@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>机器人配件管理--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/css/public.css" media="all"/>
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select class="layui-select accessoriesTypeId" lay-search="" lay-verify="required" autocomplete="off" id ="accessoriesTypeId">
+<!--                        <option value="">配件类型</option>-->
+<!--                        <option value="10">电气类</option>-->
+<!--                        <option value="20">机械类</option>-->
+<!--                        <option value="30">易损易耗</option>-->
+<!--                        <option value="40">工具类</option>-->
+<!--                        <option value="50">仪器类</option>-->
+<!--                        <option value="60">其他</option>-->
+                    </select>
+
+                </div>
+<!--                <div class="layui-input-inline">-->
+<!--                    <input type="text" class="layui-input faultNameVal" placeholder="故障名称"/>-->
+<!--                </div>-->
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input accessoryModelVal" placeholder="配件型号"/>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input accessoryNameVal" placeholder="配件名称"/>
+                </div>
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i
+                            class="layui-icon">&#xe615;</i>搜索
+                    </button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i
+                            class="layui-icon">&#xe666;</i>重置
+                    </button>
+                    <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                    <button id="downloadExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出EXCEL
+                    </button>
+                    <button type="button" class="layui-btn" id="importExcel"><i class="layui-icon"></i>导入EXCEL</button>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="robotPartsManagementList" class="layui-table" lay-filter="robotPartsManagementList"></table>
+</div>
+<!--操作-->
+<script type="text/html" id="robotPartsManagementBar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/assetsSystem/robotPartsManagement/js/robotPartsManagementList.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl','jquery'],function(){
+        var form = layui.form;
+        var items = [];
+        $ = layui.jquery;
+        $.ajax({
+            type : "post",
+            url : "/system/partsManagementType/getPartsManagementTypeDropDown",
+            async : false,
+            success : function(data){
+                if(data.state == 200){
+                    items = data.data;
+                    $("#accessoriesTypeId").html("<option value=''>请选择配件类型</option>");
+                    $.each(items, function (index, item) {
+                        console.log(item.partsManagementType);
+                        console.log(item.id);
+                        var option = new Option(item.partsManagementType,item.id);
+                        $('#accessoriesTypeId').append(option);//往下拉菜单里添加元素
+                        form.render('select');
+                    });
+                }else{
+                }
+            }
+        });
+    })
+</script>
+
+
+</html>

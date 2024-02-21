@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>机器人故障记录编辑--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="Form" lay-filter="Form">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="errorRecordsId" type="hidden" class="errorRecordsId"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">配件是否已发送<span style="color: red;">*</span></label>
+                        <div class="layui-input-block errorRecordsSend">
+                            <select name="errorRecordsSend" lay-verify="required" lay-search="" lay-filter="group" lay-reqtext="配件是否已发送是必选项，不能为空">
+                                <option value="">请选择</option>
+                                <option value="0">未发送</option>
+                                <option value="1">已发送</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">配件是否已收到<span style="color: red;">*</span></label>
+                        <div class="layui-input-block errorRecordsReceive">
+                            <select name="errorRecordsReceive" lay-verify="required" lay-search="" lay-filter="group" lay-reqtext="配件是否已发收到是必选项，不能为空">
+                                <option value="">请选择</option>
+                                <option value="0">未收到</option>
+                                <option value="1">已收到</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">配件费用承担方<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="errorRecordsPartBearer" placeholder="请输入配件费用承担方" type="text" class="layui-input errorRecordsPartBearer" autocomplete="off" lay-verify="required" lay-reqtext="配件费用承担方是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">维修费用承担方<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="errorRecordsUpkeepBearer" placeholder="请输入维修费用承担方" type="text" class="layui-input errorRecordsUpkeepBearer" autocomplete="off" lay-verify="required" lay-reqtext="维修费用承担方是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">故障状态<span style="color: red;">*</span></label>
+                        <div class="layui-input-block faultStatus">
+                            <select name="faultStatus" lay-verify="required" lay-search="" lay-filter="group" lay-reqtext="故障状态是必选项，不能为空">
+                                <option value="">请选择</option>
+                                <option value="1">已处理</option>
+                                <option value="2">已关闭</option>
+                                <option value="3">未处理</option>
+                                <option value="4">已修好待确认</option>
+                                <option value="5">待审批</option>
+                                <option value="6">不同意</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <input name="errorRecordsRemark" placeholder="请输入备注" type="text" class="layui-input errorRecordsRemark" autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/page/assetsSystem/robotErrorRecords/js/errorRecordsEdit.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+</body>
+</html>
