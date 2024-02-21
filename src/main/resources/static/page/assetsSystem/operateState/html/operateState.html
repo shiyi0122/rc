@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>机器人运营状态</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2572350_nrz27shi5c.css"/>
+    <link rel="stylesheet" href="/layuinew/css/layui.css" media="all"/>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/layuinew/layui.js"></script>
+    <script src="/js/echarts.js"></script>
+    <script src="/page/assetsSystem/operateState/js/operateState.js"></script>
+</head>
+<body style="margin: 1%">
+<form class="layui-form" action="">
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <select name="spot" id="spot" lay-verify="required" lay-search="">
+                <option value="">全部景区</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <select id="type" lay-verify="required">
+                <option value="1">按景区统计</option>
+                <option value="2">按机器人统计</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <input type="text" name="beginDate" id="beginDate" lay-verify="date" placeholder="起始日期" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <input type="text" name="endDate" id="endDate" lay-verify="date" placeholder="结束日期" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <a type="button" class="layui-btn layui-btn-primary" id="reset">重置</a>
+
+    <a type="button" class="layui-btn" id="searchEcharts">统计报表</a>
+
+    <a type="button" class="layui-btn" id="exportPng" download="机器人运营状态">导出报表</a>
+
+    <a type="button" class="layui-btn" id="searchTable">查询数据</a>
+
+    <a type="button" class="layui-btn" id="exportExcel">导出数据</a>
+</form>
+
+<table class="layui-hide" id="table" lay-filter="table"></table>
+
+<div id="main" style="width: 100%;height: 600px"></div>
+
+</body>
+</html>
