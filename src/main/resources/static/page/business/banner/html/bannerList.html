@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Banner图管理--招商平台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+
+                <div class="layui-input-inline">
+                    <select class="layui-select typesOf" lay-search="" lay-verify="required" autocomplete="off" id="typesOf">
+                        <option value="1">首页轮播图</option>
+                        <option value="2">关于我们页轮播图</option>
+                    </select>
+                </div>
+
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>
+                    <button id="btnAddBanner" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                </div>
+        </div>
+    </blockquote>
+    <table id="bannerList" class="layui-table" lay-filter="bannerList"></table>
+</div>
+<!--操作-->
+<script type="text/html" id="bannerListBar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/business/banner/js/bannerList.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+</html>

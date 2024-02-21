@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>查看银行卡信息--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="Form" lay-filter="Form">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="orderId" type="hidden" class="orderId"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">开户人名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="bankName" disabled placeholder="请输入开户人名称" type="text" class="layui-input layui-disabled bankName" autocomplete="off" lay-verify="required" lay-reqtext="开户人名称是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">银行卡号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="bankCard" disabled placeholder="请输入银行卡号" type="text" class="layui-input layui-disabled bankCard" autocomplete="off" lay-verify="required" lay-reqtext="银行卡号是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">开户银行名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="bankInfo" disabled placeholder="请输入开户银行名称" type="text" class="layui-input layui-disabled bankInfo" autocomplete="off" lay-verify="required" lay-reqtext="开户银行名称是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">开户行省市<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="bankProvince" disabled placeholder="请输入开户行省市" type="text" class="layui-input layui-disabled bankProvince" autocomplete="off" lay-verify="required" lay-reqtext="开户行省市是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">开户行支行<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="bankBranch" disabled placeholder="请输入开户行支行" type="text" class="layui-input layui-disabled bankBranch" autocomplete="off" lay-verify="required" lay-reqtext="开户行支行是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">联系电话<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="telephone" disabled placeholder="请输入联系电话" type="text" class="layui-input layui-disabled telephone" autocomplete="off" lay-verify="required" lay-reqtext="联系电话是必填项，不能为空"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+</body>
+</html>

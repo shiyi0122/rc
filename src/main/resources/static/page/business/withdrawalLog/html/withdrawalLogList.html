@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>提现申请--招商平台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input userNameVal" autocomplete="off" placeholder="客户名称"/>
+                </div>
+                <div class="layui-input-inline">
+                    <select class="layui-select state" lay-search="" lay-verify="required" autocomplete="off">
+                        <option value="">提现状态</option>
+                        <option value="0">申请中</option>
+                        <option value="1">同意</option>
+                        <option value="2">驳回</option>
+                    </select>
+                </div>
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>
+                    <button id="downloadExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出EXCEL</button>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="withdrawalLogList" class="layui-table" lay-filter="withdrawalLogList"></table>
+</div>
+<script type="text/html" id="withdrawalLogListBar">
+    {{# if(d.state == 1){ }}
+    <a class="layui-btn layui-btn-disabled layui-btn-xs layui-btn-danger">同意</a>
+    {{# } }}
+    {{# if(d.state == 0){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="adopt">通过</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="reject">驳回</a>
+    {{# } }}
+    {{# if(d.state == 2){ }}
+    <a class="layui-btn layui-btn-disabled layui-btn-xs layui-btn-danger">已驳回</a>
+    {{# } }}
+</script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/business/withdrawalLog/js/withdrawalLogList.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+</html>

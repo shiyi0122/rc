@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户编辑景区--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="Form" lay-filter="Form">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="id" class="id" type="hidden">
+                    <input class="scenicSpotIds" type="hidden">
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">选择景区<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="scenicSpotId" lay-verify="required" lay-search="" lay-filter="group" class="scenicSpotId" lay-reqtext="景区是必选项，不能为空" id="scenicSpotId">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">合同上传<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <button type="button" class="layui-btn" name="file" id="file"><i class="layui-icon"></i>上传合同</button>
+                            <input name="contractId" placeholder="请上传合同" type="hidden" class="layui-input contractId" autocomplete="off" lay-verify="required" lay-reqtext="合同是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">租赁或者承包台数:<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="totalNum" placeholder="请输入租赁或者承包台数" type="text" class="layui-input totalNum" autocomplete="off" lay-verify="required" lay-reqtext="租赁或者承包台数是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">分红比例<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="dividendRatio" placeholder="请输入分红比例" type="text" class="layui-input dividendRatio" autocomplete="off" lay-verify="required" lay-reqtext="分红比例是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">合作类型<span style="color: red;">*</span></label>
+                        <div class="layui-input-block cooperationType">
+                            <select name="cooperationType" lay-verify="required" lay-search="" lay-filter="group" class="select" lay-reqtext="合作类型是必选项，不能为空">
+                                <option value="">请选择</option>
+                                <option value="0">租赁</option>
+                                <option value="1">承包</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">数据类型<span style="color: red;">*</span></label>
+                        <div class="layui-input-block realType">
+                            <select name="realType" lay-verify="required" lay-search="" lay-filter="group" class="select" lay-reqtext="数据类型是必选项，不能为空">
+                                <option value="">请选择</option>
+                                <option value="1">真实数据</option>
+                                <option value="2">模拟数据</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">储值分红开关<span style="color: red;">*</span></label>
+                        <div class="layui-input-block switchType">
+                            <select name="switchType" lay-verify="required" lay-search="" lay-filter="group" class="select" lay-reqtext="储值分红开关是必选项，不能为空">
+                                <option value="">请选择</option>
+                                <option value="1">关闭</option>
+                                <option value="2">开启</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">合同开始时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="contractStartTime" id="contractStartTime" placeholder="请输入合同开始时间" type="text" class="layui-input contractStartTime" autocomplete="off"  lay-reqtext="合同开始时间是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">合同截至时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="contractEndTime" id="contractEndTime" placeholder="请输入合同截至时间" type="text" class="layui-input contractEndTime" autocomplete="off" lay-reqtext="合同截至时间是必填项，不能为空"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button class="layui-btn" lay-filter="btnSubmitAllocateScenicSpot" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/page/business/businessUsers/js/editAllocateScenicSpot.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+        laydate.render({
+            elem: '#contractStartTime',
+            type: 'datetime'
+        });
+        //日期时间选择器
+        laydate.render({
+            elem: '#contractEndTime'
+            ,type: 'datetime'
+        });
+        var items = [];
+        $.ajax({
+            type : "post",
+            url : "/business/businessUsers/getScenicSpotExpandList",
+            async : false,
+            success : function(data){
+                if(data.state == 200){
+                    items = data.data;
+                    var scenicSpotId = $(".scenicSpotIds").val();
+                    $("#scenicSpotId").html("<option value=''>请选择景区</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                        // 如果是之前的parentId则设置选中
+                        if(item.scenicSpotId == scenicSpotId) {
+                            option.setAttribute("selected",'true');
+                        }
+                        $('#scenicSpotId').append(option);//往下拉菜单里添加元素
+                        form.render('select'); //这个很重要
+                    });
+                }else{
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

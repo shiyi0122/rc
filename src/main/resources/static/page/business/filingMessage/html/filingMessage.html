@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>景区报备--招商平台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input filingNameVal" autocomplete="off" placeholder="报备人名称"/>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input filingPhoneVal" autocomplete="off" placeholder="报备人手机号"/>
+                </div>
+                <div class="layui-input-inline">
+                    <select class="layui-select findingsOfAudit" lay-search="" lay-verify="required" autocomplete="off">
+                        <option value="">审核状态</option>
+                        <option value="6">已签约</option>
+                        <option value="4">待审核</option>
+                        <option value="2">已通过</option>
+                        <option value="3">未通过</option>
+                        <option value="7">排队中</option>
+                        <option value="5">已失效</option>
+                    </select>
+                </div>
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>
+                    <button id="downloadExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出EXCEL</button>
+                    <button id="importExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导入EXCEL</button>
+<!--                    <button id="filingMessageAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
+                </div>
+
+            </div>
+        </div>
+    </blockquote>
+    <table id="filingMessageList" class="layui-table" lay-filter="filingMessageList"></table>
+</div>
+<!--<script type="text/html" id="filingMessageListBar">-->
+<!--    {{# if(d.findingsOfAudit == 2){ }}-->
+<!--    <a class="layui-btn layui-btn-disabled layui-btn-xs layui-btn-danger">通过</a>-->
+<!--    <a class="layui-btn layui-btn-xs" lay-event="sign">签约</a>-->
+<!--    {{# } }}-->
+<!--    {{# if(d.findingsOfAudit == 4){ }}-->
+<!--    <a class="layui-btn layui-btn-xs" lay-event="adopt">通过</a>-->
+<!--    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="reject">驳回</a>-->
+<!--    {{# } }}-->
+<!--    {{# if(d.findingsOfAudit == 3){ }}-->
+<!--    <a class="layui-btn layui-btn-disabled layui-btn-xs layui-btn-danger">驳回</a>-->
+<!--    {{# } }}-->
+<!--    {{# if(d.findingsOfAudit == 5){ }}-->
+<!--    <a class="layui-btn layui-btn-disabled layui-btn-xs layui-btn-danger">已失效</a>-->
+<!--    {{# } }}-->
+<!--    {{# if(d.findingsOfAudit == 6){ }}-->
+<!--    <a class="layui-btn layui-btn-disabled layui-btn-xs layui-btn-danger">已签约</a>-->
+<!--    {{# } }}-->
+<!--</script>-->
+
+<script type="text/html" id="filingMessageListBar">
+    <a class="layui-btn layui-btn-xs" lay-event="auditLog">审核日志</a>
+</script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/business/filingMessage/js/filingMessage.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+</html>
