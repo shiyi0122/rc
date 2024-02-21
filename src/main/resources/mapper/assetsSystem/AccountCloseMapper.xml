@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.AccountCloseMapper">
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.AccountClose">
+        select * from SYS_SCENIC_ACCOUNT_CLOSE
+        <where>
+            <if test="companyId != null">
+                company_id = #{companyId}
+            </if>
+            <if test="spotId != null">
+                and spot_id in
+                <foreach collection="spotId" item="id" open="(" close=")" separator=",">
+                    ${id}
+                </foreach>
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and month &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and month &lt;= #{endDate}
+            </if>
+            <if test="type != null">
+                and status = #{type}
+            </if>
+        </where>
+        order by month desc
+        <if test="pageNum != null and pageSize != null">
+            limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(0) from SYS_SCENIC_ACCOUNT_CLOSE
+        <where>
+            <if test="companyId != null">
+                company_id = #{companyId}
+            </if>
+            <if test="spotId != null">
+                and spot_id in
+                <foreach collection="spotId" item="id" open="(" close=")" separator=",">
+                    ${id}
+                </foreach>
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and month &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and month &lt;= #{endDate}
+            </if>
+            <if test="type != null">
+                and status = #{type}
+            </if>
+        </where>
+    </select>
+
+    <update id="update" parameterType="com.hna.hka.archive.management.assetsSystem.model.AccountClose">
+        update SYS_SCENIC_ACCOUNT_CLOSE
+        set NOTES        = #{notes},
+            <if test="type == 1">
+                MONEY_IN    = #{moneyIn},
+            </if>
+            <if test="type ==2">
+                MONEY_OUT    = #{moneyOut},
+            </if>
+            STATUS       = '3',
+            PAYMENT_NAME = #{paymentName},
+            SPOT_REPAIR_IN = #{spotRepairIn},
+            RP_STATUS = #{rpStatus},
+            PS_STATUS = #{psStatus}
+        where ID = #{id}
+    </update>
+
+    <select id="getSpotIdAndCompanyIdAndDateByAccountClose" resultType="com.hna.hka.archive.management.assetsSystem.model.AccountClose">
+        select *
+        from  SYS_SCENIC_ACCOUNT_CLOSE
+        where SPOT_ID = #{spotId}
+        and COMPANY_ID = #{companyId}
+        and MONTH = #{month}
+    </select>
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.assetsSystem.model.AccountClose">
+        insert into SYS_SCENIC_ACCOUNT_CLOSE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="companyId != null" >
+                COMPANY_ID,
+            </if>
+            <if test="companyName != null" >
+                COMPANY_NAME,
+            </if>
+            <if test="spotId != null" >
+                SPOT_ID,
+            </if>
+            <if test="spotName != null" >
+                SPOT_NAME,
+            </if>
+            <if test="month != null" >
+                MONTH,
+            </if>
+            <if test="wechat != null" >
+                WECHAT,
+            </if>
+            <if test="saving != null" >
+                SAVING,
+            </if>
+            <if test="savingWechat != null" >
+                SAVING_WECHAT,
+            </if>
+            <if test="deposit != null" >
+                DEPOSIT,
+            </if>
+            <if test="total != null" >
+                TOTAL,
+            </if>
+            <if test="charge != null" >
+                CHARGE,
+            </if>
+            <if test="totalCharge != null" >
+                TOTAL_CHARGE,
+            </if>
+            <if test="proportion != null" >
+                PROPORTION,
+            </if>
+            <if test="totalProportion != null" >
+                TOTAL_PROPORTION,
+            </if>
+            <if test="tax != null" >
+                TAX,
+            </if>
+            <if test="totalTax != null" >
+                TOTAL_TAX,
+            </if>
+            <if test="totalTaxEx != null" >
+                TOTAL_TAX_EX,
+            </if>
+            <if test="robotCount != null" >
+                ROBOT_COUNT,
+            </if>
+            <if test="accountCheckId != null" >
+                ACCOUNT_CHECK_ID,
+            </if>
+            <if test="accountCheckName != null" >
+                ACCOUNT_CHECK_NAME,
+            </if>
+            <if test="parts != null" >
+                PARTS,
+            </if>
+            <if test="partsNew != null" >
+                PARTS_NEW,
+            </if>
+            <if test="fault != null" >
+                FAULT,
+            </if>
+            <if test="compensate != null" >
+                COMPENSATE,
+            </if>
+            <if test="repair != null" >
+                REPAIR,
+            </if>
+            <if test="spotRepair != null">
+                SPOT_REPAIR,
+            </if>
+            <if test="spotRepairIn != null">
+                SPOT_REPAIR_IN,
+            </if>
+            <if test="repairCheckId != null" >
+                REPAIR_CHECK_ID,
+            </if>
+            <if test="repairCheckName != null" >
+                REPAIR_CHECK_NAME,
+            </if>
+            <if test="moneyOut != null" >
+                MONEY_OUT,
+            </if>
+            <if test="moneyIn != null" >
+                MONEY_IN,
+            </if>
+            <if test="type != null" >
+                TYPE,
+            </if>
+            <if test="notes != null" >
+                NOTES,
+            </if>
+            <if test="paymentName != null" >
+                PAYMENT_NAME,
+            </if>
+            <if test="status != null" >
+                STATUS,
+            </if>
+            <if test="reconciliationTime != null" >
+                RECONCILIATION_TIME,
+            </if>
+            <if test="payTime != null" >
+                PAY_TIME,
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME,
+            </if>
+            <if test="rpStatus != null">
+                RP_STATUS,
+            </if>
+            <if test="psStatus != null">
+                PS_STATUS,
+            </if>
+            <if test="psUserId != null">
+                PS_USER_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null" >
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="companyName != null" >
+                #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="spotId != null" >
+                #{spotId,jdbcType=BIGINT},
+            </if>
+            <if test="spotName != null" >
+                #{spotName,jdbcType=VARCHAR},
+            </if>
+            <if test="month != null" >
+                #{month,jdbcType=CHAR},
+            </if>
+            <if test="wechat != null" >
+                #{wechat,jdbcType=DECIMAL},
+            </if>
+            <if test="saving != null" >
+                #{saving,jdbcType=DECIMAL},
+            </if>
+            <if test="savingWechat != null" >
+                #{savingWechat,jdbcType=DECIMAL},
+            </if>
+            <if test="deposit != null" >
+                #{deposit,jdbcType=DECIMAL},
+            </if>
+            <if test="total != null" >
+                #{total,jdbcType=DECIMAL},
+            </if>
+            <if test="charge != null" >
+                #{charge,jdbcType=DECIMAL},
+            </if>
+            <if test="totalCharge != null" >
+                #{totalCharge,jdbcType=DECIMAL},
+            </if>
+            <if test="proportion != null" >
+                #{proportion,jdbcType=DECIMAL},
+            </if>
+            <if test="totalProportion != null" >
+                #{totalProportion,jdbcType=DECIMAL},
+            </if>
+            <if test="tax != null" >
+                #{tax,jdbcType=DECIMAL},
+            </if>
+            <if test="totalTax != null" >
+                #{totalTax,jdbcType=DECIMAL},
+            </if>
+            <if test="totalTaxEx != null" >
+                #{totalTaxEx,jdbcType=DECIMAL},
+            </if>
+            <if test="robotCount != null" >
+                #{robotCount,jdbcType=BIGINT},
+            </if>
+            <if test="accountCheckId != null" >
+                #{accountCheckId,jdbcType=BIGINT},
+            </if>
+            <if test="accountCheckName != null" >
+                #{accountCheckName,jdbcType=VARCHAR},
+            </if>
+            <if test="parts != null" >
+                #{parts,jdbcType=DECIMAL},
+            </if>
+            <if test="partsNew != null" >
+                #{partsNew,jdbcType=DECIMAL},
+            </if>
+            <if test="fault != null" >
+                #{fault,jdbcType=DECIMAL},
+            </if>
+            <if test="compensate != null" >
+                #{compensate,jdbcType=DECIMAL},
+            </if>
+            <if test="repair != null" >
+                #{repair,jdbcType=DECIMAL},
+            </if>
+            <if test="spotRepair != null">
+                #{spotRepair,jdbcType = DECIMAL},
+            </if>
+            <if test="spotRepairIn != null">
+                #{spotRepairIn,jdbcType = DECIMAL},
+            </if>
+            <if test="repairCheckId != null" >
+                #{repairCheckId,jdbcType=BIGINT},
+            </if>
+            <if test="repairCheckName != null" >
+                #{repairCheckName,jdbcType=VARCHAR},
+            </if>
+            <if test="moneyOut != null" >
+                #{moneyOut,jdbcType=DECIMAL},
+            </if>
+            <if test="moneyIn != null" >
+                #{moneyIn,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="notes != null" >
+                #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentName != null" >
+                #{paymentName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="reconciliationTime != null" >
+                #{reconciliationTime,jdbcType=CHAR},
+            </if>
+            <if test="payTime != null" >
+                #{payTime,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=CHAR},
+            </if>
+            <if test="rpStatus != null">
+                #{rpStatus,jdbcType=INTEGER},
+            </if>
+            <if test="psStatus != null">
+                #{psStatus,jdbcType=INTEGER},
+            </if>
+            <if test="psUserId != null">
+                #{psUserId,jdbcType=BIGINT}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="edit" parameterType="com.hna.hka.archive.management.assetsSystem.model.AccountClose">
+        update SYS_SCENIC_ACCOUNT_CLOSE
+        <set >
+            <if test="companyId != null" >
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="companyName != null" >
+                COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="spotId != null" >
+                SPOT_ID = #{spotId,jdbcType=BIGINT},
+            </if>
+            <if test="spotName != null" >
+                SPOT_NAME = #{spotName,jdbcType=VARCHAR},
+            </if>
+            <if test="month != null" >
+                MONTH = #{month,jdbcType=CHAR},
+            </if>
+            <if test="wechat != null" >
+                WECHAT = #{wechat,jdbcType=DECIMAL},
+            </if>
+            <if test="saving != null" >
+                SAVING = #{saving,jdbcType=DECIMAL},
+            </if>
+            <if test="savingWechat != null" >
+                SAVING_WECHAT = #{savingWechat,jdbcType=DECIMAL},
+            </if>
+            <if test="deposit != null" >
+                DEPOSIT = #{deposit,jdbcType=DECIMAL},
+            </if>
+            <if test="total != null" >
+                TOTAL = #{total,jdbcType=DECIMAL},
+            </if>
+            <if test="charge != null" >
+                CHARGE = #{charge,jdbcType=DECIMAL},
+            </if>
+            <if test="totalCharge != null" >
+                TOTAL_CHARGE = #{totalCharge,jdbcType=DECIMAL},
+            </if>
+            <if test="proportion != null" >
+                PROPORTION = #{proportion,jdbcType=DECIMAL},
+            </if>
+            <if test="totalProportion != null" >
+                TOTAL_PROPORTION = #{totalProportion,jdbcType=DECIMAL},
+            </if>
+            <if test="tax != null" >
+                TAX = #{tax,jdbcType=DECIMAL},
+            </if>
+            <if test="totalTax != null" >
+                TOTAL_TAX = #{totalTax,jdbcType=DECIMAL},
+            </if>
+            <if test="totalTaxEx != null" >
+                TOTAL_TAX_EX = #{totalTaxEx,jdbcType=DECIMAL},
+            </if>
+            <if test="robotCount != null" >
+                ROBOT_COUNT = #{robotCount,jdbcType=BIGINT},
+            </if>
+            <if test="accountCheckId != null" >
+                ACCOUNT_CHECK_ID = #{accountCheckId,jdbcType=BIGINT},
+            </if>
+            <if test="accountCheckName != null" >
+                ACCOUNT_CHECK_NAME = #{accountCheckName,jdbcType=VARCHAR},
+            </if>
+            <if test="parts != null" >
+                PARTS = #{parts,jdbcType=DECIMAL},
+            </if>
+            <if test="partsNew != null" >
+                PARTS_NEW = #{partsNew,jdbcType=DECIMAL},
+            </if>
+            <if test="fault != null" >
+                FAULT = #{fault,jdbcType=DECIMAL},
+            </if>
+            <if test="compensate != null" >
+                COMPENSATE = #{compensate,jdbcType=DECIMAL},
+            </if>
+            <if test="repair != null" >
+                REPAIR = #{repair,jdbcType=DECIMAL},
+            </if>
+            <if test="spotRepair != null" >
+                SPOT_REPAIR = #{spotRepair,jdbcType=DECIMAL},
+            </if>
+            <if test="spotRepairIn != null" >
+                SPOT_REPAIR_IN = #{spotRepairIn,jdbcType=DECIMAL},
+            </if>
+            <if test="repairCheckId != null" >
+                REPAIR_CHECK_ID = #{repairCheckId,jdbcType=BIGINT},
+            </if>
+            <if test="repairCheckName != null" >
+                REPAIR_CHECK_NAME = #{repairCheckName,jdbcType=VARCHAR},
+            </if>
+            <if test="moneyOut != null" >
+                MONEY_OUT = #{moneyOut,jdbcType=DECIMAL},
+            </if>
+            <if test="moneyIn != null" >
+                MONEY_IN = #{moneyIn,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null" >
+                TYPE = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="notes != null" >
+                NOTES = #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentName != null" >
+                PAYMENT_NAME = #{paymentName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                STATUS = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="reconciliationTime != null" >
+                RECONCILIATION_TIME = #{reconciliationTime,jdbcType=CHAR},
+            </if>
+            <if test="payTime != null" >
+                PAY_TIME = #{payTime,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=CHAR},
+            </if>
+            <if test="rpStatus != null">
+                RP_STATUS = #{rpStatus,jdbcType=INTEGER},
+            </if>
+            <if test="psStatus != null">
+                PS_STATUS = #{psStatus,jdbcType=INTEGER},
+            </if>
+            <if test="psUserId != null">
+                PS_USER_ID = #{psUserId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getDateByAccountClose" resultType="com.hna.hka.archive.management.assetsSystem.model.AccountClose">
+        select *
+        from SYS_SCENIC_ACCOUNT_CLOSE
+        where MONTH = #{month}
+    </select>
+
+    <select id="selectSpotAndCompanyAndDate" resultType="com.hna.hka.archive.management.assetsSystem.model.AccountClose">
+        select *
+        from SYS_SCENIC_ACCOUNT_CLOSE
+        where COMPANY_ID = #{company}
+        and SPOT_ID = #{spot}
+        and MONTH = #{beginDate}
+    </select>
+
+</mapper>

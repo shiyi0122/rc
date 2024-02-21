@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotPriceModificationLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotPriceModificationLog" >
+    <id column="PRICE_MODIFICATION_ID" property="priceModificationId" jdbcType="BIGINT" />
+    <result column="PRICE_MODIFICATION_USER_NAME" property="priceModificationUserName" jdbcType="VARCHAR" />
+    <result column="PRICE_MODIFICATION_SPOT_NAME" property="priceModificationSpotName" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_DEPOSIT" property="scenicSpotDeposit" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_WEEKEND_PRICE" property="scenicSpotWeekendPrice" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_NORMAL_PRICE" property="scenicSpotNormalPrice" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_WEEKEND_RENT_PRICE" property="scenicSpotWeekendRentPrice" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_NORMAL_RENT_PRICE" property="scenicSpotNormalRentPrice" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_RENT_TIME" property="scenicSpotRentTime" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_BEYOND_PRICE" property="scenicSpotBeyondPrice" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_NORMAL_TIME" property="scenicSpotNormalTime" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_WEEKEND_TIME" property="scenicSpotWeekendTime" jdbcType="VARCHAR" />
+    <result column="RANDOM_BROADCAST_TIME" property="randomBroadcastTime" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_FREQUENCY" property="scenicSpotFrequency" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_FENCE_TIME" property="scenicSpotFenceTime" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_FORBIDDEN_ZONE_TIME" property="scenicSpotForbiddenZoneTime" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_CONTACT" property="scenicSpotContact" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_PHONE" property="scenicSpotPhone" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_PROVINCE" property="scenicSpotProvince" jdbcType="VARCHAR" />
+    <result column="TEST_START_TIME" property="testStartTime" jdbcType="VARCHAR" />
+    <result column="TRIAL_OPERATIONS_TIME" property="trialOperationsTime" jdbcType="VARCHAR" />
+    <result column="FORMAL_OPERATION_TIME" property="formalOperationTime" jdbcType="VARCHAR" />
+    <result column="STOP_OPERATION_TIME" property="stopOperationTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 下载基础档案Excel表 -->
+  <resultMap id="BaseResultExcelMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotPriceModificationLogVo" >
+    <result column="PRICE_MODIFICATION_USER_NAME" property="priceModificationUserName" jdbcType="VARCHAR" />
+    <result column="PRICE_MODIFICATION_SPOT_NAME" property="priceModificationSpotName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_CONTACT" property="scenicSpotContact" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_PHONE" property="scenicSpotPhone" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_PROVINCE" property="scenicSpotProvince" jdbcType="VARCHAR" />
+    <result column="TEST_START_TIME" property="testStartTime" jdbcType="VARCHAR" />
+    <result column="TRIAL_OPERATIONS_TIME" property="trialOperationsTime" jdbcType="VARCHAR" />
+    <result column="FORMAL_OPERATION_TIME" property="formalOperationTime" jdbcType="VARCHAR" />
+    <result column="STOP_OPERATION_TIME" property="stopOperationTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PRICE_MODIFICATION_ID, PRICE_MODIFICATION_USER_NAME, PRICE_MODIFICATION_SPOT_NAME, 
+    SCENIC_SPOT_DEPOSIT, SCENIC_SPOT_WEEKEND_PRICE, SCENIC_SPOT_NORMAL_PRICE, SCENIC_SPOT_WEEKEND_RENT_PRICE, 
+    SCENIC_SPOT_NORMAL_RENT_PRICE, TYPE, SCENIC_SPOT_RENT_TIME, SCENIC_SPOT_BEYOND_PRICE, 
+    SCENIC_SPOT_NORMAL_TIME, SCENIC_SPOT_WEEKEND_TIME, RANDOM_BROADCAST_TIME, SCENIC_SPOT_FREQUENCY, 
+    SCENIC_SPOT_FENCE_TIME, SCENIC_SPOT_FORBIDDEN_ZONE_TIME, CREATE_DATE, SCENIC_SPOT_CONTACT, 
+    SCENIC_SPOT_PHONE, SCENIC_SPOT_PROVINCE, TEST_START_TIME, TRIAL_OPERATIONS_TIME, 
+    FORMAL_OPERATION_TIME, STOP_OPERATION_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_PRICE_MODIFICATION_LOG
+    where PRICE_MODIFICATION_ID = #{priceModificationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_PRICE_MODIFICATION_LOG
+    where PRICE_MODIFICATION_ID = #{priceModificationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotPriceModificationLog" >
+    insert into SYS_SCENIC_SPOT_PRICE_MODIFICATION_LOG (PRICE_MODIFICATION_ID, PRICE_MODIFICATION_USER_NAME, 
+      PRICE_MODIFICATION_SPOT_NAME, SCENIC_SPOT_DEPOSIT, 
+      SCENIC_SPOT_WEEKEND_PRICE, SCENIC_SPOT_NORMAL_PRICE, 
+      SCENIC_SPOT_WEEKEND_RENT_PRICE, SCENIC_SPOT_NORMAL_RENT_PRICE, 
+      TYPE, SCENIC_SPOT_RENT_TIME, SCENIC_SPOT_BEYOND_PRICE, 
+      SCENIC_SPOT_NORMAL_TIME, SCENIC_SPOT_WEEKEND_TIME, 
+      RANDOM_BROADCAST_TIME, SCENIC_SPOT_FREQUENCY, 
+      SCENIC_SPOT_FENCE_TIME, SCENIC_SPOT_FORBIDDEN_ZONE_TIME, 
+      CREATE_DATE, SCENIC_SPOT_CONTACT, SCENIC_SPOT_PHONE, 
+      SCENIC_SPOT_PROVINCE, TEST_START_TIME, TRIAL_OPERATIONS_TIME, 
+      FORMAL_OPERATION_TIME, STOP_OPERATION_TIME)
+    values (#{priceModificationId,jdbcType=BIGINT}, #{priceModificationUserName,jdbcType=VARCHAR}, 
+      #{priceModificationSpotName,jdbcType=VARCHAR}, #{scenicSpotDeposit,jdbcType=VARCHAR}, 
+      #{scenicSpotWeekendPrice,jdbcType=VARCHAR}, #{scenicSpotNormalPrice,jdbcType=VARCHAR}, 
+      #{scenicSpotWeekendRentPrice,jdbcType=VARCHAR}, #{scenicSpotNormalRentPrice,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{scenicSpotRentTime,jdbcType=VARCHAR}, #{scenicSpotBeyondPrice,jdbcType=VARCHAR}, 
+      #{scenicSpotNormalTime,jdbcType=VARCHAR}, #{scenicSpotWeekendTime,jdbcType=VARCHAR}, 
+      #{randomBroadcastTime,jdbcType=VARCHAR}, #{scenicSpotFrequency,jdbcType=VARCHAR}, 
+      #{scenicSpotFenceTime,jdbcType=VARCHAR}, #{scenicSpotForbiddenZoneTime,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{scenicSpotContact,jdbcType=VARCHAR}, #{scenicSpotPhone,jdbcType=VARCHAR}, 
+      #{scenicSpotProvince,jdbcType=VARCHAR}, #{testStartTime,jdbcType=VARCHAR}, #{trialOperationsTime,jdbcType=VARCHAR}, 
+      #{formalOperationTime,jdbcType=VARCHAR}, #{stopOperationTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotPriceModificationLog" >
+    insert into SYS_SCENIC_SPOT_PRICE_MODIFICATION_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="priceModificationId != null" >
+        PRICE_MODIFICATION_ID,
+      </if>
+      <if test="priceModificationUserName != null" >
+        PRICE_MODIFICATION_USER_NAME,
+      </if>
+      <if test="priceModificationSpotName != null" >
+        PRICE_MODIFICATION_SPOT_NAME,
+      </if>
+      <if test="scenicSpotDeposit != null" >
+        SCENIC_SPOT_DEPOSIT,
+      </if>
+      <if test="scenicSpotWeekendPrice != null" >
+        SCENIC_SPOT_WEEKEND_PRICE,
+      </if>
+      <if test="scenicSpotNormalPrice != null" >
+        SCENIC_SPOT_NORMAL_PRICE,
+      </if>
+      <if test="scenicSpotWeekendRentPrice != null" >
+        SCENIC_SPOT_WEEKEND_RENT_PRICE,
+      </if>
+      <if test="scenicSpotNormalRentPrice != null" >
+        SCENIC_SPOT_NORMAL_RENT_PRICE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="scenicSpotRentTime != null" >
+        SCENIC_SPOT_RENT_TIME,
+      </if>
+      <if test="scenicSpotBeyondPrice != null" >
+        SCENIC_SPOT_BEYOND_PRICE,
+      </if>
+      <if test="scenicSpotNormalTime != null" >
+        SCENIC_SPOT_NORMAL_TIME,
+      </if>
+      <if test="scenicSpotWeekendTime != null" >
+        SCENIC_SPOT_WEEKEND_TIME,
+      </if>
+      <if test="randomBroadcastTime != null" >
+        RANDOM_BROADCAST_TIME,
+      </if>
+      <if test="scenicSpotFrequency != null" >
+        SCENIC_SPOT_FREQUENCY,
+      </if>
+      <if test="scenicSpotFenceTime != null" >
+        SCENIC_SPOT_FENCE_TIME,
+      </if>
+      <if test="scenicSpotForbiddenZoneTime != null" >
+        SCENIC_SPOT_FORBIDDEN_ZONE_TIME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="scenicSpotContact != null" >
+        SCENIC_SPOT_CONTACT,
+      </if>
+      <if test="scenicSpotPhone != null" >
+        SCENIC_SPOT_PHONE,
+      </if>
+      <if test="scenicSpotProvince != null" >
+        SCENIC_SPOT_PROVINCE,
+      </if>
+      <if test="testStartTime != null" >
+        TEST_START_TIME,
+      </if>
+      <if test="trialOperationsTime != null" >
+        TRIAL_OPERATIONS_TIME,
+      </if>
+      <if test="formalOperationTime != null" >
+        FORMAL_OPERATION_TIME,
+      </if>
+      <if test="stopOperationTime != null" >
+        STOP_OPERATION_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="priceModificationId != null" >
+        #{priceModificationId,jdbcType=BIGINT},
+      </if>
+      <if test="priceModificationUserName != null" >
+        #{priceModificationUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceModificationSpotName != null" >
+        #{priceModificationSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotDeposit != null" >
+        #{scenicSpotDeposit,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotWeekendPrice != null" >
+        #{scenicSpotWeekendPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotNormalPrice != null" >
+        #{scenicSpotNormalPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotWeekendRentPrice != null" >
+        #{scenicSpotWeekendRentPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotNormalRentPrice != null" >
+        #{scenicSpotNormalRentPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotRentTime != null" >
+        #{scenicSpotRentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotBeyondPrice != null" >
+        #{scenicSpotBeyondPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotNormalTime != null" >
+        #{scenicSpotNormalTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotWeekendTime != null" >
+        #{scenicSpotWeekendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="randomBroadcastTime != null" >
+        #{randomBroadcastTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotFrequency != null" >
+        #{scenicSpotFrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotFenceTime != null" >
+        #{scenicSpotFenceTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotForbiddenZoneTime != null" >
+        #{scenicSpotForbiddenZoneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotContact != null" >
+        #{scenicSpotContact,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotPhone != null" >
+        #{scenicSpotPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotProvince != null" >
+        #{scenicSpotProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="testStartTime != null" >
+        #{testStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trialOperationsTime != null" >
+        #{trialOperationsTime,jdbcType=VARCHAR},
+      </if>
+      <if test="formalOperationTime != null" >
+        #{formalOperationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="stopOperationTime != null" >
+        #{stopOperationTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotPriceModificationLog" >
+    update SYS_SCENIC_SPOT_PRICE_MODIFICATION_LOG
+    <set >
+      <if test="priceModificationUserName != null" >
+        PRICE_MODIFICATION_USER_NAME = #{priceModificationUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceModificationSpotName != null" >
+        PRICE_MODIFICATION_SPOT_NAME = #{priceModificationSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotDeposit != null" >
+        SCENIC_SPOT_DEPOSIT = #{scenicSpotDeposit,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotWeekendPrice != null" >
+        SCENIC_SPOT_WEEKEND_PRICE = #{scenicSpotWeekendPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotNormalPrice != null" >
+        SCENIC_SPOT_NORMAL_PRICE = #{scenicSpotNormalPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotWeekendRentPrice != null" >
+        SCENIC_SPOT_WEEKEND_RENT_PRICE = #{scenicSpotWeekendRentPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotNormalRentPrice != null" >
+        SCENIC_SPOT_NORMAL_RENT_PRICE = #{scenicSpotNormalRentPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotRentTime != null" >
+        SCENIC_SPOT_RENT_TIME = #{scenicSpotRentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotBeyondPrice != null" >
+        SCENIC_SPOT_BEYOND_PRICE = #{scenicSpotBeyondPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotNormalTime != null" >
+        SCENIC_SPOT_NORMAL_TIME = #{scenicSpotNormalTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotWeekendTime != null" >
+        SCENIC_SPOT_WEEKEND_TIME = #{scenicSpotWeekendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="randomBroadcastTime != null" >
+        RANDOM_BROADCAST_TIME = #{randomBroadcastTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotFrequency != null" >
+        SCENIC_SPOT_FREQUENCY = #{scenicSpotFrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotFenceTime != null" >
+        SCENIC_SPOT_FENCE_TIME = #{scenicSpotFenceTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotForbiddenZoneTime != null" >
+        SCENIC_SPOT_FORBIDDEN_ZONE_TIME = #{scenicSpotForbiddenZoneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotContact != null" >
+        SCENIC_SPOT_CONTACT = #{scenicSpotContact,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotPhone != null" >
+        SCENIC_SPOT_PHONE = #{scenicSpotPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotProvince != null" >
+        SCENIC_SPOT_PROVINCE = #{scenicSpotProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="testStartTime != null" >
+        TEST_START_TIME = #{testStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trialOperationsTime != null" >
+        TRIAL_OPERATIONS_TIME = #{trialOperationsTime,jdbcType=VARCHAR},
+      </if>
+      <if test="formalOperationTime != null" >
+        FORMAL_OPERATION_TIME = #{formalOperationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="stopOperationTime != null" >
+        STOP_OPERATION_TIME = #{stopOperationTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PRICE_MODIFICATION_ID = #{priceModificationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotPriceModificationLog" >
+    update SYS_SCENIC_SPOT_PRICE_MODIFICATION_LOG
+    set PRICE_MODIFICATION_USER_NAME = #{priceModificationUserName,jdbcType=VARCHAR},
+      PRICE_MODIFICATION_SPOT_NAME = #{priceModificationSpotName,jdbcType=VARCHAR},
+      SCENIC_SPOT_DEPOSIT = #{scenicSpotDeposit,jdbcType=VARCHAR},
+      SCENIC_SPOT_WEEKEND_PRICE = #{scenicSpotWeekendPrice,jdbcType=VARCHAR},
+      SCENIC_SPOT_NORMAL_PRICE = #{scenicSpotNormalPrice,jdbcType=VARCHAR},
+      SCENIC_SPOT_WEEKEND_RENT_PRICE = #{scenicSpotWeekendRentPrice,jdbcType=VARCHAR},
+      SCENIC_SPOT_NORMAL_RENT_PRICE = #{scenicSpotNormalRentPrice,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      SCENIC_SPOT_RENT_TIME = #{scenicSpotRentTime,jdbcType=VARCHAR},
+      SCENIC_SPOT_BEYOND_PRICE = #{scenicSpotBeyondPrice,jdbcType=VARCHAR},
+      SCENIC_SPOT_NORMAL_TIME = #{scenicSpotNormalTime,jdbcType=VARCHAR},
+      SCENIC_SPOT_WEEKEND_TIME = #{scenicSpotWeekendTime,jdbcType=VARCHAR},
+      RANDOM_BROADCAST_TIME = #{randomBroadcastTime,jdbcType=VARCHAR},
+      SCENIC_SPOT_FREQUENCY = #{scenicSpotFrequency,jdbcType=VARCHAR},
+      SCENIC_SPOT_FENCE_TIME = #{scenicSpotFenceTime,jdbcType=VARCHAR},
+      SCENIC_SPOT_FORBIDDEN_ZONE_TIME = #{scenicSpotForbiddenZoneTime,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      SCENIC_SPOT_CONTACT = #{scenicSpotContact,jdbcType=VARCHAR},
+      SCENIC_SPOT_PHONE = #{scenicSpotPhone,jdbcType=VARCHAR},
+      SCENIC_SPOT_PROVINCE = #{scenicSpotProvince,jdbcType=VARCHAR},
+      TEST_START_TIME = #{testStartTime,jdbcType=VARCHAR},
+      TRIAL_OPERATIONS_TIME = #{trialOperationsTime,jdbcType=VARCHAR},
+      FORMAL_OPERATION_TIME = #{formalOperationTime,jdbcType=VARCHAR},
+      STOP_OPERATION_TIME = #{stopOperationTime,jdbcType=VARCHAR}
+    where PRICE_MODIFICATION_ID = #{priceModificationId,jdbcType=BIGINT}
+  </update>
+  <select id="getPriceModificationLogList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_PRICE_MODIFICATION_LOG
+    <where>
+      <if test="priceModificationSpotName != null and priceModificationSpotName != ''">
+        AND PRICE_MODIFICATION_SPOT_NAME LIKE CONCAT('%',#{priceModificationSpotName},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+      <if test="type != null and type != ''">
+        AND TYPE = #{type}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <select id="getSysScenicSpotPriceModificationLogVoExcel" resultMap="BaseResultExcelMap" parameterType="java.util.Map">
+  	select
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_PRICE_MODIFICATION_LOG
+    <where>
+      <if test="priceModificationSpotName != null and priceModificationSpotName != ''">
+        AND PRICE_MODIFICATION_SPOT_NAME LIKE CONCAT('%',#{priceModificationSpotName},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+      <if test="type != null and type != ''">
+        AND TYPE = #{type}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

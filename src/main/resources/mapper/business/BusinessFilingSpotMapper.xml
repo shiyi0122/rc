@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessFilingSpotMapper">
+
+    <select id="getFilingSpotList" resultType="com.hna.hka.archive.management.business.model.BusinessFilingSpot">
+        select *
+        from BUSINESS_FILING_SPOT
+        <where>
+            <if test="highQuality != null">
+                HIGH_QUALITY like CONCAT('%',#{highQuality},'%')
+            </if>
+        </where>
+        order by CREATE_DATE
+    </select>
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessFilingSpot">
+        insert into BUSINESS_FILING_SPOT
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="highQuality != null" >
+                HIGH_QUALITY,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="highQuality != null" >
+                #{highQuality,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessFilingSpot"  >
+        update BUSINESS_FILING_SPOT
+        <set >
+            <if test="highQuality != null" >
+                HIGH_QUALITY = #{highQuality,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        delete from BUSINESS_FILING_SPOT
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+
+</mapper>

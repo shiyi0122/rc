@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotErrorPartsMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRecords" >
+    <id column="ERROR_REPAIR_MANAGEMENT_ID" property="errorRepairManagementId" jdbcType="BIGINT" />
+    <result column="ERROR_RECORDS_ID" property="errorRecordsId" jdbcType="BIGINT" />
+    <result column="PARTS_MANAGEMENT_ID" property="partsManagementId" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    <result column="QUANTITY" property="quantity" jdbcType="DECIMAL"/>
+    <result column="AMOUNT" property="amount" jdbcType="DECIMAL"/>
+    <result column="INVENTORY_NUMBER" property="inventoryNumber" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ERROR_REPAIR_MANAGEMENT_ID,ERROR_RECORDS_ID,PARTS_MANAGEMENT_ID,CREATE_DATE,UPDATE_DATE,QUANTITY,AMOUNT,INVENTORY_NUMBER
+  </sql>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_ERROR_PARTS
+    where ERROR_REPAIR_MANAGEMENT_ID = #{errorRepairManagementId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorParts" >
+    insert into SYS_ROBOT_ERROR_PARTS (
+    ERROR_REPAIR_MANAGEMENT_ID, ERROR_RECORDS_ID, PARTS_MANAGEMENT_ID,
+    CREATE_DATE, UPDATE_DATE,QUANTITY,AMOUNT,INVENTORY_NUMBER)
+    values (#{errorRepairManagementId,jdbcType=BIGINT}, #{errorRecordsId,jdbcType=BIGINT}, #{partsManagementId,jdbcType=BIGINT},
+    #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR},#{quantity,jdbcType=DECIMAL},#{amount,jdbcType=DECIMAL},#{inventoryNumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorParts" >
+    insert into SYS_ROBOT_ERROR_PARTS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="errorRepairManagementId != null" >
+        ERROR_REPAIR_MANAGEMENT_ID,
+      </if>
+      <if test="errorRecordsId != null" >
+        ERROR_RECORDS_ID,
+      </if>
+      <if test="partsManagementId != null" >
+        PARTS_MANAGEMENT_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="quantity != null">
+        QUANTITY,
+      </if>
+      <if test="amount != null">
+        AMOUNT,
+      </if>
+      <if test="inventoryNumber != null">
+        INVENTORY_NUMBER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="errorRepairManagementId != null" >
+        #{errorRepairManagementId,jdbcType=BIGINT},
+      </if>
+      <if test="errorRecordsId != null" >
+        #{errorRecordsId,jdbcType=BIGINT},
+      </if>
+      <if test="partsManagementId != null" >
+        #{partsManagementId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType = DECIMAL},
+      </if>
+      <if test="inventoryNumber != null">
+        #{inventoryNumber,jdbcType = VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectErrorPartsByRecordsId" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorParts">
+    select SREP.PARTS_MANAGEMENT_ID, SREP.QUANTITY,SREP.AMOUNT,
+    SRPM.ACCESSORY_NAME as accessoryName,
+    SRPM.ACCESSORY_MODEL as accessoryModel,
+    SRPM.ACCESSORIES_CODE as accessoriesCode,
+    SRPM.ACCESSORY_PRICE_OUT as accessoryPriceOut,
+    SRPM.UNIT
+    from
+    SYS_ROBOT_ERROR_PARTS as SREP
+    left join
+    SYS_ROBOT_PARTS_MANAGEMENT as SRPM
+    on SREP.PARTS_MANAGEMENT_ID = SRPM.PARTS_MANAGEMENT_ID
+    where
+    SREP.ERROR_RECORDS_ID = #{errorRecordsId}
+  </select>
+
+</mapper>

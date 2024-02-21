@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotAccessoriesApplicationMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotAccessoriesApplication" >
+    <id column="ACCESSORIES_APPLICATION_ID" property="accessoriesApplicationId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="ACCESSORIES_ID" property="accessoriesId" jdbcType="BIGINT"/>
+    <result column="ACCESSORIES_NAME" property="accessoriesName" jdbcType="VARCHAR" />
+    <result column="ACCESSORIES_TYPE" property="accessoriesType" jdbcType="VARCHAR" />
+    <result column="ACCESSORIES_IMG" property="accessoriesImg" jdbcType="VARCHAR" />
+    <result column="ACCESSORY_PRICE" property="accessoryPrice" jdbcType="VARCHAR" />
+    <result column="ACCESSORY_MODEL" property="accessoryModel" jdbcType="VARCHAR" />
+    <result column="ACCESSORY_NUMBER" property="accessoryNumber" jdbcType="VARCHAR" />
+    <result column="APPLICANT" property="applicant" jdbcType="VARCHAR" />
+    <result column="APPLICANT_PHONE" property="applicantPhone" jdbcType="VARCHAR" />
+    <result column="PROCESSING_PROGRESS" property="processingProgress" jdbcType="VARCHAR" />
+    <result column="APPROVAL_PROGRESS" property="approvalProgress" jdbcType="VARCHAR" />
+    <result column="APPLICATION_REASON" property="applicationReason" jdbcType="VARCHAR" />
+    <result column="APPROVAL_RECORD" property="approvalRecord" jdbcType="VARCHAR" />
+    <result column="ACCESSORIES_RECEIVED_TYPE" property="accessoriesReceivedType" jdbcType="VARCHAR" />
+    <result column="RECEIVING_ADDRESS" property="receivingAddress" jdbcType="VARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapNew" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotAccessoriesApplication" >
+    <id column="ACCESSORIES_APPLICATION_ID" property="accessoriesApplicationId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="ACCESSORIES_ID" property="accessoriesId" jdbcType="BIGINT"/>
+    <result column="ACCESSORIES_NAME" property="accessoriesName" jdbcType="VARCHAR" />
+    <result column="ACCESSORIES_TYPE" property="accessoriesType" jdbcType="VARCHAR" />
+    <result column="ACCESSORIES_IMG" property="accessoriesImg" jdbcType="VARCHAR" />
+    <result column="ACCESSORY_PRICE" property="accessoryPrice" jdbcType="VARCHAR" />
+    <result column="ACCESSORY_MODEL" property="accessoryModel" jdbcType="VARCHAR" />
+    <result column="ACCESSORY_NUMBER" property="accessoryNumber" jdbcType="VARCHAR" />
+    <result column="APPLICANT" property="applicant" jdbcType="VARCHAR" />
+    <result column="APPLICANT_PHONE" property="applicantPhone" jdbcType="VARCHAR" />
+    <result column="PROCESSING_PROGRESS" property="processingProgress" jdbcType="VARCHAR" />
+    <result column="APPROVAL_PROGRESS" property="approvalProgress" jdbcType="VARCHAR" />
+    <result column="APPLICATION_REASON" property="applicationReason" jdbcType="VARCHAR" />
+    <result column="APPROVAL_RECORD" property="approvalRecord" jdbcType="VARCHAR" />
+    <result column="ACCESSORIES_RECEIVED_TYPE" property="accessoriesReceivedType" jdbcType="VARCHAR" />
+    <result column="RECEIVING_ADDRESS" property="receivingAddress" jdbcType="VARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="ACCESSORIES_CODE" property="accessoriesCode" jdbcType="VARCHAR"/>
+    <result column="WAREHOUSE_ID" property="warehouseId" jdbcType="BIGINT"/>
+    <result column="SHIPPING_INSTRUCTIONS" property="shippingInstructions" jdbcType="VARCHAR"/>
+    <result column="COURIER_NUMBER" property="courierNumber" jdbcType="VARCHAR"/>
+    <result column="EXPRESS_FEE" property="expressFee" jdbcType="VARCHAR"/>
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    ACCESSORIES_APPLICATION_ID, SCENIC_SPOT_ID, ACCESSORIES_ID, ACCESSORIES_NAME, ACCESSORIES_TYPE, ACCESSORIES_IMG,
+    ACCESSORY_PRICE, ACCESSORY_MODEL, ACCESSORY_NUMBER, APPLICANT, APPLICANT_PHONE, PROCESSING_PROGRESS,
+    APPROVAL_PROGRESS, APPLICATION_REASON, APPROVAL_RECORD, ACCESSORIES_RECEIVED_TYPE,
+    RECEIVING_ADDRESS, REMARKS, CREATE_DATE, UPDATE_DATE,WAREHOUSE_ID,SHIPPING_INSTRUCTIONS,COURIER_NUMBER,EXPRESS_FEE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMapNew" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_ACCESSORIES_APPLICATION
+    where ACCESSORIES_APPLICATION_ID = #{accessoriesApplicationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_ACCESSORIES_APPLICATION
+    where ACCESSORIES_APPLICATION_ID = #{accessoriesApplicationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotAccessoriesApplication" >
+    insert into SYS_ROBOT_ACCESSORIES_APPLICATION (ACCESSORIES_APPLICATION_ID, SCENIC_SPOT_ID,ACCESSORIES_ID,
+                                                   ACCESSORIES_NAME, ACCESSORIES_TYPE, ACCESSORIES_IMG,
+                                                   ACCESSORY_PRICE, ACCESSORY_MODEL, ACCESSORY_NUMBER,
+                                                   APPLICANT, APPLICANT_PHONE, PROCESSING_PROGRESS,
+                                                   APPROVAL_PROGRESS, APPLICATION_REASON, APPROVAL_RECORD,
+                                                   ACCESSORIES_RECEIVED_TYPE, RECEIVING_ADDRESS,
+                                                   REMARKS, CREATE_DATE, UPDATE_DATE,WAREHOUSE_ID,SHIPPING_INSTRUCTIONS,
+                                                   SHIPPING_INSTRUCTIONS,COURIER_NUMBER,EXPRESS_FEE
+    )
+    values (#{accessoriesApplicationId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT},#{accessoriesId,jdbcType=BIGINT},
+            #{accessoriesName,jdbcType=VARCHAR}, #{accessoriesType,jdbcType=VARCHAR}, #{accessoriesImg,jdbcType=VARCHAR},
+            #{accessoryPrice,jdbcType=VARCHAR}, #{accessoryModel,jdbcType=VARCHAR}, #{accessoryNumber,jdbcType=VARCHAR},
+            #{applicant,jdbcType=VARCHAR}, #{applicantPhone,jdbcType=VARCHAR}, #{processingProgress,jdbcType=VARCHAR},
+            #{approvalProgress,jdbcType=VARCHAR}, #{applicationReason,jdbcType=VARCHAR}, #{approvalRecord,jdbcType=VARCHAR},
+            #{accessoriesReceivedType,jdbcType=VARCHAR}, #{receivingAddress,jdbcType=VARCHAR},
+            #{remarks,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR},#{warehouseId,jdbcType=BIGINT},
+            #{shippingInstructions,jdbcType=VARCHAR},#{courierNumber,jdbcType=VARCHAR},#{expressFee,jdbcType=VARCHAR}
+           )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotAccessoriesApplication" >
+    insert into SYS_ROBOT_ACCESSORIES_APPLICATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accessoriesApplicationId != null" >
+        ACCESSORIES_APPLICATION_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="accessoriesId != null">
+        ACCESSORIES_ID,
+      </if>
+      <if test="accessoriesName != null" >
+        ACCESSORIES_NAME,
+      </if>
+      <if test="accessoriesType != null" >
+        ACCESSORIES_TYPE,
+      </if>
+      <if test="accessoriesImg != null" >
+        ACCESSORIES_IMG,
+      </if>
+      <if test="accessoryPrice != null" >
+        ACCESSORY_PRICE,
+      </if>
+      <if test="accessoryModel != null" >
+        ACCESSORY_MODEL,
+      </if>
+      <if test="accessoryNumber != null" >
+        ACCESSORY_NUMBER,
+      </if>
+      <if test="applicant != null" >
+        APPLICANT,
+      </if>
+      <if test="applicantPhone != null" >
+        APPLICANT_PHONE,
+      </if>
+      <if test="processingProgress != null" >
+        PROCESSING_PROGRESS,
+      </if>
+      <if test="approvalProgress != null" >
+        APPROVAL_PROGRESS,
+      </if>
+      <if test="applicationReason != null" >
+        APPLICATION_REASON,
+      </if>
+      <if test="approvalRecord != null" >
+        APPROVAL_RECORD,
+      </if>
+      <if test="accessoriesReceivedType != null" >
+        ACCESSORIES_RECEIVED_TYPE,
+      </if>
+      <if test="receivingAddress != null" >
+        RECEIVING_ADDRESS,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="warehouseId != null">
+        WAREHOUSE_ID,
+      </if>
+      <if test="shippingInstructions != null">
+        SHIPPING_INSTRUCTIONS,
+      </if>
+      <if test="courierNumber != null">
+        COURIER_NUMBER,
+      </if>
+      <if test="expressFee != null">
+        EXPRESS_FEE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accessoriesApplicationId != null" >
+        #{accessoriesApplicationId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="accessoriesId != null">
+        #{accessoriesId,jdbcType=BIGINT},
+      </if>
+      <if test="accessoriesName != null" >
+        #{accessoriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoriesType != null" >
+        #{accessoriesType,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoriesImg != null" >
+        #{accessoriesImg,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoryPrice != null" >
+        #{accessoryPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoryModel != null" >
+        #{accessoryModel,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoryNumber != null" >
+        #{accessoryNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantPhone != null" >
+        #{applicantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="processingProgress != null" >
+        #{processingProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalProgress != null" >
+        #{approvalProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationReason != null" >
+        #{applicationReason,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalRecord != null" >
+        #{approvalRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoriesReceivedType != null" >
+        #{accessoriesReceivedType,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingAddress != null" >
+        #{receivingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null">
+        #{warehouseId,jdbcType=BIGINT},
+      </if>
+      <if test="shippingInstructions != null">
+        #{shippingInstructions,jdbcType=VARCHAR},
+      </if>
+      <if test="courierNumber != null">
+        #{courierNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="expressFee != null">
+        #{expressFee,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotAccessoriesApplication" >
+    update SYS_ROBOT_ACCESSORIES_APPLICATION
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="accessoriesId != null">
+        ACCESSORIES_ID = #{accessoriesId,jdbcType=BIGINT},
+      </if>
+      <if test="accessoriesName != null" >
+        ACCESSORIES_NAME = #{accessoriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoriesType != null" >
+        ACCESSORIES_TYPE = #{accessoriesType,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoriesImg != null" >
+        ACCESSORIES_IMG = #{accessoriesImg,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoryPrice != null" >
+        ACCESSORY_PRICE = #{accessoryPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoryModel != null" >
+        ACCESSORY_MODEL = #{accessoryModel,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoryNumber != null" >
+        ACCESSORY_NUMBER = #{accessoryNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        APPLICANT = #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantPhone != null" >
+        APPLICANT_PHONE = #{applicantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="processingProgress != null" >
+        PROCESSING_PROGRESS = #{processingProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalProgress != null" >
+        APPROVAL_PROGRESS = #{approvalProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationReason != null" >
+        APPLICATION_REASON = #{applicationReason,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalRecord != null" >
+        APPROVAL_RECORD = #{approvalRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoriesReceivedType != null" >
+        ACCESSORIES_RECEIVED_TYPE = #{accessoriesReceivedType,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingAddress != null" >
+        RECEIVING_ADDRESS = #{receivingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null">
+        WAREHOUSE_ID = #{warehouseId,jdbcType=BIGINT},
+      </if>
+      <if test="shippingInstructions != null">
+        SHIPPING_INSTRUCTIONS = #{shippingInstructions,jdbcType=VARCHAR},
+      </if>
+      <if test="courierNumber != null">
+        COURIER_NUMBER = #{courierNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="expressFee != null">
+        EXPRESS_FEE = #{expressFee,jdbcType = VARCHAR},
+      </if>
+      <if test="signInPicture != null">
+        SIGN_IN_PICTURE = #{signInPicture,jdbcType = VARCHAR},
+      </if>
+    </set>
+    where ACCESSORIES_APPLICATION_ID = #{accessoriesApplicationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotAccessoriesApplication" >
+    update SYS_ROBOT_ACCESSORIES_APPLICATION
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+        ACCESSORIES_ID = #{accessoriesId,jdbcType=BIGINT},
+        ACCESSORIES_NAME = #{accessoriesName,jdbcType=VARCHAR},
+        ACCESSORIES_TYPE = #{accessoriesType,jdbcType=VARCHAR},
+        ACCESSORIES_IMG = #{accessoriesImg,jdbcType=VARCHAR},
+        ACCESSORY_PRICE = #{accessoryPrice,jdbcType=VARCHAR},
+        ACCESSORY_MODEL = #{accessoryModel,jdbcType=VARCHAR},
+        ACCESSORY_NUMBER = #{accessoryNumber,jdbcType=VARCHAR},
+        APPLICANT = #{applicant,jdbcType=VARCHAR},
+        APPLICANT_PHONE = #{applicantPhone,jdbcType=VARCHAR},
+        PROCESSING_PROGRESS = #{processingProgress,jdbcType=VARCHAR},
+        APPROVAL_PROGRESS = #{approvalProgress,jdbcType=VARCHAR},
+        APPLICATION_REASON = #{applicationReason,jdbcType=VARCHAR},
+        APPROVAL_RECORD = #{approvalRecord,jdbcType=VARCHAR},
+        ACCESSORIES_RECEIVED_TYPE = #{accessoriesReceivedType,jdbcType=VARCHAR},
+        RECEIVING_ADDRESS = #{receivingAddress,jdbcType=VARCHAR},
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where ACCESSORIES_APPLICATION_ID = #{accessoriesApplicationId,jdbcType=BIGINT}
+  </update>
+
+
+  <update id="update" parameterType="java.util.Map" >
+    update SYS_ROBOT_ACCESSORIES_APPLICATION
+    <set>
+      <if test="warehouseId != null" >
+        WAREHOUSE_ID = #{warehouseId,jdbcType=BIGINT},
+      </if>
+      <if test="shippingInstructions != null" >
+        SHIPPING_INSTRUCTIONS = #{shippingInstructions,jdbcType=VARCHAR},
+      </if>
+      <if test="processingProgress != null" >
+        PROCESSING_PROGRESS = #{processingProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="courierNumber != null" >
+        COURIER_NUMBER = #{courierNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="expressfee != null" >
+        EXPRESS_FEE = #{expressfee,jdbcType=VARCHAR},
+      </if>
+        UPDATE_DATE = now()
+    </set>
+    where ACCESSORIES_APPLICATION_ID = #{accessoriesApplicationId}
+  </update>
+
+  <update id="updateMany">
+    update SYS_ROBOT_ACCESSORIES_APPLICATION
+    <set>
+      <if test="processingProgress != null" >
+        PROCESSING_PROGRESS = #{processingProgress,jdbcType=VARCHAR},
+      </if>
+      UPDATE_DATE = now()
+    </set>
+    where ACCESSORIES_APPLICATION_ID = #{accessoriesApplicationId}
+  </update>
+  <select id="getRobotAccessoriesApplicationList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      A.ACCESSORIES_APPLICATION_ID,
+      A.SCENIC_SPOT_ID,
+      B.SCENIC_SPOT_NAME AS scenicSpotName,
+      A.ACCESSORIES_NAME,
+      A.ACCESSORIES_TYPE,
+      A.ACCESSORIES_IMG,
+      A.ACCESSORY_PRICE,
+      A.ACCESSORY_MODEL,
+      A.ACCESSORY_NUMBER,
+      A.APPLICANT,
+      A.APPLICANT_PHONE,
+      A.PROCESSING_PROGRESS,
+      A.APPLICATION_REASON,
+      A.APPROVAL_RECORD,
+      A.ACCESSORIES_RECEIVED_TYPE,
+      A.RECEIVING_ADDRESS,
+      A.APPROVAL_PROGRESS,
+      A.REMARKS,
+      A.CREATE_DATE,
+      A.UPDATE_DATE
+    FROM
+      SYS_ROBOT_ACCESSORIES_APPLICATION A LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    WHERE
+      A.SCENIC_SPOT_ID = #{scenicSpotId}
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+
+  <select id="getRobotAccessoriesApplicationListNew" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.ACCESSORIES_APPLICATION_ID,
+    A.SCENIC_SPOT_ID,
+    B.SCENIC_SPOT_NAME AS scenicSpotName,
+    A.ACCESSORIES_ID,
+    A.ACCESSORIES_NAME,
+    A.ACCESSORIES_TYPE,
+    A.ACCESSORIES_IMG,
+    A.ACCESSORY_PRICE,
+    A.ACCESSORY_MODEL,
+    A.ACCESSORY_NUMBER,
+    A.APPLICANT,
+    A.APPLICANT_PHONE,
+    A.PROCESSING_PROGRESS,
+    A.APPLICATION_REASON,
+    A.APPROVAL_RECORD,
+    A.ACCESSORIES_RECEIVED_TYPE,
+    A.RECEIVING_ADDRESS,
+    A.APPROVAL_PROGRESS,
+    A.REMARKS,
+    A.CREATE_DATE,
+    A.UPDATE_DATE
+    FROM
+    SYS_ROBOT_ACCESSORIES_APPLICATION A
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    LEFT JOIN SYS_APP_USERS_SPOT_ROLE C on A.SCENIC_SPOT_ID = C.PRIMARY_KEY_PID
+    <where>
+      1=1
+      <if test="userId != null and userId != ''">
+        AND C.PRIMARY_KEY_UID = #{userId}
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="processingProgress != null and processingProgress != ''">
+        AND A.PROCESSING_PROGRESS = #{processingProgress}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+
+
+  <select id="getRobotAccessoriesApplicationVoList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      A.ACCESSORIES_APPLICATION_ID,
+      A.SCENIC_SPOT_ID,
+      B.SCENIC_SPOT_NAME AS scenicSpotName,
+      A.ACCESSORIES_ID,
+      A.ACCESSORIES_NAME,
+      A.ACCESSORIES_TYPE,
+      A.ACCESSORIES_IMG,
+      A.ACCESSORY_PRICE,
+      A.ACCESSORY_MODEL,
+      A.ACCESSORY_NUMBER,
+      A.APPLICANT,
+      A.APPLICANT_PHONE,
+      A.PROCESSING_PROGRESS,
+      A.APPLICATION_REASON,
+      A.APPROVAL_RECORD,
+      A.ACCESSORIES_RECEIVED_TYPE,
+      A.RECEIVING_ADDRESS,
+      A.REMARKS,
+      A.CREATE_DATE,
+      A.UPDATE_DATE
+    FROM
+      SYS_ROBOT_ACCESSORIES_APPLICATION A
+      LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="accessoriesName != null and accessoriesName != ''">
+        AND A.ACCESSORIES_NAME LIKE CONCAT('%',#{accessoriesName},'%')
+      </if>
+      <if test="applicant != null and applicant != ''">
+        AND A.APPLICANT = #{applicant}
+      </if>
+      <if test="processingProgress != null and processingProgress != ''">
+        AND A.PROCESSING_PROGRESS LIKE CONCAT('%', #{processingProgress} ,'%')
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+
+  <select id="getRobotAccessoriesApplicationVoListNew" resultMap="BaseResultMapNew" parameterType="java.util.Map">
+    SELECT
+    A.ACCESSORIES_APPLICATION_ID,
+    A.SCENIC_SPOT_ID,
+    B.SCENIC_SPOT_NAME AS scenicSpotName,
+    A.ACCESSORIES_ID,
+    A.ACCESSORIES_NAME,
+    A.ACCESSORIES_TYPE,
+    A.ACCESSORIES_IMG,
+    A.ACCESSORY_PRICE,
+    A.ACCESSORY_NUMBER,
+    A.APPLICANT,
+    A.APPLICANT_PHONE,
+    A.PROCESSING_PROGRESS,
+    A.APPLICATION_REASON,
+    A.APPROVAL_RECORD,
+    A.ACCESSORIES_RECEIVED_TYPE,
+    A.RECEIVING_ADDRESS,
+    A.REMARKS,
+    A.CREATE_DATE,
+    A.UPDATE_DATE,
+    C.ACCESSORIES_CODE,
+    C.ACCESSORY_MODEL
+    FROM
+    SYS_ROBOT_ACCESSORIES_APPLICATION A
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    LEFT JOIN SYS_ROBOT_PARTS_MANAGEMENT C ON A.ACCESSORIES_ID = C.PARTS_MANAGEMENT_ID
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="accessoriesName != null and accessoriesName != ''">
+        AND A.ACCESSORIES_NAME LIKE CONCAT('%',#{accessoriesName},'%')
+      </if>
+      <if test="applicant != null and applicant != ''">
+        AND A.APPLICANT = #{applicant}
+      </if>
+      <if test="processingProgress != null and processingProgress != ''">
+        AND A.PROCESSING_PROGRESS LIKE CONCAT('%', #{processingProgress} ,'%')
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+
+  <select id="getRobotAccessoriesApplicationVerifyList" resultType="com.hna.hka.archive.management.assetsSystem.model.StatementOfAccessories">
+    select sraa.SCENIC_SPOT_ID,sss.SCENIC_SPOT_NAME, sraa.APPLICANT as userName, sraa.APPLICANT_ID as applyUserId, sraa.CREATE_DATE as applyTime ,sraa.UPDATE_DATE as serviceRecordsServiceDate ,sraa.ACCESSORIES_NAME as accessoryName,sraa.ACCESSORY_NUMBER as  errorRecordsNumber,sraa.ACCESSORY_PRICE as errorRecordsPartPrice,sraa.ACCESSORIES_RECEIVED_TYPE as errorRecordsReceive ,sraa.ACCESSORIES_RECEIVED_TYPE AS spotPartsCost , sraa.IS_SETTLEMENT as isSettlement
+    from  SYS_ROBOT_ACCESSORIES_APPLICATION sraa
+    left join SYS_SCENIC_SPOT sss on sraa.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+    <where>
+      1=1
+      and APPROVAL_PROGRESS = 1
+      <if test="spot != null and spot != ''">
+         and  sraa.SCENIC_SPOT_ID = #{spot}
+      </if>
+      <if test="beginDate != null and beginDate != ''">
+         and sraa.CREATE_DATE like CONCAT('%',#{beginDate},'%')
+      </if>
+    </where>
+
+  </select>
+
+  <select id="getCountNew" resultType="java.util.HashMap">
+    select COUNT(0) as count
+    from  SYS_ROBOT_ACCESSORIES_APPLICATION sraa
+    left join SYS_SCENIC_SPOT sss on sraa.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+    <where>
+      1=1
+      and APPROVAL_PROGRESS = 1
+      <if test="spot != null and spot != ''">
+        and  sraa.SCENIC_SPOT_ID = #{spot}
+      </if>
+      <if test="beginDate != null and beginDate != ''">
+        and sraa.CREATE_DATE like CONCAT('%',#{beginDate},'%')
+      </if>
+    </where>
+  </select>
+  <update id="exitSettlementState" >
+    update SYS_ROBOT_ACCESSORIES_APPLICATION
+    set IS_SETTLEMENT = "1",
+    SYS_USER_ID = #{sysUserId},
+    VERIFICATION_TIME = now()
+    where ACCESSORIES_APPLICATION_ID = #{errorRecordsId}
+  </update>
+
+  <select id="calculateTotal" resultType="java.util.Map">
+    select SUM(ACCESSORY_PRICE * ACCESSORY_NUMBER) totalCostOfAccessories , SUM(SPOT_PARTS_COST) as spotBearPartsCost
+    from SYS_ROBOT_ACCESSORIES_APPLICATION
+    <where>
+      1=1
+      and APPROVAL_PROGRESS = 1
+      <if test="spot != null and spot != ''">
+        and  SCENIC_SPOT_ID = #{spot}
+      </if>
+      <if test="beginDate != null and beginDate != ''">
+        and CREATE_DATE like CONCAT('%',#{beginDate},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="getDateLikeByAccessoriesApplicationList" resultType="com.hna.hka.archive.management.assetsSystem.model.StatementOfAccessories">
+    select *
+    from SYS_ROBOT_ACCESSORIES_APPLICATION
+    where CREATE_DATE like CONCAT('%',#{date},'%')
+    and APPROVAL_PROGRESS = 1
+  </select>
+
+  <select id="selectWarehouse" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+    SELECT distinct sa.*,
+    sss.SCENIC_SPOT_NAME                      as SPOT_NAME,
+    su.LOGIN_NAME                             as USER_NAME,
+    sar.ROLE_NAME,
+    sscc.COMPANY_NAME
+    from SYS_ADDRESS sa
+    left join SYS_SCENIC_SPOT sss on
+    sa.SPOT_ID = sss.SCENIC_SPOT_ID
+    LEFT JOIN SYS_APP_USERS su on
+    sa.USER_ID = su.USER_ID
+    LEFT JOIN SYS_SCENIC_COOPERATIVE_COMPANY sscc on
+    sa.COMPANY_ID = sscc.COMPANY_ID
+    left join SYS_APP_USERS_SPOT_ROLE sausr on
+    su.USER_ID = sausr.PRIMARY_KEY_UID
+    AND sss.SCENIC_SPOT_ID = sausr.PRIMARY_KEY_PID
+    left join SYS_APP_ROLE sar on
+    sausr.PRIMARY_KEY_RID = sar.ROLE_ID
+
+    <where>
+      <if test="spotId != null and spotId != ''">
+        sa.SPOT_ID = #{spotId}
+      </if>
+      <if test="name != null and name != ''">
+        and sa.NAME like concat('%' , #{name} , '%')
+      </if>
+      <if test="phone != null and phone != ''">
+        and sa.PHONE like concat('%' , #{phone} , '%')
+      </if>
+      <if test="type != null">
+        and sa.TYPE = #{type}
+      </if>
+    </where>
+  </select>
+
+
+</mapper>

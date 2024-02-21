@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysInvoiceMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysInvoice" >
+    <id column="INVOICE_ID" property="invoiceId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="INVOICE_AMOUNT" property="invoiceAmount" jdbcType="VARCHAR" />
+    <result column="ORDER_NUMBER" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="DUTY_PARAGRAPH" property="dutyParagraph" jdbcType="VARCHAR" />
+    <result column="INVOICE_TYPE" property="invoiceType" jdbcType="VARCHAR" />
+    <result column="RISE_TYPE" property="riseType" jdbcType="VARCHAR" />
+    <result column="INVOICE_RISE" property="invoiceRise" jdbcType="VARCHAR" />
+    <result column="INVOICE_CONTENT" property="invoiceContent" jdbcType="VARCHAR" />
+    <result column="PROCESSING_PROGRESS" property="processingProgress" jdbcType="VARCHAR" />
+    <result column="RECEIVING_INFORMATION" property="receivingInformation" jdbcType="VARCHAR" />
+    <result column="EMAIL_ADDRESS" property="emailAddress" jdbcType="VARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    INVOICE_ID, SCENIC_SPOT_ID, PHONE, INVOICE_AMOUNT, ORDER_NUMBER, DUTY_PARAGRAPH,
+    INVOICE_TYPE, RISE_TYPE, INVOICE_RISE, INVOICE_CONTENT, PROCESSING_PROGRESS, RECEIVING_INFORMATION,
+    EMAIL_ADDRESS, REMARKS, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from SYS_INVOICE
+    where INVOICE_ID = #{invoiceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_INVOICE
+    where INVOICE_ID = #{invoiceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysInvoice" >
+    insert into SYS_INVOICE (INVOICE_ID, SCENIC_SPOT_ID, PHONE,
+                             INVOICE_AMOUNT, ORDER_NUMBER, DUTY_PARAGRAPH,
+                             INVOICE_TYPE, RISE_TYPE, INVOICE_RISE,
+                             INVOICE_CONTENT, PROCESSING_PROGRESS, RECEIVING_INFORMATION,
+                             EMAIL_ADDRESS, REMARKS, CREATE_TIME,
+                             UPDATE_TIME)
+    values (#{invoiceId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR},
+            #{invoiceAmount,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR}, #{dutyParagraph,jdbcType=VARCHAR},
+            #{invoiceType,jdbcType=VARCHAR}, #{riseType,jdbcType=VARCHAR}, #{invoiceRise,jdbcType=VARCHAR},
+            #{invoiceContent,jdbcType=VARCHAR}, #{processingProgress,jdbcType=VARCHAR}, #{receivingInformation,jdbcType=VARCHAR},
+            #{emailAddress,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+            #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysInvoice" >
+    insert into SYS_INVOICE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invoiceId != null" >
+        INVOICE_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="invoiceAmount != null" >
+        INVOICE_AMOUNT,
+      </if>
+      <if test="orderNumber != null" >
+        ORDER_NUMBER,
+      </if>
+      <if test="dutyParagraph != null" >
+        DUTY_PARAGRAPH,
+      </if>
+      <if test="invoiceType != null" >
+        INVOICE_TYPE,
+      </if>
+      <if test="riseType != null" >
+        RISE_TYPE,
+      </if>
+      <if test="invoiceRise != null" >
+        INVOICE_RISE,
+      </if>
+      <if test="invoiceContent != null" >
+        INVOICE_CONTENT,
+      </if>
+      <if test="processingProgress != null" >
+        PROCESSING_PROGRESS,
+      </if>
+      <if test="receivingInformation != null" >
+        RECEIVING_INFORMATION,
+      </if>
+      <if test="emailAddress != null" >
+        EMAIL_ADDRESS,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invoiceId != null" >
+        #{invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceAmount != null" >
+        #{invoiceAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyParagraph != null" >
+        #{dutyParagraph,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceType != null" >
+        #{invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="riseType != null" >
+        #{riseType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceRise != null" >
+        #{invoiceRise,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceContent != null" >
+        #{invoiceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="processingProgress != null" >
+        #{processingProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingInformation != null" >
+        #{receivingInformation,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAddress != null" >
+        #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysInvoice" >
+    update SYS_INVOICE
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceAmount != null" >
+        INVOICE_AMOUNT = #{invoiceAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null" >
+        ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyParagraph != null" >
+        DUTY_PARAGRAPH = #{dutyParagraph,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceType != null" >
+        INVOICE_TYPE = #{invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="riseType != null" >
+        RISE_TYPE = #{riseType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceRise != null" >
+        INVOICE_RISE = #{invoiceRise,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceContent != null" >
+        INVOICE_CONTENT = #{invoiceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="processingProgress != null" >
+        PROCESSING_PROGRESS = #{processingProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingInformation != null" >
+        RECEIVING_INFORMATION = #{receivingInformation,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAddress != null" >
+        EMAIL_ADDRESS = #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where INVOICE_ID = #{invoiceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysInvoice" >
+    update SYS_INVOICE
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+        PHONE = #{phone,jdbcType=VARCHAR},
+        INVOICE_AMOUNT = #{invoiceAmount,jdbcType=VARCHAR},
+        ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
+        DUTY_PARAGRAPH = #{dutyParagraph,jdbcType=VARCHAR},
+        INVOICE_TYPE = #{invoiceType,jdbcType=VARCHAR},
+        RISE_TYPE = #{riseType,jdbcType=VARCHAR},
+        INVOICE_RISE = #{invoiceRise,jdbcType=VARCHAR},
+        INVOICE_CONTENT = #{invoiceContent,jdbcType=VARCHAR},
+        PROCESSING_PROGRESS = #{processingProgress,jdbcType=VARCHAR},
+        RECEIVING_INFORMATION = #{receivingInformation,jdbcType=VARCHAR},
+        EMAIL_ADDRESS = #{emailAddress,jdbcType=VARCHAR},
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where INVOICE_ID = #{invoiceId,jdbcType=BIGINT}
+  </update>
+  <select id="getInvoiceList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      A.INVOICE_ID,
+      A.SCENIC_SPOT_ID,
+      A.PHONE,
+      A.INVOICE_AMOUNT,
+      A.INVOICE_TYPE,
+      A.RISE_TYPE,
+      A.DUTY_PARAGRAPH,
+      A.INVOICE_RISE,
+      A.INVOICE_CONTENT,
+      A.PROCESSING_PROGRESS,
+      A.RECEIVING_INFORMATION,
+      A.EMAIL_ADDRESS,
+      A.REMARKS,
+      A.CREATE_TIME,
+      A.UPDATE_TIME,
+      B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+      SYS_INVOICE A
+      LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="phone != null and phone != ''">
+        AND A.PHONE LIKE CONCAT('%',#{phone},'%')
+      </if>
+      <if test="invoiceType != null and invoiceType != ''">
+        AND A.INVOICE_TYPE = #{invoiceType}
+      </if>
+      <if test="processingProgress != null and processingProgress != ''">
+        AND A.PROCESSING_PROGRESS = #{processingProgress}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_TIME) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_TIME) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+  <select id="getInvoiceByNumber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_INVOICE
+    where ORDER_NUMBER = #{orderNumber}
+    limit 1
+  </select>
+</mapper>

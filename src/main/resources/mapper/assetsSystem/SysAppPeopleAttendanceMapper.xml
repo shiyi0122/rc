@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.SysAppPeopleAttendanceMapper">
+    <resultMap id="AttendanceRecord" type="com.hna.hka.archive.management.appSystem.model.AttendanceRecord">
+        <id column="RECORD_ID" property="recordId" jdbcType="BIGINT"/>
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT"/>
+        <result column="USER_ID" property="userId" jdbcType="BIGINT"/>
+        <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+        <result column="WORK_TIME" property="workTime" jdbcType="VARCHAR"/>
+        <result column="WORK_PLACE" property="workPlace" jdbcType="VARCHAR"/>
+        <result column="WORK_PHOTO" property="workPhoto" jdbcType="VARCHAR"/>
+        <result column="EMPLOYEE_POST" property="employeePost" jdbcType="VARCHAR"/>
+        <result column="EMPLOYEE_TYPE" property="employeeType" jdbcType="VARCHAR"/>
+        <result column="WORK_JOURNAL" property="workJournal" jdbcType="VARCHAR"/>
+        <result column="EMPLOYEE_ATTENDANCE" property="employeeAttendAnce" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="inAttendanceRecord" parameterType="com.hna.hka.archive.management.appSystem.model.AttendanceRecord">
+        insert into SYS_APP_PEOPLE_ATTENDANCE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">
+                RECORD_ID,
+            </if>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="workTime != null">
+                WORK_TIME,
+            </if>
+            <if test="workPlace != null">
+                WORK_PLACE,
+            </if>
+            <if test="workPhoto != null">
+                WORK_PHOTO,
+            </if>
+            <if test="employeePost != null">
+                EMPLOYEE_POST,
+            </if>
+            <if test="employeeType != null">
+                EMPLOYEE_TYPE,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">
+                #{recordId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null">
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="workTime != null">
+                #{workTime,jdbcType=VARCHAR},
+            </if>
+            <if test="workPlace != null">
+                #{workPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="workPhoto != null">
+                #{workPhoto,jdbcType=VARCHAR},
+            </if>
+            <if test="employeePost != null">
+                #{employeePost,jdbcType=VARCHAR},
+            </if>
+            <if test="employeeType != null">
+                #{employeeType,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="upUserInformation">
+        update SYS_APP_USERS
+        <set>
+            <if test="userName != null">
+                USER_NAME = #{userName,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="employeePost != null">
+                EMPLOYEE_POST = #{employeePost,jdbcType=BIGINT},
+            </if>
+        </set>
+            where
+            USER_ID = #{userId}
+    </update>
+
+    <select id="selectAttendanceTimes" resultType="com.hna.hka.archive.management.assetsSystem.model.AttendanceTime">
+        SELECT ID,
+               START_DATE,
+               END_DATE,
+               CREATOR_NAME,
+               STATUS,
+               CREATE_DATE,
+               UPDATE_DATE
+        FROM SYS_SCENIC_ATTENDANCE_TIME
+        WHERE STATUS != 1
+        ORDER BY
+            START_DATE
+                ASC
+    </select>
+    <select id="timePeriod" resultType="com.hna.hka.archive.management.assetsSystem.model.EmployeeAttendance">
+        select
+        a.*,
+        b.USER_NAME,
+        b.EMPLOYEE_POST,
+        -- 打卡景区
+        c.SCENIC_SPOT_NAME
+        from
+        SYS_APP_PEOPLE_ATTENDANCE a
+        left join
+        SYS_APP_USERS b
+        on a.USER_ID = b.USER_ID
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="userId != null and userId != ''">
+                and a.USER_ID = #{userId}
+            </if>
+            <if test="startDate != null  and startDate != '' ">
+                and a.WORK_TIME <![CDATA[ >= ]]>CAST(CONCAT(#{startDate}) AS datetime)
+            </if>
+            <if test="endDate != null  and endDate != '' ">
+                and a.WORK_TIME <![CDATA[ <= ]]> CAST(CONCAT(#{endDate}) AS datetime)
+            </if>
+        </where>
+    </select>
+    <select id="selectEmployeeAttendance"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.EmployeeAttendance">
+        select
+        a.TYPE,a.RECORD_ID,a.SCENIC_SPOT_ID,c.SCENIC_SPOT_NAME,b.SCENIC_SPOT_NAME,a.USER_ID,b.USER_NAME,a.EMPLOYEE_POST,a.WORK_TIME,a.WORK_PHOTO,a.WORK_PLACE,a.EMPLOYEE_TYPE
+        from
+        SYS_APP_USERS b
+        left join
+        ( select
+        TYPE,RECORD_ID,SCENIC_SPOT_ID,USER_ID,EMPLOYEE_POST,WORK_TIME,WORK_PHOTO,WORK_PLACE,EMPLOYEE_TYPE
+        from
+        SYS_APP_PEOPLE_ATTENDANCE
+        <where>
+            <if test="startDate != null  and startDate != '' ">
+                and WORK_TIME <![CDATA[ >= ]]>CAST(CONCAT(#{startDate}) AS datetime)
+            </if>
+            <if test="endDate != null  and endDate != '' ">
+                and WORK_TIME <![CDATA[ <= ]]> CAST(CONCAT(#{endDate}) AS datetime)
+            </if>
+        </where>
+        ) a
+        on
+        a.USER_ID = b.USER_ID
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="userName != null and userName !=''">
+                and b.USER_NAME like CONCAT('%',#{userName},'%')
+            </if>
+            <if test="signInOrNot eq 0">
+                and a.RECORD_ID is null
+            </if>
+            <if test="signInOrNot eq 1">
+                and a.RECORD_ID is not null
+            </if>
+        </where>
+    </select>
+    <select id="selectEmployeeAttendances"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.EmployeeAttendance">
+        select
+        a.TYPE,a.RECORD_ID,a.SCENIC_SPOT_ID,c.SCENIC_SPOT_NAME,a.USER_ID,b.USER_NAME,a.EMPLOYEE_POST,a.WORK_TIME,a.WORK_PHOTO,a.WORK_PLACE,a.EMPLOYEE_TYPE
+        from
+        SYS_APP_USERS b
+        left join
+        ( select
+        TYPE,RECORD_ID,SCENIC_SPOT_ID,USER_ID,EMPLOYEE_POST,WORK_TIME,WORK_PHOTO,WORK_PLACE,EMPLOYEE_TYPE
+        from
+        SYS_APP_PEOPLE_ATTENDANCE
+        <where>
+            DATEDIFF(WORK_TIME,NOW())=0
+        </where>) a
+        on
+        a.USER_ID = b.USER_ID
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="userName != null and userName !=''">
+                and b.USER_NAME like CONCAT('%',#{userName},'%')
+            </if>
+            <if test="signInOrNot eq 0">
+                and RECORD_ID is null
+            </if>
+            <if test="signInOrNot eq 1">
+                and RECORD_ID is not null
+            </if>
+        </where>
+    </select>
+    <select id="RobotAttendance" resultType="com.hna.hka.archive.management.assetsSystem.model.RobotAttendance">
+        select
+        b.RECORD_ID,b.ROBOT_START_TIME,b.ROBOT_POSITION,a.CLIENT_VERSION,a.ROBOT_CODE,a.SCENIC_SPOT_ID,c.SCENIC_SPOT_NAME
+        from
+        SYS_ROBOT a
+        left join
+        (select
+        RECORD_ID,ROBOT_CODE,ROBOT_START_TIME,ROBOT_POSITION
+        from
+        SYS_APP_ROBOT_ATTENDANCE
+        <where>
+            <if test="startDate != null  and startDate != '' ">
+                and ROBOT_START_TIME <![CDATA[ >= ]]> CAST(CONCAT(#{startDate},' 00:00:00') AS datetime)
+            </if>
+            <if test="endDate != null  and endDate != '' ">
+                and ROBOT_START_TIME <![CDATA[ <= ]]> CAST(CONCAT(#{endDate},' 23:59:59') AS datetime)
+            </if>
+        </where>
+        ) b
+        on
+        a.ROBOT_CODE = b.ROBOT_CODE
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="robotCode != null  and robotCode != '' ">
+                and a.ROBOT_CODE = #{robotCode}
+            </if>
+            <if test="robotStatus eq 1">
+                and b.RECORD_ID is not null
+            </if>
+            <if test="robotStatus eq 0">
+                and b.RECORD_ID is null
+            </if>
+        </where>
+    </select>
+    <select id="RobotAttendances" resultType="com.hna.hka.archive.management.assetsSystem.model.RobotAttendance">
+        select
+        b.RECORD_ID,
+        b.ROBOT_START_TIME,
+        b.ROBOT_POSITION,
+        a.CLIENT_VERSION,
+        a.ROBOT_CODE,
+        a.SCENIC_SPOT_ID,
+        c.SCENIC_SPOT_NAME
+        from
+        SYS_ROBOT a
+        left join
+        (select
+        RECORD_ID,
+        ROBOT_CODE,
+        ROBOT_START_TIME,
+        ROBOT_POSITION
+        from
+        SYS_APP_ROBOT_ATTENDANCE
+        <where>
+            DATEDIFF(ROBOT_START_TIME,NOW())=0
+        </where>) b
+        on
+        a.ROBOT_CODE = b.ROBOT_CODE
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="robotCode != null  and robotCode != '' ">
+                and a.ROBOT_CODE = #{robotCode}
+            </if>
+            <if test="robotStatus eq 1">
+                and b.RECORD_ID is not null
+            </if>
+            <if test="robotStatus eq 0">
+                and b.RECORD_ID is null
+            </if>
+        </where>
+    </select>
+    <select id="selseUser" resultType="com.hna.hka.archive.management.assetsSystem.model.EmployeeAttendance">
+        select
+             a.USER_NAME,
+--             职位
+             a.EMPLOYEE_POST,
+--             所属景区
+             b.SCENIC_SPOT_NAME
+        from SYS_APP_USERS a
+                 left join
+             SYS_SCENIC_SPOT b
+             on
+                 a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        where USER_ID = #{userId}
+    </select>
+    <select id="selScenicSpot" resultType="com.hna.hka.archive.management.assetsSystem.model.EmployeeAttendance">
+        select
+        SCENIC_SPOT_ID,
+        SCENIC_SPOT_NAME
+        from
+        SYS_SCENIC_SPOT
+<!--        <where>-->
+<!--            <if test="scenicSpotName != null and scenicSpotName != ''">-->
+<!--                and SCENIC_SPOT_NAME  like CONCAT('%', #{scenicSpotName}, '%')-->
+<!--            </if>-->
+<!--        </where>-->
+ </select>
+
+</mapper>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotPeripheralMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotPeripheral" >
+        <id column="ROBOT_PERIPHERAL_ID" property="robotPeripheralId" jdbcType="BIGINT" />
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+        <result column="PERIPHERAL_NAME" property="peripheralName" jdbcType="VARCHAR" />
+        <result column="PERIPHERAL_PRICE" property="peripheralPrice" jdbcType="VARCHAR" />
+        <result column="PERIPHERAL_QUANTITY" property="peripheralQuantity" jdbcType="VARCHAR" />
+        <result column="PERIPHERAL_COMPANY" property="peripheralCompany" jdbcType="VARCHAR" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        ROBOT_PERIPHERAL_ID, SCENIC_SPOT_ID, PERIPHERAL_NAME, PERIPHERAL_PRICE, PERIPHERAL_QUANTITY,
+        PERIPHERAL_COMPANY,REMARKS, CREATE_DATE, UPDATE_DATE
+    </sql>
+
+    <select id="getRobotPeripheralList" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPeripheral">
+        SELECT
+        A.*,
+        B.SCENIC_SPOT_NAME
+        FROM SYS_ROBOT_PERIPHERAL A
+        LEFT JOIN SYS_SCENIC_SPOT B
+        ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="spotId != null and spotId != ''">
+                A.SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="peripheralName != null and peripheralName != ''">
+                and A.PERIPHERAL_NAME LIKE  CONCAT('%',#{peripheralName},'%')
+            </if>
+            <if test="beginDate != null  and beginDate != '' ">
+                and A.CREATE_DATE <![CDATA[ >= ]]>CAST(CONCAT(#{beginDate},' 00:00:00') AS datetime)
+            </if>
+            <if test="endDate != null  and endDate != '' " >
+                and A.CREATE_DATE <![CDATA[ <= ]]> CAST(CONCAT(#{endDate},' 23:59:59') AS datetime)
+            </if>
+        </where>
+        ORDER BY CREATE_DATE DESC
+    </select>
+    <select id="getRobotPeripheralLists" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPeripheral">
+        SELECT
+        A.*,
+        B.SCENIC_SPOT_NAME
+        FROM SYS_ROBOT_PERIPHERAL A
+        LEFT JOIN SYS_SCENIC_SPOT B
+        ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="spotId != null and spotId != ''">
+                A.SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="peripheralName != null and peripheralName != ''">
+                and A.PERIPHERAL_NAME LIKE  CONCAT('%',#{peripheralName},'%')
+            </if>
+            <if test="(beginDate != null and beginDate != '') and (endDate !=null and endDate != '')">
+                AND A.CREATE_DATE Between #{beginDate} and #{endDate}
+            </if>
+        </where>
+
+    </select>
+    <select id="getRobotPeripheralId"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPeripheral">
+        select
+            ROBOT_PERIPHERAL_ID
+        from
+            SYS_ROBOT_PERIPHERAL
+    </select>
+
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPeripheral" >
+        insert into SYS_ROBOT_PERIPHERAL
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="robotPeripheralId != null" >
+                ROBOT_PERIPHERAL_ID,
+            </if>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="peripheralName != null" >
+                PERIPHERAL_NAME,
+            </if>
+            <if test="peripheralPrice != null" >
+                PERIPHERAL_PRICE,
+            </if>
+            <if test="peripheralQuantity != null" >
+                PERIPHERAL_QUANTITY,
+            </if>
+            <if test="peripheralCompany != null" >
+                PERIPHERAL_COMPANY,
+            </if>
+            <if test="remarks != null" >
+                REMARKS,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_Date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="robotPeripheralId != null" >
+                #{robotPeripheralId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null" >
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="peripheralName != null" >
+                #{peripheralName,jdbcType=VARCHAR},
+            </if>
+            <if test="peripheralPrice != null" >
+                #{peripheralPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="peripheralQuantity != null" >
+                #{peripheralQuantity,jdbcType=VARCHAR},
+            </if>
+            <if test="peripheralCompany != null" >
+                #{peripheralCompany,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPeripheral" >
+        update SYS_ROBOT_PERIPHERAL
+        <set>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="peripheralName != null" >
+                PERIPHERAL_NAME = #{peripheralName,jdbcType=VARCHAR},
+            </if>
+            <if test="peripheralPrice != null" >
+                PERIPHERAL_PRICE = #{peripheralPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="peripheralQuantity != null" >
+                PERIPHERAL_QUANTITY = #{peripheralQuantity,jdbcType=VARCHAR},
+            </if>
+            <if test="peripheralCompany != null" >
+                PERIPHERAL_COMPANY = #{peripheralCompany,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null" >
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ROBOT_PERIPHERAL_ID = #{robotPeripheralId,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from SYS_ROBOT_PERIPHERAL
+        where ROBOT_PERIPHERAL_ID = #{robotPeripheralId,jdbcType=BIGINT}
+    </delete>
+
+
+</mapper>

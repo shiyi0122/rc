@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.GoodsStockMapper">
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.GoodsStock">
+        SELECT srpm.ACCESSORIES_CODE as code,
+               srpm.ACCESSORY_NAME   as name,
+               srpm.ACCESSORY_MODEL  as model,
+               srpm.UNIT,
+               sss.SCENIC_SPOT_NAME  as spot_name,
+               sgs.*
+        from SYS_GOODS_STOCK sgs
+                 left join SYS_ROBOT_PARTS_MANAGEMENT srpm on
+            srpm.PARTS_MANAGEMENT_ID = sgs.MANAGEMENT_ID
+                 LEFT JOIN SYS_SCENIC_SPOT sss on
+            sgs.SPOT_ID = sss.SCENIC_SPOT_ID
+        <where>
+            <if test="managementId != null">
+                and srpm.PARTS_MANAGEMENT_ID = #{managementId}
+            </if>
+            <if test="spotId != null">
+                and sgs.SPOT_ID = #{spotId}
+            </if>
+            <choose>
+                <when test="isDanger != null and isDanger == 1">
+                    and sgs.AMOUNT &lt; sgs.THRESHOLD
+                    and sgs.THRESHOLD is not null
+                </when>
+                <when test="isDanger != null and isDanger == 0">
+                    and sgs.AMOUNT &gt;= sgs.THRESHOLD
+                    and sgs.THRESHOLD is not null
+                </when>
+            </choose>
+        </where>
+        order by UPDATE_TIME DESC
+    </select>
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.assetsSystem.model.GoodsStock">
+        insert into SYS_GOODS_STOCK(id, spot_id, management_id, amount, notes, update_time, threshold)
+        values (#{id}, #{spotId}, #{managementId}, #{amount}, #{notes}, now(), #{threshold})
+    </insert>
+
+    <update id="edit" parameterType="com.hna.hka.archive.management.assetsSystem.model.GoodsStock">
+        update SYS_GOODS_STOCK set
+        <if test="amount != null">
+            AMOUNT = #{amount},
+        </if>
+        <if test="threshold != null">
+            THRESHOLD = #{threshold},
+        </if>
+        <if test="notes != null">
+            NOTES = #{notes},
+        </if>
+        <if test="spotId != null">
+            SPOT_ID = #{spotId},
+        </if>
+        <if test="managementId != null">
+            MANAGEMENT_ID = #{managementId},
+        </if>
+        UPDATE_TIME = now()
+        where ID = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from SYS_GOODS_STOCK where ID = #{id}
+    </delete>
+
+    <select id="getSpot" resultType="java.util.HashMap">
+        SELECT
+            sa.SPOT_ID as id ,
+            sss.SCENIC_SPOT_NAME as name ,
+            sa.ADDRESS as address,
+            sa.NAME as contacts,
+            sa.PHONE as phone
+        from
+            SYS_ADDRESS sa
+                left join SYS_SCENIC_SPOT sss on
+                sa.SPOT_ID = sss.SCENIC_SPOT_ID
+    </select>
+
+    <select id="getGoods" resultType="java.util.HashMap">
+        select PARTS_MANAGEMENT_ID as id,
+               ACCESSORIES_CODE    as code,
+               ACCESSORIES_TYPE    as type,
+               ACCESSORY_MODEL     as model,
+               ACCESSORY_NAME      as name,
+               UNIT                as unit,
+               ACCESSORY_PRICE     as inPrice,
+               ACCESSORY_PRICE_OUT as outPrice
+        from SYS_ROBOT_PARTS_MANAGEMENT
+    </select>
+
+    <select id="getByGoods" resultType="com.hna.hka.archive.management.assetsSystem.model.GoodsStock">
+        select * from SYS_GOODS_STOCK where MANAGEMENT_ID = #{managementId}
+        <if test="spotId != null">
+            and SPOT_ID = #{spotId}
+        </if>
+        limit 1
+    </select>
+
+    <select id="getPartIdAndNumberByStock" resultType="com.hna.hka.archive.management.assetsSystem.model.GoodsStock">
+        select sgs.*,sss.SCENIC_SPOT_NAME
+        from SYS_GOODS_STOCK sgs
+        left join SYS_SCENIC_SPOT sss on sgs.SPOT_ID = sss.SCENIC_SPOT_ID
+        where MANAGEMENT_ID = #{partsManagementId}
+        and AMOUNT >= #{quantity}
+        limit 1
+    </select>
+
+    <select id="getPartIdAndNumberByStockList" resultType="com.hna.hka.archive.management.assetsSystem.model.GoodsStock">
+        select sgs.*,sss.SCENIC_SPOT_NAME
+        from SYS_GOODS_STOCK sgs
+        left join SYS_SCENIC_SPOT sss on sgs.SPOT_ID = sss.SCENIC_SPOT_ID
+        where MANAGEMENT_ID = #{partsManagementId}
+        <if test="quantity != null" >
+            and AMOUNT >= #{quantity}
+        </if>
+    </select>
+    <select id="listById" resultType="com.hna.hka.archive.management.assetsSystem.model.GoodsStock">
+        select sgs.*,sss.SCENIC_SPOT_NAME
+        from SYS_GOODS_STOCK sgs
+        left join SYS_SCENIC_SPOT sss on sgs.SPOT_ID = sss.SCENIC_SPOT_ID
+        where MANAGEMENT_ID = #{warehouseId}
+    </select>
+
+
+</mapper>

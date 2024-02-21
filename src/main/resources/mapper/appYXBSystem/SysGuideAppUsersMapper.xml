@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.appYXBSystem.dao.SysGuideAppUsersMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsers">
+        <id column="USER_ID" property="userId" jdbcType="BIGINT"/>
+        <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR"/>
+        <result column="LONGIN_TOKEN_ID" property="longinTokenId" jdbcType="VARCHAR"/>
+        <result column="USER_CLIENT_GT_ID" property="userClientGtId" jdbcType="VARCHAR"/>
+        <result column="PHONE_SIGN" property="phoneSign" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    USER_ID,USER_PHONE,LONGIN_TOKEN_ID,USER_CLIENT_GT_ID,PHONE_SIGN,CREATE_DATE,UPDATE_DATE
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_GUIDE_APP_USERS
+        where USER_ID = #{userId,jdbcType=BIGINT}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SYS_GUIDE_APP_USERS
+    where USER_ID = #{USER_ID,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsers">
+    insert into SYS_GUIDE_APP_USERS (
+    USER_PHONE, LONGIN_TOKEN_ID, LONGIN_TOKEN_ID,
+    PHONE_SIGN, CREATE_DATE,UPDATE_DATE)
+    values (#{userPhone,jdbcType=VARCHAR}, #{longinTokenId,jdbcType=VARCHAR}, #{userClientGtId,jdbcType=VARCHAR},
+    #{phoneSign,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR},#{updateDate,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsers">
+        insert into SYS_GUIDE_APP_USERS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="userPhone != null">
+                USER_PHONE,
+            </if>
+            <if test="longinTokenId != null">
+                LONGIN_TOKEN_ID,
+            </if>
+            <if test="userClientGtId != null">
+                USER_CLIENT_GT_ID,
+            </if>
+            <if test="phoneSign != null">
+                PHONE_SIGN ,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userPhone != null">
+                #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="longinTokenId != null">
+                #{longinTokenId,jdbcType=VARCHAR},
+            </if>
+            <if test="userClientGtId != null">
+                #{userClientGtId,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneSign != null">
+                #{phoneSign,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsers">
+        update SYS_GUIDE_APP_USERS
+        <set>
+            <if test="userPhone != null">
+                USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="longinTokenId != null">
+                LONGIN_TOKEN_ID = #{longinTokenId,jdbcType=VARCHAR},
+            </if>
+            <if test="userClientGtId != null">
+                USER_CLIENT_GT_ID = #{userClientGtId,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneSign != null">
+                PHONE_SIGN = #{phoneSign,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where USER_ID = #{userId,jdbcType=BIGINT}
+    </update>
+
+    <select id="getGuideAppUsersList" resultType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsers">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SYS_GUIDE_APP_USERS
+        <where>
+            <if test="sysGuideAppUsers.userPhone != null and sysGuideAppUsers.userPhone != ''">
+                AND USER_PHONE LIKE CONCAT('%', #{sysGuideAppUsers.userPhone },'%')
+            </if>
+        </where>
+        ORDER BY CREATE_DATE DESC
+    </select>
+
+
+    <select id="selectAppUsersByPhone" parameterType="java.lang.String">
+    select * from SYS_GUIDE_APP_USERS where USER_PHONE LIKE CONCAT('%',#{userPhone},'%')
+  </select>
+
+    <select id="selectAppPhone" resultType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsers">
+    select USER_ID,USER_PHONE from SYS_GUIDE_APP_USERS
+  </select>
+
+    <select id="selectAppUsersByClientGtId" resultType="java.lang.String">
+    select USER_CLIENT_GT_ID from SYS_GUIDE_APP_USERS
+  </select>
+    <select id="selectByUser" resultType="com.hna.hka.archive.management.appYXBSystem.model.UserOperationLog">
+        SELECT
+        id,
+        phone,
+        type,
+        spot_id,
+        spot_name,
+        create_time,
+        update_time
+        FROM
+        user_operation_log
+        <where>
+            1=1
+            <if test="phone != null and phone != ''">
+                and phone =#{phone}
+            </if>
+            <if test="type != null and type != ''">
+                and type =#{type}
+            </if>
+            <if test="spotId != null and spotId != ''">
+                and spot_id =#{spotId}
+            </if>
+            <if test="spotName != null and spotName != ''">
+                and spot_name =#{spotName}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                AND DATE(A.CREATE_TIME) <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                AND DATE(A.CREATE_TIME) <![CDATA[ <= ]]> #{updateTime}
+            </if>
+        </where>
+    </select>
+
+  <select id="selectInstall" resultType="java.lang.Integer">
+    select
+    count(*)
+    from
+    user_operation_log
+    <where>
+      type = 0
+      <if test="spotId != null and spotId != ''">
+        and spot_id =#{spotId}
+      </if>
+      <if test="spotName != null and spotName != ''">
+        and spot_name =#{spotName}
+      </if>
+      <if test="createTime != null and createTime != ''">
+        AND DATE(A.CREATE_TIME) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        AND DATE(A.CREATE_TIME) <![CDATA[ <= ]]> #{updateTime}
+      </if>
+      <if test="phone != null and phone != ''">
+        and phone =#{phone}
+      </if>
+    </where>
+
+  </select>
+  <select id="selectByregister" resultType="java.lang.Integer">
+    select
+    count(*)
+    from
+    user_operation_log
+    <where>
+      type = 1
+      <if test="spotId != null and spotId != ''">
+        and spot_id =#{spotId}
+      </if>
+      <if test="spotName != null and spotName != ''">
+        and spot_name =#{spotName}
+      </if>
+      <if test="createTime != null and createTime != ''">
+        AND DATE(A.CREATE_TIME) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        AND DATE(A.CREATE_TIME) <![CDATA[ <= ]]> #{updateTime}
+      </if>
+      <if test="phone != null and phone != ''">
+        and phone =#{phone}
+      </if>
+    </where>
+  </select>
+  <select id="selectByOpen" resultType="java.lang.Integer">
+    select
+    count(*)
+    from
+    user_operation_log
+    <where>
+      type = 2
+      <if test="spotId != null and spotId != ''">
+        and spot_id =#{spotId}
+      </if>
+      <if test="spotName != null and spotName != ''">
+        and spot_name =#{spotName}
+      </if>
+      <if test="createTime != null and createTime != ''">
+        AND DATE(A.CREATE_TIME) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        AND DATE(A.CREATE_TIME) <![CDATA[ <= ]]> #{updateTime}
+      </if>
+      <if test="phone != null and phone != ''">
+        and phone =#{phone}
+      </if>
+    </where>
+  </select>
+
+
+</mapper>

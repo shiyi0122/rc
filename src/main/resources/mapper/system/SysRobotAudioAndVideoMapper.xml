@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotAudioAndVideoMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotAudioAndVideo" >
+    <id column="MEDIA_ID" property="mediaId" jdbcType="BIGINT" />
+    <result column="MEDIA_NAME" property="mediaName" jdbcType="VARCHAR" />
+    <result column="MEDIA_NAME_PING_YIN" property="mediaNamePingYin" jdbcType="VARCHAR" />
+    <result column="MEDIA_AUTHOR" property="mediaAuthor" jdbcType="VARCHAR" />
+    <result column="MEDIA_AUTHOR_PING_YIN" property="mediaAuthorPingYin" jdbcType="VARCHAR" />
+    <result column="MEDIA_TYPE" property="mediaType" jdbcType="VARCHAR" />
+    <result column="MEDIA_RESOURCES_TYPE" property="mediaResourcesType" jdbcType="VARCHAR" />
+    <result column="MEDIA_URL" property="mediaUrl" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MEDIA_ID, MEDIA_NAME, MEDIA_NAME_PING_YIN, MEDIA_AUTHOR, MEDIA_AUTHOR_PING_YIN, MEDIA_TYPE, 
+    MEDIA_RESOURCES_TYPE, MEDIA_URL, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_AUDIO_AND_VIDEO
+    where MEDIA_ID = #{mediaId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_AUDIO_AND_VIDEO
+    where MEDIA_ID = #{mediaId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotAudioAndVideo" >
+    insert into SYS_ROBOT_AUDIO_AND_VIDEO (MEDIA_ID, MEDIA_NAME, MEDIA_NAME_PING_YIN, 
+      MEDIA_AUTHOR, MEDIA_AUTHOR_PING_YIN, MEDIA_TYPE, 
+      MEDIA_RESOURCES_TYPE, MEDIA_URL, CREATE_DATE, 
+      UPDATE_DATE)
+    values (#{mediaId,jdbcType=BIGINT}, #{mediaName,jdbcType=VARCHAR}, #{mediaNamePingYin,jdbcType=VARCHAR}, 
+      #{mediaAuthor,jdbcType=VARCHAR}, #{mediaAuthorPingYin,jdbcType=VARCHAR}, #{mediaType,jdbcType=VARCHAR}, 
+      #{mediaResourcesType,jdbcType=VARCHAR}, #{mediaUrl,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotAudioAndVideo" >
+    insert into SYS_ROBOT_AUDIO_AND_VIDEO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaId != null" >
+        MEDIA_ID,
+      </if>
+      <if test="mediaName != null" >
+        MEDIA_NAME,
+      </if>
+      <if test="mediaNamePingYin != null" >
+        MEDIA_NAME_PING_YIN,
+      </if>
+      <if test="mediaAuthor != null" >
+        MEDIA_AUTHOR,
+      </if>
+      <if test="mediaAuthorPingYin != null" >
+        MEDIA_AUTHOR_PING_YIN,
+      </if>
+      <if test="mediaType != null" >
+        MEDIA_TYPE,
+      </if>
+      <if test="mediaResourcesType != null" >
+        MEDIA_RESOURCES_TYPE,
+      </if>
+      <if test="mediaUrl != null" >
+        MEDIA_URL,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaNamePingYin != null" >
+        #{mediaNamePingYin,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaAuthor != null" >
+        #{mediaAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaAuthorPingYin != null" >
+        #{mediaAuthorPingYin,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaType != null" >
+        #{mediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaResourcesType != null" >
+        #{mediaResourcesType,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaUrl != null" >
+        #{mediaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotAudioAndVideo" >
+    update SYS_ROBOT_AUDIO_AND_VIDEO
+    <set >
+      <if test="mediaName != null" >
+        MEDIA_NAME = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaNamePingYin != null" >
+        MEDIA_NAME_PING_YIN = #{mediaNamePingYin,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaAuthor != null" >
+        MEDIA_AUTHOR = #{mediaAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaAuthorPingYin != null" >
+        MEDIA_AUTHOR_PING_YIN = #{mediaAuthorPingYin,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaType != null" >
+        MEDIA_TYPE = #{mediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaResourcesType != null" >
+        MEDIA_RESOURCES_TYPE = #{mediaResourcesType,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaUrl != null" >
+        MEDIA_URL = #{mediaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MEDIA_ID = #{mediaId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotAudioAndVideo" >
+    update SYS_ROBOT_AUDIO_AND_VIDEO
+    set MEDIA_NAME = #{mediaName,jdbcType=VARCHAR},
+      MEDIA_NAME_PING_YIN = #{mediaNamePingYin,jdbcType=VARCHAR},
+      MEDIA_AUTHOR = #{mediaAuthor,jdbcType=VARCHAR},
+      MEDIA_AUTHOR_PING_YIN = #{mediaAuthorPingYin,jdbcType=VARCHAR},
+      MEDIA_TYPE = #{mediaType,jdbcType=VARCHAR},
+      MEDIA_RESOURCES_TYPE = #{mediaResourcesType,jdbcType=VARCHAR},
+      MEDIA_URL = #{mediaUrl,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where MEDIA_ID = #{mediaId,jdbcType=BIGINT}
+  </update>
+  <select id="getSemanticResources" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_AUDIO_AND_VIDEO
+  </select>
+  <select id="getRobotAudioAndVideoList" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_AUDIO_AND_VIDEO
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

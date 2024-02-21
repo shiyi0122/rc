@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessWorldAreaMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.business.model.BusinessWorldArea" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="PID" property="pid" jdbcType="INTEGER" />
+    <result column="SHORT_NAME" property="shortName" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="MERGER_NAME" property="mergerName" jdbcType="VARCHAR" />
+    <result column="LEVEL" property="level" jdbcType="VARCHAR" />
+    <result column="PINYIN" property="pinyin" jdbcType="VARCHAR" />
+    <result column="PHONE_CODE" property="phoneCode" jdbcType="VARCHAR" />
+    <result column="ZIP_CODE" property="zipCode" jdbcType="VARCHAR" />
+    <result column="FIRST" property="first" jdbcType="VARCHAR" />
+    <result column="LNG" property="lng" jdbcType="VARCHAR" />
+    <result column="LAT" property="lat" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PID, SHORT_NAME, NAME, MERGER_NAME, LEVEL, PINYIN, PHONE_CODE, ZIP_CODE, FIRST, 
+    LNG, LAT, AREA_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from BUSINESS_WORLD_AREA
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from BUSINESS_WORLD_AREA
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.business.model.BusinessWorldArea" >
+    insert into BUSINESS_WORLD_AREA (ID, PID, SHORT_NAME, 
+      NAME, MERGER_NAME, LEVEL, 
+      PINYIN, PHONE_CODE, ZIP_CODE, 
+      FIRST, LNG, LAT, AREA_CODE
+      )
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{shortName,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{mergerName,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT}, 
+      #{pinyin,jdbcType=VARCHAR}, #{phoneCode,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR}, 
+      #{first,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessWorldArea" >
+    insert into BUSINESS_WORLD_AREA
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="shortName != null" >
+        SHORT_NAME,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="mergerName != null" >
+        MERGER_NAME,
+      </if>
+      <if test="level != null" >
+        LEVEL,
+      </if>
+      <if test="pinyin != null" >
+        PINYIN,
+      </if>
+      <if test="phoneCode != null" >
+        PHONE_CODE,
+      </if>
+      <if test="zipCode != null" >
+        ZIP_CODE,
+      </if>
+      <if test="first != null" >
+        FIRST,
+      </if>
+      <if test="lng != null" >
+        LNG,
+      </if>
+      <if test="lat != null" >
+        LAT,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="shortName != null" >
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mergerName != null" >
+        #{mergerName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=TINYINT},
+      </if>
+      <if test="pinyin != null" >
+        #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneCode != null" >
+        #{phoneCode,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="first != null" >
+        #{first,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null" >
+        #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null" >
+        #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessWorldArea" >
+    update BUSINESS_WORLD_AREA
+    <set >
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="shortName != null" >
+        SHORT_NAME = #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mergerName != null" >
+        MERGER_NAME = #{mergerName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        LEVEL = #{level,jdbcType=TINYINT},
+      </if>
+      <if test="pinyin != null" >
+        PINYIN = #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneCode != null" >
+        PHONE_CODE = #{phoneCode,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        ZIP_CODE = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="first != null" >
+        FIRST = #{first,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null" >
+        LNG = #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null" >
+        LAT = #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.business.model.BusinessWorldArea" >
+    update BUSINESS_WORLD_AREA
+    set PID = #{pid,jdbcType=INTEGER},
+      SHORT_NAME = #{shortName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      MERGER_NAME = #{mergerName,jdbcType=VARCHAR},
+      LEVEL = #{level,jdbcType=TINYINT},
+      PINYIN = #{pinyin,jdbcType=VARCHAR},
+      PHONE_CODE = #{phoneCode,jdbcType=VARCHAR},
+      ZIP_CODE = #{zipCode,jdbcType=VARCHAR},
+      FIRST = #{first,jdbcType=VARCHAR},
+      LNG = #{lng,jdbcType=VARCHAR},
+      LAT = #{lat,jdbcType=VARCHAR},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getProvince" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from BUSINESS_WORLD_AREA
+    where PID = #{pid}
+  </select>
+
+</mapper>

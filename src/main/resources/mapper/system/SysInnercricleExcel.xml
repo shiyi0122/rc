@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotInnercircleCoordinateGroupMapper">
+    <resultMap id="Innercricle" type="com.hna.hka.archive.management.system.model.InnercricleExcel" >
+        <id column="COORDINATE_INNERCIRCLE_ID" property="coordinateInnercircleId" jdbcType="BIGINT" />
+        <result column="COORDINATE_ID" property="coordinateId" jdbcType="BIGINT" />
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR"/>
+        <result column="COORDINATE_INNERCIRCLE_NAME" property="coordinateInnercircleName" jdbcType="VARCHAR" />
+        <result column="COORDINATE_INNERCIRCLE_CONTENT" property="coordinateInnercircleContent" jdbcType="VARCHAR" />
+        <result column="BUFFER_RADIUS" property="bufferRadius" jdbcType="VARCHAR" />
+        <result column="INNERCIRCLE_TYPE" property="innercircleType" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+        <result column="COORDINATE_INNERCIRCLE" property="coordinateInnercircle" jdbcType="LONGVARCHAR" />
+        <result column="COORDINATE_INNERCIRCLE_BAI_DU" property="coordinateInnercircleBaiDu" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <select id="getInnercricleExcel" resultMap="Innercricle" parameterType="com.hna.hka.archive.management.system.model.InnercricleExcel">
+        select a.COORDINATE_INNERCIRCLE_ID,b.SCENIC_SPOT_NAME,a.COORDINATE_INNERCIRCLE_NAME,a.COORDINATE_INNERCIRCLE_CONTENT,
+               a.COORDINATE_INNERCIRCLE,a.COORDINATE_INNERCIRCLE_BAI_DU,a.BUFFER_RADIUS,a.INNERCIRCLE_TYPE,a.CREATE_DATE
+        from SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP a
+        left join SYS_SCENIC_SPOT b on a.COORDINATE_ID=b.SCENIC_SPOT_ID
+        where b.SCENIC_SPOT_ID=#{scenicSpotId}
+    </select>
+    <select id="getcoordinateInnercircleIdByName" resultMap="Innercricle" parameterType="com.hna.hka.archive.management.system.model.InnercricleExcel">
+        select a.COORDINATE_INNERCIRCLE_ID,b.SCENIC_SPOT_NAME,a.COORDINATE_INNERCIRCLE_NAME,a.COORDINATE_INNERCIRCLE_CONTENT,
+               a.COORDINATE_INNERCIRCLE,a.COORDINATE_INNERCIRCLE_BAI_DU,a.BUFFER_RADIUS,a.INNERCIRCLE_TYPE,a.CREATE_DATE from SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP a
+left join SYS_SCENIC_SPOT b on a.COORDINATE_ID=b.SCENIC_SPOT_ID
+where (a.COORDINATE_INNERCIRCLE_NAME=#{coordinateInnercircleName}) and (a.COORDINATE_ID=#{coordinateId})
+
+    </select>
+    <update id="upInnercricleExcel" parameterType="com.hna.hka.archive.management.system.model.InnercricleExcel" >
+    update SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP
+    set COORDINATE_ID = #{coordinateId,jdbcType=BIGINT},
+      COORDINATE_INNERCIRCLE_NAME = #{coordinateInnercircleName,jdbcType=VARCHAR},
+      COORDINATE_INNERCIRCLE_CONTENT = #{coordinateInnercircleContent,jdbcType=VARCHAR},
+      BUFFER_RADIUS = #{bufferRadius,jdbcType=VARCHAR},
+      INNERCIRCLE_TYPE = #{innercircleType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where COORDINATE_INNERCIRCLE_ID = #{coordinateInnercircleId,jdbcType=BIGINT}
+  </update>
+    <insert id="setInnercricleExcel" parameterType="com.hna.hka.archive.management.system.model.InnercricleExcel" >
+    insert into SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP (COORDINATE_INNERCIRCLE_ID, COORDINATE_ID,
+      COORDINATE_INNERCIRCLE_NAME, COORDINATE_INNERCIRCLE_CONTENT,
+      BUFFER_RADIUS, INNERCIRCLE_TYPE, CREATE_DATE,
+      UPDATE_DATE, COORDINATE_INNERCIRCLE,
+      COORDINATE_INNERCIRCLE_BAI_DU)
+    values (#{coordinateInnercircleId,jdbcType=BIGINT}, #{coordinateId,jdbcType=BIGINT},
+      #{coordinateInnercircleName,jdbcType=VARCHAR}, #{coordinateInnercircleContent,jdbcType=VARCHAR},
+      #{bufferRadius,jdbcType=VARCHAR}, #{innercircleType,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=VARCHAR}, #{coordinateInnercircle,jdbcType=LONGVARCHAR},
+      #{coordinateInnercircleBaiDu,jdbcType=LONGVARCHAR})
+  </insert>
+</mapper>

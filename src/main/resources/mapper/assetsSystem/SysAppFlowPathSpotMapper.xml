@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysAppFlowPathSpotMapper">
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPathSpot">
+        insert into SYS_APP_FLOW_PATH_SPOT
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="flowPathId != null" >
+                FLOW_PATH_ID,
+            </if>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="flowPathId != null" >
+                #{flowPathId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null" >
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteByFlowPathId" parameterType="java.lang.Long">
+        delete from SYS_APP_FLOW_PATH_SPOT
+        where FLOW_PATH_ID = #{flowPathId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="selectFlowPathIdByList" resultType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPathSpot">
+        select safps.*,sss.SCENIC_SPOT_NAME
+        from SYS_APP_FLOW_PATH_SPOT safps
+        left join SYS_SCENIC_SPOT sss
+        on safps.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        where FLOW_PATH_ID = #{id}
+
+    </select>
+
+</mapper>

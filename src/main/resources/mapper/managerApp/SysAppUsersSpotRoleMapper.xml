@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.managerApp.dao.SysAppUsersSpotRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.managerApp.model.SysAppUsersSpotRole" >
+    <id column="PRIMARY_KEY_ID" property="primaryKeyId" jdbcType="BIGINT" />
+    <result column="PRIMARY_KEY_UID" property="primaryKeyUid" jdbcType="BIGINT" />
+    <result column="PRIMARY_KEY_PID" property="primaryKeyPid" jdbcType="BIGINT" />
+    <result column="PRIMARY_KEY_RID" property="primaryKeyRid" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PRIMARY_KEY_ID, PRIMARY_KEY_UID, PRIMARY_KEY_PID, PRIMARY_KEY_RID, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from SYS_APP_USERS_SPOT_ROLE
+    where PRIMARY_KEY_ID = #{primaryKeyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_APP_USERS_SPOT_ROLE
+    where PRIMARY_KEY_ID = #{primaryKeyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.managerApp.model.SysAppUsersSpotRole" >
+    insert into SYS_APP_USERS_SPOT_ROLE (PRIMARY_KEY_ID, PRIMARY_KEY_UID, PRIMARY_KEY_PID,
+      PRIMARY_KEY_RID, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{primaryKeyId,jdbcType=BIGINT}, #{primaryKeyUid,jdbcType=BIGINT}, #{primaryKeyPid,jdbcType=BIGINT},
+      #{primaryKeyRid,jdbcType=BIGINT}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.managerApp.model.SysAppUsersSpotRole" >
+    insert into SYS_APP_USERS_SPOT_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="primaryKeyId != null" >
+        PRIMARY_KEY_ID,
+      </if>
+      <if test="primaryKeyUid != null" >
+        PRIMARY_KEY_UID,
+      </if>
+      <if test="primaryKeyPid != null" >
+        PRIMARY_KEY_PID,
+      </if>
+      <if test="primaryKeyRid != null" >
+        PRIMARY_KEY_RID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="primaryKeyId != null" >
+        #{primaryKeyId,jdbcType=BIGINT},
+      </if>
+      <if test="primaryKeyUid != null" >
+        #{primaryKeyUid,jdbcType=BIGINT},
+      </if>
+      <if test="primaryKeyPid != null" >
+        #{primaryKeyPid,jdbcType=BIGINT},
+      </if>
+      <if test="primaryKeyRid != null" >
+        #{primaryKeyRid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.managerApp.model.SysAppUsersSpotRole" >
+    update SYS_APP_USERS_SPOT_ROLE
+    <set >
+      <if test="primaryKeyUid != null" >
+        PRIMARY_KEY_UID = #{primaryKeyUid,jdbcType=BIGINT},
+      </if>
+      <if test="primaryKeyPid != null" >
+        PRIMARY_KEY_PID = #{primaryKeyPid,jdbcType=BIGINT},
+      </if>
+      <if test="primaryKeyRid != null" >
+        PRIMARY_KEY_RID = #{primaryKeyRid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PRIMARY_KEY_ID = #{primaryKeyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.managerApp.model.SysAppUsersSpotRole" >
+    update SYS_APP_USERS_SPOT_ROLE
+    set PRIMARY_KEY_UID = #{primaryKeyUid,jdbcType=BIGINT},
+      PRIMARY_KEY_PID = #{primaryKeyPid,jdbcType=BIGINT},
+      PRIMARY_KEY_RID = #{primaryKeyRid,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where PRIMARY_KEY_ID = #{primaryKeyId,jdbcType=BIGINT}
+  </update>
+  <select id="getScenicSpotzTree" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_APP_USERS_SPOT_ROLE
+    where PRIMARY_KEY_UID = #{userId}
+  </select>
+  <delete id="deleteByUserId" parameterType="java.lang.Long" >
+    delete from SYS_APP_USERS_SPOT_ROLE
+    where PRIMARY_KEY_UID = #{userId}
+  </delete>
+  <select id="getRoleScenicSpot" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_APP_USERS_SPOT_ROLE
+    where PRIMARY_KEY_UID = #{userId}
+    AND PRIMARY_KEY_PID = #{scenicSpots}
+    AND PRIMARY_KEY_RID = #{roleId}
+  </select>
+
+  <select id="getUserIdListBySpotId" resultMap="BaseResultMap">
+    select *
+    from SYS_APP_USERS_SPOT_ROLE
+    where PRIMARY_KEY_PID = #{scenicSpotId}
+  </select>
+
+
+  <select id="getScenicSpotByUser" resultType="com.hna.hka.archive.management.managerApp.model.SysAppUsers">
+    select sau.*
+    from SYS_APP_USERS_SPOT_ROLE sausr
+    left join SYS_APP_USERS sau on sausr.PRIMARY_KEY_UID = sau.USER_ID
+    where
+    sausr.PRIMARY_KEY_PID = #{scenicSpotId}
+    and  sau.USER_TYPE = 2
+  </select>
+
+  <select id="getScenicSpotTypeByUser" resultType="com.hna.hka.archive.management.managerApp.model.SysAppUsers">
+    select sau.*
+    from SYS_APP_USERS_SPOT_ROLE sausr
+    left join SYS_APP_USERS sau on sausr.PRIMARY_KEY_UID = sau.USER_ID
+    where
+    sau.USER_TYPE = 2
+  </select>
+
+
+
+</mapper>

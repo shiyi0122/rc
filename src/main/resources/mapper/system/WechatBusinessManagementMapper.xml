@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.WechatBusinessManagementMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.WechatBusinessManagement" >
+    <id column="MERCHANT_ID" property="merchantId" jdbcType="BIGINT" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="MERCHANT_SCENIC_SPOT_ID" property="merchantScenicSpotId" jdbcType="BIGINT" />
+    <result column="CERT_FILE_NAME" property="certFileName" jdbcType="VARCHAR" />
+    <result column="MERCHANT_SECRET" property="merchantSecret" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NUMBER" property="merchantNumber" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MERCHANT_ID, MERCHANT_NAME, MERCHANT_SCENIC_SPOT_ID, CERT_FILE_NAME, MERCHANT_SECRET, 
+    MERCHANT_NUMBER, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from WECHAT_BUSINESS_MANAGEMENT
+    where MERCHANT_ID = #{merchantId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from WECHAT_BUSINESS_MANAGEMENT
+    where MERCHANT_ID = #{merchantId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.WechatBusinessManagement" >
+    insert into WECHAT_BUSINESS_MANAGEMENT (MERCHANT_ID, MERCHANT_NAME, MERCHANT_SCENIC_SPOT_ID, 
+      CERT_FILE_NAME, MERCHANT_SECRET, MERCHANT_NUMBER, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{merchantId,jdbcType=BIGINT}, #{merchantName,jdbcType=VARCHAR}, #{merchantScenicSpotId,jdbcType=BIGINT}, 
+      #{certFileName,jdbcType=VARCHAR}, #{merchantSecret,jdbcType=VARCHAR}, #{merchantNumber,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.WechatBusinessManagement" >
+    insert into WECHAT_BUSINESS_MANAGEMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="merchantId != null" >
+        MERCHANT_ID,
+      </if>
+      <if test="merchantName != null" >
+        MERCHANT_NAME,
+      </if>
+      <if test="merchantScenicSpotId != null" >
+        MERCHANT_SCENIC_SPOT_ID,
+      </if>
+      <if test="certFileName != null" >
+        CERT_FILE_NAME,
+      </if>
+      <if test="merchantSecret != null" >
+        MERCHANT_SECRET,
+      </if>
+      <if test="merchantNumber != null" >
+        MERCHANT_NUMBER,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantScenicSpotId != null" >
+        #{merchantScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="certFileName != null" >
+        #{certFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantSecret != null" >
+        #{merchantSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNumber != null" >
+        #{merchantNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.WechatBusinessManagement" >
+    update WECHAT_BUSINESS_MANAGEMENT
+    <set >
+      <if test="merchantName != null" >
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantScenicSpotId != null" >
+        MERCHANT_SCENIC_SPOT_ID = #{merchantScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="certFileName != null" >
+        CERT_FILE_NAME = #{certFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantSecret != null" >
+        MERCHANT_SECRET = #{merchantSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNumber != null" >
+        MERCHANT_NUMBER = #{merchantNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MERCHANT_ID = #{merchantId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.WechatBusinessManagement" >
+    update WECHAT_BUSINESS_MANAGEMENT
+    set MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      MERCHANT_SCENIC_SPOT_ID = #{merchantScenicSpotId,jdbcType=BIGINT},
+      CERT_FILE_NAME = #{certFileName,jdbcType=VARCHAR},
+      MERCHANT_SECRET = #{merchantSecret,jdbcType=VARCHAR},
+      MERCHANT_NUMBER = #{merchantNumber,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where MERCHANT_ID = #{merchantId,jdbcType=BIGINT}
+  </update>
+  <select id="getManagementList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from WECHAT_BUSINESS_MANAGEMENT
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <select id="getBusinessManagementByScenicSpotId" resultMap="BaseResultMap">
+    SELECT
+	A.MERCHANT_ID,
+	A.MERCHANT_NAME,
+	A.MERCHANT_SCENIC_SPOT_ID,
+	A.CERT_FILE_NAME,
+	A.MERCHANT_SECRET,
+	A.MERCHANT_NUMBER,
+	A.CREATE_DATE,
+	A.UPDATE_DATE
+    FROM
+	WECHAT_BUSINESS_MANAGEMENT A
+	LEFT JOIN SYS_SCENIC_SPOT_CERTIFICATE_SPOT B ON A.MERCHANT_ID = B.CERTIFICATE_ID
+	<where>
+      B.SCENIC_SPOT_ID = #{orderScenicSpotId}
+    </where>
+  </select>
+  <select id="selectWechatBusinessManagementByName" resultMap="BaseResultMap">
+    SELECT
+    A.MERCHANT_ID,
+    A.MERCHANT_NAME,
+    A.MERCHANT_SCENIC_SPOT_ID,
+    A.CERT_FILE_NAME,
+    A.MERCHANT_SECRET,
+    A.MERCHANT_NUMBER,
+    A.CREATE_DATE,
+    A.UPDATE_DATE
+    FROM
+    WECHAT_BUSINESS_MANAGEMENT A
+    <where>
+      A.CERT_FILE_NAME = #{filename}
+    </where>
+  </select>
+</mapper>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysCurrentUserMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysCurrentUser" >
+    <id column="CURRENT_USER_ID" property="currentUserId" jdbcType="BIGINT" />
+    <result column="CURRENT_USER_PHONE" property="currentUserPhone" jdbcType="VARCHAR" />
+    <result column="CURRENT_OPEN_ID" property="currentOpenId" jdbcType="VARCHAR" />
+    <result column="CURRENT_SESSION_KEY" property="currentSessionKey" jdbcType="VARCHAR" />
+    <result column="CURRENT_THD_SESSION" property="currentThdSession" jdbcType="VARCHAR" />
+    <result column="DEPOSIT_PAY_STATE" property="depositPayState" jdbcType="VARCHAR" />
+    <result column="DEPOSIT_PAY_AMOUNT" property="depositPayAmount" jdbcType="VARCHAR" />
+    <result column="CREDIT_ARREARS_STATE" property="creditArrearsState" jdbcType="VARCHAR" />
+    <result column="GPS_COORDINATES" property="gpsCoordinates" jdbcType="VARCHAR" />
+    <result column="DEPOSIT_PAY_TIME" property="depositPayTime" jdbcType="VARCHAR" />
+    <result column="RETURN_DEPOSIT_PAY_TIME" property="returnDepositPayTime" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="VARCHAR" />
+    <result column="SMALL_APP_MONITOR_STATE" property="smallAppMonitorState" jdbcType="VARCHAR" />
+    <result column="SMALL_POLLING" property="smallPolling" jdbcType="VARCHAR" />
+    <result column="CONTINUATION_STATUS" property="continuationStatus" jdbcType="VARCHAR" />
+    <result column="PAY_USER_ID" property="payUserId" jdbcType="VARCHAR" />
+    <result column="PAYMENT_CHANNELS" property="paymentChannels" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CURRENT_USER_ID, SMALL_APP_MONITOR_STATE, CURRENT_USER_PHONE, CURRENT_OPEN_ID, CURRENT_SESSION_KEY, 
+    CURRENT_THD_SESSION, DEPOSIT_PAY_STATE, DEPOSIT_PAY_AMOUNT, CREDIT_ARREARS_STATE, 
+    GPS_COORDINATES, DEPOSIT_PAY_TIME, RETURN_DEPOSIT_PAY_TIME, SCENIC_SPOT_ID, SMALL_POLLING, 
+    CONTINUATION_STATUS, PAY_USER_ID, PAYMENT_CHANNELS, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_USER
+    where CURRENT_USER_ID = #{currentUserId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_CURRENT_USER
+    where CURRENT_USER_ID = #{currentUserId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUser" >
+    insert into SYS_CURRENT_USER (CURRENT_USER_ID, SMALL_APP_MONITOR_STATE, 
+      CURRENT_USER_PHONE, CURRENT_OPEN_ID, CURRENT_SESSION_KEY, 
+      CURRENT_THD_SESSION, DEPOSIT_PAY_STATE, DEPOSIT_PAY_AMOUNT, 
+      CREDIT_ARREARS_STATE, GPS_COORDINATES, DEPOSIT_PAY_TIME, 
+      RETURN_DEPOSIT_PAY_TIME, SCENIC_SPOT_ID, SMALL_POLLING, 
+      CONTINUATION_STATUS, PAY_USER_ID, PAYMENT_CHANNELS, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{currentUserId,jdbcType=BIGINT}, #{smallAppMonitorState,jdbcType=VARCHAR}, 
+      #{currentUserPhone,jdbcType=VARCHAR}, #{currentOpenId,jdbcType=VARCHAR}, #{currentSessionKey,jdbcType=VARCHAR}, 
+      #{currentThdSession,jdbcType=VARCHAR}, #{depositPayState,jdbcType=VARCHAR}, #{depositPayAmount,jdbcType=VARCHAR}, 
+      #{creditArrearsState,jdbcType=VARCHAR}, #{gpsCoordinates,jdbcType=VARCHAR}, #{depositPayTime,jdbcType=VARCHAR}, 
+      #{returnDepositPayTime,jdbcType=VARCHAR}, #{scenicSpotId,jdbcType=VARCHAR}, #{smallPolling,jdbcType=VARCHAR}, 
+      #{continuationStatus,jdbcType=VARCHAR}, #{payUserId,jdbcType=VARCHAR}, #{paymentChannels,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUser" >
+    insert into SYS_CURRENT_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="currentUserId != null" >
+        CURRENT_USER_ID,
+      </if>
+      <if test="currentUserPhone != null" >
+        CURRENT_USER_PHONE,
+      </if>
+      <if test="currentOpenId != null" >
+        CURRENT_OPEN_ID,
+      </if>
+      <if test="currentSessionKey != null" >
+        CURRENT_SESSION_KEY,
+      </if>
+      <if test="currentThdSession != null" >
+        CURRENT_THD_SESSION,
+      </if>
+      <if test="depositPayState != null" >
+        DEPOSIT_PAY_STATE,
+      </if>
+      <if test="depositPayAmount != null" >
+        DEPOSIT_PAY_AMOUNT,
+      </if>
+      <if test="creditArrearsState != null" >
+        CREDIT_ARREARS_STATE,
+      </if>
+      <if test="gpsCoordinates != null" >
+        GPS_COORDINATES,
+      </if>
+      <if test="depositPayTime != null" >
+        DEPOSIT_PAY_TIME,
+      </if>
+      <if test="returnDepositPayTime != null" >
+        RETURN_DEPOSIT_PAY_TIME,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="smallAppMonitorState != null" >
+        SMALL_APP_MONITOR_STATE,
+      </if>
+      <if test="smallPolling != null" >
+        SMALL_POLLING,
+      </if>
+      <if test="continuationStatus != null" >
+        CONTINUATION_STATUS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="currentUserId != null" >
+        #{currentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="currentUserPhone != null" >
+        #{currentUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="currentOpenId != null" >
+        #{currentOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="currentSessionKey != null" >
+        #{currentSessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="currentThdSession != null" >
+        #{currentThdSession,jdbcType=VARCHAR},
+      </if>
+      <if test="depositPayState != null" >
+        #{depositPayState,jdbcType=VARCHAR},
+      </if>
+      <if test="depositPayAmount != null" >
+        #{depositPayAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="creditArrearsState != null" >
+        #{creditArrearsState,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsCoordinates != null" >
+        #{gpsCoordinates,jdbcType=VARCHAR},
+      </if>
+      <if test="depositPayTime != null" >
+        #{depositPayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnDepositPayTime != null" >
+        #{returnDepositPayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=VARCHAR},
+      </if>
+      <if test="smallAppMonitorState != null" >
+        #{smallAppMonitorState,jdbcType=VARCHAR},
+      </if>
+      <if test="smallPolling != null" >
+        #{smallPolling,jdbcType=VARCHAR},
+      </if>
+      <if test="continuationStatus != null" >
+        #{continuationStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUser" >
+    update SYS_CURRENT_USER
+    <set >
+      <if test="smallAppMonitorState != null" >
+        SMALL_APP_MONITOR_STATE = #{smallAppMonitorState,jdbcType=VARCHAR},
+      </if>
+      <if test="currentUserPhone != null" >
+        CURRENT_USER_PHONE = #{currentUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="currentOpenId != null" >
+        CURRENT_OPEN_ID = #{currentOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="currentSessionKey != null" >
+        CURRENT_SESSION_KEY = #{currentSessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="currentThdSession != null" >
+        CURRENT_THD_SESSION = #{currentThdSession,jdbcType=VARCHAR},
+      </if>
+      <if test="depositPayState != null" >
+        DEPOSIT_PAY_STATE = #{depositPayState,jdbcType=VARCHAR},
+      </if>
+      <if test="depositPayAmount != null" >
+        DEPOSIT_PAY_AMOUNT = #{depositPayAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="creditArrearsState != null" >
+        CREDIT_ARREARS_STATE = #{creditArrearsState,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsCoordinates != null" >
+        GPS_COORDINATES = #{gpsCoordinates,jdbcType=VARCHAR},
+      </if>
+      <if test="depositPayTime != null" >
+        DEPOSIT_PAY_TIME = #{depositPayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnDepositPayTime != null" >
+        RETURN_DEPOSIT_PAY_TIME = #{returnDepositPayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=VARCHAR},
+      </if>
+      <if test="smallPolling != null" >
+        SMALL_POLLING = #{smallPolling,jdbcType=VARCHAR},
+      </if>
+      <if test="continuationStatus != null" >
+        CONTINUATION_STATUS = #{continuationStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payUserId != null" >
+        PAY_USER_ID = #{payUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentChannels != null" >
+        PAYMENT_CHANNELS = #{paymentChannels,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CURRENT_USER_ID = #{currentUserId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUser" >
+    update SYS_CURRENT_USER
+    set SMALL_APP_MONITOR_STATE = #{smallAppMonitorState,jdbcType=VARCHAR},
+      CURRENT_USER_PHONE = #{currentUserPhone,jdbcType=VARCHAR},
+      CURRENT_OPEN_ID = #{currentOpenId,jdbcType=VARCHAR},
+      CURRENT_SESSION_KEY = #{currentSessionKey,jdbcType=VARCHAR},
+      CURRENT_THD_SESSION = #{currentThdSession,jdbcType=VARCHAR},
+      DEPOSIT_PAY_STATE = #{depositPayState,jdbcType=VARCHAR},
+      DEPOSIT_PAY_AMOUNT = #{depositPayAmount,jdbcType=VARCHAR},
+      CREDIT_ARREARS_STATE = #{creditArrearsState,jdbcType=VARCHAR},
+      GPS_COORDINATES = #{gpsCoordinates,jdbcType=VARCHAR},
+      DEPOSIT_PAY_TIME = #{depositPayTime,jdbcType=VARCHAR},
+      RETURN_DEPOSIT_PAY_TIME = #{returnDepositPayTime,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=VARCHAR},
+      SMALL_POLLING = #{smallPolling,jdbcType=VARCHAR},
+      CONTINUATION_STATUS = #{continuationStatus,jdbcType=VARCHAR},
+      PAY_USER_ID = #{payUserId,jdbcType=VARCHAR},
+      PAYMENT_CHANNELS = #{paymentChannels,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where CURRENT_USER_ID = #{currentUserId,jdbcType=BIGINT}
+  </update>
+  <select id="getCurrentUserList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.CREDIT_ARREARS_STATE,
+    A.CURRENT_USER_ID,
+    A.CURRENT_OPEN_ID,
+    A.CURRENT_USER_PHONE,
+    A.DEPOSIT_PAY_AMOUNT,
+    A.DEPOSIT_PAY_STATE,
+    A.DEPOSIT_PAY_TIME,
+    A.RETURN_DEPOSIT_PAY_TIME,
+    A.PAYMENT_CHANNELS,
+    A.CREATE_DATE,
+    B.SCENIC_SPOT_NAME AS scenicSpotName,
+    IFNULL(C.BLACK_LIST_TYPE, 0) AS blackListType,
+    C.CREATE_DATE AS blackListTypeDate
+    FROM
+    SYS_CURRENT_USER A
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    LEFT JOIN SYS_CURRENT_BLACK_LIST C ON A.CURRENT_USER_ID = C.CURRENT_USER_ID
+    <where>
+      <if test="currentUserPhone!=null and currentUserPhone!=''">
+        AND A.CURRENT_USER_PHONE LIKE CONCAT('%',#{currentUserPhone},'%')
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.DEPOSIT_PAY_TIME) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.DEPOSIT_PAY_TIME) <![CDATA[ <= ]]> #{endTime}
+      </if>  
+      <if test="time != null and time != ''">
+        AND DATE(A.DEPOSIT_PAY_TIME) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="depositPayState != null and depositPayState != ''">
+        AND A.DEPOSIT_PAY_STATE = #{depositPayState}
+      </if>
+      <if test="creditArrearsState != null and creditArrearsState != ''">
+        AND A.CREDIT_ARREARS_STATE = #{creditArrearsState}
+      </if>
+      AND !isNull(A.CURRENT_USER_PHONE)
+    </where>
+    ORDER BY
+    A.CREATE_DATE DESC
+  </select>
+  <select id="getCurrenUserByPhone" resultMap="BaseResultMap">
+  	SELECT 
+  	<include refid="Base_Column_List"/> 
+  	FROM SYS_CURRENT_USER
+  	<where>
+  		<if test="phone != null and phone != ''">
+  			AND CURRENT_USER_PHONE = #{phone}
+  		</if>
+  	</where>
+  </select>
+</mapper>

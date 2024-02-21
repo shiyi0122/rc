@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessFeedBackMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.business.model.BusinessFeedBack" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="IMAGE_IDS" property="imageIds" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="REPLY_CONTENT" property="replyContent" jdbcType="VARCHAR" />
+    <result column="CONTACT" property="contact" jdbcType="VARCHAR" />
+    <result column="IS_READ" property="isRead" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, IMAGE_IDS, CONTENT, REPLY_CONTENT, CONTACT, IS_READ, STATE, CREATE_TIME, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BUSINESS_FEED_BACK
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BUSINESS_FEED_BACK
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.business.model.BusinessFeedBack" >
+    insert into BUSINESS_FEED_BACK (ID, USER_ID, IMAGE_IDS, 
+      CONTENT, REPLY_CONTENT, CONTACT, 
+      IS_READ, STATE, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{imageIds,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{replyContent,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
+      #{isRead,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessFeedBack" >
+    insert into BUSINESS_FEED_BACK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="imageIds != null" >
+        IMAGE_IDS,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="replyContent != null" >
+        REPLY_CONTENT,
+      </if>
+      <if test="contact != null" >
+        CONTACT,
+      </if>
+      <if test="isRead != null" >
+        IS_READ,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="imageIds != null" >
+        #{imageIds,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="replyContent != null" >
+        #{replyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="isRead != null" >
+        #{isRead,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessFeedBack" >
+    update BUSINESS_FEED_BACK
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="imageIds != null" >
+        IMAGE_IDS = #{imageIds,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="replyContent != null" >
+        REPLY_CONTENT = #{replyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        CONTACT = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="isRead != null" >
+        IS_READ = #{isRead,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.business.model.BusinessFeedBack" >
+    update BUSINESS_FEED_BACK
+    set USER_ID = #{userId,jdbcType=BIGINT},
+      IMAGE_IDS = #{imageIds,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      REPLY_CONTENT = #{replyContent,jdbcType=VARCHAR},
+      CONTACT = #{contact,jdbcType=VARCHAR},
+      IS_READ = #{isRead,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getFeedBackList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	A.ID,
+	A.USER_ID,
+	A.IMAGE_IDS,
+	A.CONTENT,
+	A.REPLY_CONTENT,
+	A.CONTACT,
+	A.IS_READ,
+	A.STATE,
+	A.CREATE_TIME,
+	A.UPDATE_TIME,
+	B.USER_NAME AS userName
+    FROM
+	BUSINESS_FEED_BACK A
+	LEFT JOIN BUSINESS_USERS B ON A.USER_ID = B.ID
+    <where>
+      <if test="contact != null and contact != ''">
+        AND A.CONTACT LIKE CONCAT('%',#{contact},'%')
+      </if>
+    </where>
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+</mapper>

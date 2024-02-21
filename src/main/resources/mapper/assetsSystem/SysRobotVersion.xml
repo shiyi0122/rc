@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotVersionsMapper">
+    <resultMap id="version" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor">
+        <id column="ROBOT_BELARC_ADVISOR_ID" property="robotBelarcAdvisorId" jdbcType="BIGINT" />
+        <result column="ROBOT_ID" property="robotId" jdbcType="BIGINT" />
+        <result column="MASTER_CONTROL_MODEL" property="masterControlModel" jdbcType="VARCHAR" />
+        <result column="MASTER_CONTROL_FIRMWARE_VERSION" property="masterControlFirmwareVersion" jdbcType="VARCHAR" />
+        <result column="MASTER_CONTROL_ID" property="masterControlId" jdbcType="VARCHAR" />
+        <result column="PAD_VERSION" property="padVersion" jdbcType="VARCHAR" />
+        <result column="PAD_FIRMWARE_VERSION" property="padFirmwareVersion" jdbcType="VARCHAR" />
+        <result column="PAD_MANUFACTOR" property="padManufactor" jdbcType="VARCHAR" />
+        <result column="MEID" property="meid" jdbcType="VARCHAR" />
+        <result column="DRIVE_MODEL" property="driveModel" jdbcType="VARCHAR" />
+        <result column="DRIVE_FIRMWARE_VERSION" property="driveFirmwareVersion" jdbcType="VARCHAR" />
+        <result column="DRIVER_MANUFACTURER" property="driverManufacturer" jdbcType="VARCHAR" />
+        <result column="DRIVE_ID" property="driveId" jdbcType="VARCHAR" />
+        <result column="MOTOR_MODEL" property="motorModel" jdbcType="VARCHAR" />
+        <result column="MOTOR_ID" property="motorId" jdbcType="VARCHAR" />
+        <result column="MOTOR_MANUFACTURER" property="motorManufacturer" jdbcType="VARCHAR" />
+        <result column="BATTERY_MODEL" property="batteryModel" jdbcType="VARCHAR" />
+        <result column="BATTERY_MANUFACTURER" property="batteryManufacturer" jdbcType="VARCHAR" />
+        <result column="BATTERY_ID" property="batteryId" jdbcType="VARCHAR" />
+        <result column="ROBOT_POWER" property="robotPower" jdbcType="VARCHAR" />
+        <result column="CHARGER_MODEL" property="chargerModel" jdbcType="VARCHAR" />
+        <result column="CHARGER_MANUFACTURER" property="chargerManufacturer" jdbcType="VARCHAR" />
+        <result column="CHARGER_ID" property="chargerId" jdbcType="VARCHAR" />
+        <result column="RANGING_MODULAR_MODEL" property="rangingModularModel" jdbcType="VARCHAR" />
+        <result column="RANGING_MODULAR_VERSION" property="rangingModularVersion" jdbcType="VARCHAR" />
+        <result column="RANGING_MODULAR_MANUFACTURER" property="rangingModularManufacturer" jdbcType="VARCHAR" />
+        <result column="RANGING_MODULAR_ID" property="rangingModularId" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+        <result column="ROBOT_MODEL" property="robotModel" jdbcType="VARCHAR" />
+        <result column="UPGRADED_VERSION" property="upgradedVersion" jdbcType="VARCHAR"/>
+        <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR"/>
+        <result column="UPGRADE_MODULE" property="upgradeModule" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getRobotVersionList" resultMap="version" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotVersion">
+        select UPGRADED_VERSION
+				from SYS_ROBOT_SOFTWARE_VERSION
+				where  UPGRADE_MODULE=#{upgradeModule}
+				GROUP BY UPGRADED_VERSION
+    </select>
+
+    <select id="getRobotBelarcAdvisorList" resultMap="version" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor">
+        SELECT
+        A.ROBOT_CODE ,
+        A.ROBOT_ID,
+        B.SCENIC_SPOT_NAME ,
+        A.CLIENT_VERSION ,
+        A.ROBOT_CODE_SIM,
+        A.ROBOT_MODEL
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_USERS_ROLE_SPOT D ON D.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="userId != null and userId != ''">
+                AND D.USER_ID = #{userId}
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="robotCodeSim != null and robotCodeSim != ''">
+                AND A.ROBOT_CODE_SIM LIKE CONCAT('%',#{robotCodeSim},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getVsersionList" resultMap="version" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor">
+        select UPGRADED_VERSION,UPDATE_DATE
+				from SYS_ROBOT_SOFTWARE_VERSION
+				<where>
+                    <if test="robotCode!=null and robotCode !=''">
+                        ROBOT_CODE = #{robotCode}
+                    </if>
+                    <if test="upgradeModule!=null and upgradeModule !=''">
+                        UPGRADE_MODULE=#{upgradeModule}
+                    </if>
+                    <if test="upgradedVersion!=null and upgradedVersion !=''">
+                        UPGRADED_VERSION=#{upgradedVersion}
+                    </if>
+                </where>
+    </select>
+
+
+    <select id="getRobotVersionsAll" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor">
+        SELECT
+        A.ROBOT_CODE ,
+        A.ROBOT_ID,
+        B.SCENIC_SPOT_NAME ,
+        A.CLIENT_VERSION ,
+        A.ROBOT_CODE_SIM,
+        A.ROBOT_MODEL,
+        (select UPGRADED_VERSION
+            from SYS_ROBOT_SOFTWARE_VERSION
+                <where>
+                    <if test="masterControlFirmwareVersion != null and masterControlFirmwareVersion != ''">
+                     AND    UPGRADED_VERSION like  CONCAT('%',#{masterControlFirmwareVersion},'%')
+                    </if>
+                    AND  UPGRADE_MODULE = 3
+                    AND ROBOT_CODE = A.ROBOT_CODE
+                </where>
+                 ORDER BY UPDATE_DATE DESC LIMIT 1) as rangingModularVersion ,
+        (select UPGRADED_VERSION
+            from SYS_ROBOT_SOFTWARE_VERSION
+                <where>
+                    <if test="rangingModularVersion != null and rangingModularVersion != '' ">
+                        UPGRADED_VERSION like  CONCAT('%',#{rangingModularVersion},'%')
+                    </if>
+                    AND UPGRADE_MODULE = 2
+                    AND ROBOT_CODE = A.ROBOT_CODE
+                </where>
+                 ORDER BY UPDATE_DATE DESC LIMIT 1) as masterControlFirmwareVersion,
+        (select UPDATE_DATE
+        from SYS_ROBOT_SOFTWARE_VERSION
+        <where>
+            <if test="masterControlFirmwareVersion != null and masterControlFirmwareVersion != ''">
+                AND    UPGRADED_VERSION like  CONCAT('%',#{masterControlFirmwareVersion},'%')
+            </if>
+            AND  UPGRADE_MODULE = 2
+            AND ROBOT_CODE = A.ROBOT_CODE
+        </where>
+        ORDER BY UPDATE_DATE DESC LIMIT 1) as updateDate
+
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_USERS_ROLE_SPOT D ON D.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="USER_ID != null and USER_ID != ''">
+                AND  D.USER_ID = #{userId}
+            </if>
+            <if test="ROBOT_CODE != null and ROBOT_CODE != ''">
+                AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+
+        </where>
+
+        GROUP BY  A.ROBOT_ID
+    </select>
+
+    <select id="getSysRobotVersion" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor">
+        select
+        A.ROBOT_CODE,
+        A.SCENIC_SPOT_ID,
+        A.UPGRADED_VERSION as masterControlFirmwareVersion ,
+        A.UPDATE_DATE,
+        B.SCENIC_SPOT_NAME,
+        C.ROBOT_MODEL,
+        C.CLIENT_VERSION,
+        C.ROBOT_CODE_SIM,
+        (select UPGRADED_VERSION
+        from SYS_ROBOT_SOFTWARE_VERSION
+        <where>
+            <if test="masterControlFirmwareVersion != null and masterControlFirmwareVersion != ''">
+                AND    UPGRADED_VERSION like  CONCAT('%',#{masterControlFirmwareVersion},'%')
+            </if>
+            AND  UPGRADE_MODULE = 3
+            AND ROBOT_CODE = A.ROBOT_CODE
+        </where>
+        ORDER BY UPDATE_DATE DESC LIMIT 1) as rangingModularVersion
+        from SYS_ROBOT_SOFTWARE_VERSION A
+        left join SYS_SCENIC_SPOT B on  A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        left join SYS_ROBOT C on A.ROBOT_CODE = C.ROBOT_CODE
+        LEFT JOIN SYS_USERS_ROLE_SPOT D ON D.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        <where>
+            <if test="rangingModularVersion != null and rangingModularVersion !=''">
+                AND  UPGRADED_VERSION like  CONCAT("%",#{rangingModularVersion},"%")
+            </if>
+            <if test="scenicSpotId != nll and scenicSpotId !=''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+            </if>
+                AND A.UPGRADE_MODULE in (2)
+        </where>
+        GROUP BY ROBOT_CODE
+        ORDER BY UPDATE_DATE DESC
+
+    </select>
+
+
+    <select id="getSysRobotVersionN" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor">
+        select
+        A.ROBOT_CODE,
+        A.SCENIC_SPOT_ID,
+        A.UPGRADED_VERSION as rangingModularVersion ,
+        A.UPDATE_DATE,
+        B.SCENIC_SPOT_NAME,
+        C.ROBOT_MODEL,
+        C.CLIENT_VERSION,
+        C.ROBOT_CODE_SIM,
+        (select UPGRADED_VERSION
+        from SYS_ROBOT_SOFTWARE_VERSION
+        <where>
+            <if test="rangingModularVersion != null and rangingModularVersion != ''">
+                AND    UPGRADED_VERSION like  CONCAT('%',#{rangingModularVersion},'%')
+            </if>
+            AND  UPGRADE_MODULE = 2
+            AND ROBOT_CODE = A.ROBOT_CODE
+        </where>
+        ORDER BY UPDATE_DATE DESC LIMIT 1) as masterControlFirmwareVersion
+        from SYS_ROBOT_SOFTWARE_VERSION A
+        left join SYS_SCENIC_SPOT B on  A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        left join SYS_ROBOT C on A.ROBOT_CODE = C.ROBOT_CODE
+        LEFT JOIN SYS_USERS_ROLE_SPOT D ON D.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        <where>
+            <if test="masterControlFirmwareVersion != null and masterControlFirmwareVersion !=''">
+                AND  UPGRADED_VERSION like  CONCAT("%",#{masterControlFirmwareVersion},"%")
+            </if>
+            <if test="scenicSpotId != nll and scenicSpotId !=''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+            </if>
+            AND A.UPGRADE_MODULE in (3)
+        </where>
+        GROUP BY ROBOT_CODE
+        ORDER BY UPDATE_DATE DESC
+
+    </select>
+
+    <select id="getSysRobotVersionCode" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor">
+
+        SELECT
+        A.ROBOT_CODE ,
+        A.ROBOT_ID,
+        B.SCENIC_SPOT_NAME ,
+        A.CLIENT_VERSION ,
+        A.ROBOT_CODE_SIM,
+        A.ROBOT_MODEL,
+        (select UPGRADED_VERSION
+        from SYS_ROBOT_SOFTWARE_VERSION
+        <where>
+            <if test="masterControlFirmwareVersion != null and masterControlFirmwareVersion != ''">
+                AND    UPGRADED_VERSION like  CONCAT('%',#{masterControlFirmwareVersion},'%')
+            </if>
+            AND  UPGRADE_MODULE = 3
+            AND ROBOT_CODE = A.ROBOT_CODE
+        </where>
+        ORDER BY UPDATE_DATE DESC LIMIT 1) as rangingModularVersion ,
+        (select UPGRADED_VERSION
+        from SYS_ROBOT_SOFTWARE_VERSION
+        <where>
+            <if test="rangingModularVersion != null and rangingModularVersion != '' ">
+                UPGRADED_VERSION like  CONCAT('%',#{rangingModularVersion},'%')
+            </if>
+            AND UPGRADE_MODULE = 2
+            AND ROBOT_CODE = A.ROBOT_CODE
+        </where>
+        ORDER BY UPDATE_DATE DESC LIMIT 1) as masterControlFirmwareVersion,
+        (select UPDATE_DATE
+        from SYS_ROBOT_SOFTWARE_VERSION
+        <where>
+            <if test="masterControlFirmwareVersion != null and masterControlFirmwareVersion != ''">
+                AND    UPGRADED_VERSION like  CONCAT('%',#{masterControlFirmwareVersion},'%')
+            </if>
+            AND  UPGRADE_MODULE = 2
+            AND ROBOT_CODE = A.ROBOT_CODE
+        </where>
+        ORDER BY UPDATE_DATE DESC LIMIT 1) as updateDate
+
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_USERS_ROLE_SPOT D ON D.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        LEFT JOIN SYS_USERS_ROLE_SPOT E ON E.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        <where>
+            <if test="USER_ID != null and USER_ID != ''">
+                AND  D.USER_ID = #{userId}
+            </if>
+            <if test="ROBOT_CODE != null and ROBOT_CODE != ''">
+                AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+
+        </where>
+
+        GROUP BY  A.ROBOT_ID
+        ORDER BY UPDATE_DATE DESC
+    </select>
+
+
+
+</mapper>

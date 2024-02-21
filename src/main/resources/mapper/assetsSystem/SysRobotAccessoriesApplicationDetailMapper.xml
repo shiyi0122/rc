@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.SysRobotAccessoriesApplicationDetailMapper">
+    <resultMap id="BaseResultMap"
+               type="com.hna.hka.archive.management.appSystem.model.SysRobotAccessoriesApplicationDetail">
+        <id column="ID" property="id" jdbcType="BIGINT"/>
+        <result column="ACCESSORIES_APPLICATION_ID" property="accessoriesApplicationId" jdbcType="BIGINT"/>
+        <result column="ACCESSORIES_ID" property="accessoriesId" jdbcType="BIGINT"/>
+        <result column="ACCESSORIES_NAME" property="accessoriesName" jdbcType="VARCHAR"/>
+        <result column="ACCESSORIES_TYPE" property="accessoriesType" jdbcType="VARCHAR"/>
+        <result column="ACCESSORY_PRICE" property="accessoryPrice" jdbcType="VARCHAR"/>
+        <result column="ACCESSORY_MODEL" property="accessoryModel" jdbcType="VARCHAR"/>
+        <result column="ACCESSORY_NUMBER" property="accessoryNumber" jdbcType="VARCHAR"/>
+        <result column="WAREHOUSE_ID" property="warehouseId" jdbcType="BIGINT"/>
+        <result column="SHIPPING_INSTRUCTIONS" property="shippingInstructions" jdbcType="VARCHAR"/>
+        <result column="COURIER_NUMBER" property="courierNumber" jdbcType="VARCHAR"/>
+        <result column="EXPRESS_FEE" property="expressFee" jdbcType="VARCHAR"/>
+        <result column="ACCESSORIES_RECEIVED_TYPE" property="accessoriesReceivedType" jdbcType="VARCHAR"/>
+        <result column="SIGN_IN_PICTURE" property="signInPicture" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+        <result column="IS_SEND_OUT_GOODS" property="isSendOutGoods" jdbcType="VARCHAR"/>
+        <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="add"
+            parameterType="com.hna.hka.archive.management.appSystem.model.SysRobotAccessoriesApplicationDetail">
+        insert into SYS_ROBOT_ACCESSORIES_APPLICATION_DETAIL
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="accessoriesApplicationId != null">
+                ACCESSORIES_APPLICATION_ID,
+            </if>
+            <if test="accessoriesId != null">
+                ACCESSORIES_ID,
+            </if>
+            <if test="accessoriesName != null">
+                ACCESSORIES_NAME,
+            </if>
+            <if test="accessoriesType != null">
+                ACCESSORIES_TYPE,
+            </if>
+            <if test="accessoryPrice != null">
+                ACCESSORY_PRICE,
+            </if>
+            <if test="accessoryModel != null">
+                ACCESSORY_MODEL,
+            </if>
+            <if test="accessoryNumber != null">
+                ACCESSORY_NUMBER,
+            </if>
+            <if test="warehouseId != null">
+                WAREHOUSE_ID,
+            </if>
+            <if test="shippingInstructions != null">
+                SHIPPING_INSTRUCTIONS,
+            </if>
+            <if test="courierNumber != null">
+                COURIER_NUMBER,
+            </if>
+            <if test="expressFee != null">
+                EXPRESS_FEE,
+            </if>
+            <if test="accessoriesReceivedType != null">
+                ACCESSORIES_RECEIVED_TYPE,
+            </if>
+            <if test="signInPicture != null">
+                SIGN_IN_PICTURE,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+            <if test="isSendOutGoods != null">
+                IS_SEND_OUT_GOODS,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="accessoriesApplicationId != null">
+                #{accessoriesApplicationId,jdbcType=BIGINT},
+            </if>
+            <if test="accessoriesId != null">
+                #{accessoriesId,jdbcType=BIGINT},
+            </if>
+            <if test="accessoriesName != null">
+                #{accessoriesName,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoriesType != null">
+                #{accessoriesType,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryPrice != null">
+                #{accessoryPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryModel != null">
+                #{accessoryModel,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryNumber != null">
+                #{accessoryNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseId != null">
+                #{warehouseId,jdbcType=BIGINT},
+            </if>
+            <if test="shippingInstructions != null">
+                #{shippingInstructions,jdbcType=VARCHAR},
+            </if>
+            <if test="courierNumber != null">
+                #{courierNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="expressFee != null">
+                #{expressFee,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoriesReceivedType != null">
+                #{accessoriesReceivedType,jdbcType=VARCHAR},
+            </if>
+            <if test="signInPicture != null">
+                #{signInPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="isSendOutGoods != null">
+                #{isSendOutGoods,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.hna.hka.archive.management.appSystem.model.SysRobotAccessoriesApplicationDetail">
+        update SYS_ROBOT_ACCESSORIES_APPLICATION_DETAIL
+        <set>
+            <if test="accessoriesApplicationId != null">
+                ACCESSORIES_APPLICATION_ID = #{accessoriesApplicationId,jdbcType=BIGINT},
+            </if>
+            <if test="accessoriesId != null">
+                ACCESSORIES_ID = #{accessoriesId,jdbcType=BIGINT},
+            </if>
+            <if test="accessoriesName != null">
+                ACCESSORIES_NAME = #{accessoriesName,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoriesType != null">
+                ACCESSORIES_TYPE = #{accessoriesType,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryPrice != null">
+                ACCESSORY_PRICE = #{accessoryPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryModel != null">
+                ACCESSORY_MODEL = #{accessoryModel,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryNumber != null">
+                ACCESSORY_NUMBER = #{accessoryNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseId != null">
+                WAREHOUSE_ID = #{warehouseId,jdbcType=BIGINT},
+            </if>
+            <if test="shippingInstructions != null">
+                SHIPPING_INSTRUCTIONS = #{shippingInstructions,jdbcType=VARCHAR},
+            </if>
+            <if test="courierNumber != null">
+                COURIER_NUMBER = #{courierNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="expressFee != null">
+                EXPRESS_FEE = #{expressFee,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoriesReceivedType != null">
+                ACCESSORIES_RECEIVED_TYPE = #{accessoriesReceivedType,jdbcType=VARCHAR},
+            </if>
+            <if test="signInPicture != null">
+                SIGN_IN_PICTURE = #{signInPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="isSendOutGoods != null">
+                IS_SEND_OUT_GOODS = #{isSendOutGoods,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                TYPE = #{type,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByAccessoriesApplicationId"
+            resultType="com.hna.hka.archive.management.appSystem.model.SysRobotAccessoriesApplicationDetail">
+        select *
+        from SYS_ROBOT_ACCESSORIES_APPLICATION_DETAIL
+        where ACCESSORIES_APPLICATION_ID = #{accessoriesApplicationId}
+    </select>
+
+
+    <select id="getSpotIdSendOutGoodsList"
+            resultType="com.hna.hka.archive.management.appSystem.model.SysRobotAccessoriesApplicationDetail">
+        SELECT
+        saad.*,
+        sraa.SCENIC_SPOT_ID,
+        sss.SCENIC_SPOT_NAME AS warehouseName
+        FROM
+        SYS_ROBOT_ACCESSORIES_APPLICATION_DETAIL saad
+        LEFT JOIN SYS_APP_USERS_SPOT_ROLE saus ON saad.WAREHOUSE_ID = saus.PRIMARY_KEY_PID
+        LEFT JOIN SYS_SCENIC_SPOT sss ON saad.WAREHOUSE_ID = sss.SCENIC_SPOT_ID
+        LEFT JOIN SYS_ROBOT_ACCESSORIES_APPLICATION sraa ON saad.ACCESSORIES_APPLICATION_ID =
+        sraa.ACCESSORIES_APPLICATION_ID
+        <where>
+            <if test="userId != null">
+                saus.PRIMARY_KEY_UID = #{userId}
+            </if>
+            <if test="scenicSpotId != null">
+                and sraa.SCENIC_SPOT_ID =#{scenicSpotId}
+            </if>
+            <if test="isSendOutGoods != null">
+                and saad.IS_SEND_OUT_GOODS =#{isSendOutGoods}
+            </if>
+        </where>
+        order by saad.CREATE_DATE DESC
+    </select>
+
+    <select id="selectById"
+            resultType="com.hna.hka.archive.management.appSystem.model.SysRobotAccessoriesApplicationDetail">
+        select *
+        from SYS_ROBOT_ACCESSORIES_APPLICATION_DETAIL
+        where ID = #{id}
+    </select>
+
+    <delete id="deleteByAccessoriesId">
+        delete from SYS_ROBOT_ACCESSORIES_APPLICATION_DETAIL where ACCESSORIES_APPLICATION_ID = #{accessoriesApplicationId}
+    </delete>
+
+
+    <select id="getSumAccessoryPrice" resultType="java.lang.Double">
+        select SUM(ACCESSORY_PRICE)
+        from SYS_ROBOT_ACCESSORIES_APPLICATION_DETAIL
+        where ACCESSORIES_APPLICATION_ID = #{errorRecordsId}
+    </select>
+
+    <select id="selectNullByList"
+            resultType="com.hna.hka.archive.management.appSystem.model.SysRobotAccessoriesApplicationDetail">
+        select *
+        FROM
+        SYS_ROBOT_ACCESSORIES_APPLICATION_DETAIL sraad
+        LEFT JOIN SYS_ROBOT_ACCESSORIES_APPLICATION sraa ON sraad.ACCESSORIES_APPLICATION_ID =
+        sraa.ACCESSORIES_APPLICATION_ID
+        LEFT JOIN SYS_SCENIC_SPOT sss ON sraa.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                sraa.SCENIC_SPOT_ID =#{scenicSpotId}
+            </if>
+            <if test="isSendOutGoods != null and isSendOutGoods != ''">
+                and sraad.IS_SEND_OUT_GOODS =#{isSendOutGoods}
+            </if>
+        </where>
+        order by sraad.CREATE_DATE DESC
+    </select>
+
+    <insert id="insertSys" parameterType="com.hna.hka.archive.management.appSystem.model.SysRobotErrorRecordDetaIl">
+        INSERT INTO SYS_ROBOT_ERROR_RECORD_DETAIL (
+        ERROR_RECORDS_ID
+        ) VALUES (
+        <if test="errorRecordsId != null">
+            #{errorRecordsId}
+        </if>
+        )
+    </insert>
+    <select id="selectByIds" resultType="com.hna.hka.archive.management.appSystem.model.SysRobotErrorRecordDetaIl">
+        select
+        ERROR_RECORDS_ID,GOODS_INVENTORY_DETAIL_ID
+        from
+        SYS_ROBOT_ERROR_RECORD_DETAIL
+        where
+        ERROR_RECORDS_ID =#{errorRecordsId}
+    </select>
+
+</mapper>

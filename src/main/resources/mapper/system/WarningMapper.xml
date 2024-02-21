@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotWarningMapper">
+    <resultMap id="Warning" type="com.hna.hka.archive.management.system.model.WarningExcel">
+        <id column="WARNING_ID" property="warningId" jdbcType="BIGINT" />
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR" />
+        <result column="WARNING_NAME" property="warningName" jdbcType="VARCHAR" />
+        <result column="WARNING_GPS" property="warningGps" jdbcType="VARCHAR" />
+        <result column="WARNING_GPS_BAI_DU" property="warningGpsBaiDu" jdbcType="VARCHAR" />
+        <result column="WARNING_CONTENT" property="warningContent" jdbcType="VARCHAR" />
+        <result column="WARNING_PIC" property="warningPic" jdbcType="VARCHAR" />
+        <result column="WARNING_RADIUS" property="warningRadius" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getWarningExcel" resultMap="Warning" parameterType="com.hna.hka.archive.management.system.model.WarningExcel">
+        select a.WARNING_ID,b.SCENIC_SPOT_NAME,a.WARNING_NAME,a.WARNING_GPS,a.WARNING_GPS_BAI_DU,a.WARNING_CONTENT,a.WARNING_PIC,a.WARNING_RADIUS,a.CREATE_DATE,a.UPDATE_DATE
+         from SYS_SCENIC_SPOT_WARNING a
+         left join SYS_SCENIC_SPOT b on a.SCENIC_SPOT_ID=b.SCENIC_SPOT_ID
+         where b.SCENIC_SPOT_ID=#{scenicSpotId}
+    </select>
+
+    <select id="selWarning" resultMap="Warning" parameterType="com.hna.hka.archive.management.system.model.WarningExcel">
+        select a.WARNING_ID,b.SCENIC_SPOT_NAME,a.WARNING_NAME,a.WARNING_GPS,a.WARNING_GPS_BAI_DU,a.WARNING_CONTENT,a.WARNING_PIC,a.WARNING_RADIUS,a.CREATE_DATE,a.UPDATE_DATE
+         from SYS_SCENIC_SPOT_WARNING a
+         left join SYS_SCENIC_SPOT b on a.SCENIC_SPOT_ID=b.SCENIC_SPOT_ID
+         where a.SCENIC_SPOT_ID=#{scenicSpotId} and a.WARNING_NAME=#{warningName}
+    </select>
+
+    <insert id="addWarningExcel" parameterType="com.hna.hka.archive.management.system.model.WarningExcel" >
+    insert into SYS_SCENIC_SPOT_WARNING (WARNING_ID, SCENIC_SPOT_ID, WARNING_NAME,
+      WARNING_GPS, WARNING_GPS_BAI_DU, WARNING_CONTENT,
+      WARNING_PIC,  WARNING_RADIUS,
+      CREATE_DATE, UPDATE_DATE)
+    values (#{warningId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{warningName,jdbcType=VARCHAR},
+      #{warningGps,jdbcType=VARCHAR}, #{warningGpsBaiDu,jdbcType=VARCHAR}, #{warningContent,jdbcType=VARCHAR},
+      #{warningPic,jdbcType=VARCHAR}, #{warningRadius,jdbcType=VARCHAR},
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+
+    <update id="upWarningExcel" parameterType="com.hna.hka.archive.management.system.model.WarningExcel" >
+    update SYS_SCENIC_SPOT_WARNING
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      WARNING_NAME = #{warningName,jdbcType=VARCHAR},
+      WARNING_GPS = #{warningGps,jdbcType=VARCHAR},
+      WARNING_GPS_BAI_DU = #{warningGpsBaiDu,jdbcType=VARCHAR},
+      WARNING_CONTENT = #{warningContent,jdbcType=VARCHAR},
+      WARNING_PIC = #{warningPic,jdbcType=VARCHAR},
+      WARNING_RADIUS = #{warningRadius,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where WARNING_ID = #{warningId,jdbcType=BIGINT}
+  </update>
+
+
+</mapper>

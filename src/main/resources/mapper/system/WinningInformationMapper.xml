@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.system.dao.WinningInformationMapper">
+    <resultMap id="winningInformation" type="com.hna.hka.archive.management.system.model.WinningInformation">
+        <id column="EXCHANGE_ID" property="exchangeId" jdbcType="BIGINT"/>
+        <result column="CURRENT_USER_PHONE" property="currentUserPhone" jdbcType="VARCHAR"/>
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR"/>
+        <result column="EXCHANGE_STATE" property="exchangeState" jdbcType="VARCHAR"/>
+        <result column="EXCHANGE_NAME" property="exchangeName" jdbcType="VARCHAR"/>
+        <result column="START_VALIDITY" property="startValiDity" jdbcType="VARCHAR"/>
+        <result column="END_VALIDITY" property="endValiDity" jdbcType="VARCHAR"/>
+        <result column="EXCHANGE_TYPE" property="exchangeType" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getWinningInformation" resultMap="winningInformation" parameterType="com.hna.hka.archive.management.system.model.WinningInformation">
+        SELECT
+        b.EXCHANGE_NUMBER,
+        b.EXCHANGE_STATE,
+        b.EXCHANGE_NAME,
+        b.START_VALIDITY,
+        b.END_VALIDITY,
+        b.EXCHANGE_TYPE,
+        c.SCENIC_SPOT_NAME,
+        a.CURRENT_USER_ID,
+        a.CURRENT_USER_PHONE
+        FROM
+        SYS_CURRENT_USER_EXCHANGE b
+        LEFT JOIN SYS_CURRENT_USER a ON a.CURRENT_USER_ID = b.USER_ID
+        LEFT JOIN SYS_SCENIC_SPOT c ON b.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="currentUserPhone != null and currentUserPhone != ''">
+                a.CURRENT_USER_PHONE  like CONCAT('%', #{currentUserPhone}, '%')
+            </if>
+            <if test="exchangeType !=null and exchangeType!=''">
+                b.EXCHANGE_TYPE like CONCAT('%', #{exchangeType}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

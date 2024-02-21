@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotAdvertisingMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotAdvertising" >
+    <id column="ADVERTISING_ID" property="advertisingId" jdbcType="BIGINT" />
+    <result column="ADVERTISING_SCENIC_SPOT_ID" property="advertisingScenicSpotId" jdbcType="VARCHAR" />
+    <result column="ADVERTISING_URL" property="advertisingUrl" jdbcType="VARCHAR" />
+    <result column="ADVERTISING_VALID" property="advertisingValid" jdbcType="VARCHAR" />
+    <result column="ADVERTISING_NAME" property="advertisingName" jdbcType="VARCHAR" />
+    <result column="ADVERTISING_ORDER" property="advertisingOrder" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ADVERTISING_ID, ADVERTISING_SCENIC_SPOT_ID, ADVERTISING_URL, ADVERTISING_VALID, ADVERTISING_NAME, 
+    ADVERTISING_ORDER, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_ADVERTISING
+    where ADVERTISING_ID = #{advertisingId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_ADVERTISING
+    where ADVERTISING_ID = #{advertisingId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotAdvertising" >
+    insert into SYS_ROBOT_ADVERTISING (ADVERTISING_ID, ADVERTISING_SCENIC_SPOT_ID, 
+      ADVERTISING_URL, ADVERTISING_VALID, ADVERTISING_NAME, 
+      ADVERTISING_ORDER, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{advertisingId,jdbcType=BIGINT}, #{advertisingScenicSpotId,jdbcType=VARCHAR}, 
+      #{advertisingUrl,jdbcType=VARCHAR}, #{advertisingValid,jdbcType=VARCHAR}, #{advertisingName,jdbcType=VARCHAR}, 
+      #{advertisingOrder,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotAdvertising" >
+    insert into SYS_ROBOT_ADVERTISING
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="advertisingId != null" >
+        ADVERTISING_ID,
+      </if>
+      <if test="advertisingScenicSpotId != null" >
+        ADVERTISING_SCENIC_SPOT_ID,
+      </if>
+      <if test="advertisingUrl != null" >
+        ADVERTISING_URL,
+      </if>
+      <if test="advertisingValid != null" >
+        ADVERTISING_VALID,
+      </if>
+      <if test="advertisingName != null" >
+        ADVERTISING_NAME,
+      </if>
+      <if test="advertisingOrder != null" >
+        ADVERTISING_ORDER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="advertisingId != null" >
+        #{advertisingId,jdbcType=BIGINT},
+      </if>
+      <if test="advertisingScenicSpotId != null" >
+        #{advertisingScenicSpotId,jdbcType=VARCHAR},
+      </if>
+      <if test="advertisingUrl != null" >
+        #{advertisingUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="advertisingValid != null" >
+        #{advertisingValid,jdbcType=VARCHAR},
+      </if>
+      <if test="advertisingName != null" >
+        #{advertisingName,jdbcType=VARCHAR},
+      </if>
+      <if test="advertisingOrder != null" >
+        #{advertisingOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotAdvertising" >
+    update SYS_ROBOT_ADVERTISING
+    <set >
+      <if test="advertisingScenicSpotId != null" >
+        ADVERTISING_SCENIC_SPOT_ID = #{advertisingScenicSpotId,jdbcType=VARCHAR},
+      </if>
+      <if test="advertisingUrl != null" >
+        ADVERTISING_URL = #{advertisingUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="advertisingValid != null" >
+        ADVERTISING_VALID = #{advertisingValid,jdbcType=VARCHAR},
+      </if>
+      <if test="advertisingName != null" >
+        ADVERTISING_NAME = #{advertisingName,jdbcType=VARCHAR},
+      </if>
+      <if test="advertisingOrder != null" >
+        ADVERTISING_ORDER = #{advertisingOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ADVERTISING_ID = #{advertisingId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotAdvertising" >
+    update SYS_ROBOT_ADVERTISING
+    set ADVERTISING_SCENIC_SPOT_ID = #{advertisingScenicSpotId,jdbcType=VARCHAR},
+      ADVERTISING_URL = #{advertisingUrl,jdbcType=VARCHAR},
+      ADVERTISING_VALID = #{advertisingValid,jdbcType=VARCHAR},
+      ADVERTISING_NAME = #{advertisingName,jdbcType=VARCHAR},
+      ADVERTISING_ORDER = #{advertisingOrder,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where ADVERTISING_ID = #{advertisingId,jdbcType=BIGINT}
+  </update>
+  <select id="getAdvertisingList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	B.SCENIC_SPOT_NAME AS scenicSpotName,
+	A.*
+    FROM
+	SYS_ROBOT_ADVERTISING A
+	LEFT JOIN SYS_SCENIC_SPOT B ON B.SCENIC_SPOT_ID = A.ADVERTISING_SCENIC_SPOT_ID
+	<where>
+      AND A.ADVERTISING_SCENIC_SPOT_ID = #{scenicSpotId}
+    </where>
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+</mapper>

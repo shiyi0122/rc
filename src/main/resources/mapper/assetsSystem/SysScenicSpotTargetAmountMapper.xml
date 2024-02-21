@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysScenicSpotTargetAmountMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmount" >
+    <id column="TARGET_AMOUNT_ID" property="targetAmountId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="TARGET_AMOUNT" property="targetAmount" jdbcType="VARCHAR" />
+    <result column="ROBOT_TARGET_AMOUNT" property="robotTargetAmount" jdbcType="VARCHAR" />
+    <result column="TARGET_STATE" property="targetState" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="DATE" property="date" jdbcType="VARCHAR"/>
+    <result column="ROBOT_COST" property="robotCost" jdbcType="VARCHAR"/>
+    <result column="OPERATE_COST" property="operateCost" jdbcType="VARCHAR"/>
+    <result column="SPOT_MARKET_COST" property="spotMarketCost" jdbcType="VARCHAR"/>
+    <result column="RENT" property="rent" jdbcType="VARCHAR"/><result column="RENT_UNDERTAKER" property="rentUndertaker" jdbcType="VARCHAR"/>
+    <result column="MAINTAIN_COST" property="maintainCost" jdbcType="VARCHAR"/>
+    <result column="COMPANY_ID" property="companyId" jdbcType="BIGINT"/>
+    <result column="ROBOT_EX_FACTORY_COST" property="robotExFactory" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TARGET_AMOUNT_ID, SCENIC_SPOT_ID, TARGET_AMOUNT, ROBOT_TARGET_AMOUNT, TARGET_STATE,
+    CREATE_DATE, UPDATE_DATE ,DATE, ROBOT_COST, OPERATE_COST, SPOT_MARKET_COST, RENT,
+    MAINTAIN_COST,COMPANY_ID,ROBOT_EX_FACTORY_COST
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_TARGET_AMOUNT
+    where TARGET_AMOUNT_ID = #{targetAmountId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_TARGET_AMOUNT
+    where TARGET_AMOUNT_ID = #{targetAmountId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmount" >
+    insert into SYS_SCENIC_SPOT_TARGET_AMOUNT (TARGET_AMOUNT_ID, SCENIC_SPOT_ID, TARGET_AMOUNT,
+                                               ROBOT_TARGET_AMOUNT, TARGET_STATE, CREATE_DATE,
+                                               UPDATE_DATE,DATE,ROBOT_COST,
+                                               OPERATE_COST,SPOT_MARKET_COST,RENT,MAINTAIN_COST)
+    values (#{targetAmountId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{targetAmount,jdbcType=VARCHAR},
+            #{robotTargetAmount,jdbcType=VARCHAR}, #{targetState,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR},
+            #{updateDate,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{robotCost,jdbcType=VARCHAR},
+            #{operateCost,jdbcType=VARCHAR},#{spotMarketCost,jdbcType=VARCHAR},
+            #{rent,jdbcType=VARCHAR},#{maintainCost,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmount" >
+    insert into SYS_SCENIC_SPOT_TARGET_AMOUNT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="targetAmountId != null" >
+        TARGET_AMOUNT_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="targetAmount != null" >
+        TARGET_AMOUNT,
+      </if>
+      <if test="robotTargetAmount != null" >
+        ROBOT_TARGET_AMOUNT,
+      </if>
+      <if test="targetState != null" >
+        TARGET_STATE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="date != null">
+        DATE,
+      </if>
+      <if test="robotCost != null">
+        ROBOT_COST,
+      </if>
+      <if test="operateCost != null">
+        OPERATE_COST,
+      </if>
+      <if test="spotMarketCost != null">
+        SPOT_MARKET_COST,
+      </if>
+      <if test="rent != null">
+        RENT,
+      </if>
+      <if test="maintainCost != null">
+        MAINTAIN_COST,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="robotExFactory != null">
+        ROBOT_EX_FACTORY_COST,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="targetAmountId != null" >
+        #{targetAmountId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="targetAmount != null" >
+        #{targetAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="robotTargetAmount != null" >
+        #{robotTargetAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="targetState != null" >
+        #{targetState,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="robotCost != null">
+        #{robotCost,jdbcType=VARCHAR},
+      </if>
+      <if test="operateCost != null">
+        #{operateCost,jdbcType=VARCHAR},
+      </if>
+      <if test="spotMarketCost != null">
+        #{spotMarketCost,jdbcType=VARCHAR},
+      </if>
+      <if test="rent != null">
+        #{rent,jdbcType = VARCHAR},
+      </if>
+      <if test="maintainCost != null">
+        #{maintainCost,jdbcType = VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType = VARCHAR},
+      </if>
+      <if test="robotExFactory != null">
+        #{robotExFactory,jdbcType = VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmount" >
+    update SYS_SCENIC_SPOT_TARGET_AMOUNT
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="targetAmount != null" >
+        TARGET_AMOUNT = #{targetAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="robotTargetAmount != null" >
+        ROBOT_TARGET_AMOUNT = #{robotTargetAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="targetState != null" >
+        TARGET_STATE = #{targetState,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        DATE = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="robotCost != null">
+        ROBOT_COST = #{robotCost,jdbcType=VARCHAR},
+      </if>
+      <if test="operateCost !=null">
+        OPERATE_COST = #{operateCost,jdbcType = VARCHAR},
+      </if>
+      <if test="spotMarketCost != null">
+        SPOT_MARKET_COST = #{spotMarketCost,jdbcType = VARCHAR},
+      </if>
+      <if test="rent != null">
+        RENT = #{rent,jdbcType = VARCHAR},
+      </if>
+      <if test="maintainCost != null">
+        MAINTAIN_COST = #{maintainCost,jdbcType = VARCHAR},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType = BIGINT},
+      </if>
+      <if test="robotExFactory != null">
+        ROBOT_EX_FACTORY_COST = #{robotExFactory,jdbcType = VARCHAR}
+      </if>
+    </set>
+    where TARGET_AMOUNT_ID = #{targetAmountId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmount" >
+    update SYS_SCENIC_SPOT_TARGET_AMOUNT
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+        TARGET_AMOUNT = #{targetAmount,jdbcType=VARCHAR},
+        ROBOT_TARGET_AMOUNT = #{robotTargetAmount,jdbcType=VARCHAR},
+        TARGET_STATE = #{targetState,jdbcType=VARCHAR},
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where TARGET_AMOUNT_ID = #{targetAmountId,jdbcType=BIGINT}
+  </update>
+  <select id="getTargetAmountList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      A.TARGET_AMOUNT_ID,
+      A.SCENIC_SPOT_ID,
+      A.TARGET_AMOUNT,
+      A.ROBOT_TARGET_AMOUNT,
+      A.TARGET_STATE,
+      A.CREATE_DATE,
+      A.UPDATE_DATE,
+      A.DATE,
+      A.ROBOT_COST,
+      A.OPERATE_COST,
+      A.SPOT_MARKET_COST,
+      A.RENT,
+      A.MAINTAIN_COST,
+      A.COMPANY_ID,
+      A.ROBOT_EX_FACTORY_COST,
+      sssi.COMPANY_NAME,
+      B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+      SYS_SCENIC_SPOT_TARGET_AMOUNT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        LEFT JOIN SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi ON A.COMPANY_ID = sssi.COMPANY_ID
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="date != null and date != ''">
+        AND A.DATE LIKE CONCAT('%',#{date},'%')
+      </if>
+      <if test="targetAmount != null and targetAmount != ''">
+        AND A.TARGET_AMOUNT = #{targetAmount}
+      </if>
+      <if test="companyId != null and companyId != ''">
+        AND A.COMPANY_ID = #{companyId}
+      </if>
+    </where>
+    group by TARGET_AMOUNT_ID
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+  <select id="getTargetAmountById" resultMap="BaseResultMap" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmount">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_TARGET_AMOUNT
+    where SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT}
+    and TARGET_STATE = #{targetState,jdbcType=VARCHAR}
+    and DATE LIKE CONCAT('%',#{date},'%')
+  </select>
+
+  <select id="getTargetAmountListExel" resultType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmount">
+    SELECT
+    A.TARGET_AMOUNT_ID,
+    A.SCENIC_SPOT_ID,
+    A.TARGET_AMOUNT,
+    A.ROBOT_TARGET_AMOUNT,
+    A.TARGET_STATE,
+    A.CREATE_DATE,
+    A.UPDATE_DATE,
+    A.DATE,
+    A.ROBOT_COST,
+    A.OPERATE_COST,
+    A.SPOT_MARKET_COST,
+    A.RENT,
+    A.MAINTAIN_COST,
+    B.SCENIC_SPOT_NAME AS scenicSpotName,
+    sscc.COMPANY_NAME
+    FROM
+    SYS_SCENIC_SPOT_TARGET_AMOUNT A
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    LEFT JOIN SYS_SCENIC_COOPERATIVE_COMPANY sscc ON A.COMPANY_ID = sscc.COMPANY_ID
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="date != null and date != ''">
+        AND A.DATE LIKE CONCAT('%',#{date},'%')
+      </if>
+      <if test="targetAmount != null and targetAmount != ''">
+        AND A.TARGET_AMOUNT = #{targetAmount}
+      </if>
+      <if test="companyId != null and companyId != ''">
+        AND A.COMPANY_ID = #{companyId}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+
+  </select>
+
+  <select id="getTargetAmountGpmList" resultType="java.lang.Double">
+
+    select SUM(OPERATE_COST+SPOT_MARKET_COST+RENT+MAINTAIN_COST)
+    from  SYS_SCENIC_SPOT_TARGET_AMOUNT
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        and SCENIC_SPOT_ID =#{scenicSpotId}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        and DATE &gt;= #{startTime}
+      </if>
+      <if test="endTime != null and startTime != ''">
+        and DATE &lt;= #{endTime}
+      </if>
+    </where>
+  </select>
+
+  <select id="getSpotIdAndDateByTagret" resultType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmount">
+    select *
+    from SYS_SCENIC_SPOT_TARGET_AMOUNT
+    where SCENIC_SPOT_ID = #{scenicSpotId}
+    and DATE = #{date}
+  </select>
+
+
+</mapper>

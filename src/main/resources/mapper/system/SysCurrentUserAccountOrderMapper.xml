@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysCurrentUserAccountOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysCurrentUserAccountOrder" >
+    <id column="ACCOUNT_ORDER_ID" property="accountOrderId" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="ORDER_START" property="orderStart" jdbcType="VARCHAR" />
+    <result column="RECHARGE_AMOUNT" property="rechargeAmount" jdbcType="VARCHAR" />
+    <result column="DONATION_AMOUNT" property="donationAmount" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="PAYMENT_METHOD" property="paymentMethod" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_ORDER_NUMBER" property="accountOrderNumber" jdbcType="VARCHAR" />
+    <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="REFUND_AMOUNT" property="refundAmount" jdbcType="VARCHAR"/>
+    <result column="REVENUE_AMOUNT" property="revenueAmount" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ACCOUNT_ORDER_ID, USER_ID, ORDER_START, RECHARGE_AMOUNT, DONATION_AMOUNT, SCENIC_SPOT_ID, 
+    PAYMENT_METHOD, ACCOUNT_ORDER_NUMBER, USER_PHONE, CREATE_DATE, UPDATE_DATE,REFUND_AMOUNT,REVENUE_AMOUNT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_USER_ACCOUNT_ORDER
+    where ACCOUNT_ORDER_ID = #{accountOrderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_CURRENT_USER_ACCOUNT_ORDER
+    where ACCOUNT_ORDER_ID = #{accountOrderId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAccountOrder" >
+    insert into SYS_CURRENT_USER_ACCOUNT_ORDER (ACCOUNT_ORDER_ID, USER_ID, ORDER_START, 
+      RECHARGE_AMOUNT, DONATION_AMOUNT, SCENIC_SPOT_ID, 
+      PAYMENT_METHOD, ACCOUNT_ORDER_NUMBER, USER_PHONE, 
+      CREATE_DATE, UPDATE_DATE,REFUND_AMOUNT,REVENUE_AMOUNT)
+    values (#{accountOrderId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{orderStart,jdbcType=VARCHAR}, 
+      #{rechargeAmount,jdbcType=VARCHAR}, #{donationAmount,jdbcType=VARCHAR}, #{scenicSpotId,jdbcType=BIGINT}, 
+      #{paymentMethod,jdbcType=VARCHAR}, #{accountOrderNumber,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR},#{refundAmount,jdbcType=VARCHAR},#{revenueAmount,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAccountOrder" >
+    insert into SYS_CURRENT_USER_ACCOUNT_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountOrderId != null" >
+        ACCOUNT_ORDER_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="orderStart != null" >
+        ORDER_START,
+      </if>
+      <if test="rechargeAmount != null" >
+        RECHARGE_AMOUNT,
+      </if>
+      <if test="donationAmount != null" >
+        DONATION_AMOUNT,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="paymentMethod != null" >
+        PAYMENT_METHOD,
+      </if>
+      <if test="accountOrderNumber != null" >
+        ACCOUNT_ORDER_NUMBER,
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="refundAmount != null">
+        REFUND_AMOUNT,
+      </if>
+      <if test="revenueAmount != null">
+        REVENUE_AMOUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountOrderId != null" >
+        #{accountOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderStart != null" >
+        #{orderStart,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAmount != null" >
+        #{rechargeAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="donationAmount != null" >
+        #{donationAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentMethod != null" >
+        #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="accountOrderNumber != null" >
+        #{accountOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="refundAmount != null">
+        #{refundAmount,jdbcType = VARCHAR},
+      </if>
+      <if test="revenueAmount != null">
+        #{revenueAmount,jdbcType = VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAccountOrder" >
+    update SYS_CURRENT_USER_ACCOUNT_ORDER
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderStart != null" >
+        ORDER_START = #{orderStart,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAmount != null" >
+        RECHARGE_AMOUNT = #{rechargeAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="donationAmount != null" >
+        DONATION_AMOUNT = #{donationAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentMethod != null" >
+        PAYMENT_METHOD = #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="accountOrderNumber != null" >
+        ACCOUNT_ORDER_NUMBER = #{accountOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="refundAmount != null">
+        REFUND_AMOUNT = #{refundAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="revenueAmount != null">
+        REVENUE_AMOUNT = #{refundAmount,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ACCOUNT_ORDER_ID = #{accountOrderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAccountOrder" >
+    update SYS_CURRENT_USER_ACCOUNT_ORDER
+    set USER_ID = #{userId,jdbcType=BIGINT},
+      ORDER_START = #{orderStart,jdbcType=VARCHAR},
+      RECHARGE_AMOUNT = #{rechargeAmount,jdbcType=VARCHAR},
+      DONATION_AMOUNT = #{donationAmount,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      PAYMENT_METHOD = #{paymentMethod,jdbcType=VARCHAR},
+      ACCOUNT_ORDER_NUMBER = #{accountOrderNumber,jdbcType=VARCHAR},
+      USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      REFUND_AMOUNT = #{refundAmount,jdbcType=VARCHAR},
+      REVENUE_AMOUNT = #{revenueAmount,jdbcType=VARCHAR}
+    where ACCOUNT_ORDER_ID = #{accountOrderId,jdbcType=BIGINT}
+  </update>
+  <select id="getCurrentUserAccountOrderList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.ACCOUNT_ORDER_ID,
+    A.USER_ID,
+    A.ORDER_START,
+    A.RECHARGE_AMOUNT,
+    A.DONATION_AMOUNT,
+    A.PAYMENT_METHOD,
+    A.ACCOUNT_ORDER_NUMBER,
+    A.USER_PHONE,
+    A.CREATE_DATE,
+    A.UPDATE_DATE,
+    A.REFUND_AMOUNT,
+    A.REVENUE_AMOUNT,
+    B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+    SYS_CURRENT_USER_ACCOUNT_ORDER A LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId !=''" >
+        AND A.SCENIC_SPOT_ID LIKE CONCAT('%',#{scenicSpotId},'%')
+      </if>
+      <if test="userPhone != null and userPhone !=''" >
+        AND A.USER_PHONE LIKE CONCAT('%',#{userPhone},'%')
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    AND ORDER_START = 30
+    ORDER BY CREATE_DATE DESC
+  </select>
+
+  <select id="getCurrentUserAccountOrderListByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_USER_ACCOUNT_ORDER
+    where USER_ID = #{userId}
+    and   ORDER_START = 30
+    order by CREATE_DATE DESC
+  </select>
+
+</mapper>

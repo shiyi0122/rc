@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.InventoryDetailMapper">
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.InventoryDetail">
+        SELECT
+        sgid.id,
+        SUBSTR(sgid.order_time, 1, 10) AS order_time,
+        sgid.order_number,
+        sgid.goods_code,
+        sgid.goods_amount,
+        sgid.unit_pirce,
+        sgid.total_amount,
+        sgid.notes,
+        sgid.spot_name,
+        sgid.phone,
+        sgid.delivery_man,
+        sgid.receiver,
+        sgid.goods_name,
+        sgid.model,
+        sgid.unit,
+        sgid.spot_id,
+        sgid.goods_id,
+        sgid.create_time,
+        sgid.update_time,
+        sgid.type,
+        sgid.apply_number,
+        sgid.IN_STOCK_REASON,
+        sgid.status,
+        sgid.receiving_id,
+        sgid.receiving_name,
+        sgid.receiving_address,
+        sgid.in_stock_type,
+        sgid.courier_number,
+        sgid.express_fee,
+        sgid.confirmed_by_id,
+        su.USER_NAME AS confirmedByName,
+        sgid.WARRANTY_PERIOD,
+        sgid.IS_AN_ERROR,
+        sgid.SIGN_IN_STATE,
+        sgid.RECEIVING_PHONE,
+        srer.ERROR_RECORDS_NO
+        FROM
+        SYS_GOODS_INVENTORY_DETAIL sgid
+        LEFT JOIN SYS_USERS su ON sgid.CONFIRMED_BY_ID = su.USER_ID
+        LEFT JOIN SYS_ROBOT_ERROR_RECORD_DETAIL srerd ON sgid.ID = srerd.GOODS_INVENTORY_DETAIL_ID
+        LEFT JOIN SYS_ROBOT_ERROR_RECORDS srer ON srerd.ERROR_RECORDS_ID = srer.ERROR_RECORDS_ID
+        <where>
+            STATUS &lt;&gt; 2
+            <if test="startDate != null and startDate != ''">
+                and DATE_FORMAT(ORDER_TIME, '%Y-%m-%d') &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and DATE_FORMAT(ORDER_TIME, '%Y-%m-%d') &lt;= #{endDate}
+            </if>
+            <if test="goodId !=  null and goodId != ''">
+                and GOODS_ID = #{goodId}
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                and ORDER_NUMBER like concat('%', #{orderNumber}, '%')
+            </if>
+            <if test="inStockReason  != null and inStockReason != ''">
+                and IN_STOCK_REASON like concat('%',#{inStockReason},'%')
+            </if>
+            <if test="type != null and type != ''">
+                and TYPE = #{type}
+                <if test="spotId != null  and spotId != '' and type == 2">
+                    and SPOT_ID = #{spotId}
+                </if>
+                <if test="spotId != null and spotId != '' and type == 1">
+                    and RECEIVING_ID = #{spotId}
+                </if>
+            </if>
+            <if test="inStockType != null and inStockType != ''">
+                and IN_STOCK_TYPE = #{inStockType}
+            </if>
+            <if test="signInState != null and signInState != null">
+                and SIGN_IN_STATE = #{signInState}
+            </if>
+        </where>
+
+        order by update_time DESC
+    </select>
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.assetsSystem.model.Inventory">
+        insert into SYS_GOODS_INVENTORY_DETAIL(ID, ORDER_TIME, ORDER_NUMBER, GOODS_CODE, GOODS_AMOUNT, UNIT_PIRCE,
+        TOTAL_AMOUNT, NOTES, SPOT_NAME, PHONE, DELIVERY_MAN, RECEIVER,
+        GOODS_NAME, MODEL, UNIT, SPOT_ID, GOODS_ID, CREATE_TIME, UPDATE_TIME,
+        TYPE, APPLY_NUMBER, IN_STOCK_REASON , RECEIVING_ID , RECEIVING_NAME , RECEIVING_ADDRESS , IN_STOCK_TYPE ,
+        COURIER_NUMBER , EXPRESS_FEE
+        ,WARRANTY_PERIOD,IS_AN_ERROR,RECEIVING_PHONE,SPOT_ADDRESS_TYPE_ID,RECEIVING_ADDRESS_TYPE_ID)
+        values
+        <foreach collection="details" separator="," item="detail">
+            (#{detail.id} , #{detail.orderTime} , #{detail.orderNumber} , #{detail.goodsCode} ,
+            #{detail.goodsAmount},#{detail.unitPirce} , #{detail.totalAmount} ,#{detail.notes} , #{detail.spotName} ,
+            #{detail.phone} ,#{detail.deliveryMan} , #{detail.receiver} ,#{detail.goodsName} , #{detail.model}
+            ,#{detail.unit} , #{detail.spotId} , #{detail.goodsId} , now() ,now() ,#{detail.type}
+            ,#{detail.applyNumber},#{detail.inStockReason} , #{detail.receivingId} , #{detail.receivingName} ,
+            #{detail.receivingAddress} , #{inStockType} , #{courierNumber} , #{expressFee} , #{warrantyPeriod} ,
+            #{isAnError}, #{receivingPhone},#{spotAddressTypeId},#{receivingAddressTypeId})
+        </foreach>
+    </insert>
+
+    <select id="getGoodAmountById" resultType="java.lang.Long">
+        select GOODS_AMOUNT
+        from SYS_GOODS_INVENTORY_DETAIL
+        where ID = #{_parameter}
+        limit 1
+    </select>
+
+    <delete id="delete">
+        delete
+        from SYS_GOODS_INVENTORY_DETAIL
+        where ID = #{_parameter}
+    </delete>
+
+    <select id="getById" resultType="com.hna.hka.archive.management.assetsSystem.model.InventoryDetail">
+        select *
+        from SYS_GOODS_INVENTORY_DETAIL
+        where ID = #{_parameter}
+        limit 1
+    </select>
+
+    <update id="updateStatus">
+        update SYS_GOODS_INVENTORY_DETAIL
+        set STATUS = #{status},
+            CONFIRMED_BY_ID = #{userId}
+        where ID = #{id}
+    </update>
+
+    <select id="getByOrderNumber" resultType="com.hna.hka.archive.management.assetsSystem.model.InventoryDetail">
+        select *
+        from SYS_GOODS_INVENTORY_DETAIL
+        where ORDER_NUMBER = #{orderNumber}
+        and STATUS &lt;&gt; 2
+    </select>
+
+    <select id="getByOrderNumberN" resultType="com.hna.hka.archive.management.assetsSystem.model.InventoryDetail">
+        select *
+        from SYS_GOODS_INVENTORY_DETAIL
+        where ORDER_NUMBER = #{orderNumber}
+        <if test="type != null">
+            and TYPE = #{type}
+        </if>
+        and STATUS &lt;&gt; 2
+
+    </select>
+
+    <update id="update" parameterType="com.hna.hka.archive.management.assetsSystem.model.InventoryDetail">
+        update SYS_GOODS_INVENTORY_DETAIL
+        <set>
+            <if test="orderTime != null">
+                ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderNumber != null">
+                ORDER_NUMBER = #{orderNumber,jdbcType=CHAR},
+            </if>
+            <if test="goodsCode != null">
+                GOODS_CODE = #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsAmount != null">
+                GOODS_AMOUNT = #{goodsAmount,jdbcType=INTEGER},
+            </if>
+            <if test="unitPirce != null">
+                UNIT_PIRCE = #{unitPirce,jdbcType=DECIMAL},
+            </if>
+            <if test="totalAmount != null">
+                TOTAL_AMOUNT = #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="notes != null">
+                NOTES = #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="spotName != null">
+                SPOT_NAME = #{spotName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                PHONE = #{phone,jdbcType=CHAR},
+            </if>
+            <if test="deliveryMan != null">
+                DELIVERY_MAN = #{deliveryMan,jdbcType=VARCHAR},
+            </if>
+            <if test="receiver != null">
+                RECEIVER = #{receiver,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null">
+                GOODS_NAME = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                MODEL = #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="spotId != null">
+                SPOT_ID = #{spotId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                GOODS_ID = #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="type != null">
+                TYPE = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="applyNumber != null">
+                APPLY_NUMBER = #{applyNumber,jdbcType=CHAR},
+            </if>
+            <if test="inStockReason != null">
+                IN_STOCK_REASON = #{inStockReason,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="receivingId != null">
+                RECEIVING_ID = #{receivingId,jdbcType=BIGINT},
+            </if>
+            <if test="receivingName != null">
+                RECEIVING_NAME = #{receivingName,jdbcType=VARCHAR},
+            </if>
+            <if test="receivingAddress != null">
+                RECEIVING_ADDRESS = #{receivingAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="inStockType != null">
+                IN_STOCK_TYPE = #{inStockType,jdbcType=VARCHAR},
+            </if>
+            <if test="courierNumber != null">
+                COURIER_NUMBER = #{courierNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="expressFee != null">
+                EXPRESS_FEE = #{expressFee,jdbcType=VARCHAR},
+            </if>
+            <if test="confirmedById != null">
+                CONFIRMED_BY_ID = #{confirmedById,jdbcType=VARCHAR},
+            </if>
+            <if test="warrantyPeriod != null">
+                WARRANTY_PERIOD = #{warrantyPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="isAnError != null">
+                IS_AN_ERROR = #{isAnError,jdbcType=VARCHAR},
+            </if>
+            <if test="signInState != null">
+                SIGN_IN_STATE = #{signInState,jdbcType=VARCHAR},
+            </if>
+            <if test="receivingPhone != null">
+                RECEIVING_PHONE = #{receivingPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="spotAddressTypeId != null">
+                SPOT_ADDRESS_TYPE_ID = #{spotAddressTypeId,jdbcType=VARCHAR},
+            </if>
+            <if test="receivingAddressTypeId != null">
+                RECEIVING_ADDRESS_TYPE_ID = #{receivingAddressTypeId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.InventoryDetail">
+        insert into SYS_GOODS_INVENTORY_DETAIL
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="orderTime != null">
+                ORDER_TIME,
+            </if>
+            <if test="orderNumber != null">
+                ORDER_NUMBER,
+            </if>
+            <if test="goodsCode != null">
+                GOODS_CODE,
+            </if>
+            <if test="goodsAmount != null">
+                GOODS_AMOUNT,
+            </if>
+            <if test="unitPirce != null">
+                UNIT_PIRCE,
+            </if>
+            <if test="totalAmount != null">
+                TOTAL_AMOUNT,
+            </if>
+            <if test="notes != null">
+                NOTES,
+            </if>
+            <if test="spotName != null">
+                SPOT_NAME,
+            </if>
+            <if test="phone != null">
+                PHONE,
+            </if>
+            <if test="deliveryMan != null">
+                DELIVERY_MAN,
+            </if>
+            <if test="receiver != null">
+                RECEIVER,
+            </if>
+            <if test="goodsName != null">
+                GOODS_NAME,
+            </if>
+            <if test="model != null">
+                MODEL,
+            </if>
+            <if test="unit != null">
+                UNIT,
+            </if>
+            <if test="spotId != null">
+                SPOT_ID,
+            </if>
+            <if test="goodsId != null">
+                GOODS_ID,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="applyNumber != null">
+                APPLY_NUMBER,
+            </if>
+            <if test="inStockReason != null">
+                IN_STOCK_REASON,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="receivingId != null">
+                RECEIVING_ID,
+            </if>
+            <if test="receivingName != null">
+                RECEIVING_NAME,
+            </if>
+            <if test="receivingAddress != null">
+                RECEIVING_ADDRESS,
+            </if>
+            <if test="inStockType != null">
+                IN_STOCK_TYPE,
+            </if>
+            <if test="courierNumber != null">
+                COURIER_NUMBER,
+            </if>
+            <if test="expressFee != null">
+                EXPRESS_FEE,
+            </if>
+            <if test="confirmedById != null">
+                CONFIRMED_BY_ID,
+            </if>
+            <if test="warrantyPeriod != null">
+                WARRANTY_PERIOD,
+            </if>
+            <if test="isAnError != null">
+                IS_AN_ERROR,
+            </if>
+            <if test="signInState != null">
+                SIGN_IN_STATE,
+            </if>
+            <if test="receivingPhone != null">
+                RECEIVING_PHONE,
+            </if>
+            <if test="spotAddressTypeId != null">
+                SPOT_ADDRESS_TYPE_ID,
+            </if>
+            <if test="receivingAddressTypeId != null">
+                RECEIVING_ADDRESS_TYPE_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orderTime != null">
+                #{orderTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderNumber != null">
+                #{orderNumber,jdbcType=CHAR},
+            </if>
+            <if test="goodsCode != null">
+                #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsAmount != null">
+                #{goodsAmount,jdbcType=INTEGER},
+            </if>
+            <if test="unitPirce != null">
+                #{unitPirce,jdbcType=DECIMAL},
+            </if>
+            <if test="totalAmount != null">
+                #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="notes != null">
+                #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="spotName != null">
+                #{spotName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=CHAR},
+            </if>
+            <if test="deliveryMan != null">
+                #{deliveryMan,jdbcType=VARCHAR},
+            </if>
+            <if test="receiver != null">
+                #{receiver,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="spotId != null">
+                #{spotId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="applyNumber != null">
+                #{applyNumber,jdbcType=CHAR},
+            </if>
+            <if test="inStockReason != null">
+                #{inStockReason,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="receivingId != null">
+                #{receivingId,jdbcType=BIGINT},
+            </if>
+            <if test="receivingName != null">
+                #{receivingName,jdbcType=VARCHAR},
+            </if>
+            <if test="receivingAddress != null">
+                #{receivingAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="inStockType != null">
+                #{inStockType,jdbcType=VARCHAR},
+            </if>
+            <if test="courierNumber != null">
+                #{courierNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="expressFee != null">
+                #{expressFee,jdbcType=VARCHAR},
+            </if>
+            <if test="confirmedById != null">
+                #{confirmedById,jdbcType=VARCHAR},
+            </if>
+            <if test="warrantyPeriod != null">
+                #{warrantyPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="isAnError != null">
+                #{isAnError,jdbcType=VARCHAR},
+            </if>
+            <if test="signInState != null">
+                #{signInState,jdbcType=VARCHAR},
+            </if>
+            <if test="receivingPhone != null">
+                #{receivingPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="spotAddressTypeId != null">
+                #{spotAddressTypeId,jdbcType=VARCHAR},
+            </if>
+            <if test="receivingAddressTypeId != null">
+                #{receivingAddressTypeId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="total" resultType="java.util.Map">
+        select sum(UNIT_PIRCE) as purchasePrice ,sum(TOTAL_AMOUNT) as salePrice, sum(EXPRESS_FEE) as expressPrice
+        from SYS_GOODS_INVENTORY_DETAIL
+        <where>
+            STATUS &lt;&gt; 2
+            <if test="startDate != null and startDate != ''">
+                and DATE_FORMAT(ORDER_TIME, '%Y-%m-%d') &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and DATE_FORMAT(ORDER_TIME, '%Y-%m-%d') &lt;= #{endDate}
+            </if>
+            <if test="goodId !=  null and goodId != ''">
+                and GOODS_ID = #{goodId}
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                and ORDER_NUMBER like concat('%', #{orderNumber}, '%')
+            </if>
+            <if test="inStockReason  != null and inStockReason != ''">
+                and IN_STOCK_REASON like concat('%',#{inStockReason},'%')
+            </if>
+            <if test="type != null and type != ''">
+                and TYPE = #{type}
+                <if test="spotId != null  and spotId != '' and type == 1">
+                    and SPOT_ID = #{spotId}
+                </if>
+                <if test="spotId != null and spotId != '' and type == 2">
+                    and RECEIVING_ID = #{spotId}
+                </if>
+            </if>
+            <if test="inStockType != null and inStockType != ''">
+                and IN_STOCK_TYPE = #{inStockType}
+            </if>
+            <if test="signInState != null and signInState != null">
+                and SIGN_IN_STATE = #{signInState}
+            </if>
+        </where>
+
+    </select>
+
+    <update id="updateSignInStatus">
+        update SYS_GOODS_INVENTORY_DETAIL
+        set SIGN_IN_STATE = #{status}
+        where ID = #{id}
+    </update>
+    <select id="listById" resultType="com.hna.hka.archive.management.assetsSystem.model.InventoryDetail">
+        select
+        ID,ORDER_NUMBER
+        from
+        SYS_GOODS_INVENTORY_DETAIL
+        where
+        type = 1
+    </select>
+    <update id="updateSys">
+        update SYS_ROBOT_ERROR_RECORD_DETAIL
+        set GOODS_INVENTORY_DETAIL_ID =#{goodsInventoryDetailId}
+        where ERROR_RECORDS_ID =#{errorRecordsId}
+    </update>
+    <select id="listByIds" resultType="int">
+        SELECT
+            GOODS_ID,
+            SUM(GOODS_AMOUNT) AS total_amount
+        FROM
+            SYS_GOODS_INVENTORY_DETAIL
+        WHERE
+            GOODS_ID =#{goodsId,jdbcType=BIGINT}
+            AND TYPE = 1
+        GROUP BY
+            GOODS_ID;
+    </select>
+
+
+</mapper>

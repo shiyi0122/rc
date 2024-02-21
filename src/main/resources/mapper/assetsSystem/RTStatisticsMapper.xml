@@ -1,0 +1,1009 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.RTStatisticsMapper">
+
+    <sql id="substr">
+        <choose>
+            <when test="dateType == 3">
+                4
+            </when>
+            <when test="dateType == 2">
+                7
+            </when>
+            <when test="dateType == 1">
+                10
+            </when>
+            <otherwise>10</otherwise>
+        </choose>
+    </sql>
+
+    <sql id="substr1">
+        <choose>
+            <when test="dateType == 3">
+                4
+            </when>
+            <when test="dateType == 2">
+                7
+            </when>
+            <when test="dateType == 1">
+                7
+            </when>
+            <otherwise>7</otherwise>
+        </choose>
+    </sql>
+
+    <sql id="avgType">
+        <choose>
+            <when test="dateType == 3">
+                365
+            </when>
+            <when test="dateType == 2">
+                30
+            </when>
+            <when test="dateType == 1">
+                1
+            </when>
+            <otherwise>1</otherwise>
+        </choose>
+    </sql>
+
+    <sql id="timeList">
+        select * from(
+        SELECT b.checkDate,
+        b.SCENIC_SPOT_ID spotId,
+        SCENIC_SPOT_NAME spotName,
+        b.ROBOT_CODE robotCode,
+        ROUND(SUM(b.TOTAL_TIME)/60, 2) totalTime,
+        ifnull(ROUND((SUM(b.TOTAL_TIME) - sum(b.hb)) / sum(b.hb) * 100, 2) , 0) as hb,
+        ifnull(ROUND((SUM(b.TOTAL_TIME) - sum(b.tb)) / sum(b.tb) * 100, 2) , 0) as tb,
+        round(SUM(b.TOTAL_TIME)/60 / sum(b.count) * <include refid="avgType"></include> , 2) as avgsc,
+        (
+        select COUNT(1)
+        from SYS_ORDER so
+        WHERE b.SCENIC_SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        and ORDER_STATUS = '10') as jxz
+        from (
+        SELECT substr(checkDate, 1, <include refid="substr"></include>) as checkDate,
+        a.SCENIC_SPOT_ID,
+        a.SCENIC_SPOT_NAME,
+        a.ROBOT_CODE,
+        sum(a.COUNT) as count,
+        SUM(a.TOTAL_TIME) as TOTAL_TIME,
+        (
+        select SUM(ssoi2.TOTAL_TIME)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE a.SCENIC_SPOT_ID = ssoi2.SPOT_ID
+        <choose>
+            <when test="type == 2">and a.ROBOT_CODE = ssoi2.ROBOT_CODE</when>
+        </choose>
+        and SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 MONTH), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as hb,
+        (
+        select SUM(ssoi2.TOTAL_TIME)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE a.SCENIC_SPOT_ID = ssoi2.SPOT_ID
+        <choose>
+            <when test="type == 2">and a.ROBOT_CODE = ssoi2.ROBOT_CODE</when>
+        </choose>
+        and SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 YEAR), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as tb
+        FROM (
+        SELECT vc.checkDate,
+        sss.SCENIC_SPOT_ID,
+        sss.SCENIC_SPOT_NAME,
+        ssoi.ROBOT_CODE,
+        SUM(ssoi.TOTAL_TIME) as TOTAL_TIME,
+        srtd.COUNT
+        from D_CALENDAR vc
+        left join SYS_SCENIC_SPOT sss on
+        1 = 1
+        left join SYS_SCENIC_OPERATIONAL_INVENTORY ssoi on
+        sss.SCENIC_SPOT_ID = ssoi.SPOT_ID
+        and vc.checkDate = ssoi.`DATE`
+        LEFT JOIN S_ROBOT_TOTAL_DAY srtd on
+        sss.SCENIC_SPOT_ID = srtd.SOPT_ID
+        and vc.checkDate = srtd.`DATE`
+        <where>
+            <if test="companyId != null">
+                and sss.COMPANY_ID = #{companyId}
+            </if>
+            <if test="spotId != null">
+                and sss.SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and substr(checkDate , 1 , <include refid="substr"></include>) &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(checkDate , 1 , <include refid="substr"></include>) &lt;= #{endDate}
+            </if>
+            <if test="status != null and status != ''">
+                and sss.ROBOT_WAKEUP_WORDS in
+                <foreach collection="status.split(',')" separator="," open="(" close=")" item="stat">
+                    #{stat}
+                </foreach>
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                and ssoi.ROBOT_CODE like concat('%',#{robotCode},'%')
+            </if>
+        </where>
+        GROUP BY vc.checkDate,
+        sss.SCENIC_SPOT_ID
+        <if test="type == 2">,ssoi.ROBOT_CODE</if>) a
+        GROUP by substr(checkDate, 1, <include refid="substr"></include>), a.SCENIC_SPOT_ID<if test="type == 2">
+        ,a.ROBOT_CODE</if>) b
+        group by b.checkDate, b.SCENIC_SPOT_ID,b.ROBOT_CODE
+        <if test="type == 2">,b.ROBOT_CODE</if>
+        ) b
+        <where>
+            <if test="timeType == 1 and totalTime != null">
+                and b.totalTime &gt; #{totalTime}
+            </if>
+            <if test="timeType == 2 and totalTime != null">
+                and b.avgsc &gt; #{totalTime}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="spotTimeList">
+        select * from (
+        SELECT concat(#{startDate} , ' ~ ' , #{endDate}) as checkDate,
+        b.SCENIC_SPOT_ID spotId,
+        SCENIC_SPOT_NAME spotName,
+        b.ROBOT_CODE robotCode,
+        ROUND(SUM(b.TOTAL_TIME)/60, 2) totalTime,
+        ifnull(ROUND((SUM(b.TOTAL_TIME) - sum(b.hb)) / sum(b.hb) * 100, 2) , 0) as hb,
+        ifnull(ROUND((SUM(b.TOTAL_TIME) - sum(b.tb)) / sum(b.tb) * 100, 2) , 0) as tb,
+        round(SUM(b.TOTAL_TIME)/60 / sum(b.count) * <include refid="avgType"></include> , 2) as avgsc,
+        (
+        select COUNT(1)
+        from SYS_ORDER so
+        WHERE b.SCENIC_SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        and ORDER_STATUS = '10') as jxz
+        from (
+        SELECT substr(checkDate, 1, <include refid="substr"></include>) as checkDate,
+        a.SCENIC_SPOT_ID,
+        a.SCENIC_SPOT_NAME,
+        a.ROBOT_CODE,
+        sum(a.COUNT) as count,
+        SUM(a.TOTAL_TIME) as TOTAL_TIME,
+        (
+        select SUM(ssoi2.TOTAL_TIME)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE a.SCENIC_SPOT_ID = ssoi2.SPOT_ID
+        <choose><when test="type == 2">and a.ROBOT_CODE = ssoi2.ROBOT_CODE</when></choose>
+        and SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 MONTH), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as hb,
+        (
+        select SUM(ssoi2.TOTAL_TIME)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE a.SCENIC_SPOT_ID = ssoi2.SPOT_ID
+        <choose><when test="type == 2">and a.ROBOT_CODE = ssoi2.ROBOT_CODE</when></choose>
+        and SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 YEAR), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as tb
+        FROM (
+        SELECT vc.checkDate,
+        sss.SCENIC_SPOT_ID,
+        sss.SCENIC_SPOT_NAME,
+        ssoi.ROBOT_CODE,
+        SUM(ssoi.TOTAL_TIME) as TOTAL_TIME,
+        srtd.COUNT
+        from D_CALENDAR vc
+        left join SYS_SCENIC_SPOT sss on
+        1 = 1
+        left join SYS_SCENIC_OPERATIONAL_INVENTORY ssoi on
+        sss.SCENIC_SPOT_ID = ssoi.SPOT_ID
+        and vc.checkDate = ssoi.`DATE`
+        LEFT JOIN S_ROBOT_TOTAL_DAY srtd on
+        sss.SCENIC_SPOT_ID = srtd.SOPT_ID
+        and vc.checkDate = srtd.`DATE`
+        <where>
+            <if test="companyId != null">
+                and sss.COMPANY_ID = #{companyId}
+            </if>
+            <if test="spotId != null">
+                and sss.SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and substr(checkDate , 1 , <include refid="substr"></include>) &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(checkDate , 1 , <include refid="substr"></include>) &lt;= #{endDate}
+            </if>
+            <if test="status != null and status != ''">
+                and sss.ROBOT_WAKEUP_WORDS in
+                <foreach collection="status.split(',')" separator="," open="(" close=")" item="stat">
+                    #{stat}
+                </foreach>
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                and ssoi.ROBOT_CODE like concat('%',#{robotCode},'%')
+            </if>
+        </where>
+        GROUP BY vc.checkDate,
+        sss.SCENIC_SPOT_ID
+        <if test="type == 2">,ssoi.ROBOT_CODE</if>) a
+        GROUP by substr(checkDate, 1, <include refid="substr"></include>), a.SCENIC_SPOT_ID<if test="type == 2">
+        ,a.ROBOT_CODE</if>) b
+        group by b.SCENIC_SPOT_ID <if test="type == 2">,b.ROBOT_CODE</if>) b
+
+        <where>
+            <if test="timeType == 1 and totalTime != null">
+                and totalTime &gt; #{totalTime}
+            </if>
+            <if test="timeType == 2 and totalTime != null">
+                and avgsc &gt; #{totalTime}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="amountList">
+        select * from (
+        SELECT b.checkDate,
+        b.SCENIC_SPOT_ID spotId,
+        SCENIC_SPOT_NAME spotName,
+        b.ROBOT_CODE,
+        ROUND(SUM(b.REAL_AMOUNT), 2) realAmount,
+        ifnull(ROUND((SUM(b.REAL_AMOUNT) - sum(b.hb)) / sum(b.hb) * 100, 2) , 0) as hb,
+        ifnull(ROUND((SUM(b.REAL_AMOUNT) - sum(b.tb)) / sum(b.tb) * 100, 2) , 0) as tb,
+        round(SUM(b.REAL_AMOUNT) / sum(b.count) * <include refid="avgType"></include> , 2) as avgsc,
+        round(sum(b.TOTAL_TIME) / sum(b.count) / 60 * <include refid="avgType"></include> , 2) as avgyysc,
+        sum(b.wuyingshou) as wuyingshou,
+        ROUND(sum(b.TOTAL_TIME) / 60 , 2) as yysc,
+        <if test="type == 1">
+            d.SPOT_TARGET as target,
+            ROUND(b.REAL_AMOUNT / d.SPOT_TARGET * 100, 2) mbwcbl,
+        </if>
+        <if test="type == 2">
+            d.ROBOT_TARGET as target,
+            ROUND(b.REAL_AMOUNT / d.ROBOT_TARGET * 100, 2) mbwcbl,
+        </if>
+        (
+        select COUNT(1)
+        from SYS_ORDER so
+        WHERE b.SCENIC_SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        and ORDER_STATUS = '10') as jxz
+        from (
+        SELECT substr(checkDate, 1, <include refid="substr"></include>) as checkDate,
+        a.SCENIC_SPOT_ID,
+        a.SCENIC_SPOT_NAME,
+        a.ROBOT_CODE,
+        SUM(a.REAL_AMOUNT) as REAL_AMOUNT,
+        sum(a.COUNT) as count,
+        sum(a.isn) as wuyingshou,
+        SUM(a.TOTAL_TIME) as TOTAL_TIME,
+        (
+        select SUM(ssoi2.REAL_AMOUNT)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE a.SCENIC_SPOT_ID = ssoi2.SPOT_ID
+        <choose><when test="type == 2">and a.ROBOT_CODE = ssoi2.ROBOT_CODE</when></choose>
+        and SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 MONTH), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as hb,
+        (
+        select SUM(ssoi2.REAL_AMOUNT)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE a.SCENIC_SPOT_ID = ssoi2.SPOT_ID
+        <choose><when test="type == 2">and a.ROBOT_CODE = ssoi2.ROBOT_CODE</when></choose>
+        and SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 YEAR), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as tb
+        FROM (
+        SELECT vc.checkDate,
+        sss.SCENIC_SPOT_ID,
+        sss.SCENIC_SPOT_NAME,
+        ssoi.ROBOT_CODE,
+        SUM(ssoi.REAL_AMOUNT) as REAL_AMOUNT,
+        case
+        when REAL_AMOUNT is null then 1
+        else 0
+        end isn,
+        SUM(ssoi.TOTAL_TIME) as TOTAL_TIME,
+        srtd.COUNT
+        from D_CALENDAR vc
+        left join SYS_SCENIC_SPOT sss on
+        1 = 1
+        left join SYS_SCENIC_OPERATIONAL_INVENTORY ssoi on
+        sss.SCENIC_SPOT_ID = ssoi.SPOT_ID
+        and vc.checkDate = ssoi.`DATE`
+        LEFT JOIN S_ROBOT_TOTAL_DAY srtd on
+        sss.SCENIC_SPOT_ID = srtd.SOPT_ID
+        and vc.checkDate = srtd.`DATE`
+        <where>
+            <if test="companyId != null">
+                and sss.COMPANY_ID = #{companyId}
+            </if>
+            <if test="spotId != null">
+                and sss.SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and substr(checkDate , 1 , <include refid="substr"></include>) &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(checkDate , 1 , <include refid="substr"></include>) &lt;= #{endDate}
+            </if>
+            <if test="status != null and status != ''">
+                and sss.ROBOT_WAKEUP_WORDS in
+                <foreach collection="status.split(',')" separator="," open="(" close=")" item="stat">
+                    #{stat}
+                </foreach>
+            </if>
+            <if test="payType != null">
+                and ssoi.PAYMENT_TYPE in
+                <foreach collection="payType.split(',')" separator="," open="(" close=")" item="stat">
+                    #{stat}
+                </foreach>
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                and ssoi.ROBOT_CODE like concat('%',#{robotCode},'%')
+            </if>
+        </where>
+        GROUP BY vc.checkDate,
+        sss.SCENIC_SPOT_ID
+        <if test="type == 2">,ssoi.ROBOT_CODE</if>) a
+        GROUP by substr(checkDate, 1, <include refid="substr"></include>), a.SCENIC_SPOT_ID<if test="type == 2">
+        ,a.ROBOT_CODE</if>) b
+        left join
+        (
+        select sssta.SPOT_ID,
+               sssta.STATIC_DATE,
+        sum(sssta.SPOT_TARGET) as SPOT_TARGET,
+        SUM(sssta.ROBOT_TARGET) as ROBOT_TARGET
+        from SYS_SCENIC_SPOT_TARGET_AMOUNT1 sssta
+        <where>
+            <if test="startDate != null and startDate != ''">
+                and substr(sssta.STATIC_DATE , 1 , <include refid="substr1"></include>) &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(sssta.STATIC_DATE , 1 , <include refid="substr1"></include>) &lt;= #{endDate}
+            </if>
+        </where>
+        group by sssta.SPOT_ID , substr(sssta.STATIC_DATE , 1 , <include refid="substr1"></include>)) d on
+        b.SCENIC_SPOT_ID = d.SPOT_ID
+        and substr(b.checkDate , 1 , <include refid="substr"></include>) = substr(d.STATIC_DATE , 1 , <include
+            refid="substr1"></include>)
+        group by b.checkDate , b.SCENIC_SPOT_ID) b
+
+        <where>
+            <if test="amountType == 1 and totalAmount != null">
+                and realAmount &gt; #{totalAmount}
+            </if>
+            <if test="amountType == 2 and totalAmount != null">
+                and avgsc &gt; #{totalAmount}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="spotAmountList">
+        select * from (
+        SELECT concat(#{startDate} , ' ~ ' , #{endDate}) as checkDate,
+        b.SCENIC_SPOT_ID spotId,
+        SCENIC_SPOT_NAME spotName,
+        b.ROBOT_CODE,
+        ROUND(SUM(b.REAL_AMOUNT), 2) realAmount,
+        ifnull(ROUND((SUM(b.REAL_AMOUNT) - sum(b.hb)) / sum(b.hb) * 100, 2) , 0) as hb,
+        ifnull(ROUND((SUM(b.REAL_AMOUNT) - sum(b.tb)) / sum(b.tb) * 100, 2) , 0) as tb,
+        round(SUM(b.REAL_AMOUNT) / sum(b.count) * <include refid="avgType"></include> , 2) as avgsc,
+        round(sum(b.TOTAL_TIME) / sum(b.count) / 60 * <include refid="avgType"></include> , 2) as avgyysc,
+        sum(b.wuyingshou) as wuyingshou,
+        ROUND(sum(b.TOTAL_TIME) / 60 , 2) as yysc,
+        <if test="type == 1">
+            d.SPOT_TARGET as target,
+            ROUND(b.REAL_AMOUNT / d.SPOT_TARGET * 100, 2) mbwcbl,
+        </if>
+        <if test="type == 2">
+            d.ROBOT_TARGET as target,
+            ROUND(b.REAL_AMOUNT / d.ROBOT_TARGET * 100, 2) mbwcbl,
+        </if>        (
+        select COUNT(1)
+        from SYS_ORDER so
+        WHERE b.SCENIC_SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        and ORDER_STATUS = '10') as jxz
+        from (
+        SELECT substr(checkDate, 1, <include refid="substr"></include>) as checkDate,
+        a.SCENIC_SPOT_ID,
+        a.SCENIC_SPOT_NAME,
+        a.ROBOT_CODE,
+        SUM(a.REAL_AMOUNT) as REAL_AMOUNT,
+        sum(a.COUNT) as count,
+        sum(a.isn) as wuyingshou,
+        SUM(a.TOTAL_TIME) as TOTAL_TIME,
+        (
+        select SUM(ssoi2.REAL_AMOUNT)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE a.SCENIC_SPOT_ID = ssoi2.SPOT_ID
+        <choose><when test="type == 2">and a.ROBOT_CODE = ssoi2.ROBOT_CODE</when></choose>
+        and SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 MONTH), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as hb,
+        (
+        select SUM(ssoi2.REAL_AMOUNT)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE a.SCENIC_SPOT_ID = ssoi2.SPOT_ID
+        <choose><when test="type == 2">and a.ROBOT_CODE = ssoi2.ROBOT_CODE</when></choose>
+        and SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 YEAR), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as tb
+        FROM (
+        SELECT vc.checkDate,
+        sss.SCENIC_SPOT_ID,
+        sss.SCENIC_SPOT_NAME,
+        ssoi.ROBOT_CODE,
+        SUM(ssoi.REAL_AMOUNT) as REAL_AMOUNT,
+        case
+        when REAL_AMOUNT is null then 1
+        else 0
+        end isn,
+        SUM(ssoi.TOTAL_TIME) as TOTAL_TIME,
+        srtd.COUNT
+        from D_CALENDAR vc
+        left join SYS_SCENIC_SPOT sss on
+        1 = 1
+        left join SYS_SCENIC_OPERATIONAL_INVENTORY ssoi on
+        sss.SCENIC_SPOT_ID = ssoi.SPOT_ID
+        and vc.checkDate = ssoi.`DATE`
+        LEFT JOIN S_ROBOT_TOTAL_DAY srtd on
+        sss.SCENIC_SPOT_ID = srtd.SOPT_ID
+        and vc.checkDate = srtd.`DATE`
+        <where>
+            <if test="companyId != null">
+                and sss.COMPANY_ID = #{companyId}
+            </if>
+            <if test="spotId != null">
+                and sss.SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and substr(checkDate , 1 , <include refid="substr"></include>) &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(checkDate , 1 , <include refid="substr"></include>) &lt;= #{endDate}
+            </if>
+            <if test="status != null and status != ''">
+                and sss.ROBOT_WAKEUP_WORDS in
+                <foreach collection="status.split(',')" separator="," open="(" close=")" item="stat">
+                    #{stat}
+                </foreach>
+            </if>
+            <if test="payType != null">
+                and ssoi.PAYMENT_TYPE in
+                <foreach collection="payType.split(',')" separator="," open="(" close=")" item="stat">
+                    #{stat}
+                </foreach>
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                and ssoi.ROBOT_CODE like concat('%',#{robotCode},'%')
+            </if>
+        </where>
+        GROUP BY vc.checkDate,
+        sss.SCENIC_SPOT_ID
+        <if test="type == 2">,ssoi.ROBOT_CODE</if>) a
+        GROUP by substr(checkDate, 1, <include refid="substr"></include>), a.SCENIC_SPOT_ID<if test="type == 2">
+        ,a.ROBOT_CODE</if>) b
+        left join
+        (
+        select sssta.SPOT_ID,
+        sum(sssta.SPOT_TARGET) as SPOT_TARGET,
+        SUM(sssta.ROBOT_TARGET) as ROBOT_TARGET
+        from SYS_SCENIC_SPOT_TARGET_AMOUNT1 sssta
+        <where>
+            <if test="startDate != null and startDate != ''">
+                and substr(sssta.STATIC_DATE , 1 , <include refid="substr1"></include>) &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(sssta.STATIC_DATE , 1 , <include refid="substr1"></include>) &lt;= #{endDate}
+            </if>
+        </where>
+        group by sssta.SPOT_ID) d on
+        b.SCENIC_SPOT_ID = d.SPOT_ID
+        group by b.SCENIC_SPOT_ID) b
+        <where>
+            <if test="amountType == 1 and totalAmount != null">
+                and realAmount &gt; #{totalAmount}
+            </if>
+            <if test="amountType == 2 and totalAmount != null">
+                and avgsc &gt; #{totalAmount}
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="spotAmountListNew">
+        select * from (
+        SELECT concat(#{startDate} , ' ~ ' , #{endDate}) as checkDate,
+        b.SCENIC_SPOT_ID spotId,
+        SCENIC_SPOT_NAME spotName,
+<!--        b.ROBOT_CODE,-->
+        b.ORDER_ROBOT_CODE,
+        ROUND(SUM(b.REAL_AMOUNT), 2) realAmount,
+        ifnull(ROUND((SUM(b.REAL_AMOUNT) - sum(b.hb)) / sum(b.hb) * 100, 2) , 0) as hb,
+        ifnull(ROUND((SUM(b.REAL_AMOUNT) - sum(b.tb)) / sum(b.tb) * 100, 2) , 0) as tb,
+        round(SUM(b.REAL_AMOUNT) / sum(b.count) * <include refid="avgType"></include> , 2) as avgsc,
+        round(sum(b.TOTAL_TIME) / sum(b.count) / 60 * <include refid="avgType"></include> , 2) as avgyysc,
+        sum(b.wuyingshou) as wuyingshou,
+        ROUND(sum(b.TOTAL_TIME) / 60 , 2) as yysc,
+        <if test="type == 1">
+            d.SPOT_TARGET as target,
+            ROUND(b.REAL_AMOUNT / d.SPOT_TARGET * 100, 2) mbwcbl,
+        </if>
+        <if test="type == 2">
+            d.ROBOT_TARGET as target,
+            ROUND(b.REAL_AMOUNT / d.ROBOT_TARGET * 100, 2) mbwcbl,
+        </if>        (
+        select COUNT(1)
+        from SYS_ORDER so
+        WHERE b.SCENIC_SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        and ORDER_STATUS = '10') as jxz
+        from (
+        SELECT substr(checkDate, 1, <include refid="substr"></include>) as checkDate,
+        a.SCENIC_SPOT_ID,
+        a.SCENIC_SPOT_NAME,
+<!--        a.ROBOT_CODE,-->
+        a.ORDER_ROBOT_CODE,
+        SUM(a.REAL_AMOUNT) as REAL_AMOUNT,
+        sum(a.COUNT) as count,
+        sum(a.isn) as wuyingshou,
+        SUM(a.TOTAL_TIME) as TOTAL_TIME,
+        (
+        select SUM(ssoi2.REAL_AMOUNT)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE a.SCENIC_SPOT_ID = ssoi2.SPOT_ID
+        <choose><when test="type == 2">and a.ORDER_ROBOT_CODE = ssoi2.ROBOT_CODE</when></choose>
+        and SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 MONTH), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as hb,
+        (
+        select SUM(ssoi2.REAL_AMOUNT)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE a.SCENIC_SPOT_ID = ssoi2.SPOT_ID
+        <choose><when test="type == 2">and a.ORDER_ROBOT_CODE = ssoi2.ROBOT_CODE</when></choose>
+        and SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 YEAR), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as tb
+        FROM (
+
+        select  checkDate,
+                SCENIC_SPOT_ID,
+                SCENIC_SPOT_NAME,
+                ORDER_ROBOT_CODE,
+                REAL_AMOUNT,
+                case
+                when c.REAL_AMOUNT is null then 1
+                else 0
+                end isn,
+                TOTAL_TIME,
+                COUNT
+        FROM (
+        SELECT
+        vc.CREATE_DATE as checkDate,
+        sss.SCENIC_SPOT_ID,
+        sss.SCENIC_SPOT_NAME,
+        vc.ORDER_ROBOT_CODE,
+        SUM(ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 )) as REAL_AMOUNT,
+
+<!--        case-->
+<!--        when REAL_AMOUNT is null then 1-->
+<!--        else 0-->
+<!--        end isn,-->
+        SUM(vc.TOTAL_TIME) as TOTAL_TIME,
+        (select COUNT(*) from SYS_ROBOT where SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID ) as COUNT
+
+        from SYS_SCENIC_SPOT sss
+        left join SYS_ORDER vc on
+        sss.SCENIC_SPOT_ID = vc.ORDER_SCENIC_SPOT_ID
+
+        <where>
+             vc.ORDER_STATUS = 30
+            <if test="spotId != null">
+                and sss.SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and substr(vc.ORDER_START_TIME , 1 , <include refid="substr"></include>) &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(vc.ORDER_START_TIME , 1 , <include refid="substr"></include>) &lt;= #{endDate}
+            </if>
+            <if test="payType != null">
+                and vc.PAYMENT_METHOD in
+                <foreach collection="payType.split(',')" separator="," open="(" close=")" item="stat">
+                    #{stat}
+                </foreach>
+            </if>
+            <if test="companyId != null">
+                and sss.COMPANY_ID = #{companyId}
+            </if>
+            <if test="status != null and status != ''">
+                and sss.ROBOT_WAKEUP_WORDS in
+                <foreach collection="status.split(',')" separator="," open="(" close=")" item="stat">
+                    #{stat}
+                </foreach>
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                and vc.ORDER_ROBOT_CODE like concat('%',#{robotCode},'%')
+            </if>
+        </where>
+        GROUP BY substr(vc.CREATE_DATE , 1 , 10),
+        sss.SCENIC_SPOT_ID
+        <if test="type == 2">,vc.ORDER_ROBOT_CODE</if>) as c
+        ) a
+
+        GROUP by substr(checkDate, 1, <include refid="substr"></include>), a.SCENIC_SPOT_ID<if test="type == 2">
+        ,a.ORDER_ROBOT_CODE</if>) b
+        left join
+        (
+        select sssta.SPOT_ID,
+        sum(sssta.SPOT_TARGET) as SPOT_TARGET,
+        SUM(sssta.ROBOT_TARGET) as ROBOT_TARGET
+        from SYS_SCENIC_SPOT_TARGET_AMOUNT1 sssta
+        <where>
+            <if test="startDate != null and startDate != ''">
+                and substr(sssta.STATIC_DATE , 1 , <include refid="substr1"></include>) &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(sssta.STATIC_DATE , 1 , <include refid="substr1"></include>) &lt;= #{endDate}
+            </if>
+        </where>
+        group by sssta.SPOT_ID) d on
+        b.SCENIC_SPOT_ID = d.SPOT_ID
+        group by b.SCENIC_SPOT_ID) b
+        <where>
+            <if test="amountType == 1 and totalAmount != null">
+                and realAmount &gt; #{totalAmount}
+            </if>
+            <if test="amountType == 2 and totalAmount != null">
+                and avgsc &gt; #{totalAmount}
+            </if>
+        </where>
+    </sql>
+
+
+
+
+
+
+
+
+
+    <select id="timeList" resultType="java.util.HashMap">
+        <include refid="timeList"></include>
+        <if test="order != null and order != ''">
+            order by ${order}
+        </if>
+        <if test="pageNum != null and pageSize != null">
+            limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="amountList" resultType="java.util.HashMap">
+        <include refid="amountList"></include>
+        <if test="order != null and order != ''">
+            order by ${order}
+        </if>
+        <if test="pageNum != null and pageSize != null">
+            limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getTimeCount" resultType="java.util.HashMap">
+        select count(0) as count , sum(totalTime) as totalTime from (<include refid="timeList"></include>) c
+    </select>
+
+    <select id="getAmountCount" resultType="java.util.HashMap">
+        select count(0) as count , sum(realAmount) as realAmount, sum(wuyingshou) as wuyingshou, sum(yysc) as yysc from
+        (<include refid="amountList"></include>) c
+    </select>
+
+    <select id="spotTimeList" resultType="java.util.HashMap">
+        <include refid="spotTimeList"></include>
+        <if test="order != null and order != ''">
+            order by ${order}
+        </if>
+        <if test="pageNum != null and pageSize != null">
+            limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getSpotTimeCount" resultType="java.util.HashMap">
+        select count(0) as count , sum(totalTime) as totalTime from (<include refid="spotTimeList"></include>) c
+    </select>
+
+    <select id="spotAmountList" resultType="java.util.HashMap">
+        <include refid="spotAmountList"></include>
+        <if test="order != null and order != ''">
+            order by ${order}
+        </if>
+        <if test="pageNum != null and pageSize != null">
+            limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}
+        </if>
+    </select>
+
+
+    <select id="getSpotAmountCount" resultType="java.util.HashMap">
+        select count(0) as count , sum(realAmount) as realAmount, sum(wuyingshou) as wuyingshou, sum(yysc) as yysc from
+        (<include refid="spotAmountList"></include>) c
+    </select>
+    <select id="getSpotAmountCountNew" resultType="java.util.HashMap">
+        select count(0) as count , sum(realAmount) as realAmount, sum(wuyingshou) as wuyingshou, sum(yysc) as yysc from
+        (<include refid="spotAmountListNew"></include>) c
+    </select>
+
+
+    <select id="companyList" resultType="java.util.HashMap">
+        SELECT distinct sssac.COMPANY_ID, sssac.COMPANY_NAME
+        from SYS_SCENIC_SPOT_ASCRIPTION_COMPANY sssac
+        left join SYS_SCENIC_SPOT sss on sssac.COMPANY_ID = sss.COMPANY_ID
+        <if test="_parameter != null">
+            WHERE sss.SCENIC_SPOT_ID = #{_parameter}
+        </if>
+    </select>
+
+    <select id="spotList" resultType="java.util.HashMap">
+        select SCENIC_SPOT_ID, SCENIC_SPOT_NAME
+        from SYS_SCENIC_SPOT
+        <if test="_parameter != null">
+            where COMPANY_ID = #{_parameter}
+        </if>
+    </select>
+
+    <select id="timeChart" resultType="java.util.HashMap">
+        SELECT b.checkDate,
+               ROUND(b.TOTAL_TIME, 2)                          totalTime,
+               ROUND((b.TOTAL_TIME - b.hb) / b.hb * 100, 2) as hb,
+               ROUND((b.TOTAL_TIME - b.tb) / b.tb * 100, 2) as tb
+        from (
+                 SELECT substr(checkDate, 1, <include refid="substr"></include>)                as checkDate,
+                        SUM(a.TOTAL_TIME / 60)                                                  as TOTAL_TIME,
+                        (
+                            select SUM(ssoi2.TOTAL_TIME / 60)
+                            from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+                            WHERE SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 MONTH), 1, <include refid="substr"></include>) =
+                                  SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>))  as hb,
+                        (
+                            select SUM(ssoi2.TOTAL_TIME / 60)
+                            from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+                            WHERE SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 YEAR), 1, <include refid="substr"></include>) =
+                                  SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>))  as tb
+                 FROM (
+                          SELECT vc.checkDate,
+                                 SUM(ssoi.TOTAL_TIME) as TOTAL_TIME
+                          from D_CALENDAR vc
+                                   left join SYS_SCENIC_SPOT sss on
+                              1 = 1
+                                   left join SYS_SCENIC_OPERATIONAL_INVENTORY ssoi on
+                                  sss.SCENIC_SPOT_ID = ssoi.SPOT_ID
+                                  and vc.checkDate = ssoi.`DATE`
+                                <where>
+                                    <if test="companyId != null">
+                                        and sss.COMPANY_ID = #{companyId}
+                                    </if>
+                                    <if test="spotId != null">
+                                        and sss.SCENIC_SPOT_ID = #{spotId}
+                                    </if>
+                                    <if test="startDate != null and startDate != ''">
+                                        and substr(checkDate , 1 , <include refid="substr"></include>) &gt;= #{startDate}
+                                    </if>
+                                    <if test="endDate != null and endDate != ''">
+                                        and substr(checkDate , 1 , <include refid="substr"></include>) &lt;= #{endDate}
+                                    </if>
+                                </where>
+                          GROUP BY vc.checkDate, sss.SCENIC_SPOT_ID) a
+                 GROUP by substr(checkDate, 1, <include refid="substr"></include>)) b
+    </select>
+
+
+    <select id="amountChart" resultType="java.util.HashMap">
+        SELECT b.checkDate,
+        ROUND(b.REAL_AMOUNT, 2)                          totalTime,
+        ROUND((b.REAL_AMOUNT - b.hb) / b.hb * 100, 2) as hb,
+        ROUND((b.REAL_AMOUNT - b.tb) / b.tb * 100, 2) as tb
+        from (
+        SELECT substr(checkDate, 1, <include refid="substr"></include>)                as checkDate,
+        SUM(a.REAL_AMOUNT)                  as REAL_AMOUNT,
+        (
+        select SUM(ssoi2.REAL_AMOUNT)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 MONTH), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as hb,
+        (
+        select SUM(ssoi2.REAL_AMOUNT)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY ssoi2
+        WHERE SUBSTR(DATE_SUB(a.checkDate, INTERVAL 1 YEAR), 1, <include refid="substr"></include>) =
+        SUBSTR(ssoi2.`DATE`, 1, <include refid="substr"></include>)) as tb
+        FROM (
+        SELECT vc.checkDate,
+        SUM(ssoi.REAL_AMOUNT) as REAL_AMOUNT
+        from D_CALENDAR vc
+        left join SYS_SCENIC_SPOT sss on
+        1 = 1
+        left join SYS_SCENIC_OPERATIONAL_INVENTORY ssoi on
+        sss.SCENIC_SPOT_ID = ssoi.SPOT_ID
+        and vc.checkDate = ssoi.`DATE`
+        <where>
+            <if test="companyId != null">
+                and sss.COMPANY_ID = #{companyId}
+            </if>
+            <if test="spotId != null">
+                and sss.SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and substr(checkDate , 1 , <include refid="substr"></include>) &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(checkDate , 1 , <include refid="substr"></include>) &lt;= #{endDate}
+            </if>
+        </where>
+        GROUP BY vc.checkDate, sss.SCENIC_SPOT_ID) a
+        GROUP by substr(checkDate , 1 , <include refid="substr"></include>)) b
+    </select>
+
+
+
+    <select id="spotAmountListNew" resultType="java.util.HashMap">
+        <include refid="spotAmountListNew"></include>
+        <if test="order != null and order != ''">
+            order by ${order}
+        </if>
+<!--        <if test="pageNum != null and pageSize != null">-->
+<!--            limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}-->
+<!--        </if>-->
+    </select>
+
+
+    <select id="spotAmountListNewTow" resultType="java.util.HashMap">
+
+        select checkDate, SCENIC_SPOT_ID, SCENIC_SPOT_NAME, ORDER_ROBOT_CODE, REAL_AMOUNT, case when c.REAL_AMOUNT is null then 1 else 0 end isn, TOTAL_TIME, COUNT FROM
+
+        (SELECT vc.CREATE_DATE as checkDate, sss.SCENIC_SPOT_ID, sss.SCENIC_SPOT_NAME, vc.ORDER_ROBOT_CODE,
+        SUM(ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 )) as REAL_AMOUNT,
+        SUM(vc.TOTAL_TIME) as TOTAL_TIME,
+        (select COUNT(*) from SYS_ROBOT where SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID ) as COUNT from SYS_SCENIC_SPOT sss
+        left join SYS_ORDER vc on 1 = 1 WHERE substr(vc.CREATE_DATE , 1 , 10 ) &gt;= #{startDate} and substr(vc.CREATE_DATE , 1 , 10 ) &lt;= #{endDate} and sss.ROBOT_WAKEUP_WORDS in ( 1 ) and vc.ORDER_STATUS = 30
+        GROUP BY substr(vc.CREATE_DATE , 1 , 10), sss.SCENIC_SPOT_ID) as c  GROUP BY SCENIC_SPOT_ID
+<!--        LIMIT #{pageNum},#{pageSize}-->
+
+    </select>
+
+    <select id="getSpotAmountMoney" resultType="java.lang.Double">
+        select ROUND(SUM(ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 )),2) from SYS_ORDER where ORDER_SCENIC_SPOT_ID = #{scenicSpotId} and  substr(CREATE_DATE , 1 , 10 )  &gt;= #{startDate} and substr(CREATE_DATE , 1 , 10 )  &lt;= #{endDate} and ORDER_STATUS = 30
+    </select>
+
+    <select id="getSpotOperateTime" resultType="java.lang.Double">
+        select ROUND(SUM(TOTAL_TIME),2) from SYS_ORDER where ORDER_SCENIC_SPOT_ID = #{scenicSpotId} and  substr(CREATE_DATE , 1 , 10 )  &gt;= #{startDate} and substr(CREATE_DATE , 1 , 10 )  &lt;= #{endDate} and ORDER_STATUS = 30
+    </select>
+
+    <select id="onlineOrderNumber" resultType="java.lang.Integer">
+
+        select COUNT(1) from SYS_ORDER  WHERE ORDER_SCENIC_SPOT_ID = #{scenicSpotId} and ORDER_STATUS = '10'
+
+    </select>
+
+    <select id="getSpotAndDateByRobot" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (
+        select COUNT(ROBOT_CODE) from
+        SYS_SCENIC_OPERATIONAL_INVENTORY
+        <where>
+            <if test="spotIdN != null">
+                SPOT_ID = #{spotIdN}
+            </if>
+            <if test="startDate != null">
+                and  SUBSTR(DATE, 1,<include refid="substr"></include>) &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and SUBSTR(DATE, 1,<include refid="substr"></include>) &lt;= #{endDate}
+            </if>
+        </where>
+        GROUP BY ROBOT_CODE
+        ) as a
+    </select>
+    <select id="amountByYear" resultType="java.util.HashMap">
+        SELECT
+            SPOT_ID,
+            SPOT_NAME,
+            YEAR ( DATE ) AS year,
+            SUM( FINAL_AMOUNT ) AS total_amount
+        FROM
+            SYS_SCENIC_OPERATIONAL_INVENTORY
+        <where>
+            <if test="spotId != null">
+            SPOT_ID =#{spotId}
+            </if>
+        </where>
+        GROUP BY
+        SPOT_ID,
+        SPOT_NAME,
+        YEAR ( DATE );
+    </select>
+    <select id="amountByMonth" resultType="java.util.HashMap">
+        SELECT
+            SPOT_ID,
+            SPOT_NAME,
+            DATE_FORMAT(DATE, '%Y-%m') AS month,
+            SUM(FINAL_AMOUNT) AS total_amount
+        FROM
+            SYS_SCENIC_OPERATIONAL_INVENTORY
+        <where>
+            <if test="spotId != null">
+                SPOT_ID =#{spotId}
+            </if>
+            <if test="startDate != null">
+                and DATE >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and DATE &lt;= #{endDate}
+            </if>
+        </where>
+        GROUP BY
+        SPOT_ID,
+        SPOT_NAME,
+        DATE_FORMAT(DATE, '%Y-%m')
+    </select>
+    <select id="amountByDay" resultType="java.util.HashMap">
+        SELECT
+        SPOT_ID,
+        SPOT_NAME,
+        DATE,
+        DAY(DATE) AS day,
+        SUM(FINAL_AMOUNT) AS total_amount
+        FROM
+        SYS_SCENIC_OPERATIONAL_INVENTORY
+        <where>
+            <if test="spotId != null">
+                SPOT_ID =#{spotId}
+            </if>
+            <if test="startDate != null">
+                and DATE >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and DATE &lt;= #{endDate}
+            </if>
+        </where>
+        GROUP BY
+        SPOT_ID,
+        SPOT_NAME,
+        DATE,
+        DAY(DATE);
+    </select>
+    <select id="amountAll" resultType="java.util.HashMap">
+        SELECT
+            DATE,
+            SUM(FINAL_AMOUNT) AS total_amount
+        FROM
+            SYS_SCENIC_OPERATIONAL_INVENTORY
+        <where>
+            <if test="startDate != null">
+                and DATE >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and DATE &lt;= #{endDate}
+            </if>
+        </where>
+        GROUP BY DATE
+    </select>
+    <select id="amountMonthAll" resultType="java.util.HashMap">
+        SELECT
+            DATE_FORMAT(DATE, '%Y-%m') as month,
+            SUM(FINAL_AMOUNT) as total_amount
+        FROM SYS_SCENIC_OPERATIONAL_INVENTORY
+        <where>
+            <if test="startDate != null">
+                and DATE >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and DATE &lt;= #{endDate}
+            </if>
+        </where>
+        GROUP BY month
+    </select>
+    <select id="amountYearAll" resultType="java.util.HashMap">
+        SELECT
+            DATE_FORMAT(DATE, '%Y') as year,
+            SUM(FINAL_AMOUNT) as total_amount
+        FROM SYS_SCENIC_OPERATIONAL_INVENTORY
+        <where>
+            <if test="startDate != null">
+                and DATE >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and DATE &lt;= #{endDate}
+            </if>
+        </where>
+        GROUP BY year;
+    </select>
+
+
+</mapper>

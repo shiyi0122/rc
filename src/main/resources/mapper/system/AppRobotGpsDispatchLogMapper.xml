@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.AppRobotGpsDispatchLogMapper">
+
+    <select id="getAppRobotGpsDispatchLogList" resultType="com.hna.hka.archive.management.appSystem.model.AppRobotGpsDispatchLog">
+        select *
+        from SYS_ROBOT_GPS_DISPATCH_LOG
+        <where>
+            1=1
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                and ROBOT_CODE = #{robotCode}
+            </if>
+        </where>
+        order by CREATE_DATE
+    </select>
+
+
+</mapper>

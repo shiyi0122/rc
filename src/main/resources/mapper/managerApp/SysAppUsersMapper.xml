@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.managerApp.dao.SysAppUsersMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.managerApp.model.SysAppUsers" >
+    <id column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="SALT_VALUE" property="saltValue" jdbcType="VARCHAR" />
+    <result column="USER_STATE" property="userState" jdbcType="VARCHAR" />
+    <result column="LONGIN_TOKEN_ID" property="longinTokenId" jdbcType="VARCHAR" />
+    <result column="USER_CLIENT_GT_ID" property="userClientGtId" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="USER_APPROVAL" property="userApproval" jdbcType="VARCHAR" />
+    <result column="USER_GPS" property="userGps" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USER_ID, LOGIN_NAME, USER_NAME, PASSWORD, SALT_VALUE, USER_STATE, LONGIN_TOKEN_ID, 
+    USER_CLIENT_GT_ID, USER_TYPE, CREATE_DATE, UPDATE_DATE, USER_APPROVAL, USER_GPS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_APP_USERS
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_APP_USERS
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.managerApp.model.SysAppUsers" >
+    insert into SYS_APP_USERS (USER_ID, LOGIN_NAME, USER_NAME, 
+      PASSWORD, SALT_VALUE, USER_STATE, 
+      LONGIN_TOKEN_ID, USER_CLIENT_GT_ID, USER_TYPE, 
+      CREATE_DATE, UPDATE_DATE, USER_GPS
+      )
+    values (#{userId,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{saltValue,jdbcType=VARCHAR}, #{userState,jdbcType=VARCHAR}, 
+      #{longinTokenId,jdbcType=VARCHAR}, #{userClientGtId,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{userGps,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.managerApp.model.SysAppUsers" >
+    insert into SYS_APP_USERS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="saltValue != null" >
+        SALT_VALUE,
+      </if>
+      <if test="userState != null" >
+        USER_STATE,
+      </if>
+      <if test="longinTokenId != null" >
+        LONGIN_TOKEN_ID,
+      </if>
+      <if test="userClientGtId != null" >
+        USER_CLIENT_GT_ID,
+      </if>
+      <if test="userType != null" >
+        USER_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="userApproval != null" >
+        USER_APPROVAL,
+      </if>
+      <if test="userGps != null" >
+        USER_GPS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="saltValue != null" >
+        #{saltValue,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        #{userState,jdbcType=VARCHAR},
+      </if>
+      <if test="longinTokenId != null" >
+        #{longinTokenId,jdbcType=VARCHAR},
+      </if>
+      <if test="userClientGtId != null" >
+        #{userClientGtId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="userApproval != null" >
+        #{userApproval,jdbcType=VARCHAR},
+      </if>
+      <if test="userGps != null" >
+        #{userGps,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.managerApp.model.SysAppUsers" >
+    update SYS_APP_USERS
+    <set >
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="saltValue != null" >
+        SALT_VALUE = #{saltValue,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        USER_STATE = #{userState,jdbcType=VARCHAR},
+      </if>
+      <if test="longinTokenId != null" >
+        LONGIN_TOKEN_ID = #{longinTokenId,jdbcType=VARCHAR},
+      </if>
+      <if test="userClientGtId != null" >
+        USER_CLIENT_GT_ID = #{userClientGtId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        USER_TYPE = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="userApproval != null" >
+        USER_APPROVAL = #{userApproval,jdbcType=VARCHAR},
+      </if>
+      <if test="userGps != null" >
+        USER_GPS = #{userGps,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.managerApp.model.SysAppUsers" >
+    update SYS_APP_USERS
+    set LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      SALT_VALUE = #{saltValue,jdbcType=VARCHAR},
+      USER_STATE = #{userState,jdbcType=VARCHAR},
+      LONGIN_TOKEN_ID = #{longinTokenId,jdbcType=VARCHAR},
+      USER_CLIENT_GT_ID = #{userClientGtId,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      USER_GPS = #{userGps,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <select id="getAppUsersList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM SYS_APP_USERS
+    <where>
+      <if test="userName != null and userName != ''">
+        AND USER_NAME LIKE CONCAT('%',#{userName},'%')
+      </if>
+      <if test="loginName != null and loginName != ''">
+        AND LOGIN_NAME LIKE CONCAT('%',#{loginName},'%')
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <select id="getSysAppUserByLoginName" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    SYS_APP_USERS
+    <where>
+      LOGIN_NAME = #{loginName }
+    </where>
+  </select>
+  <select id="getSysUserBylonginTokenId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    SYS_APP_USERS
+    <where>
+      LONGIN_TOKEN_ID = #{longinTokenId }
+    </where>
+  </select>
+  <select id="getUsersVoExcel" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	SELECT
+	B.USER_NAME,
+	D.SCENIC_SPOT_NAME scenicSpotName,
+	C.ROLE_NAME AS roleName
+	FROM
+	SYS_APP_USERS_SPOT_ROLE A
+	LEFT JOIN SYS_APP_USERS B ON
+	A.PRIMARY_KEY_UID = B.USER_ID
+	LEFT JOIN SYS_APP_ROLE C ON
+	A.PRIMARY_KEY_RID = C.ROLE_ID
+	LEFT JOIN SYS_SCENIC_SPOT D ON
+	A.PRIMARY_KEY_PID = D.SCENIC_SPOT_ID 
+	<where>
+		<if test="userName != null and userName != ''">
+			AND B.USER_NAME LIKE CONCAT('%',#{userName},'%')
+		</if>
+    </where>
+  </select>
+  <select id="getSysAppUsers" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM SYS_APP_USERS
+  </select>
+  <select id="getAppUsersByScenicIdList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      E.USER_CLIENT_GT_ID,
+      A.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+      SYS_APP_USERS_SPOT_ROLE B
+        LEFT JOIN SYS_SCENIC_SPOT A ON A.SCENIC_SPOT_ID = B.PRIMARY_KEY_PID
+        LEFT JOIN SYS_APP_ROLE_RESOURCE C ON C.ROLE_ID = B.PRIMARY_KEY_RID
+        LEFT JOIN SYS_MANAGER_APP_RES D ON D.RES_ID = C.RES_ID
+        LEFT JOIN SYS_APP_USERS E ON E.USER_ID = B.PRIMARY_KEY_UID
+    WHERE
+      A.SCENIC_SPOT_ID = #{scenicSpotId}
+      AND D.RES_MENU_FLAG = 'N'
+      AND D.RES_CODE = #{resCode}
+  </select>
+
+  <select id="getSysAppUserByUserName" resultMap = "BaseResultMap">
+    select * from SYS_APP_USERS where USER_NAME = #{serviceRecordsPersonnel}
+  </select>
+
+
+
+</mapper>

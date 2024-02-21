@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.SysPermissionMapper">
+
+	<resultMap id="sysPermission"
+		type="com.hna.hka.archive.management.appSystem.model.SysPermission">
+		<result property="prmsId" column="PRMS_ID" />
+		<result property="prmsName" column="PRMS_NAME" />
+		<result property="prmsIdentity" column="PRMS_IDENTITY" />
+		<result property="prmsDesc" column="PRMS_DESC" />
+		<result property="prmsStatus" column="PRMS_STATUS" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="updateDate" column="UPDATE_DATE" />
+	</resultMap>
+
+	<select id="getRoleResPrmsByLoginName" parameterType="java.util.HashMap" resultMap="sysPermission">
+		SELECT DISTINCT
+		PRMS.PRMS_DESC,
+		PRMS.PRMS_IDENTITY
+		FROM
+		SYS_APP_USERS U
+		INNER JOIN SYS_APP_USERS_SPOT_ROLE UR
+		ON U.USER_ID = UR.PRIMARY_KEY_UID
+		INNER
+		JOIN SYS_APP_ROLE R
+		ON UR.PRIMARY_KEY_RID = R.ROLE_ID
+		INNER JOIN
+		SYS_APP_ROLE_RESOURCE_PRMS RRP
+		ON R.ROLE_ID = RRP.ROLE_ID
+		INNER JOIN
+		SYS_RESOURCE RES
+		ON RRP.RES_ID = RES.RES_ID
+		LEFT JOIN SYS_PERMISSION
+		PRMS
+		ON RRP.PRMS_ID = PRMS.PRMS_ID
+		WHERE
+		1=1
+		AND
+		U.USER_STATE= #{status}
+		AND
+		R.ROLE_STATUS = #{roleStatus}
+		AND
+		(PRMS.PRMS_STATUS = #{prmsStatus})
+		AND
+		RES.RES_STATUS = #{resStatus}
+		AND RES.RES_TYPE = #{resType}
+		<if test="resId != null and resId != ''">
+			AND RES.RES_ID = #{resId}
+		</if>
+		<if test="roleId != null and roleId != ''">
+			AND R.ROLE_ID = #{roleId}
+		</if>
+		<if test="loginName != null and loginName != ''">
+			AND U.LOGIN_NAME = #{loginName}
+		</if>
+	</select>
+</mapper>
+

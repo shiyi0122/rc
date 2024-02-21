@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysOrderLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysOrderLog" >
+    <id column="ORDER_LOG_ID" property="orderLogId" jdbcType="BIGINT" />
+    <result column="ORDER_LOG_LOGINNAME" property="orderLogLoginname" jdbcType="VARCHAR" />
+    <result column="ORDER_LOG_USERNAME" property="orderLogUsername" jdbcType="VARCHAR" />
+    <result column="ORDER_LOG_PHONE" property="orderLogPhone" jdbcType="VARCHAR" />
+    <result column="ORDER_LOG_CLIENT" property="orderLogClient" jdbcType="VARCHAR" />
+    <result column="ORDER_LOG_NUMBER" property="orderLogNumber" jdbcType="VARCHAR" />
+    <result column="DEPOSIT_MONEY" property="depositMoney" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR" />
+    <result column="ORDER_LOG_REASON" property="orderLogReason" jdbcType="VARCHAR" />
+    <result column="RETURN_RESULT_CODE" property="returnResultCode" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ORDER_LOG_ID, ORDER_LOG_LOGINNAME, ORDER_LOG_USERNAME, ORDER_LOG_PHONE, ORDER_LOG_CLIENT, 
+    ORDER_LOG_NUMBER, DEPOSIT_MONEY, SCENIC_SPOT_NAME, ORDER_LOG_REASON, RETURN_RESULT_CODE, 
+    CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ORDER_LOG
+    where ORDER_LOG_ID = #{orderLogId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ORDER_LOG
+    where ORDER_LOG_ID = #{orderLogId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysOrderLog" >
+    insert into SYS_ORDER_LOG (ORDER_LOG_ID, ORDER_LOG_LOGINNAME, ORDER_LOG_USERNAME, 
+      ORDER_LOG_PHONE, ORDER_LOG_CLIENT, ORDER_LOG_NUMBER, 
+      DEPOSIT_MONEY, SCENIC_SPOT_NAME, ORDER_LOG_REASON, 
+      RETURN_RESULT_CODE, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{orderLogId,jdbcType=BIGINT}, #{orderLogLoginname,jdbcType=VARCHAR}, #{orderLogUsername,jdbcType=VARCHAR}, 
+      #{orderLogPhone,jdbcType=VARCHAR}, #{orderLogClient,jdbcType=VARCHAR}, #{orderLogNumber,jdbcType=VARCHAR}, 
+      #{depositMoney,jdbcType=VARCHAR}, #{scenicSpotName,jdbcType=VARCHAR}, #{orderLogReason,jdbcType=VARCHAR}, 
+      #{returnResultCode,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysOrderLog" >
+    insert into SYS_ORDER_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderLogId != null" >
+        ORDER_LOG_ID,
+      </if>
+      <if test="orderLogLoginname != null" >
+        ORDER_LOG_LOGINNAME,
+      </if>
+      <if test="orderLogUsername != null" >
+        ORDER_LOG_USERNAME,
+      </if>
+      <if test="orderLogPhone != null" >
+        ORDER_LOG_PHONE,
+      </if>
+      <if test="orderLogClient != null" >
+        ORDER_LOG_CLIENT,
+      </if>
+      <if test="orderLogNumber != null" >
+        ORDER_LOG_NUMBER,
+      </if>
+      <if test="depositMoney != null" >
+        DEPOSIT_MONEY,
+      </if>
+      <if test="scenicSpotName != null" >
+        SCENIC_SPOT_NAME,
+      </if>
+      <if test="orderLogReason != null" >
+        ORDER_LOG_REASON,
+      </if>
+      <if test="returnResultCode != null" >
+        RETURN_RESULT_CODE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderLogId != null" >
+        #{orderLogId,jdbcType=BIGINT},
+      </if>
+      <if test="orderLogLoginname != null" >
+        #{orderLogLoginname,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogUsername != null" >
+        #{orderLogUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogPhone != null" >
+        #{orderLogPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogClient != null" >
+        #{orderLogClient,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogNumber != null" >
+        #{orderLogNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="depositMoney != null" >
+        #{depositMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotName != null" >
+        #{scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogReason != null" >
+        #{orderLogReason,jdbcType=VARCHAR},
+      </if>
+      <if test="returnResultCode != null" >
+        #{returnResultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysOrderLog" >
+    update SYS_ORDER_LOG
+    <set >
+      <if test="orderLogLoginname != null" >
+        ORDER_LOG_LOGINNAME = #{orderLogLoginname,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogUsername != null" >
+        ORDER_LOG_USERNAME = #{orderLogUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogPhone != null" >
+        ORDER_LOG_PHONE = #{orderLogPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogClient != null" >
+        ORDER_LOG_CLIENT = #{orderLogClient,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogNumber != null" >
+        ORDER_LOG_NUMBER = #{orderLogNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="depositMoney != null" >
+        DEPOSIT_MONEY = #{depositMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotName != null" >
+        SCENIC_SPOT_NAME = #{scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderLogReason != null" >
+        ORDER_LOG_REASON = #{orderLogReason,jdbcType=VARCHAR},
+      </if>
+      <if test="returnResultCode != null" >
+        RETURN_RESULT_CODE = #{returnResultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_LOG_ID = #{orderLogId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysOrderLog" >
+    update SYS_ORDER_LOG
+    set ORDER_LOG_LOGINNAME = #{orderLogLoginname,jdbcType=VARCHAR},
+      ORDER_LOG_USERNAME = #{orderLogUsername,jdbcType=VARCHAR},
+      ORDER_LOG_PHONE = #{orderLogPhone,jdbcType=VARCHAR},
+      ORDER_LOG_CLIENT = #{orderLogClient,jdbcType=VARCHAR},
+      ORDER_LOG_NUMBER = #{orderLogNumber,jdbcType=VARCHAR},
+      DEPOSIT_MONEY = #{depositMoney,jdbcType=VARCHAR},
+      SCENIC_SPOT_NAME = #{scenicSpotName,jdbcType=VARCHAR},
+      ORDER_LOG_REASON = #{orderLogReason,jdbcType=VARCHAR},
+      RETURN_RESULT_CODE = #{returnResultCode,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where ORDER_LOG_ID = #{orderLogId,jdbcType=BIGINT}
+  </update>
+  <select id="getOperationLogRefundOrderList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.*,
+    B.ORDER_ROBOT_CODE AS orderRobotCode,
+    B.REASONS_REFUNDS AS reasonsRefunds
+    FROM
+    SYS_ORDER_LOG A
+    LEFT JOIN SYS_ORDER B ON A.ORDER_LOG_NUMBER = B.ORDER_NUMBER
+    <where>
+      <if test="orderLogPhone != null and orderLogPhone != ''">
+        AND A.ORDER_LOG_PHONE LIKE CONCAT('%',#{orderLogPhone},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+
+  <select id="selectByOrderLogNumber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ORDER_LOG
+    where ORDER_LOG_NUMBER = #{OrderLogNumber,jdbcType=VARCHAR}
+    and DEPOSIT_MONEY like "%退调度费%"
+    and RETURN_RESULT_CODE like "SUCCESS"
+  </select>
+
+  <select id="getOrderNumberLogList" resultType="com.hna.hka.archive.management.system.model.ExternalData.RefundOrderList">
+    select sol.CREATE_DATE as refundTime,sol.ORDER_LOG_NUMBER as relateOrderNo,sol.RETURN_RESULT_CODE as refundStatus,sol.DEPOSIT_MONEY as amountRefund,so.USER_ID as userId,so.ORDER_ID as orderId,so.ORDER_STATUS as orderStatus from SYS_ORDER_LOG sol left join SYS_ORDER so	on sol.ORDER_LOG_NUMBER = so.ORDER_NUMBER
+    where sol.ORDER_LOG_NUMBER = #{orderNumber}
+  </select>
+</mapper>

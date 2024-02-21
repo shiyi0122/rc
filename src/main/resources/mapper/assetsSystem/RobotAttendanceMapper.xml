@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.RobotAttendanceMapper">
+    <resultMap id="RobotAttendanceMapper" type="com.hna.hka.archive.management.assetsSystem.model.RobotAttendance">
+        <!-- 机器人考勤记录主键 -->
+        <id column="RECORD_ID" property="recordId" jdbcType="BIGINT"/>
+        <!-- 景区id -->
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT"/>
+        <!-- 景区名称 -->
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR"/>
+        <!-- 机器人编号 -->
+        <result column="ROBOT_CODE" property="robotCode" jdbcType="BIGINT"/>
+        <!-- 机器人状态 -->
+        <result column="ROBOT_ADMIN_LOCKING" property="robotAdminLocking" jdbcType="VARCHAR"/>
+        <!-- 开始时间 -->
+        <result column="START_TIME" property="startTime" jdbcType="VARCHAR"/>
+        <!-- 结束时间 -->
+        <result column="END_TIME" property="endTime" jdbcType="VARCHAR"/>
+        <!-- 机器人点位 -->
+        <result column="ROBOT_POSITION" property="robotPosition" jdbcType="VARCHAR"/>
+        <!-- 机器人版本号 -->
+        <result column="CLIENT_VERSION" property="clientVersion" jdbcType="VARCHAR"/>
+        <!-- 创建时间 -->
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--  添加机器人考勤记录  -->
+    <insert id="insertRobotAttendance"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.RobotAttendance">
+        insert into SYS_APP_ROBOT_ATTENDANCE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">
+                RECORD_ID,
+            </if>
+            <if test="robotCode != null">
+                ROBOT_CODE,
+            </if>
+            <if test="robotStartTime != null">
+                ROBOT_START_TIME,
+            </if>
+            <if test="robotPosition != null">
+                ROBOT_POSITION,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">
+                #{recordId,jdbcType=BIGINT},
+            </if>
+            <if test="robotCode != null">
+                #{robotCode,jdbcType=BIGINT},
+            </if>
+            <if test="robotStartTime != null">
+                #{robotStartTime,jdbcType=VARCHAR},
+            </if>
+            <if test="robotPosition != null">
+                #{robotPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--  修改机器人版本号  -->
+    <update id="updateRobotAttendance">
+        update
+            SYS_ROBOT
+        set CLIENT_VERSION = #{clientVersion}
+        where ROBOT_CODE = #{robotCode}
+    </update>
+    <!--  根据条件查询数据  -->
+    <select id="RobotAttendance" resultType="com.hna.hka.archive.management.assetsSystem.model.RobotAttendance">
+        select
+        b.RECORD_ID,
+        b.ROBOT_START_TIME,
+        b.ROBOT_POSITION,
+        a.CLIENT_VERSION,
+        a.ROBOT_CODE,
+        a.SCENIC_SPOT_ID,
+        c.SCENIC_SPOT_NAME
+        from
+        SYS_ROBOT a
+        left join
+        (select
+        RECORD_ID,
+        ROBOT_CODE,
+        ROBOT_START_TIME,
+        ROBOT_POSITION
+        from
+        SYS_APP_ROBOT_ATTENDANCE
+        <where>
+            <if test="startDate != null  and startDate != '' ">
+                and ROBOT_START_TIME <![CDATA[ >= ]]> CAST(CONCAT(#{startDate},' 00:00:00') AS datetime)
+            </if>
+            <if test="endDate != null  and endDate != '' ">
+                and ROBOT_START_TIME <![CDATA[ <= ]]> CAST(CONCAT(#{endDate},' 23:59:59') AS datetime)
+            </if>
+        </where>
+        ) b
+        on
+        a.ROBOT_CODE = b.ROBOT_CODE
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="robotCode != null  and robotCode != '' ">
+                and a.ROBOT_CODE = #{robotCode}
+            </if>
+            <if test="robotStatus eq 1">
+                and b.RECORD_ID is not null
+            </if>
+            <if test="robotStatus eq 0">
+                and b.RECORD_ID is null
+            </if>
+        </where>
+    </select>
+    <!--  统计条件查出得数据总数 -->
+    <select id="RobotAttendance2" resultType="java.lang.Integer">
+        select
+        count(*)
+        from
+        SYS_APP_ROBOT_ATTENDANCE b
+        left join
+        SYS_ROBOT a
+        on
+        a.ROBOT_CODE = b.ROBOT_CODE
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID= c.SCENIC_SPOT_ID
+        <where>
+            <if test="robotCode != null and robotCode !=''">
+                and a.ROBOT_CODE=#{robotCode}
+            </if>
+            <if test="robotAdminLocking != null and robotAdminLocking !=''">
+                and a.ROBOT_ADMIN_LOCKING=#{robotAdminLocking}
+            </if>
+            <if test="startTime != null  and startTime != '' ">
+                and b.START_TIME <![CDATA[ >= ]]> CAST(CONCAT(#{startTime},' 00:00:00') AS datetime)
+            </if>
+            <if test="endTime != null  and endTime != '' ">
+                and b.END_TIME <![CDATA[ <= ]]> CAST(CONCAT(#{endTime},' 23:59:59') AS datetime)
+            </if>
+        </where>
+    </select>
+    <select id="RobotAttendances" resultType="com.hna.hka.archive.management.assetsSystem.model.RobotAttendance">
+        select
+        b.RECORD_ID,
+        b.ROBOT_START_TIME,
+        b.ROBOT_POSITION,
+        a.CLIENT_VERSION,
+        a.ROBOT_CODE,
+        a.SCENIC_SPOT_ID,
+        c.SCENIC_SPOT_NAME
+        from
+        SYS_ROBOT a
+        left join
+        (select
+        RECORD_ID,
+        ROBOT_CODE,
+        ROBOT_START_TIME,
+        ROBOT_POSITION
+        from
+        SYS_APP_ROBOT_ATTENDANCE
+        <where>
+            DATEDIFF(ROBOT_START_TIME,NOW())=0
+        </where>) b
+        on
+        a.ROBOT_CODE = b.ROBOT_CODE
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="robotCode != null  and robotCode != '' ">
+                and a.ROBOT_CODE = #{robotCode}
+            </if>
+            <if test="robotStatus eq 1">
+                and b.RECORD_ID is not null
+            </if>
+            <if test="robotStatus eq 0">
+                and b.RECORD_ID is null
+            </if>
+        </where>
+    </select>
+    <!--  根据景区和时间获取全部机器人  -->
+    <select id="timePeriod" resultType="com.hna.hka.archive.management.assetsSystem.model.RobotAttendance">
+        select
+        b.RECORD_ID,
+        b.ROBOT_START_TIME,
+        b.ROBOT_POSITION,
+        a.CLIENT_VERSION,
+        a.ROBOT_CODE,
+        a.SCENIC_SPOT_ID,
+        c.SCENIC_SPOT_NAME
+        from
+        SYS_ROBOT a
+        left join
+        (select
+        RECORD_ID,
+        ROBOT_CODE,
+        ROBOT_START_TIME,
+        ROBOT_POSITION
+        from
+        SYS_APP_ROBOT_ATTENDANCE
+        <where>
+            <if test="startDate != null  and startDate != '' ">
+                and ROBOT_START_TIME <![CDATA[ >= ]]> CAST(CONCAT(#{startDate},' 00:00:00') AS datetime)
+            </if>
+            <if test="endDate != null  and endDate != '' ">
+                and ROBOT_START_TIME <![CDATA[ <= ]]> CAST(CONCAT(#{endDate},' 23:59:59') AS datetime)
+            </if>
+        </where>
+        ) b
+        on
+        a.ROBOT_CODE = b.ROBOT_CODE
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null  and scenicSpotId != '' ">
+                and a.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+    </select>
+    <select id="wholeClientVersion" resultType="com.hna.hka.archive.management.assetsSystem.model.RobotVersion">
+        select
+            CLIENT_VERSION,
+            Count(CLIENT_VERSION) as versionNum
+        from
+            SYS_ROBOT
+        <where>
+            <if test="scenicSpotId !=null and scenicSpotId != ''">
+                and SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        group by
+            CLIENT_VERSION
+    </select>
+<!-- 查询全部数量 -->
+    <select id="selectWholeNum" resultType="java.lang.Integer">
+        select
+            Count(*)
+        from
+            SYS_ROBOT
+        <where>
+            <if test="scenicSpotId !=null and scenicSpotId != ''">
+             and SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+    </select>
+</mapper>

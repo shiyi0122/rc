@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.OperatePartsStockMapper">
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.OperatePartsStock">
+
+        select ops.*,sss.SCENIC_SPOT_NAME as spotName, sau.LOGIN_NAME as operatorUserName
+        from OPERATE_PARTS_STOCK ops
+        left join SYS_SCENIC_SPOT sss on ops.SPOT_ID = sss.SCENIC_SPOT_ID
+        left join SYS_APP_USERS sau on ops.OPERATOR_USER_ID = sau.USER_ID
+        <where>
+            <if test="spotId  != null and spotId != ''">
+               and  SPOT_ID = #{spotId}
+            </if>
+            <if test="type != null and type != ''">
+               and  TYPE = #{type}
+            </if>
+            <if test="equipmentNo != null and equipmentNo != null">
+               and  EQUIPMENT_NO = #{equipmentNo}
+            </if>
+            <if test="partsManagementId != null and partsManagementId != ''">
+               and  PARTS_MANAGEMENT_ID like CONCAT('%',#{partsManagementId},'%')
+            </if>
+            <if test="applyNumber != null and applyNumber != null">
+               and  APPLY_NUMBER like CONCAT('%',#{applyNumber},'%')
+            </if>
+
+        </where>
+        order by UPDATE_TIME DESC
+
+    </select>
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.OperatePartsStock">
+        insert into OPERATE_PARTS_STOCK
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="spotId != null" >
+                SPOT_ID,
+            </if>
+            <if test="applyNumber != null" >
+                APPLY_NUMBER,
+            </if>
+            <if test="partsManagementId != null" >
+                PARTS_MANAGEMENT_ID,
+            </if>
+            <if test="partsManagementName != null" >
+                PARTS_MANAGEMENT_NAME,
+            </if>
+            <if test="accessoryModel != null" >
+                ACCESSORY_MODEL,
+            </if>
+            <if test="type != null" >
+                TYPE,
+            </if>
+            <if test="number != null" >
+                NUMBER,
+            </if>
+            <if test="reason != null" >
+                REASON,
+            </if>
+            <if test="operatorUserId != null" >
+                OPERATOR_USER_ID,
+            </if>
+            <if test="equipmentNo != null" >
+                EQUIPMENT_NO,
+            </if>
+            <if test="inventoryBalance != null">
+                INVENTORY_BALANCE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="overWarranty != null">
+                OVER_WARRANTY,
+            </if>
+            <if test="threshold != null">
+                THRESHOLD,
+            </if>
+            <if test="remarks != null">
+                REMARKS,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="spotId != null" >
+                #{spotId,jdbcType=BIGINT},
+            </if>
+            <if test="applyNumber != null" >
+                #{applyNumber,jdbcType=BIGINT},
+            </if>
+            <if test="partsManagementId != null" >
+                #{partsManagementId,jdbcType=BIGINT},
+            </if>
+            <if test="partsManagementName != null" >
+                #{partsManagementName,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryModel != null" >
+                #{accessoryModel,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null" >
+                #{number,jdbcType=VARCHAR},
+            </if>
+            <if test="reason != null" >
+                #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorUserId != null" >
+                #{operatorUserId,jdbcType=BIGINT},
+            </if>
+            <if test="equipmentNo != null" >
+                #{equipmentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="inventoryBalance != null">
+                #{inventoryBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType = VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType = VARCHAR},
+            </if>
+            <if test="overWarranty != null">
+                #{overWarranty,jdbcType = VARCHAR},
+            </if>
+            <if test="threshold != null">
+                #{threshold,jdbcType = VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.OperatePartsStock">
+
+        update OPERATE_PARTS_STOCK
+        <set >
+            <if test="spotId != null" >
+                SPOT_ID = #{spotId,jdbcType=BIGINT},
+            </if>
+            <if test="applyNumber != null" >
+                APPLY_NUMBER = #{applyNumber,jdbcType=BIGINT},
+            </if>
+            <if test="partsManagementId != null" >
+                PARTS_MANAGEMENT_ID = #{partsManagementId,jdbcType=BIGINT},
+            </if>
+            <if test="partsManagementName != null" >
+                PARTS_MANAGEMENT_NAME = #{partsManagementName,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryModel != null" >
+                ACCESSORY_MODEL = #{accessoryModel,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                TYPE = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null" >
+                NUMBER = #{number,jdbcType=VARCHAR},
+            </if>
+            <if test="reason != null" >
+                REASON = #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorUserId != null" >
+                OPERATOR_USER_ID = #{operatorUserId,jdbcType=BIGINT},
+            </if>
+            <if test="equipmentNo != null" >
+                EQUIPMENT_NO = #{equipmentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="inventoryBalance != null" >
+                INVENTORY_BALANCE = #{inventoryBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="overWarranty != null" >
+                OVER_WARRANTY = #{overWarranty,jdbcType=VARCHAR},
+            </if>
+            <if test="threshold != null" >
+                THRESHOLD = #{threshold,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null" >
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from OPERATE_PARTS_STOCK
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <select id="selectByApplyNumber" resultType="com.hna.hka.archive.management.assetsSystem.model.OperatePartsStock">
+        select * from OPERATE_PARTS_STOCK where APPLY_NUMBER = #{applyNumber}
+    </select>
+
+
+
+
+</mapper>

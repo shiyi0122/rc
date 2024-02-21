@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotDateTreasureHuntMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotDateTreasureHunt" >
+        <id column="TREASURE_ID" property="treasureId" jdbcType="BIGINT" />
+        <result column="DATE_TREASURE_ID" property="dateTreasureId" jdbcType="BIGINT"/>
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+        <result column="TREASURE_NAME" property="treasureName" jdbcType="VARCHAR" />
+        <result column="TREASURE_TYPE" property="treasureType" jdbcType="VARCHAR" />
+        <result column="COUPON_AMOUNT" property="couponAmount" jdbcType="VARCHAR" />
+        <result column="INVENTORY" property="inventory" jdbcType="BIGINT" />
+        <result column="END_VALIDITY" property="endValidity" jdbcType="VARCHAR" />
+        <result column="START_VALIDITY" property="startValidity" jdbcType="VARCHAR" />
+        <result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
+        <result column="PRIZE_WEIGHT" property="prizeWeight" jdbcType="BIGINT"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        TREASURE_ID, DATE_TREASURE_ID, SCENIC_SPOT_ID, TREASURE_NAME, TREASURE_TYPE, COUPON_AMOUNT,
+        INVENTORY, END_VALIDITY, START_VALIDITY, PIC_URL, PRIZE_WEIGHT,
+        CREATE_DATE, UPDATE_DATE
+    </sql>
+
+    <select id="getTreasureList" resultMap="BaseResultMap">
+        SELECT
+        A.*,
+        B.SCENIC_SPOT_NAME AS scenicSpotName
+        FROM
+        SYS_SCENIC_SPOT_DATE_TREASURE_HUNT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{sysScenicSpotTreasureHunt.scenicSpotId}
+            </if>
+        </where>
+        ORDER BY A.CREATE_DATE DESC
+    </select>
+
+    <select id="getDateTreasureListNew" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        A.*,
+        B.SCENIC_SPOT_NAME AS scenicSpotName,
+        C.RANDOM_TIME
+        FROM
+        SYS_SCENIC_SPOT_DATE_TREASURE_HUNT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        LEFT JOIN SYS_SCENIC_SPOT_DATE_HUNT C ON A.DATE_TREASURE_ID = C.DATE_TREASURE_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID LIKE CONCAT('%',#{scenicSpotId},'%')
+            </if>
+            <if test="treasureName != null and treasureName !=''">
+                AND A.TREASURE_NAME LIKE CONCAT('%',#{treasureName},'%')
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName !=''">
+                AND B.SCENIC_SPOT_NAME LIKE CONCAT('%',#{scenicSpotName},'%')
+            </if>
+            <if test="randomTime != null and randomTime != ''">
+                AND C.RANDOM_TIME = #{randomTime}
+            </if>
+        </where>
+        ORDER BY C.RANDOM_TIME DESC
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from SYS_SCENIC_SPOT_DATE_TREASURE_HUNT
+        where TREASURE_ID = #{treasureId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from SYS_SCENIC_SPOT_DATE_TREASURE_HUNT
+        where TREASURE_ID = #{treasureId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotDateTreasureHunt" >
+        insert into SYS_SCENIC_SPOT_DATE_TREASURE_HUNT (TREASURE_ID, DATE_TREASURE_ID, SCENIC_SPOT_ID, TREASURE_NAME, TREASURE_TYPE, COUPON_AMOUNT,
+        INVENTORY, END_VALIDITY, START_VALIDITY, PIC_URL, PRIZE_WEIGHT,
+        CREATE_DATE, UPDATE_DATE)
+        values (#{treasureId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{treasureName,jdbcType=VARCHAR},
+        #{treasureType,jdbcType=VARCHAR}, #{couponAmount,jdbcType=VARCHAR}, #{inventory,jdbcType=BIGINT},
+        #{endValidity,jdbcType=VARCHAR}, #{startValidity,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR},
+        #{prizeWeight,jdbcType=BIGINT}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotDateTreasureHunt" >
+        insert into SYS_SCENIC_SPOT_DATE_TREASURE_HUNT
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="treasureId != null" >
+                TREASURE_ID,
+            </if>
+            <if test="dateTreasureId != null">
+                DATE_TREASURE_ID,
+            </if>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="treasureName != null" >
+                TREASURE_NAME,
+            </if>
+            <if test="treasureType != null" >
+                TREASURE_TYPE,
+            </if>
+            <if test="couponAmount != null and couponAmount != ''" >
+                COUPON_AMOUNT,
+            </if>
+            <if test="inventory != null" >
+                INVENTORY,
+            </if>
+            <if test="endValidity != null" >
+                END_VALIDITY,
+            </if>
+            <if test="startValidity != null" >
+                START_VALIDITY,
+            </if>
+            <if test="picUrl != null" >
+                PIC_URL,
+            </if>
+            <if test="prizeWeight != null" >
+                PRIZE_WEIGHT,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="treasureId != null" >
+                #{treasureId,jdbcType=BIGINT},
+            </if>
+            <if test="dateTreasureId != null">
+                #{dateTreasureId,jdbcType = BIGINT},
+            </if>
+            <if test="scenicSpotId != null" >
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="treasureName != null" >
+                #{treasureName,jdbcType=VARCHAR},
+            </if>
+            <if test="treasureType != null" >
+                #{treasureType,jdbcType=VARCHAR},
+            </if>
+            <if test="couponAmount != null and couponAmount != ''" >
+                #{couponAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="inventory != null" >
+                #{inventory,jdbcType=BIGINT},
+            </if>
+            <if test="endValidity != null" >
+                #{endValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="startValidity != null" >
+                #{startValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null" >
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeWeight != null" >
+                #{prizeWeight,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotDateTreasureHunt" >
+        update SYS_SCENIC_SPOT_DATE_TREASURE_HUNT
+        <set>
+            <if test="dateTreasureId != null">
+                DATE_TREASURE_ID = #{dateTreasureId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="treasureName != null" >
+                TREASURE_NAME = #{treasureName,jdbcType=VARCHAR},
+            </if>
+            <if test="treasureType != null" >
+                TREASURE_TYPE = #{treasureType,jdbcType=VARCHAR},
+            </if>
+            <if test="couponAmount != null" >
+                COUPON_AMOUNT = #{couponAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="inventory != null" >
+                INVENTORY = #{inventory,jdbcType=BIGINT},
+            </if>
+            <if test="endValidity != null" >
+                END_VALIDITY = #{endValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="startValidity != null" >
+                START_VALIDITY = #{startValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null" >
+                PIC_URL = #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeWeight != null" >
+                PRIZE_WEIGHT = #{prizeWeight,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where TREASURE_ID = #{treasureId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotDateTreasureHunt" >
+        update SYS_SCENIC_SPOT_DATE_TREASURE_HUNT
+        set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+        DATE_TREASURE_ID = #{dateTreasureId,jdbcType=BIGINT},
+        TREASURE_NAME = #{treasureName,jdbcType=VARCHAR},
+        TREASURE_TYPE = #{treasureType,jdbcType=VARCHAR},
+        COUPON_AMOUNT = #{couponAmount,jdbcType=VARCHAR},
+        INVENTORY = #{inventory,jdbcType=BIGINT},
+        END_VALIDITY = #{endValidity,jdbcType=VARCHAR},
+        START_VALIDITY = #{startValidity,jdbcType=VARCHAR},
+        PIC_URL = #{picUrl,jdbcType=VARCHAR},
+        PRIZE_WEIGHT = #{prizeWeight,jdbcType=BIGINT},
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+        where BROADCAST_ID = #{broadcastId,jdbcType=BIGINT}
+    </update>
+
+
+
+</mapper>

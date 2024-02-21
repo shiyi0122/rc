@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotSimSupplierMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotSimSupplier" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="ROBOT_CODE" property="robotCode" jdbcType="BIGINT" />
+        <result column="SIM_CARD" property="simCard" jdbcType="VARCHAR" />
+        <result column="SUPPLIER_NAME" property="supplierName" jdbcType="VARCHAR" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        ID,ROBOT_CODE,SIM_CARD,SUPPLIER_NAME,REMARKS,CREATE_TIME,UPDATE_TIME
+    </sql>
+
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotSimSupplier" >
+        insert into SYS_ROBOT_SIM_SUPPLIER
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="robotCode != null" >
+                ROBOT_CODE,
+            </if>
+            <if test="simCard != null" >
+                SIM_CARD,
+            </if>
+            <if test="supplierName != null" >
+                SUPPLIER_NAME,
+            </if>
+            <if test="remarks != null" >
+                REMARKS,
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="robotCode != null" >
+                #{robotCode,jdbcType=VARCHAR},
+            </if>
+            <if test="simCard != null" >
+                #{simCard,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierName != null" >
+                #{supplierName,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotSimSupplier">
+        update SYS_ROBOT_SIM_SUPPLIER
+        <set >
+            <if test="robotCode != null" >
+                ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+            </if>
+            <if test="simCard != null" >
+                SIM_CARD = #{simCard,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierName != null" >
+                SUPPLIER_NAME = #{supplierName,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null" >
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getSysRobotSimSupplierList" resultType="com.hna.hka.archive.management.system.model.SysRobotSimSupplier">
+        select *
+        from
+        SYS_ROBOT_SIM_SUPPLIER
+        <where>
+            1=1
+            <if test="robotCode != null and robotCode != ''">
+               and ROBOT_CODE like CONCAT('%',#{robotCode},'%')
+            </if>
+            <if test="simCard != null and simCard != ''">
+                and SIM_CARD like CONCAT('%',#{simCard},'%')
+            </if>
+            <if test="supplierName != null and supplierName != ''">
+                and SUPPLIER_NAME like CONCAT('%',#{supplierName},'%')
+            </if>
+        </where>
+        order by CREATE_TIME DESC
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from SYS_ROBOT_SIM_SUPPLIER
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <select id="getSimById" resultType="com.hna.hka.archive.management.system.model.SysRobotSimSupplier">
+        select *
+        from SYS_ROBOT_SIM_SUPPLIER
+        where ID = #{id}
+    </select>
+
+</mapper>
+
+

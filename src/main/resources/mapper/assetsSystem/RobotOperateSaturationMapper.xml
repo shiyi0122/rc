@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.RobotOperateSaturationMapper">
+
+    <select id="getOperateSaturationList" resultType="java.util.HashMap">
+
+        select A.SCENIC_SPOT_NAME,
+        (select COUNT(*) from SYS_ROBOT
+        <where>
+            <choose>
+                <when test="spotId != null and spotId != ''"> and SCENIC_SPOT_ID = #{spotId} </when>
+                <otherwise>and SCENIC_SPOT_ID = A.SCENIC_SPOT_ID</otherwise>
+            </choose>
+        </where>
+        ) as sum,
+
+        (select COUNT(*) from SYS_ROBOT
+        <where>
+            <choose>
+                <when test="spotId != null and spotId != ''"> and SCENIC_SPOT_ID = #{spotId} </when>
+                <otherwise> and SCENIC_SPOT_ID = A.SCENIC_SPOT_ID </otherwise>
+            </choose>
+            and ROBOT_RUN_STATE in (20,30,70)
+        </where>
+        ) as nowsum,
+        (select nowsum / sum ) as saturation
+        from SYS_SCENIC_SPOT A
+        <where>
+            <if test="spotId != null and spotId != ''">
+               and  A.SCENIC_SPOT_ID = #{spotId}
+            </if>
+        </where>
+        limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}
+
+    </select>
+
+    <select id="getOperateSaturationCensus" resultType="java.lang.String">
+
+        select  (select  COUNT(ORDER_ID) from
+        (select * from SYS_ORDER
+        <where>
+            <if test="spotId != null and spotId != ''">
+                and ORDER_SCENIC_SPOT_ID = #{spotId}
+            </if>
+            and  CREATE_DATE &gt;= #{startDate} and CREATE_DATE &lt;= #{endDate}
+        </where>
+        GROUP BY ORDER_ROBOT_CODE) as sss )
+        /
+        (select COUNT(*) from SYS_ROBOT
+        <where>
+            <if test="spotId != null and spotId != ''">
+                SCENIC_SPOT_ID =#{spotId}
+            </if>
+        </where>
+         ) as zsb
+    </select>
+
+
+    <select id="getOperateSaturationListCount" resultType="java.lang.Integer">
+        select COUNT(*) from  SYS_SCENIC_SPOT A
+        <where>
+            <if test="spotId != null and spotId != ''">
+                and  A.SCENIC_SPOT_ID =#{spotId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getOperateSaturationSettlement" resultType="java.util.HashMap">
+        select
+        (select COUNT(*) from SYS_ROBOT
+        <where>
+           <if test="spotId != null and spotId != ''">
+               and SCENIC_SPOT_ID = #{spotId}
+           </if>
+        </where>
+        ) as sum,
+
+        (select COUNT(*) from SYS_ROBOT
+        <where>
+            <if test="spotId != null and spotId != ''">
+                and SCENIC_SPOT_ID = #{spotId}
+            </if>
+            and ROBOT_RUN_STATE in (20,30,70)
+        </where>
+        ) as nowsum,
+        (select nowsum / sum ) as saturation
+    </select>
+
+
+
+
+</mapper>

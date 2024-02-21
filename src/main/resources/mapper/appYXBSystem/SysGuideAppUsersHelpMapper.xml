@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.appYXBSystem.dao.SysGuideAppUsersHelpMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsersHelp" >
+    <id column="HELP_ID" property="helpId" jdbcType="BIGINT" />
+    <result column="HELP_TITLE" property="helpTitle" jdbcType="VARCHAR" />
+    <result column="HELP_CONTENT" property="helpContent" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    HELP_ID,HELP_TITLE,HELP_CONTENT,CREATE_DATE,UPDATE_DATE
+  </sql>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_GUIDE_APP_USERS_HELP
+    where HELP_ID = #{helpId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsersHelp" >
+    insert into SYS_GUIDE_APP_USERS_HELP (
+    HELP_TITLE, HELP_CONTENT,CREATE_DATE,UPDATE_DATE)
+    values (#{helpTitle,jdbcType=VARCHAR}, #{helpContent,jdbcType=VARCHAR},
+          #{createDate,jdbcType=VARCHAR},#{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsersHelp" >
+    insert into SYS_GUIDE_APP_USERS_HELP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="helpId != null">
+        HELP_ID,
+      </if>
+      <if test="helpTitle != null" >
+        HELP_TITLE,
+      </if>
+      <if test="helpContent != null" >
+        HELP_CONTENT,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="helpId">
+        #{helpId,jdbcType=BIGINT},
+      </if>
+      <if test="helpTitle != null" >
+        #{helpTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="helpContent != null" >
+        #{helpContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsersHelp" >
+    update SYS_GUIDE_APP_USERS_HELP
+    <set >
+      <if test="helpTitle != null" >
+        HELP_TITLE = #{helpTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="helpContent != null" >
+        HELP_CONTENT = #{helpContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where HELP_ID = #{helpId,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="getGuideAppUsersHelpList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM SYS_GUIDE_APP_USERS_HELP
+    <where>
+      <if test="sysGuideAppUsersHelp.helpTitle != null and sysGuideAppUsersHelp.helpTitle != ''">
+        AND HELP_TITLE LIKE CONCAT('%', #{sysGuideAppUsersHelp.helpTitle },'%')
+      </if>
+      <if test="sysGuideAppUsersHelp.helpContent != null and sysGuideAppUsersHelp.helpContent != ''">
+        AND HELP_CONTENT LIKE CONCAT('%', #{sysGuideAppUsersHelp.helpContent},'%')
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+
+
+</mapper>

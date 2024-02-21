@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotActivity" >
+    <id column="ACTIVITY_ID" property="activityId" jdbcType="BIGINT" />
+    <result column="ACTIVITY_NAME" property="activityName" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_SCENIC_SPOT_ID" property="activityScenicSpotId" jdbcType="BIGINT" />
+    <result column="ACTIVITY_SCENIC_SPOT_NAME" property="activityScenicSpotName" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_STANDARD" property="activityStandard" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_AMOUNT" property="activityAmount" jdbcType="VARCHAR" />
+    <result column="NUMBER_COUPONS" property="numberCoupons" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_START_TIME" property="activityStartTime" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_END_TIME" property="activityEndTime" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_TYPE" property="activityType" jdbcType="VARCHAR" />
+    <result column="CLAIM_CONDITIONS" property="claimConditions" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_FAILURE" property="activityFailure" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_USE_TYPE" property="activityUseType" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ACTIVITY_ID, ACTIVITY_NAME, ACTIVITY_SCENIC_SPOT_ID, ACTIVITY_SCENIC_SPOT_NAME, ACTIVITY_STANDARD, 
+    ACTIVITY_AMOUNT, NUMBER_COUPONS, ACTIVITY_START_TIME, ACTIVITY_END_TIME, ACTIVITY_TYPE, 
+    CLAIM_CONDITIONS, ACTIVITY_FAILURE, CREATE_DATE, UPDATE_DATE, ACTIVITY_USE_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_ACTIVITY
+    where ACTIVITY_ID = #{activityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_ACTIVITY
+    where ACTIVITY_ID = #{activityId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotActivity" >
+    insert into SYS_SCENIC_SPOT_ACTIVITY (ACTIVITY_ID, ACTIVITY_NAME, ACTIVITY_SCENIC_SPOT_ID, 
+      ACTIVITY_SCENIC_SPOT_NAME, ACTIVITY_STANDARD, 
+      ACTIVITY_AMOUNT, NUMBER_COUPONS, ACTIVITY_START_TIME, 
+      ACTIVITY_END_TIME, ACTIVITY_TYPE, CLAIM_CONDITIONS, 
+      ACTIVITY_FAILURE, CREATE_DATE, UPDATE_DATE, ACTIVITY_USE_TYPE
+      )
+    values (#{activityId,jdbcType=BIGINT}, #{activityName,jdbcType=VARCHAR}, #{activityScenicSpotId,jdbcType=BIGINT}, 
+      #{activityScenicSpotName,jdbcType=VARCHAR}, #{activityStandard,jdbcType=VARCHAR}, 
+      #{activityAmount,jdbcType=VARCHAR}, #{numberCoupons,jdbcType=VARCHAR}, #{activityStartTime,jdbcType=VARCHAR}, 
+      #{activityEndTime,jdbcType=VARCHAR}, #{activityType,jdbcType=VARCHAR}, #{claimConditions,jdbcType=VARCHAR}, 
+      #{activityFailure,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR},#{activityUseType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotActivity" >
+    insert into SYS_SCENIC_SPOT_ACTIVITY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityId != null" >
+        ACTIVITY_ID,
+      </if>
+      <if test="activityName != null" >
+        ACTIVITY_NAME,
+      </if>
+      <if test="activityScenicSpotId != null" >
+        ACTIVITY_SCENIC_SPOT_ID,
+      </if>
+      <if test="activityScenicSpotName != null" >
+        ACTIVITY_SCENIC_SPOT_NAME,
+      </if>
+      <if test="activityStandard != null" >
+        ACTIVITY_STANDARD,
+      </if>
+      <if test="activityAmount != null" >
+        ACTIVITY_AMOUNT,
+      </if>
+      <if test="numberCoupons != null" >
+        NUMBER_COUPONS,
+      </if>
+      <if test="activityStartTime != null" >
+        ACTIVITY_START_TIME,
+      </if>
+      <if test="activityEndTime != null" >
+        ACTIVITY_END_TIME,
+      </if>
+      <if test="activityType != null" >
+        ACTIVITY_TYPE,
+      </if>
+      <if test="claimConditions != null" >
+        CLAIM_CONDITIONS,
+      </if>
+      <if test="activityFailure != null" >
+        ACTIVITY_FAILURE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="activityUseType != null">
+        ACTIVITY_USE_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityId != null" >
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityScenicSpotId != null" >
+        #{activityScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="activityScenicSpotName != null" >
+        #{activityScenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStandard != null" >
+        #{activityStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="activityAmount != null" >
+        #{activityAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="numberCoupons != null" >
+        #{numberCoupons,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStartTime != null" >
+        #{activityStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityEndTime != null" >
+        #{activityEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="claimConditions != null" >
+        #{claimConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="activityFailure != null" >
+        #{activityFailure,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="activityUseType != null">
+        #{activityUseType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotActivity" >
+    update SYS_SCENIC_SPOT_ACTIVITY
+    <set >
+      <if test="activityName != null" >
+        ACTIVITY_NAME = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityScenicSpotId != null" >
+        ACTIVITY_SCENIC_SPOT_ID = #{activityScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="activityScenicSpotName != null" >
+        ACTIVITY_SCENIC_SPOT_NAME = #{activityScenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStandard != null" >
+        ACTIVITY_STANDARD = #{activityStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="activityAmount != null" >
+        ACTIVITY_AMOUNT = #{activityAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="numberCoupons != null" >
+        NUMBER_COUPONS = #{numberCoupons,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStartTime != null" >
+        ACTIVITY_START_TIME = #{activityStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityEndTime != null" >
+        ACTIVITY_END_TIME = #{activityEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        ACTIVITY_TYPE = #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="claimConditions != null" >
+        CLAIM_CONDITIONS = #{claimConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="activityFailure != null" >
+        ACTIVITY_FAILURE = #{activityFailure,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="activityUseType != null">
+        ACTIVITY_USE_TYPE = #{activityUseType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ACTIVITY_ID = #{activityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotActivity" >
+    update SYS_SCENIC_SPOT_ACTIVITY
+    set ACTIVITY_NAME = #{activityName,jdbcType=VARCHAR},
+      ACTIVITY_SCENIC_SPOT_ID = #{activityScenicSpotId,jdbcType=BIGINT},
+      ACTIVITY_SCENIC_SPOT_NAME = #{activityScenicSpotName,jdbcType=VARCHAR},
+      ACTIVITY_STANDARD = #{activityStandard,jdbcType=VARCHAR},
+      ACTIVITY_AMOUNT = #{activityAmount,jdbcType=VARCHAR},
+      NUMBER_COUPONS = #{numberCoupons,jdbcType=VARCHAR},
+      ACTIVITY_START_TIME = #{activityStartTime,jdbcType=VARCHAR},
+      ACTIVITY_END_TIME = #{activityEndTime,jdbcType=VARCHAR},
+      ACTIVITY_TYPE = #{activityType,jdbcType=VARCHAR},
+      CLAIM_CONDITIONS = #{claimConditions,jdbcType=VARCHAR},
+      ACTIVITY_FAILURE = #{activityFailure,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      ACTIVITY_USE_TYPE = #{activityUseType,jdbcType=VARCHAR}
+    where ACTIVITY_ID = #{activityId,jdbcType=BIGINT}
+  </update>
+  <select id="getScenicSpotActivityList" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_ACTIVITY
+    <where>
+    	<if test="activityScenicSpotId != null and activityScenicSpotId != ''" >
+        AND ACTIVITY_SCENIC_SPOT_ID = #{activityScenicSpotId}
+      </if>
+      <if test="activityFailure != null">
+        AND ACTIVITY_FAILURE = #{activityFailure}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <select id="getScenicSpotActivityByType" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_ACTIVITY
+    <where>
+    	AND ACTIVITY_TYPE = #{activityType}
+    </where>
+  </select>
+</mapper>

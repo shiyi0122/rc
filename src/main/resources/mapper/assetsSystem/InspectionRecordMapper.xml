@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.InspectionRecordMapper">
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecord">
+        select srir.* from SYS_ROBOT_INSPECTION_RECORD srir
+        left join SYS_ROBOT sr on sr.ROBOT_CODE = srir.ROBOT_CODE
+        left join SYS_APP_USERS_SPOT_ROLE sausr on sr.SCENIC_SPOT_ID = sausr.PRIMARY_KEY_PID
+        <where>
+            1=1
+            <if test="userId != null and userId != ''">
+                and sausr.PRIMARY_KEY_UID = #{userId}
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                and  srir.ROBOT_CODE = #{robotCode}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and srir.INSPECTON_TIME &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and srir.INSPECTON_TIME &lt;= #{endTime}
+            </if>
+            <if test="type != null">
+                and srir.TYPE = #{type}
+            </if>
+            <if test="result != null">
+                and srir.RESULT = #{result}
+            </if>
+<!--            <if test="userId != null">-->
+<!--                and srir.INSPECTOR_ID = #{userId}-->
+<!--            </if>-->
+            and srir.IS_DELECTED = 0
+        </where>
+        GROUP BY srir.ID
+        order by srir.CREATE_TIME DESC
+    </select>
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecord">
+        insert into SYS_ROBOT_INSPECTION_RECORD(ID, TYPE, INSPECTION_ID, INSPECTION_NAME, RESULT, ROBOT_CODE,
+        ROBOT_MODEL, INSPECTOR_ID, INSPECTOR_NAME, INSPECTOR_ROLE,
+        INSPECTON_TIME, NOTES, PRODUCTION_INFO,CREATE_TIME,PICTURE_URL,UPDATE_TIME)
+        values (#{id}, #{type}, #{inspectionId}, #{inspectionName}, #{result}, #{robotCode}, #{robotModel},
+        #{inspectorId}, #{inspectorName}, #{inspectorRole}, #{inspectonTime}, #{notes}, #{productionInfo},#{createTime},#{pictureUrl},#{updateTime})
+    </insert>
+
+    <insert id="addRobotQualityTesting" parameterType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecord">
+        insert into SYS_ROBOT_INSPECTION_RECORD(ID, TYPE, INSPECTION_ID, INSPECTION_NAME, RESULT, ROBOT_CODE,
+        ROBOT_MODEL, INSPECTOR_ID, INSPECTOR_NAME, INSPECTOR_ROLE,
+        INSPECTON_TIME, NOTES, PRODUCTION_INFO)
+        values (#{id}, #{type}, #{inspectionId}, #{inspectionName}, #{result}, #{robotCode}, #{robotModel},
+        #{inspectorId}, #{inspectorName}, #{inspectorRole}, #{inspectonTime}, #{notes}, #{productionInfo});
+
+        insert into SYS_ROBOT_INSPECTION_RECORD_DETAIL(id, standard_id, serial, project, parameter, create_time,
+        qualified) values
+        <foreach collection="details" separator="," item="detail">
+            (#{detail.id}, #{detail.standardId}, #{detail.serial}, #{detail.project}, #{detail.parameter},
+            #{detail.createTime}, #{detail.qualified});
+        </foreach>
+    </insert>
+
+    <insert id="addDetail" parameterType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecordDetail">
+        insert into SYS_ROBOT_INSPECTION_RECORD_DETAIL(id, standard_id, serial, project, parameter, create_time,
+        qualified,update_time) values
+            (#{id}, #{standardId}, #{serial}, #{project}, #{parameter},
+            #{createTime}, #{qualified}, #{updateTime})
+    </insert>
+    <update id="editDetail" parameterType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecordDetail">
+        update SYS_ROBOT_INSPECTION_RECORD_DETAIL
+        <set>
+            <if test="standardId != null" >
+                STANDARD_ID = #{standardId,jdbcType=BIGINT},
+            </if>
+            <if test="serial != null" >
+                SERIAL = #{serial,jdbcType=INTEGER},
+            </if>
+            <if test="project != null" >
+                PROJECT = #{project,jdbcType=VARCHAR},
+            </if>
+            <if test="parameter != null" >
+                PARAMETER = #{parameter,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="qualified != null" >
+                QUALIFIED = #{qualified,jdbcType=INTEGER},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findByKey" resultType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecord">
+        SELECT srir.*,
+               sssac.COMPANY_NAME,
+               sss.SCENIC_SPOT_NAME
+        FROM SYS_ROBOT_INSPECTION_RECORD srir
+                 left join SYS_ROBOT sr on
+            srir.ROBOT_CODE = sr.ROBOT_CODE
+                 left JOIN SYS_SCENIC_SPOT sss on
+            sr.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+                 left join SYS_SCENIC_SPOT_ASCRIPTION_COMPANY sssac
+                           on sss.COMPANY_ID = sssac.COMPANY_ID
+        where srir.ID = #{id}
+    </select>
+
+
+    <select id="showDetail" resultType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecordDetail">
+        select *
+        from SYS_ROBOT_INSPECTION_RECORD_DETAIL
+        where STANDARD_ID = #{id}
+    </select>
+
+    <select id="selectQcOrAts" resultType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecord">
+        select * from SYS_ROBOT_INSPECTION_RECORD
+        <where>
+            <if test="type!=null and type!=''">
+                TYPE =#{type}
+            </if>
+            <if test="result!=null and result!=''">
+                RESULT#{result}
+            </if>
+        </where>
+    </select>
+    <select id="lists" resultType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecordDetail">
+        select * from
+        SYS_ROBOT_INSPECTION_RECORD_DETAIL
+        where STANDARD_ID=#{id}
+        order by CREATE_TIME DESC
+    </select>
+
+    <select id="selectById" resultType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecord">
+        select * from SYS_ROBOT_INSPECTION_RECORD
+        where ID = #{id}
+    </select>
+
+    <select id="selectByRobotCode" resultType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecord">
+        select *
+        from SYS_ROBOT_INSPECTION_RECORD
+        where ROBOT_CODE = #{robotCode}
+        order by CREATE_TIME DESC
+        limit 1
+    </select>
+
+    <select id="selectByRobotCodeAndType" resultType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecord">
+        select *
+        from SYS_ROBOT_INSPECTION_RECORD
+        where ROBOT_CODE = #{robotCode}
+        and TYPE = #{type}
+        order by CREATE_TIME DESC
+        limit 1
+    </select>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecord">
+        update SYS_ROBOT_INSPECTION_RECORD
+        <set >
+            <if test="type != null" >
+                TYPE = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="inspectionId != null" >
+                INSPECTION_ID = #{inspectionId,jdbcType=BIGINT},
+            </if>
+            <if test="inspectionName != null" >
+                INSPECTION_NAME = #{inspectionName,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null" >
+                RESULT = #{result,jdbcType=INTEGER},
+            </if>
+            <if test="robotCode != null" >
+                ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+            </if>
+            <if test="robotModel != null" >
+                ROBOT_MODEL = #{robotModel,jdbcType=VARCHAR},
+            </if>
+            <if test="inspectorId != null" >
+                INSPECTOR_ID = #{inspectorId,jdbcType=BIGINT},
+            </if>
+            <if test="inspectorName != null" >
+                INSPECTOR_NAME = #{inspectorName,jdbcType=VARCHAR},
+            </if>
+            <if test="inspectorRole != null" >
+                INSPECTOR_ROLE = #{inspectorRole,jdbcType=VARCHAR},
+            </if>
+            <if test="inspectonTime != null" >
+                INSPECTON_TIME = #{inspectonTime,jdbcType=VARCHAR},
+            </if>
+            <if test="notes != null" >
+                NOTES = #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="productionInfo != null" >
+                PRODUCTION_INFO = #{productionInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="pictureUrl != null" >
+                PICTURE_URL = #{pictureUrl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="delect" parameterType="com.hna.hka.archive.management.assetsSystem.model.InspectionRecord">
+        update SYS_ROBOT_INSPECTION_RECORD
+        <set>
+                IS_DELECTED = 1
+        </set>
+        where ID =#{id,jdbcType=BIGINT}
+    </update>
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.OperationalAnalysisMapper">
+
+    <sql id="substr">
+        <choose>
+            <when test="type == 1">
+                SUBSTR(vc.checkDate , 1 , 7)
+            </when>
+            <when test="type == 2">
+                SUBSTR(vc.checkDate , 1 , 4)
+            </when>
+            <when test="type == 3">
+                SUBSTR(vc.checkDate , 1 , 10)
+            </when>
+        </choose>
+    </sql>
+
+    <sql id="sum">
+        <choose>
+            <when test="analysis == 1">
+                SUM(ssoi.TOTAL_TIME)
+            </when>
+            <when test="analysis == 2">
+                SUM(ssoi.REAL_AMOUNT)
+            </when>
+        </choose>
+    </sql>
+
+    <select id="timeSort" resultType="java.util.HashMap">
+        SELECT sss.SCENIC_SPOT_ID as spotId,
+        sss.SCENIC_SPOT_NAME as spotName,
+        <include refid="sum"></include> as totalTime
+        FROM D_CALENDAR vc
+        left join SYS_SCENIC_SPOT sss on
+        1 = 1
+        left join SYS_SCENIC_OPERATIONAL_INVENTORY ssoi on
+        vc.checkDate = ssoi.`DATE`
+        and sss.SCENIC_SPOT_ID = ssoi.SPOT_ID
+        <where>
+            <if test="beginDate != null and beginDate != ''">
+                and <include refid="substr"></include> &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and <include refid="substr"></include> &lt;= #{endDate}
+            </if>
+        </where>
+        group by sss.SCENIC_SPOT_ID
+        ORDER by <include refid="sum"></include> DESC
+    </select>
+
+
+    <select id="timeList" resultType="java.util.HashMap">
+        SELECT
+        <include refid="substr"></include>
+        as checkDate,
+        <include refid="sum"></include> as totalTime
+        FROM
+        D_CALENDAR vc
+        left join SYS_SCENIC_SPOT sss on
+        1 = 1
+        left join SYS_SCENIC_OPERATIONAL_INVENTORY ssoi on
+        vc.checkDate = ssoi.`DATE`
+        and sss.SCENIC_SPOT_ID = ssoi.SPOT_ID
+        <where>
+            sss.SCENIC_SPOT_ID = #{spotId}
+            <if test="beginDate != null and beginDate != ''">
+                and <include refid="substr"></include> &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and <include refid="substr"></include> &lt;= #{endDate}
+            </if>
+
+        </where>
+        group by
+        <include refid="substr"></include>
+        ORDER by
+        <include refid="substr"></include>
+    </select>
+
+    <select id="fitList" resultType="java.util.HashMap">
+        select
+            ID,
+            CASE
+                when `BEGIN` is null
+                    and `END` is NOT NULL THEN CONCAT('前' , `END` , '名')
+                WHEN `BEGIN` is NOT NULL
+                    and `END` IS NULL THEN CONCAT(`BEGIN` , '名之后')
+                WHEN `BEGIN` IS NOT NULL
+                    and `END` IS NOT NULL THEN concat(BEGIN, '-', END, '名')
+                ELSE '全部'
+                END as SECTION,
+            BEGIN,
+            END
+        from
+            D_OPERATIONAL_ANAlYSIS_SECTION
+    </select>
+
+    <insert id="fitAdd">
+        insert into D_OPERATIONAL_ANAlYSIS_SECTION(id, begin, end)
+        VALUES (#{id}, #{begin}, #{end})
+    </insert>
+
+    <update id="fitEdit">
+        update D_OPERATIONAL_ANAlYSIS_SECTION
+        set BEGIN = #{begin},
+            END   = #{end}
+        where ID = #{id}
+    </update>
+
+    <delete id="fitDelete">
+        delete
+        from D_OPERATIONAL_ANAlYSIS_SECTION
+        where ID = #{id}
+    </delete>
+
+
+    <select id="fitRevenue" resultType="java.util.HashMap">
+        SELECT sss.SCENIC_SPOT_ID as spotId,
+        sss.SCENIC_SPOT_NAME as spotName,
+        <include refid="sum"></include> as realAmout ,
+        <include refid="substr"></include> as checkDate
+        FROM D_CALENDAR vc
+        left join SYS_SCENIC_SPOT sss on
+        1 = 1
+        left join SYS_SCENIC_OPERATIONAL_INVENTORY ssoi on vc.checkDate = ssoi.`DATE`
+                    and sss.SCENIC_SPOT_ID = ssoi.SPOT_ID
+
+        left join SYS_SCENIC_SPOT_BINDING sssb  on ssoi.SPOT_ID = sssb.SCENIC_SPOT_FID
+        <where>
+            <if test="provinceId != null and provinceId != ''">
+                and sssb.SCENIC_SPOT_PID = #{provinceId}
+            </if>
+            <if test="spotId != null and spotId != ''">
+                and ssoi.SPOT_ID = #{spotId}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and   <include refid="substr"></include> &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and  <include refid="substr"></include> &lt;= #{endDate}
+            </if>
+        </where>
+        group by <include refid="substr"></include>
+        ORDER by <include refid="substr"></include>
+
+    </select>
+
+
+
+    <select id="spotList" resultType="com.hna.hka.archive.management.assetsSystem.model.ScenicSpot" parameterType="java.lang.Long">
+        select sssb.SCENIC_SPOT_FID as scenicSpotId ,sssb.SCENIC_SPOT_FNAME as scenicSpotName ,sssb.SCENIC_SPOT_PID as provinceId from SYS_SCENIC_SPOT_BINDING as sssb
+        LEFT JOIN SYS_SCENIC_SPOT as sss on sssb.SCENIC_SPOT_FID = sss.SCENIC_SPOT_ID
+        <where>
+            <if test="provinceId != null and provinceId != ''">
+<!--                and sssb.SCENIC_SPOT_PID like CONCAT('%',#{provinceId},'%')-->
+                    and sssb.SCENIC_SPOT_PID = #{provinceId}
+            </if>
+            and sssb.SCENIC_SPOT_TYPE is null
+        </where>
+
+    </select>
+
+    <select id="provinceList" resultType="com.hna.hka.archive.management.assetsSystem.model.ScenicSpot">
+        select SCENIC_SPOT_FID as provinceId,SCENIC_SPOT_FNAME as provinceName from SYS_SCENIC_SPOT_BINDING where SCENIC_SPOT_TYPE = 1
+    </select>
+</mapper>

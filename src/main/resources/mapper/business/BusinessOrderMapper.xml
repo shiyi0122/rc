@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.business.model.BusinessOrder" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="ORDER_NUMBER" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="ORDER_AMOUNT" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="PAY_TYPE" property="payType" jdbcType="BIT" />
+    <result column="ORDER_STATUS" property="orderStatus" jdbcType="BIT" />
+    <result column="INVOICE_STATUS" property="invoiceStatus" jdbcType="BIT" />
+    <result column="ORDER_TYPE" property="orderType" jdbcType="BIT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, ORDER_NUMBER, ORDER_AMOUNT, PAY_TYPE, ORDER_STATUS, INVOICE_STATUS, 
+    ORDER_TYPE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BUSINESS_ORDER
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BUSINESS_ORDER
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.business.model.BusinessOrder" >
+    insert into BUSINESS_ORDER (ID, USER_ID, ORDER_NUMBER, 
+      ORDER_AMOUNT, PAY_TYPE, ORDER_STATUS, 
+      INVOICE_STATUS, ORDER_TYPE, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{orderNumber,jdbcType=VARCHAR}, 
+      #{orderAmount,jdbcType=DECIMAL}, #{payType,jdbcType=BIT}, #{orderStatus,jdbcType=BIT}, 
+      #{invoiceStatus,jdbcType=BIT}, #{orderType,jdbcType=BIT}, #{createTime,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessOrder" >
+    insert into BUSINESS_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="orderNumber != null" >
+        ORDER_NUMBER,
+      </if>
+      <if test="orderAmount != null" >
+        ORDER_AMOUNT,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS,
+      </if>
+      <if test="invoiceStatus != null" >
+        INVOICE_STATUS,
+      </if>
+      <if test="orderType != null" >
+        ORDER_TYPE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=BIT},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=BIT},
+      </if>
+      <if test="invoiceStatus != null" >
+        #{invoiceStatus,jdbcType=BIT},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessOrder" >
+    update BUSINESS_ORDER
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNumber != null" >
+        ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        ORDER_AMOUNT = #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=BIT},
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS = #{orderStatus,jdbcType=BIT},
+      </if>
+      <if test="invoiceStatus != null" >
+        INVOICE_STATUS = #{invoiceStatus,jdbcType=BIT},
+      </if>
+      <if test="orderType != null" >
+        ORDER_TYPE = #{orderType,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.business.model.BusinessOrder" >
+    update BUSINESS_ORDER
+    set USER_ID = #{userId,jdbcType=BIGINT},
+      ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
+      ORDER_AMOUNT = #{orderAmount,jdbcType=DECIMAL},
+      PAY_TYPE = #{payType,jdbcType=BIT},
+      ORDER_STATUS = #{orderStatus,jdbcType=BIT},
+      INVOICE_STATUS = #{invoiceStatus,jdbcType=BIT},
+      ORDER_TYPE = #{orderType,jdbcType=BIT},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getOrderList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	A.ID,
+	A.USER_ID,
+	A.ORDER_NUMBER,
+	A.ORDER_AMOUNT,
+	A.PAY_TYPE,
+	A.ORDER_STATUS,
+	A.INVOICE_STATUS,
+	A.ORDER_TYPE,
+	A.CREATE_TIME,
+	A.UPDATE_TIME,
+	B.USER_NAME AS userName,
+	B.PHONE AS phone,
+	C.REAL_TYPE AS realType,
+	D.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+	BUSINESS_ORDER A
+	LEFT JOIN BUSINESS_USERS B ON A.USER_ID = B.ID
+	LEFT JOIN BUSINESS_AUCTION_BUY C ON A.ID = C.ORDER_ID
+	LEFT JOIN SYS_SCENIC_SPOT D ON C.SCENIC_SPOT_ID = D.SCENIC_SPOT_ID
+    <where>
+      <if test="orderType == 1">
+        AND A.ORDER_TYPE = 3
+      </if>
+      <if test="orderType == 2">
+        AND A.ORDER_TYPE != 3
+      </if>
+      <if test="userName != null and userName != ''">
+        B.USER_NAME LIKE CONCAT('%',#{userName},'%')
+      </if>
+    </where>
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+</mapper>

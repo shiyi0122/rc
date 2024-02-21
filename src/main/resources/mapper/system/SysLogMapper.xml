@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysLog" >
+    <id column="LOG_ID" property="logId" jdbcType="BIGINT" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="LOG_USER_PHONE" property="logUserPhone" jdbcType="VARCHAR" />
+    <result column="LOG_TYPE" property="logType" jdbcType="VARCHAR" />
+    <result column="LOG_AMOUNT" property="logAmount" jdbcType="VARCHAR" />
+    <result column="LOG_DISCOUNT" property="logDiscount" jdbcType="VARCHAR" />
+    <result column="LOG_REASONS_REFUNDS" property="logReasonsRefunds" jdbcType="VARCHAR" />
+    <result column="LOG_SCENIC_SPOT_ID" property="logScenicSpotId" jdbcType="BIGINT" />
+    <result column="LOG_SCENIC_SPOT_NAME" property="logScenicSpotName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysLogWithBLOBs" extends="BaseResultMap" >
+    <result column="LOG_COORDINATE_OUTERRING" property="logCoordinateOuterring" jdbcType="LONGVARCHAR" />
+    <result column="LOG_COORDINATE_OUTERRING_BAI_DU" property="logCoordinateOuterringBaiDu" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    LOG_ID, USER_NAME, LOG_USER_PHONE, LOG_TYPE, LOG_AMOUNT, LOG_DISCOUNT, LOG_REASONS_REFUNDS,
+    LOG_SCENIC_SPOT_ID, LOG_SCENIC_SPOT_NAME, CREATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    LOG_COORDINATE_OUTERRING, LOG_COORDINATE_OUTERRING_BAI_DU
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_LOG
+    where LOG_ID = #{logId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_LOG
+    where LOG_ID = #{logId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysLogWithBLOBs" >
+    insert into SYS_LOG (LOG_ID, USER_NAME, LOG_USER_PHONE,
+      LOG_TYPE, LOG_AMOUNT, LOG_DISCOUNT,
+      LOG_REASONS_REFUNDS, LOG_SCENIC_SPOT_ID, LOG_SCENIC_SPOT_NAME,
+      CREATE_DATE, LOG_COORDINATE_OUTERRING,
+      LOG_COORDINATE_OUTERRING_BAI_DU)
+    values (#{logId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{logUserPhone,jdbcType=VARCHAR},
+      #{logType,jdbcType=VARCHAR}, #{logAmount,jdbcType=VARCHAR}, #{logDiscount,jdbcType=VARCHAR},
+      #{logReasonsRefunds,jdbcType=VARCHAR}, #{logScenicSpotId,jdbcType=BIGINT}, #{logScenicSpotName,jdbcType=VARCHAR},
+      #{createDate,jdbcType=VARCHAR}, #{logCoordinateOuterring,jdbcType=LONGVARCHAR},
+      #{logCoordinateOuterringBaiDu,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysLogWithBLOBs" >
+    insert into SYS_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        LOG_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="logUserPhone != null" >
+        LOG_USER_PHONE,
+      </if>
+      <if test="logType != null" >
+        LOG_TYPE,
+      </if>
+      <if test="logAmount != null" >
+        LOG_AMOUNT,
+      </if>
+      <if test="logDiscount != null" >
+        LOG_DISCOUNT,
+      </if>
+      <if test="logReasonsRefunds != null" >
+        LOG_REASONS_REFUNDS,
+      </if>
+      <if test="logScenicSpotId != null" >
+        LOG_SCENIC_SPOT_ID,
+      </if>
+      <if test="logScenicSpotName != null" >
+        LOG_SCENIC_SPOT_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="logCoordinateOuterring != null" >
+        LOG_COORDINATE_OUTERRING,
+      </if>
+      <if test="logCoordinateOuterringBaiDu != null" >
+        LOG_COORDINATE_OUTERRING_BAI_DU,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="logUserPhone != null" >
+        #{logUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="logType != null" >
+        #{logType,jdbcType=VARCHAR},
+      </if>
+      <if test="logAmount != null" >
+        #{logAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="logDiscount != null" >
+        #{logDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="logReasonsRefunds != null" >
+        #{logReasonsRefunds,jdbcType=VARCHAR},
+      </if>
+      <if test="logScenicSpotId != null" >
+        #{logScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="logScenicSpotName != null" >
+        #{logScenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="logCoordinateOuterring != null" >
+        #{logCoordinateOuterring,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="logCoordinateOuterringBaiDu != null" >
+        #{logCoordinateOuterringBaiDu,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysLogWithBLOBs" >
+    update SYS_LOG
+    <set >
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="logUserPhone != null" >
+        LOG_USER_PHONE = #{logUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="logType != null" >
+        LOG_TYPE = #{logType,jdbcType=VARCHAR},
+      </if>
+      <if test="logAmount != null" >
+        LOG_AMOUNT = #{logAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="logDiscount != null" >
+        LOG_DISCOUNT = #{logDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="logReasonsRefunds != null" >
+        LOG_REASONS_REFUNDS = #{logReasonsRefunds,jdbcType=VARCHAR},
+      </if>
+      <if test="logScenicSpotId != null" >
+        LOG_SCENIC_SPOT_ID = #{logScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="logScenicSpotName != null" >
+        LOG_SCENIC_SPOT_NAME = #{logScenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="logCoordinateOuterring != null" >
+        LOG_COORDINATE_OUTERRING = #{logCoordinateOuterring,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="logCoordinateOuterringBaiDu != null" >
+        LOG_COORDINATE_OUTERRING_BAI_DU = #{logCoordinateOuterringBaiDu,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where LOG_ID = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysLogWithBLOBs" >
+    update SYS_LOG
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      LOG_USER_PHONE = #{logUserPhone,jdbcType=VARCHAR},
+      LOG_TYPE = #{logType,jdbcType=VARCHAR},
+      LOG_AMOUNT = #{logAmount,jdbcType=VARCHAR},
+      LOG_DISCOUNT = #{logDiscount,jdbcType=VARCHAR},
+      LOG_REASONS_REFUNDS = #{logReasonsRefunds,jdbcType=VARCHAR},
+      LOG_SCENIC_SPOT_ID = #{logScenicSpotId,jdbcType=BIGINT},
+      LOG_SCENIC_SPOT_NAME = #{logScenicSpotName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      LOG_COORDINATE_OUTERRING = #{logCoordinateOuterring,jdbcType=LONGVARCHAR},
+      LOG_COORDINATE_OUTERRING_BAI_DU = #{logCoordinateOuterringBaiDu,jdbcType=LONGVARCHAR}
+    where LOG_ID = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysLog" >
+    update SYS_LOG
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      LOG_USER_PHONE = #{logUserPhone,jdbcType=VARCHAR},
+      LOG_TYPE = #{logType,jdbcType=VARCHAR},
+      LOG_AMOUNT = #{logAmount,jdbcType=VARCHAR},
+      LOG_DISCOUNT = #{logDiscount,jdbcType=VARCHAR},
+      LOG_REASONS_REFUNDS = #{logReasonsRefunds,jdbcType=VARCHAR},
+      LOG_SCENIC_SPOT_ID = #{logScenicSpotId,jdbcType=BIGINT},
+      LOG_SCENIC_SPOT_NAME = #{logScenicSpotName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR}
+    where LOG_ID = #{logId,jdbcType=BIGINT}
+  </update>
+  <select id="getStoredValueAmountLogList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    FROM
+    SYS_LOG
+    <where>
+      <if test="logUserPhone != null and logUserPhone != ''">
+        AND LOG_USER_PHONE LIKE CONCAT('%',#{logUserPhone},'%')
+      </if>
+      <if test="logType != null and logType != ''">
+        AND LOG_TYPE = #{logType}
+      </if>
+      <if test="logAmount != null and logAmount != ''">
+        AND LOG_AMOUNT = #{logAmount}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

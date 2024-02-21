@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.WechatSysDepositLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.WechatSysDepositLog" >
+    <id column="DEPOSIT_LOG_ID" property="depositLogId" jdbcType="BIGINT" />
+    <result column="DEPOSIT_ID" property="depositId" jdbcType="BIGINT" />
+    <result column="DEPOSIT_PHONE" property="depositPhone" jdbcType="VARCHAR" />
+    <result column="DEPOSIT_MONEY" property="depositMoney" jdbcType="VARCHAR" />
+    <result column="OUT_TRADE_NO" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="REFUND_CLIENT" property="refundClient" jdbcType="VARCHAR" />
+    <result column="REASON" property="reason" jdbcType="VARCHAR" />
+    <result column="RETURN_RESULT_CODE" property="returnResultCode" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DEPOSIT_LOG_ID, DEPOSIT_ID, DEPOSIT_PHONE, DEPOSIT_MONEY, OUT_TRADE_NO, REFUND_CLIENT, 
+    REASON, RETURN_RESULT_CODE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from WECHAT_SYS_DEPOSIT_LOG
+    where DEPOSIT_LOG_ID = #{depositLogId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from WECHAT_SYS_DEPOSIT_LOG
+    where DEPOSIT_LOG_ID = #{depositLogId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.WechatSysDepositLog" >
+    insert into WECHAT_SYS_DEPOSIT_LOG (DEPOSIT_LOG_ID, DEPOSIT_ID, DEPOSIT_PHONE, 
+      DEPOSIT_MONEY, OUT_TRADE_NO, REFUND_CLIENT, 
+      REASON, RETURN_RESULT_CODE, CREATE_DATE, 
+      UPDATE_DATE)
+    values (#{depositLogId,jdbcType=BIGINT}, #{depositId,jdbcType=BIGINT}, #{depositPhone,jdbcType=VARCHAR}, 
+      #{depositMoney,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{refundClient,jdbcType=VARCHAR}, 
+      #{reason,jdbcType=VARCHAR}, #{returnResultCode,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.WechatSysDepositLog" >
+    insert into WECHAT_SYS_DEPOSIT_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="depositLogId != null" >
+        DEPOSIT_LOG_ID,
+      </if>
+      <if test="depositId != null" >
+        DEPOSIT_ID,
+      </if>
+      <if test="depositPhone != null" >
+        DEPOSIT_PHONE,
+      </if>
+      <if test="depositMoney != null" >
+        DEPOSIT_MONEY,
+      </if>
+      <if test="outTradeNo != null" >
+        OUT_TRADE_NO,
+      </if>
+      <if test="refundClient != null" >
+        REFUND_CLIENT,
+      </if>
+      <if test="reason != null" >
+        REASON,
+      </if>
+      <if test="returnResultCode != null" >
+        RETURN_RESULT_CODE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="depositLogId != null" >
+        #{depositLogId,jdbcType=BIGINT},
+      </if>
+      <if test="depositId != null" >
+        #{depositId,jdbcType=BIGINT},
+      </if>
+      <if test="depositPhone != null" >
+        #{depositPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="depositMoney != null" >
+        #{depositMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundClient != null" >
+        #{refundClient,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="returnResultCode != null" >
+        #{returnResultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.WechatSysDepositLog" >
+    update WECHAT_SYS_DEPOSIT_LOG
+    <set >
+      <if test="depositId != null" >
+        DEPOSIT_ID = #{depositId,jdbcType=BIGINT},
+      </if>
+      <if test="depositPhone != null" >
+        DEPOSIT_PHONE = #{depositPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="depositMoney != null" >
+        DEPOSIT_MONEY = #{depositMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        OUT_TRADE_NO = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundClient != null" >
+        REFUND_CLIENT = #{refundClient,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="returnResultCode != null" >
+        RETURN_RESULT_CODE = #{returnResultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DEPOSIT_LOG_ID = #{depositLogId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.WechatSysDepositLog" >
+    update WECHAT_SYS_DEPOSIT_LOG
+    set DEPOSIT_ID = #{depositId,jdbcType=BIGINT},
+      DEPOSIT_PHONE = #{depositPhone,jdbcType=VARCHAR},
+      DEPOSIT_MONEY = #{depositMoney,jdbcType=VARCHAR},
+      OUT_TRADE_NO = #{outTradeNo,jdbcType=VARCHAR},
+      REFUND_CLIENT = #{refundClient,jdbcType=VARCHAR},
+      REASON = #{reason,jdbcType=VARCHAR},
+      RETURN_RESULT_CODE = #{returnResultCode,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where DEPOSIT_LOG_ID = #{depositLogId,jdbcType=BIGINT}
+  </update>
+  <select id="getSysDepositLogList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from WECHAT_SYS_DEPOSIT_LOG
+    <where>
+      <if test="depositPhone != null and depositPhone != ''">
+        AND OUT_TRADE_NO LIKE CONCAT('%',#{depositPhone},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

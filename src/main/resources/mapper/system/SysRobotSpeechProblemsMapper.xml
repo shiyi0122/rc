@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotSpeechProblemsMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotSpeechProblems" >
+    <id column="SPEECH_PROBLEMS_ID" property="speechProblemsId" jdbcType="BIGINT" />
+    <result column="SPEECH_PROBLEMS" property="speechProblems" jdbcType="VARCHAR" />
+    <result column="SPEECH_PROBLEMS_PINYIN" property="speechProblemsPinyin" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR" />
+    <result column="HANDLE_STATE" property="handleState" jdbcType="VARCHAR" />
+    <result column="PROBLEM_STATUS" property="problemStatus" jdbcType="VARCHAR" />
+    <result column="PROBLEM_TIMES" property="problemTimes" jdbcType="VARCHAR" />
+    <result column="VOICE_TYPE" property="voiceType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SPEECH_PROBLEMS_ID, SPEECH_PROBLEMS, SPEECH_PROBLEMS_PINYIN, SCENIC_SPOT_ID, SCENIC_SPOT_NAME, 
+    HANDLE_STATE, PROBLEM_STATUS, PROBLEM_TIMES, VOICE_TYPE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_SPEECH_PROBLEMS
+    where SPEECH_PROBLEMS_ID = #{speechProblemsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_SPEECH_PROBLEMS
+    where SPEECH_PROBLEMS_ID = #{speechProblemsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotSpeechProblems" >
+    insert into SYS_ROBOT_SPEECH_PROBLEMS (SPEECH_PROBLEMS_ID, SPEECH_PROBLEMS, 
+      SPEECH_PROBLEMS_PINYIN, SCENIC_SPOT_ID, SCENIC_SPOT_NAME, 
+      HANDLE_STATE, PROBLEM_STATUS, PROBLEM_TIMES, 
+      VOICE_TYPE, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{speechProblemsId,jdbcType=BIGINT}, #{speechProblems,jdbcType=VARCHAR}, 
+      #{speechProblemsPinyin,jdbcType=VARCHAR}, #{scenicSpotId,jdbcType=BIGINT}, #{scenicSpotName,jdbcType=VARCHAR}, 
+      #{handleState,jdbcType=VARCHAR}, #{problemStatus,jdbcType=VARCHAR}, #{problemTimes,jdbcType=VARCHAR}, 
+      #{voiceType,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotSpeechProblems" >
+    insert into SYS_ROBOT_SPEECH_PROBLEMS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="speechProblemsId != null" >
+        SPEECH_PROBLEMS_ID,
+      </if>
+      <if test="speechProblems != null" >
+        SPEECH_PROBLEMS,
+      </if>
+      <if test="speechProblemsPinyin != null" >
+        SPEECH_PROBLEMS_PINYIN,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="scenicSpotName != null" >
+        SCENIC_SPOT_NAME,
+      </if>
+      <if test="handleState != null" >
+        HANDLE_STATE,
+      </if>
+      <if test="problemStatus != null" >
+        PROBLEM_STATUS,
+      </if>
+      <if test="problemTimes != null" >
+        PROBLEM_TIMES,
+      </if>
+      <if test="voiceType != null" >
+        VOICE_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="speechProblemsId != null" >
+        #{speechProblemsId,jdbcType=BIGINT},
+      </if>
+      <if test="speechProblems != null" >
+        #{speechProblems,jdbcType=VARCHAR},
+      </if>
+      <if test="speechProblemsPinyin != null" >
+        #{speechProblemsPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotName != null" >
+        #{scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="handleState != null" >
+        #{handleState,jdbcType=VARCHAR},
+      </if>
+      <if test="problemStatus != null" >
+        #{problemStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="problemTimes != null" >
+        #{problemTimes,jdbcType=VARCHAR},
+      </if>
+      <if test="voiceType != null" >
+        #{voiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotSpeechProblems" >
+    update SYS_ROBOT_SPEECH_PROBLEMS
+    <set >
+      <if test="speechProblems != null" >
+        SPEECH_PROBLEMS = #{speechProblems,jdbcType=VARCHAR},
+      </if>
+      <if test="speechProblemsPinyin != null" >
+        SPEECH_PROBLEMS_PINYIN = #{speechProblemsPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotName != null" >
+        SCENIC_SPOT_NAME = #{scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="handleState != null" >
+        HANDLE_STATE = #{handleState,jdbcType=VARCHAR},
+      </if>
+      <if test="problemStatus != null" >
+        PROBLEM_STATUS = #{problemStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="problemTimes != null" >
+        PROBLEM_TIMES = #{problemTimes,jdbcType=VARCHAR},
+      </if>
+      <if test="voiceType != null" >
+        VOICE_TYPE = #{voiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SPEECH_PROBLEMS_ID = #{speechProblemsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotSpeechProblems" >
+    update SYS_ROBOT_SPEECH_PROBLEMS
+    set SPEECH_PROBLEMS = #{speechProblems,jdbcType=VARCHAR},
+      SPEECH_PROBLEMS_PINYIN = #{speechProblemsPinyin,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      SCENIC_SPOT_NAME = #{scenicSpotName,jdbcType=VARCHAR},
+      HANDLE_STATE = #{handleState,jdbcType=VARCHAR},
+      PROBLEM_STATUS = #{problemStatus,jdbcType=VARCHAR},
+      PROBLEM_TIMES = #{problemTimes,jdbcType=VARCHAR},
+      VOICE_TYPE = #{voiceType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where SPEECH_PROBLEMS_ID = #{speechProblemsId,jdbcType=BIGINT}
+  </update>
+  <select id="getSpeechProblemsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_SPEECH_PROBLEMS
+    <where>
+      AND SCENIC_SPOT_ID = #{scenicSpotId}
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

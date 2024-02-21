@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotUnusualTimeMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotUnusualTime" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="SYS_SCENIC_SPOT_ID" property="sysScenicSpotId" jdbcType="BIGINT" />
+        <result column="ORDER_ABNORMAL_TIME" property="orderAbnormalTime" jdbcType="VARCHAR" />
+        <result column="FORBIDDEN_TIME" property="forbiddenTime" jdbcType="VARCHAR" />
+        <result column="TEMPORARY_LACKING" property="temporaryLacking" jdbcType="VARCHAR" />
+        <result column="RECEIVING_ORDERS" property="receivingOrders" jdbcType="VARCHAR" />
+        <result column="PAD_APP_USEE" property="padAppUsee" jdbcType="VARCHAR" />
+        <result column="SWITCH_ON_OFF" property="switchOnOff" jdbcType="VARCHAR" />
+        <result column="CHARGE_STATUS" property="chargeStatus" jdbcType="VARCHAR" />
+        <result column="SATURATION_LOW" property="saturationLow" jdbcType="VARCHAR" />
+        <result column="SATURATION_HIGH" property="saturationHigh" jdbcType="VARCHAR" />
+        <result column="SATURATION_TIME" property="saturationTime" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+        <result column="ORDER_STATE" property="orderState" jdbcType="VARCHAR"/>
+        <result column="BATTERY_REMINDER" property="batteryReminder" jdbcType="VARCHAR"/>
+        <result column="ON_OFF_STATUS" property="onOffStatus" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+    <select id="getSysRobotUnusualTimeList" resultType="com.hna.hka.archive.management.system.model.SysRobotUnusualTime">
+        select srut.*,sss.SCENIC_SPOT_NAME
+        from SYS_ROBOT_UNUSUAL_TIME srut
+        left join SYS_SCENIC_SPOT sss on srut.SYS_SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        <where>
+            1=1
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and  SYS_SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotUnusualTime">
+        insert into SYS_ROBOT_UNUSUAL_TIME
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="sysScenicSpotId != null" >
+                SYS_SCENIC_SPOT_ID,
+            </if>
+            <if test="forbiddenTime != null" >
+                FORBIDDEN_TIME,
+            </if>
+            <if test="temporaryLacking != null" >
+                TEMPORARY_LACKING,
+            </if>
+            <if test="receivingOrders != null" >
+                RECEIVING_ORDERS,
+            </if>
+            <if test="padAppUsee != null" >
+                PAD_APP_USEE,
+            </if>
+            <if test="switchOnOff != null" >
+                SWITCH_ON_OFF,
+            </if>
+            <if test="chargeStatus != null" >
+                CHARGE_STATUS,
+            </if>
+            <if test="saturationLow != null">
+                SATURATION_LOW,
+            </if>
+            <if test="saturationHigh != null">
+                SATURATION_HIGH,
+            </if>
+            <if test="saturationTime != null">
+                SATURATION_TIME,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE,
+            </if>
+            <if test="orderAbnormalTime != null">
+                ORDER_ABNORMAL_TIME,
+            </if>
+            <if test="orderState != null">
+                ORDER_STATE,
+            </if>
+            <if test="batteryReminder != null">
+                BATTERY_REMINDER,
+            </if>
+            <if test="onOffStatus != null">
+                ON_OFF_STATUS,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="sysScenicSpotId != null" >
+                #{sysScenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="forbiddenTime != null" >
+                #{forbiddenTime,jdbcType=VARCHAR},
+            </if>
+            <if test="temporaryLacking != null" >
+                #{temporaryLacking,jdbcType=VARCHAR},
+            </if>
+            <if test="receivingOrders != null" >
+                #{receivingOrders,jdbcType=VARCHAR},
+            </if>
+            <if test="padAppUsee != null" >
+                #{padAppUsee,jdbcType=VARCHAR},
+            </if>
+            <if test="switchOnOff != null" >
+                #{switchOnOff,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeStatus != null" >
+                #{chargeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="saturationLow != null" >
+                #{saturationLow,jdbcType=VARCHAR},
+            </if>
+            <if test="saturationHigh != null" >
+                #{saturationHigh,jdbcType=VARCHAR},
+            </if>
+            <if test="saturationTime != null" >
+                #{saturationTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="orderAbnormalTime != null">
+                #{orderAbnormalTime,jdbcType=VARCHAR},
+            </if>
+            <if test="orderState != null">
+                #{orderState,jdbcType=VARCHAR},
+            </if>
+            <if test="batteryReminder != null">
+                #{batteryReminder,jdbcType=VARCHAR},
+            </if>
+            <if test="onOffStatus != null">
+                #{onOffStatus,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.hna.hka.archive.management.system.model.SysRobotUnusualTime">
+        update  SYS_ROBOT_UNUSUAL_TIME
+        <set >
+            <if test="sysScenicSpotId != null" >
+                SYS_SCENIC_SPOT_ID = #{sysScenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="forbiddenTime != null" >
+                FORBIDDEN_TIME = #{forbiddenTime,jdbcType=VARCHAR},
+            </if>
+            <if test="temporaryLacking != null" >
+                TEMPORARY_LACKING = #{temporaryLacking,jdbcType=VARCHAR},
+            </if>
+            <if test="receivingOrders != null" >
+                RECEIVING_ORDERS = #{receivingOrders,jdbcType=VARCHAR},
+            </if>
+            <if test="padAppUsee != null" >
+                PAD_APP_USEE = #{padAppUsee,jdbcType=VARCHAR},
+            </if>
+            <if test="switchOnOff != null" >
+                SWITCH_ON_OFF = #{switchOnOff,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeStatus != null" >
+                CHARGE_STATUS = #{chargeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="saturationLow != null">
+                SATURATION_LOW = #{saturationLow,jdbcType=VARCHAR},
+            </if>
+            <if test="saturationHigh != null">
+                SATURATION_HIGH = #{saturationHigh,jdbcType=VARCHAR},
+            </if>
+            <if test="saturationTime != null">
+                SATURATION_TIME = #{saturationTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="orderAbnormalTime != null">
+                ORDER_ABNORMAL_TIME = #{orderAbnormalTime,jdbcType=VARCHAR},
+            </if>
+            <if test="orderState != null">
+                ORDER_STATE = #{orderState,jdbcType=VARCHAR},
+            </if>
+            <if test="batteryReminder != null">
+                BATTERY_REMINDER = #{batteryReminder,jdbcType=VARCHAR},
+            </if>
+            <if test="onOffStatus != null">
+                ON_OFF_STATUS = #{onOffStatus,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+
+    </update>
+
+    <select id="getSpotIdByUnusualTime" resultType="com.hna.hka.archive.management.system.model.SysRobotUnusualTime">
+        select *
+         from SYS_ROBOT_UNUSUAL_TIME
+         where SYS_SCENIC_SPOT_ID = #{scenicSpotId}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from SYS_ROBOT_UNUSUAL_TIME
+        where Id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <select id="getSysRobotUnusualTimeSpotList" resultType="com.hna.hka.archive.management.system.model.SysScenicSpot">
+        select  srut.SYS_SCENIC_SPOT_ID as scenicSpotId , sss.SCENIC_SPOT_NAME
+        from SYS_ROBOT_UNUSUAL_TIME  srut
+        left join SYS_SCENIC_SPOT sss
+        on srut.SYS_SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        group by SYS_SCENIC_SPOT_ID
+    </select>
+
+</mapper>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotRecommendedRouteMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotRecommendedRoute" >
+    <id column="ROUTE_ID" property="routeId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="ROUTE_NAME" property="routeName" jdbcType="VARCHAR" />
+    <result column="ROUTE_NAME_PIN_YIN" property="routeNamePinYin" jdbcType="VARCHAR" />
+    <result column="ROUTE_INTRODUCE" property="routeIntroduce" jdbcType="VARCHAR" />
+    <result column="ROUTE_GPS" property="routeGps" jdbcType="VARCHAR" />
+    <result column="ROUTE_GPS_BAI_DU" property="routeGpsBaiDu" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROUTE_ID, SCENIC_SPOT_ID, ROUTE_NAME, ROUTE_NAME_PIN_YIN, ROUTE_INTRODUCE, ROUTE_GPS, 
+    ROUTE_GPS_BAI_DU, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_RECOMMENDED_ROUTE
+    where ROUTE_ID = #{routeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_RECOMMENDED_ROUTE
+    where ROUTE_ID = #{routeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRecommendedRoute" >
+    insert into SYS_SCENIC_SPOT_RECOMMENDED_ROUTE (ROUTE_ID, SCENIC_SPOT_ID, ROUTE_NAME, 
+      ROUTE_NAME_PIN_YIN, ROUTE_INTRODUCE, ROUTE_GPS, 
+      ROUTE_GPS_BAI_DU, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{routeId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{routeName,jdbcType=VARCHAR}, 
+      #{routeNamePinYin,jdbcType=VARCHAR}, #{routeIntroduce,jdbcType=VARCHAR}, #{routeGps,jdbcType=VARCHAR}, 
+      #{routeGpsBaiDu,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRecommendedRoute" >
+    insert into SYS_SCENIC_SPOT_RECOMMENDED_ROUTE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="routeId != null" >
+        ROUTE_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="routeName != null" >
+        ROUTE_NAME,
+      </if>
+      <if test="routeNamePinYin != null" >
+        ROUTE_NAME_PIN_YIN,
+      </if>
+      <if test="routeIntroduce != null" >
+        ROUTE_INTRODUCE,
+      </if>
+      <if test="routeGps != null" >
+        ROUTE_GPS,
+      </if>
+      <if test="routeGpsBaiDu != null" >
+        ROUTE_GPS_BAI_DU,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="routeId != null" >
+        #{routeId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="routeName != null" >
+        #{routeName,jdbcType=VARCHAR},
+      </if>
+      <if test="routeNamePinYin != null" >
+        #{routeNamePinYin,jdbcType=VARCHAR},
+      </if>
+      <if test="routeIntroduce != null" >
+        #{routeIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="routeGps != null" >
+        #{routeGps,jdbcType=VARCHAR},
+      </if>
+      <if test="routeGpsBaiDu != null" >
+        #{routeGpsBaiDu,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRecommendedRoute" >
+    update SYS_SCENIC_SPOT_RECOMMENDED_ROUTE
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="routeName != null" >
+        ROUTE_NAME = #{routeName,jdbcType=VARCHAR},
+      </if>
+      <if test="routeNamePinYin != null" >
+        ROUTE_NAME_PIN_YIN = #{routeNamePinYin,jdbcType=VARCHAR},
+      </if>
+      <if test="routeIntroduce != null" >
+        ROUTE_INTRODUCE = #{routeIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="routeGps != null" >
+        ROUTE_GPS = #{routeGps,jdbcType=VARCHAR},
+      </if>
+      <if test="routeGpsBaiDu != null" >
+        ROUTE_GPS_BAI_DU = #{routeGpsBaiDu,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROUTE_ID = #{routeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRecommendedRoute" >
+    update SYS_SCENIC_SPOT_RECOMMENDED_ROUTE
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      ROUTE_NAME = #{routeName,jdbcType=VARCHAR},
+      ROUTE_NAME_PIN_YIN = #{routeNamePinYin,jdbcType=VARCHAR},
+      ROUTE_INTRODUCE = #{routeIntroduce,jdbcType=VARCHAR},
+      ROUTE_GPS = #{routeGps,jdbcType=VARCHAR},
+      ROUTE_GPS_BAI_DU = #{routeGpsBaiDu,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where ROUTE_ID = #{routeId,jdbcType=BIGINT}
+  </update>
+  <select id="getRecommendedRouteList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	A.*,
+	B.SCENIC_SPOT_NAME AS scenicSpotName
+	FROM SYS_SCENIC_SPOT_RECOMMENDED_ROUTE A
+	LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+	<where>
+      A.SCENIC_SPOT_ID = #{scenicSpotId}
+      <if test="routeName != null and routeName != ''">
+        AND A.ROUTE_NAME LIKE CONCAT('%',#{routeName},'%')
+      </if>
+    </where>
+	ORDER BY A.CREATE_DATE DESC
+  </select>
+
+  <select id="getScenicSpotRecommendedRouteAll" resultMap="BaseResultMap">
+    select * from SYS_SCENIC_SPOT_RECOMMENDED_ROUTE
+  </select>
+
+
+
+</mapper>

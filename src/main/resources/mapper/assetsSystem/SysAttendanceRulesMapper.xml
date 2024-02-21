@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysAttendanceRulesMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysAttendanceRules" >
+    <id column="ATTENDANCE_RULES_ID" property="attendanceRulesId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="ATTENDANCE_RULES_NAME" property="attendanceRulesName" jdbcType="VARCHAR" />
+    <result column="WORKING_HOURS_ON_WEEKDAYS" property="workingHoursOnWeekdays" jdbcType="VARCHAR" />
+    <result column="WORKING_HOURS_ON_HOLIDAYS" property="workingHoursOnHolidays" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ATTENDANCE_RULES_ID, SCENIC_SPOT_ID, ATTENDANCE_RULES_NAME, WORKING_HOURS_ON_WEEKDAYS, 
+    WORKING_HOURS_ON_HOLIDAYS, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ATTENDANCE_RULES
+    where ATTENDANCE_RULES_ID = #{attendanceRulesId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ATTENDANCE_RULES
+    where ATTENDANCE_RULES_ID = #{attendanceRulesId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysAttendanceRules" >
+    insert into SYS_ATTENDANCE_RULES (ATTENDANCE_RULES_ID, SCENIC_SPOT_ID, ATTENDANCE_RULES_NAME, 
+      WORKING_HOURS_ON_WEEKDAYS, WORKING_HOURS_ON_HOLIDAYS, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{attendanceRulesId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{attendanceRulesName,jdbcType=VARCHAR}, 
+      #{workingHoursOnWeekdays,jdbcType=VARCHAR}, #{workingHoursOnHolidays,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysAttendanceRules" >
+    insert into SYS_ATTENDANCE_RULES
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attendanceRulesId != null" >
+        ATTENDANCE_RULES_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="attendanceRulesName != null" >
+        ATTENDANCE_RULES_NAME,
+      </if>
+      <if test="workingHoursOnWeekdays != null" >
+        WORKING_HOURS_ON_WEEKDAYS,
+      </if>
+      <if test="workingHoursOnHolidays != null" >
+        WORKING_HOURS_ON_HOLIDAYS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attendanceRulesId != null" >
+        #{attendanceRulesId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="attendanceRulesName != null" >
+        #{attendanceRulesName,jdbcType=VARCHAR},
+      </if>
+      <if test="workingHoursOnWeekdays != null" >
+        #{workingHoursOnWeekdays,jdbcType=VARCHAR},
+      </if>
+      <if test="workingHoursOnHolidays != null" >
+        #{workingHoursOnHolidays,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysAttendanceRules" >
+    update SYS_ATTENDANCE_RULES
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="attendanceRulesName != null" >
+        ATTENDANCE_RULES_NAME = #{attendanceRulesName,jdbcType=VARCHAR},
+      </if>
+      <if test="workingHoursOnWeekdays != null" >
+        WORKING_HOURS_ON_WEEKDAYS = #{workingHoursOnWeekdays,jdbcType=VARCHAR},
+      </if>
+      <if test="workingHoursOnHolidays != null" >
+        WORKING_HOURS_ON_HOLIDAYS = #{workingHoursOnHolidays,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ATTENDANCE_RULES_ID = #{attendanceRulesId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysAttendanceRules" >
+    update SYS_ATTENDANCE_RULES
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      ATTENDANCE_RULES_NAME = #{attendanceRulesName,jdbcType=VARCHAR},
+      WORKING_HOURS_ON_WEEKDAYS = #{workingHoursOnWeekdays,jdbcType=VARCHAR},
+      WORKING_HOURS_ON_HOLIDAYS = #{workingHoursOnHolidays,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where ATTENDANCE_RULES_ID = #{attendanceRulesId,jdbcType=BIGINT}
+  </update>
+  <select id="getAttendanceRulesList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      B.SCENIC_SPOT_ID,
+      B.SCENIC_SPOT_NAME AS scenicSpotName,
+      C.ATTENDANCE_RULES_ID,
+      C.ATTENDANCE_RULES_NAME,
+      C.WORKING_HOURS_ON_WEEKDAYS,
+      C.WORKING_HOURS_ON_HOLIDAYS,
+      C.CREATE_DATE,
+      C.UPDATE_DATE
+    FROM
+      SYS_USERS_ROLE_SPOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        LEFT JOIN SYS_ATTENDANCE_RULES C ON C.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="userId != null and userId != ''">
+        AND A.USER_ID = #{userId}
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND B.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="attendanceRulesName != null and attendanceRulesName != ''">
+        AND C.ATTENDANCE_RULES_NAME LIKE CONCAT('%',#{attendanceRulesName},'%')
+      </if>
+    </where>
+    ORDER BY C.CREATE_DATE DESC
+  </select>
+</mapper>

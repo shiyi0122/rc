@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotBroadcastExtendMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastExtend" >
+    <id column="BROADCAST_RES_ID" property="broadcastResId" jdbcType="BIGINT" />
+    <result column="BROADCAST_ID" property="broadcastId" jdbcType="BIGINT" />
+    <result column="MEDIA_RESOURCE_URL" property="mediaResourceUrl" jdbcType="VARCHAR" />
+    <result column="MEDIA_TYPE" property="mediaType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastExtendWithBLOBs" extends="BaseResultMap" >
+    <result column="BROADCAST_CONTENT" property="broadcastContent" jdbcType="LONGVARCHAR" />
+    <result column="PICTURE_URL" property="pictureUrl" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    BROADCAST_RES_ID, BROADCAST_ID, MEDIA_RESOURCE_URL, MEDIA_TYPE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    BROADCAST_CONTENT, PICTURE_URL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_BROADCAST_EXTEND
+    where BROADCAST_RES_ID = #{broadcastResId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_BROADCAST_EXTEND
+    where BROADCAST_RES_ID = #{broadcastResId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastExtendWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_BROADCAST_EXTEND (BROADCAST_RES_ID, BROADCAST_ID, MEDIA_RESOURCE_URL, 
+      MEDIA_TYPE, CREATE_DATE, UPDATE_DATE, 
+      BROADCAST_CONTENT, PICTURE_URL)
+    values (#{broadcastResId,jdbcType=BIGINT}, #{broadcastId,jdbcType=BIGINT}, #{mediaResourceUrl,jdbcType=VARCHAR}, 
+      #{mediaType,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, 
+      #{broadcastContent,jdbcType=LONGVARCHAR}, #{pictureUrl,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastExtendWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_BROADCAST_EXTEND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="broadcastResId != null" >
+        BROADCAST_RES_ID,
+      </if>
+      <if test="broadcastId != null" >
+        BROADCAST_ID,
+      </if>
+      <if test="mediaResourceUrl != null" >
+        MEDIA_RESOURCE_URL,
+      </if>
+      <if test="mediaType != null" >
+        MEDIA_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="broadcastContent != null" >
+        BROADCAST_CONTENT,
+      </if>
+      <if test="pictureUrl != null" >
+        PICTURE_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="broadcastResId != null" >
+        #{broadcastResId,jdbcType=BIGINT},
+      </if>
+      <if test="broadcastId != null" >
+        #{broadcastId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaResourceUrl != null" >
+        #{mediaResourceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaType != null" >
+        #{mediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="broadcastContent != null" >
+        #{broadcastContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pictureUrl != null" >
+        #{pictureUrl,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastExtendWithBLOBs" >
+    update SYS_SCENIC_SPOT_BROADCAST_EXTEND
+    <set >
+      <if test="broadcastId != null" >
+        BROADCAST_ID = #{broadcastId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaResourceUrl != null" >
+        MEDIA_RESOURCE_URL = #{mediaResourceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaType != null" >
+        MEDIA_TYPE = #{mediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="broadcastContent != null" >
+        BROADCAST_CONTENT = #{broadcastContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pictureUrl != null" >
+        PICTURE_URL = #{pictureUrl,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where BROADCAST_RES_ID = #{broadcastResId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastExtendWithBLOBs" >
+    update SYS_SCENIC_SPOT_BROADCAST_EXTEND
+    set BROADCAST_ID = #{broadcastId,jdbcType=BIGINT},
+      MEDIA_RESOURCE_URL = #{mediaResourceUrl,jdbcType=VARCHAR},
+      MEDIA_TYPE = #{mediaType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      BROADCAST_CONTENT = #{broadcastContent,jdbcType=LONGVARCHAR},
+      PICTURE_URL = #{pictureUrl,jdbcType=LONGVARCHAR}
+    where BROADCAST_RES_ID = #{broadcastResId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastExtend" >
+    update SYS_SCENIC_SPOT_BROADCAST_EXTEND
+    set BROADCAST_ID = #{broadcastId,jdbcType=BIGINT},
+      MEDIA_RESOURCE_URL = #{mediaResourceUrl,jdbcType=VARCHAR},
+      MEDIA_TYPE = #{mediaType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where BROADCAST_RES_ID = #{broadcastResId,jdbcType=BIGINT}
+  </update>
+  <select id="getBroadcastContentList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+    A.BROADCAST_RES_ID,
+    A.BROADCAST_ID,
+    A.MEDIA_RESOURCE_URL,
+    A.MEDIA_TYPE,
+    A.CREATE_DATE,
+    A.UPDATE_DATE,
+    A.BROADCAST_CONTENT,
+    A.PICTURE_URL,
+    B.BROADCAST_NAME AS broadcastName
+    FROM
+    SYS_SCENIC_SPOT_BROADCAST_EXTEND A
+    LEFT JOIN SYS_SCENIC_SPOT_BROADCAST B ON A.BROADCAST_ID = B.BROADCAST_ID
+    WHERE A.BROADCAST_ID = #{broadcastId}
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+  <select id="getBroadcastExcel" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+	A.BROADCAST_RES_ID,
+	A.BROADCAST_ID,
+	A.MEDIA_RESOURCE_URL,
+	A.MEDIA_TYPE,
+	A.CREATE_DATE,
+	A.UPDATE_DATE,
+	A.BROADCAST_CONTENT,
+	A.PICTURE_URL,
+	B.BROADCAST_NAME AS broadcastName,
+	C.SCENIC_SPOT_NAME AS scenicSpotName,
+	B.BROADCAST_GPS AS broadcastGps,
+	B.BROADCAST_GPS_BAI_DU AS broadcastGpsBaiDu
+    FROM
+	SYS_SCENIC_SPOT_BROADCAST_EXTEND A
+	LEFT JOIN SYS_SCENIC_SPOT_BROADCAST B ON A.BROADCAST_ID = B.BROADCAST_ID
+	LEFT JOIN SYS_SCENIC_SPOT C ON B.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+    WHERE A.MEDIA_TYPE = 1
+    AND B.SCENIC_SPOT_ID = #{scenicSpotId}
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

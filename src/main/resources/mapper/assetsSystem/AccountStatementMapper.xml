@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.AccountStatementMapper">
+
+    <select id="companyList" resultType="java.util.HashMap">
+        SELECT
+        distinct
+        sssi.COMPANY_ID ,
+        sssi.COMPANY_NAME
+        from
+        SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi
+        left join SYS_USERS_ROLE_SPOT surs on
+        surs.SCENIC_SPOT_ID = sssi.SPOT_ID
+        <where>
+            surs.USER_ID = #{userId}
+            <if test="spotId != null">
+                and sssi.SPOT_ID in
+                <foreach collection="spotId" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="spotList" resultType="java.util.HashMap">
+        SELECT
+        distinct
+        sssi.SPOT_ID ,
+        sssi.SPOT_NAME
+        from
+        SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi
+        left join SYS_USERS_ROLE_SPOT surs on
+        surs.SCENIC_SPOT_ID = sssi.SPOT_ID
+        <where>
+            surs.USER_ID = #{userId}
+            <if test="companyId != null">
+                and sssi.COMPANY_ID = #{companyId}
+            </if>
+        </where>
+    </select>
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.AccountStatement">
+        select
+        so.ORDER_NUMBER ,
+        so.CURRENT_USER_PHONE ,
+        so.ORDER_ROBOT_CODE ,
+        so.ORDER_SCENIC_SPOT_NAME ,
+        so.ORDER_START_TIME ,
+        so.ORDER_END_TIME ,
+        so.TOTAL_TIME ,
+        so.ACTUAL_AMOUNT ,
+        so.DISPATCHING_FEE,
+        so.ORDER_AMOUNT,
+        so.ORDER_REFUND_AMOUNT,
+        ROUND( so.ORDER_AMOUNT - so.ORDER_REFUND_AMOUNT, 2 ) AS realIncome,
+        so.ORDER_STATUS,
+        so.PAYMENT_METHOD
+        from
+        SYS_ORDER so
+        left join SYS_USERS_ROLE_SPOT susr on
+        susr.SCENIC_SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+#         LEFT join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on
+#         sssi.SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        <where>
+            susr.USER_ID = #{userId}
+<!--            <if test="company != null">-->
+<!--                and sssi.COMPANY_ID = #{company}-->
+<!--            </if>-->
+            <if test="spot != null">
+                and so.ORDER_SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and substr(so.ORDER_START_TIME , 1 , #{beginSize , jdbcType=INTEGER}) &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(so.ORDER_START_TIME , 1 , #{endSize , jdbcType=INTEGER}) &lt;= #{endDate}
+            </if>
+            <if test="paymentType != null">
+                and
+                <foreach collection="paymentType" separator=" or " open="(" close=")" item="type">
+                    <if test='type == "WECHAT"'>
+                        (so.PAYMENT_METHOD = 1
+                        and so.SUB_METHOD = 0)
+                    </if>
+                    <if test='type == "SAVING"'>
+                        (so.PAYMENT_METHOD = 3
+                        and so.SUB_METHOD = 1)
+                    </if>
+                    <if test='type == "SAVING_WECHAT"'>
+                        (so.PAYMENT_METHOD = 1
+                        and so.SUB_METHOD = 2)
+                    </if>
+                    <if test='type == "DEPOSIT"'>
+                        (so.PAYMENT_METHOD = 5
+                        and so.SUB_METHOD = 0)
+                    </if>
+                </foreach>
+            </if>
+            <if test="orderStatus != null">
+                and so.ORDER_STATUS = #{orderStatus}
+            </if>
+        </where>
+        order by ORDER_START_TIME
+        <if test="pageNum != null and pageSize != null">
+            limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getCount" resultType="java.util.HashMap">
+        select count(0) as count , ROUND(sum(so.ORDER_AMOUNT - so.ORDER_REFUND_AMOUNT + so.DEDUCTIBLE_AMOUNT) , 2) as sum
+        from
+        SYS_ORDER so
+        left join SYS_USERS_ROLE_SPOT susr on
+        susr.SCENIC_SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+#         LEFT join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on
+#         sssi.SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        <where>
+            susr.USER_ID = #{userId}
+<!--            <if test="company != null">-->
+<!--                and sssi.COMPANY_ID = #{company}-->
+<!--            </if>-->
+            <if test="spot != null">
+                and so.ORDER_SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and substr(so.ORDER_START_TIME , 1 , #{beginSize , jdbcType=INTEGER}) &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(so.ORDER_START_TIME , 1 , #{endSize , jdbcType=INTEGER}) &lt;= #{endDate}
+            </if>
+            <if test="paymentType != null">
+                and
+                <foreach collection="paymentType" separator=" or " open="(" close=")" item="type">
+                    <if test='type == "WECHAT"'>
+                        (so.PAYMENT_METHOD = 1
+                        and so.SUB_METHOD = 0)
+                    </if>
+                    <if test='type == "SAVING"'>
+                        (so.PAYMENT_METHOD = 3
+                        and so.SUB_METHOD = 1)
+                    </if>
+                    <if test='type == "SAVING_WECHAT"'>
+                        (so.PAYMENT_METHOD = 1
+                        and so.SUB_METHOD = 2)
+                    </if>
+                    <if test='type == "DEPOSIT"'>
+                        (so.PAYMENT_METHOD = 5
+                        and so.SUB_METHOD = 0)
+                    </if>
+                </foreach>
+            </if>
+            <if test="orderStatus != null">
+                and so.ORDER_STATUS = #{orderStatus}
+            </if>
+        </where>
+    </select>
+
+    <select id="preview" resultType="java.util.HashMap">
+        SELECT
+        aa.COLLECTION_ACCOUNT as `收款账户`,
+        aa.COLLECTION_ACCOUNT_NUMBER as `收款账号`,
+        aa.BANK as `开户行`,
+        aa.SUBJECT_NAME as `合作主体`,
+        aa.`景区名称`,
+        DATE_FORMAT(STR_TO_DATE(#{beginDate} , '%Y-%m') , '%Y年%m月') as `月份`,
+        aa.`流水`,
+        aa.`手续费`,
+        aa.`可分润金额`,
+        aa.`分润金额`,
+        CONCAT(CAST(aa.TAX as char) * 100 , '%') as `税率`,
+        CONCAT(CAST(aa.PROPORTION as char) * 100 , '%') as `分润比例`,
+        CONCAT(CAST(aa.CHARGE as char) * 100 , '%') as `手续费率`,
+        ROUND((`分润金额` /(1 + aa.TAX)) * aa.TAX , 2) as `税` ,
+        ROUND(`分润金额` - ROUND((`分润金额` /(1 + aa.TAX)) * aa.TAX , 2) , 2) as `结算`
+        FROM
+        (
+        SELECT
+        a.COLLECTION_ACCOUNT,
+        a.COLLECTION_ACCOUNT_NUMBER,
+        a.BANK,
+        a.SUBJECT_NAME,
+        a.`景区名称`,
+        a.`流水`,
+        a.`手续费`,
+        a.TAX,
+        a.PROPORTION,
+        a.CHARGE,
+        ROUND(`流水` - `手续费` , 2) as `可分润金额`,
+        ROUND(ROUND(`流水` - `手续费` , 2) * a.PROPORTION , 2) as `分润金额`
+        FROM
+        (
+        select
+        sscc.COLLECTION_ACCOUNT,
+        sscc.COLLECTION_ACCOUNT_NUMBER,
+        sscc.BANK,
+        sssi.SUBJECT_NAME,
+        so.ORDER_SCENIC_SPOT_NAME as `景区名称`,
+        SUM( ROUND( so.ORDER_AMOUNT - so.ORDER_REFUND_AMOUNT + so.DEDUCTIBLE_AMOUNT, 2 )) as `流水`,
+        ROUND(SUM( ROUND( so.ORDER_AMOUNT - so.ORDER_REFUND_AMOUNT + so.DEDUCTIBLE_AMOUNT , 2 ) * sssi.CHARGE),2) AS `手续费`,
+        sssi.CHARGE,
+        sssi.PROPORTION,
+        sssi.TAX
+        from
+        SYS_ORDER so
+        left join SYS_USERS_ROLE_SPOT susr on
+        susr.SCENIC_SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        LEFT join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on
+        sssi.SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        LEFT JOIN SYS_SCENIC_COOPERATIVE_COMPANY sscc ON
+        sssi.company_id = sscc.COMPANY_ID
+        <where>
+            susr.USER_ID = #{userId}
+            and so.order_status = 30
+            <if test="company != null">
+                and sssi.COMPANY_ID = #{company}
+            </if>
+            <if test="spot != null">
+                and so.ORDER_SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and substr(so.ORDER_START_TIME , 1 , #{beginSize , jdbcType=INTEGER}) &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(so.ORDER_START_TIME , 1 , #{endSize , jdbcType=INTEGER}) &lt;= #{endDate}
+            </if>
+            <if test="paymentType != null">
+                and
+                <foreach collection="paymentType" separator=" or " open="(" close=")" item="type">
+                    <if test='type == "WECHAT"'>
+                        (so.PAYMENT_METHOD = 1
+                        and so.SUB_METHOD = 0)
+                    </if>
+                    <if test='type == "SAVING"'>
+                        (so.PAYMENT_METHOD = 3
+                        and so.SUB_METHOD = 1)
+                    </if>
+                    <if test='type == "SAVING_WECHAT"'>
+                        (so.PAYMENT_METHOD = 1
+                        and so.SUB_METHOD = 2)
+                    </if>
+                    <if test='type == "DEPOSIT"'>
+                        (so.PAYMENT_METHOD = 5
+                        and so.SUB_METHOD = 0)
+                    </if>
+                </foreach>
+                <if test="paymentStatus != null">
+                    so.ORDER_STATUS = #{paymentStatus}
+                </if>
+            </if>
+        </where>
+        group by
+        sscc.COLLECTION_ACCOUNT,
+        sscc.COLLECTION_ACCOUNT_NUMBER,
+        sscc.BANK,
+        `景区名称` ,
+        sssi.CHARGE,
+        sssi.PROPORTION,
+        sssi.TAX) a
+        ) aa
+    </select>
+
+
+    <select id="verify" resultType="java.lang.Double">
+        select
+        ROUND( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 )  ) AS realIncome,
+        from
+        SYS_ORDER so
+        left join SYS_USERS_ROLE_SPOT susr on
+        susr.SCENIC_SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        #         LEFT join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on
+        #         sssi.SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        <where>
+            susr.USER_ID = #{userId}
+            <!--            <if test="company != null">-->
+            <!--                and sssi.COMPANY_ID = #{company}-->
+            <!--            </if>-->
+            <if test="spot != null">
+                and so.ORDER_SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and substr(so.ORDER_START_TIME , 1 , #{beginSize , jdbcType=INTEGER}) &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(so.ORDER_START_TIME , 1 , #{endSize , jdbcType=INTEGER}) &lt;= #{endDate}
+            </if>
+            <if test="paymentType != null">
+                and
+                <foreach collection="paymentType" separator=" or " open="(" close=")" item="type">
+                    <if test='type == "WECHAT"'>
+                        (so.PAYMENT_METHOD = 1
+                        and so.SUB_METHOD = 0)
+                    </if>
+                    <if test='type == "SAVING"'>
+                        (so.PAYMENT_METHOD = 3
+                        and so.SUB_METHOD = 1)
+                    </if>
+                    <if test='type == "SAVING_WECHAT"'>
+                        (so.PAYMENT_METHOD = 1
+                        and so.SUB_METHOD = 2)
+                    </if>
+                    <if test='type == "DEPOSIT"'>
+                        (so.PAYMENT_METHOD = 5
+                        and so.SUB_METHOD = 0)
+                    </if>
+                </foreach>
+            </if>
+            and so.ORDER_STATUS = 30
+        </where>
+    </select>
+
+    <select id="verifyN" resultType="java.lang.Double">
+        select SUM(realIncome) from
+        (
+        select
+        ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 )  AS realIncome
+        from
+        SYS_ORDER so
+        left join SYS_USERS_ROLE_SPOT susr on
+        susr.SCENIC_SPOT_ID = so.ORDER_SCENIC_SPOT_ID
+        <where>
+            susr.USER_ID = #{userId}
+            <if test="spot != null">
+                and so.ORDER_SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and substr(so.ORDER_START_TIME , 1 , #{beginSize , jdbcType=INTEGER}) &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(so.ORDER_START_TIME , 1 , #{endSize , jdbcType=INTEGER}) &lt;= #{endDate}
+            </if>
+            <if test="paymentType != null">
+                and
+                    <if test='paymentType == "WECHAT"'>
+                        (so.PAYMENT_METHOD = 1
+                        and so.SUB_METHOD = 0)
+                    </if>
+                    <if test='paymentType == "SAVING"'>
+                        (so.PAYMENT_METHOD = 3
+                        and so.SUB_METHOD = 1)
+                    </if>
+                    <if test='paymentType == "SAVING_WECHAT"'>
+                        (so.PAYMENT_METHOD = 1
+                        and so.SUB_METHOD = 2)
+                    </if>
+                    <if test='paymentType == "DEPOSIT"'>
+                        (so.PAYMENT_METHOD = 5
+                        and so.SUB_METHOD = 0)
+                    </if>
+            </if>
+<!--            <if test="orderStatus != null">-->
+<!--                and so.ORDER_STATUS = #{orderStatus}-->
+<!--            </if>-->
+            and so.ORDER_STATUS = 30
+        </where>
+        ) as a
+    </select>
+
+
+
+    <select id="getSpotIdAndCompanyIdAndDateByRunningData" resultType="com.hna.hka.archive.management.assetsSystem.model.AccountClose">
+        select *
+        from  SYS_SCENIC_ACCOUNT_CLOSE
+        where COMPANY_ID = #{companyId}
+        and SPOT_ID = #{spot}
+        and MONTH = #{month}
+    </select>
+
+
+</mapper>

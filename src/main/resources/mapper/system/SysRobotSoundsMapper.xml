@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotSoundsMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotSounds" >
+    <id column="SOUNDS_ID" property="soundsId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="SOUNDS_TITLE" property="soundsTitle" jdbcType="VARCHAR" />
+    <result column="SOUNDS_CONTENT" property="soundsContent" jdbcType="VARCHAR" />
+    <result column="SOUNDS_MEDIA_TYPE" property="soundsMediaType" jdbcType="VARCHAR" />
+    <result column="SOUNDS_TYPE" property="soundsType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SOUNDS_ID, SCENIC_SPOT_ID, SOUNDS_TITLE, SOUNDS_CONTENT, SOUNDS_MEDIA_TYPE, SOUNDS_TYPE, 
+    CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_SOUNDS
+    where SOUNDS_ID = #{soundsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_SOUNDS
+    where SOUNDS_ID = #{soundsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotSounds" >
+    insert into SYS_ROBOT_SOUNDS (SOUNDS_ID, SCENIC_SPOT_ID, SOUNDS_TITLE, 
+      SOUNDS_CONTENT, SOUNDS_MEDIA_TYPE, SOUNDS_TYPE, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{soundsId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{soundsTitle,jdbcType=VARCHAR}, 
+      #{soundsContent,jdbcType=VARCHAR}, #{soundsMediaType,jdbcType=VARCHAR}, #{soundsType,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotSounds" >
+    insert into SYS_ROBOT_SOUNDS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="soundsId != null" >
+        SOUNDS_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="soundsTitle != null" >
+        SOUNDS_TITLE,
+      </if>
+      <if test="soundsContent != null" >
+        SOUNDS_CONTENT,
+      </if>
+      <if test="soundsMediaType != null" >
+        SOUNDS_MEDIA_TYPE,
+      </if>
+      <if test="soundsType != null" >
+        SOUNDS_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="soundsId != null" >
+        #{soundsId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="soundsTitle != null" >
+        #{soundsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="soundsContent != null" >
+        #{soundsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="soundsMediaType != null" >
+        #{soundsMediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="soundsType != null" >
+        #{soundsType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotSounds" >
+    update SYS_ROBOT_SOUNDS
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="soundsTitle != null" >
+        SOUNDS_TITLE = #{soundsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="soundsContent != null" >
+        SOUNDS_CONTENT = #{soundsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="soundsMediaType != null" >
+        SOUNDS_MEDIA_TYPE = #{soundsMediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="soundsType != null" >
+        SOUNDS_TYPE = #{soundsType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SOUNDS_ID = #{soundsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotSounds" >
+    update SYS_ROBOT_SOUNDS
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      SOUNDS_TITLE = #{soundsTitle,jdbcType=VARCHAR},
+      SOUNDS_CONTENT = #{soundsContent,jdbcType=VARCHAR},
+      SOUNDS_MEDIA_TYPE = #{soundsMediaType,jdbcType=VARCHAR},
+      SOUNDS_TYPE = #{soundsType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where SOUNDS_ID = #{soundsId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotSoundsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	A.SOUNDS_ID,
+	A.SCENIC_SPOT_ID,
+	A.SOUNDS_TITLE,
+	A.SOUNDS_CONTENT,
+	A.SOUNDS_MEDIA_TYPE,
+	A.SOUNDS_TYPE,
+	A.CREATE_DATE,
+	A.UPDATE_DATE,
+	B.SCENIC_SPOT_NAME AS scenicSpotName
+	FROM
+	SYS_ROBOT_SOUNDS A
+	LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+	<where>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+    </where>
+	ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

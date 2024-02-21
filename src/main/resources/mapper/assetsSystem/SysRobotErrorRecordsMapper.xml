@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.SysRobotErrorRecordsMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRecords" >
+    <id column="ERROR_RECORDS_ID" property="errorRecordsId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_MODEL" property="errorRecordsModel" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_NO" property="errorRecordsNo" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_AFFECT" property="errorRecordsAffect" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_STATUS" property="errorRecordsStatus" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_REPORT_SOURCE" property="errorRecordsReportSource" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_TYPE" property="errorRecordsType" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_NAME" property="errorRecordsName" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_DESCRIPTION" property="errorRecordsDescription" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_PIC" property="errorRecordsPic" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_PART" property="errorRecordsPart" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_ADDRESS" property="errorRecordsAddress" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_SEND" property="errorRecordsSend" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_RECEIVE" property="errorRecordsReceive" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_DATE" property="errorRecordsDate" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_PERSONNEL" property="errorRecordsPersonnel" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_TEL" property="errorRecordsTel" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_ORDER_NO" property="errorRecordsOrderNo" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_QUALITY" property="errorRecordsQuality" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_APP_ROVER" property="errorRecordsAppRover" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_APPROVE" property="errorRecordsApprove" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_OPINION" property="errorRecordsOpinion" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_REPLACE" property="errorRecordsReplace" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_OLD_ID" property="errorRecordsOldId" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_NEW_ID" property="errorRecordsNewId" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_SOURCE" property="errorRecordsSource" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_PART_PRICE" property="errorRecordsPartPrice" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_PART_BEARER" property="errorRecordsPartBearer" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_UPKEEP_COST" property="errorRecordsUpkeepCost" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_UPKEEP_BEARER" property="errorRecordsUpkeepBearer" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_REMARK" property="errorRecordsRemark" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_LOSS" property="errorRecordsLoss" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_DELETE" property="errorRecordsDelete" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    <result column="IMPROPER_OPERATION" property="improperOperation" jdbcType="VARCHAR"/>
+    <result column="FAULT_STATUS" property="faultStatus" jdbcType="VARCHAR"/>
+    <result column="FLOW_PATH_ID" property="flowPathId" jdbcType="BIGINT"/>
+    <result column="FLOW_PATH_TYPE" property="flowPathType" jdbcType="VARCHAR"/>
+    <!--    <result column="INVENTORY_NUMBER" property="inventoryNumber" jdbcType="VARCHAR"/>-->
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SYS_ROBOT_ERROR_RECORDS.ERROR_RECORDS_ID, SCENIC_SPOT_ID, ROBOT_CODE, ERROR_RECORDS_MODEL, ERROR_RECORDS_NO,
+    ERROR_RECORDS_AFFECT, ERROR_RECORDS_STATUS, ERROR_RECORDS_REPORT_SOURCE, ERROR_RECORDS_TYPE,
+    ERROR_RECORDS_NAME, ERROR_RECORDS_DESCRIPTION, ERROR_RECORDS_PIC, ERROR_RECORDS_PART,
+    ERROR_RECORDS_ADDRESS, ERROR_RECORDS_SEND, ERROR_RECORDS_RECEIVE, ERROR_RECORDS_DATE,
+    ERROR_RECORDS_PERSONNEL, ERROR_RECORDS_TEL, ERROR_RECORDS_ORDER_NO, ERROR_RECORDS_QUALITY,
+    ERROR_RECORDS_APP_ROVER, ERROR_RECORDS_APPROVE, ERROR_RECORDS_OPINION, ERROR_RECORDS_REPLACE,
+    ERROR_RECORDS_OLD_ID, ERROR_RECORDS_NEW_ID, ERROR_RECORDS_SOURCE, ERROR_RECORDS_PART_PRICE,
+    ERROR_RECORDS_PART_BEARER, ERROR_RECORDS_UPKEEP_COST, ERROR_RECORDS_UPKEEP_BEARER,
+    ERROR_RECORDS_REMARK, ERROR_RECORDS_LOSS, ERROR_RECORDS_DELETE, SYS_ROBOT_ERROR_RECORDS.CREATE_TIME, SYS_ROBOT_ERROR_RECORDS.UPDATE_TIME,
+    IMPROPER_OPERATION,FAULT_STATUS,FLOW_PATH_ID,FLOW_PATH_TYPE,SYS_GOODS_INVENTORY_DETAIL.UNIT,SYS_GOODS_INVENTORY_DETAIL.GOODS_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List"/>
+    from SYS_ROBOT_ERROR_RECORDS
+    LEFT JOIN SYS_ROBOT_ERROR_RECORD_DETAIL ON SYS_ROBOT_ERROR_RECORD_DETAIL.ERROR_RECORDS_ID = SYS_ROBOT_ERROR_RECORDS.ERROR_RECORDS_ID
+	LEFT JOIN SYS_GOODS_INVENTORY_DETAIL ON SYS_GOODS_INVENTORY_DETAIL.ID = SYS_ROBOT_ERROR_RECORD_DETAIL.GOODS_INVENTORY_DETAIL_ID
+    where SYS_ROBOT_ERROR_RECORDS.ERROR_RECORDS_ID = #{errorRecordsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_ERROR_RECORDS
+    where ERROR_RECORDS_ID = #{errorRecordsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRecords" >
+    insert into SYS_ROBOT_ERROR_RECORDS (ERROR_RECORDS_ID, SCENIC_SPOT_ID, ROBOT_CODE,
+      ERROR_RECORDS_MODEL, ERROR_RECORDS_NO, ERROR_RECORDS_AFFECT,
+      ERROR_RECORDS_STATUS, ERROR_RECORDS_REPORT_SOURCE,
+      ERROR_RECORDS_TYPE, ERROR_RECORDS_NAME, ERROR_RECORDS_DESCRIPTION,
+      ERROR_RECORDS_PIC, ERROR_RECORDS_PART, ERROR_RECORDS_ADDRESS,
+      ERROR_RECORDS_SEND, ERROR_RECORDS_RECEIVE,
+      ERROR_RECORDS_DATE, ERROR_RECORDS_PERSONNEL,
+      ERROR_RECORDS_TEL, ERROR_RECORDS_ORDER_NO, ERROR_RECORDS_QUALITY,
+      ERROR_RECORDS_APP_ROVER, ERROR_RECORDS_APPROVE,
+      ERROR_RECORDS_OPINION, ERROR_RECORDS_REPLACE,
+      ERROR_RECORDS_OLD_ID, ERROR_RECORDS_NEW_ID, ERROR_RECORDS_SOURCE,
+      ERROR_RECORDS_PART_PRICE, ERROR_RECORDS_PART_BEARER,
+      ERROR_RECORDS_UPKEEP_COST, ERROR_RECORDS_UPKEEP_BEARER,
+      ERROR_RECORDS_REMARK, ERROR_RECORDS_LOSS, ERROR_RECORDS_DELETE,
+      CREATE_TIME, UPDATE_TIME,IMPROPER_OPERATION)
+    values (#{errorRecordsId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{robotCode,jdbcType=VARCHAR},
+      #{errorRecordsModel,jdbcType=VARCHAR}, #{errorRecordsNo,jdbcType=VARCHAR}, #{errorRecordsAffect,jdbcType=VARCHAR},
+      #{errorRecordsStatus,jdbcType=VARCHAR}, #{errorRecordsReportSource,jdbcType=VARCHAR},
+      #{errorRecordsType,jdbcType=VARCHAR}, #{errorRecordsName,jdbcType=VARCHAR}, #{errorRecordsDescription,jdbcType=VARCHAR},
+      #{errorRecordsPic,jdbcType=VARCHAR}, #{errorRecordsPart,jdbcType=VARCHAR}, #{errorRecordsAddress,jdbcType=VARCHAR},
+      #{errorRecordsSend,jdbcType=VARCHAR}, #{errorRecordsReceive,jdbcType=VARCHAR},
+      #{errorRecordsDate,jdbcType=VARCHAR}, #{errorRecordsPersonnel,jdbcType=VARCHAR},
+      #{errorRecordsTel,jdbcType=VARCHAR}, #{errorRecordsOrderNo,jdbcType=VARCHAR}, #{errorRecordsQuality,jdbcType=VARCHAR},
+      #{errorRecordsAppRover,jdbcType=VARCHAR}, #{errorRecordsApprove,jdbcType=VARCHAR},
+      #{errorRecordsOpinion,jdbcType=VARCHAR}, #{errorRecordsReplace,jdbcType=VARCHAR},
+      #{errorRecordsOldId,jdbcType=VARCHAR}, #{errorRecordsNewId,jdbcType=VARCHAR}, #{errorRecordsSource,jdbcType=VARCHAR},
+      #{errorRecordsPartPrice,jdbcType=VARCHAR}, #{errorRecordsPartBearer,jdbcType=VARCHAR},
+      #{errorRecordsUpkeepCost,jdbcType=VARCHAR}, #{errorRecordsUpkeepBearer,jdbcType=VARCHAR},
+      #{errorRecordsRemark,jdbcType=VARCHAR}, #{errorRecordsLoss,jdbcType=VARCHAR}, #{errorRecordsDelete,jdbcType=VARCHAR},
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR},#{improperOperation,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRecords" >
+    insert into SYS_ROBOT_ERROR_RECORDS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="errorRecordsId != null" >
+        ERROR_RECORDS_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="robotCode != null" >
+        ROBOT_CODE,
+      </if>
+      <if test="errorRecordsModel != null" >
+        ERROR_RECORDS_MODEL,
+      </if>
+      <if test="errorRecordsNo != null" >
+        ERROR_RECORDS_NO,
+      </if>
+      <if test="errorRecordsAffect != null" >
+        ERROR_RECORDS_AFFECT,
+      </if>
+      <if test="errorRecordsStatus != null" >
+        ERROR_RECORDS_STATUS,
+      </if>
+      <if test="errorRecordsReportSource != null" >
+        ERROR_RECORDS_REPORT_SOURCE,
+      </if>
+      <if test="errorRecordsType != null" >
+        ERROR_RECORDS_TYPE,
+      </if>
+      <if test="errorRecordsName != null" >
+        ERROR_RECORDS_NAME,
+      </if>
+      <if test="errorRecordsDescription != null" >
+        ERROR_RECORDS_DESCRIPTION,
+      </if>
+      <if test="errorRecordsPic != null" >
+        ERROR_RECORDS_PIC,
+      </if>
+      <if test="errorRecordsPart != null" >
+        ERROR_RECORDS_PART,
+      </if>
+      <if test="errorRecordsAddress != null" >
+        ERROR_RECORDS_ADDRESS,
+      </if>
+      <if test="errorRecordsSend != null" >
+        ERROR_RECORDS_SEND,
+      </if>
+      <if test="errorRecordsReceive != null" >
+        ERROR_RECORDS_RECEIVE,
+      </if>
+      <if test="errorRecordsDate != null" >
+        ERROR_RECORDS_DATE,
+      </if>
+      <if test="errorRecordsPersonnel != null" >
+        ERROR_RECORDS_PERSONNEL,
+      </if>
+      <if test="errorRecordsTel != null" >
+        ERROR_RECORDS_TEL,
+      </if>
+      <if test="errorRecordsOrderNo != null" >
+        ERROR_RECORDS_ORDER_NO,
+      </if>
+      <if test="errorRecordsQuality != null" >
+        ERROR_RECORDS_QUALITY,
+      </if>
+      <if test="errorRecordsAppRover != null" >
+        ERROR_RECORDS_APP_ROVER,
+      </if>
+      <if test="errorRecordsApprove != null" >
+        ERROR_RECORDS_APPROVE,
+      </if>
+      <if test="errorRecordsOpinion != null" >
+        ERROR_RECORDS_OPINION,
+      </if>
+      <if test="errorRecordsReplace != null" >
+        ERROR_RECORDS_REPLACE,
+      </if>
+      <if test="errorRecordsOldId != null" >
+        ERROR_RECORDS_OLD_ID,
+      </if>
+      <if test="errorRecordsNewId != null" >
+        ERROR_RECORDS_NEW_ID,
+      </if>
+      <if test="errorRecordsSource != null" >
+        ERROR_RECORDS_SOURCE,
+      </if>
+      <if test="errorRecordsPartPrice != null" >
+        ERROR_RECORDS_PART_PRICE,
+      </if>
+      <if test="errorRecordsPartBearer != null" >
+        ERROR_RECORDS_PART_BEARER,
+      </if>
+      <if test="errorRecordsUpkeepCost != null" >
+        ERROR_RECORDS_UPKEEP_COST,
+      </if>
+      <if test="errorRecordsUpkeepBearer != null" >
+        ERROR_RECORDS_UPKEEP_BEARER,
+      </if>
+      <if test="errorRecordsRemark != null" >
+        ERROR_RECORDS_REMARK,
+      </if>
+      <if test="errorRecordsLoss != null" >
+        ERROR_RECORDS_LOSS,
+      </if>
+      <if test="errorRecordsDelete != null" >
+        ERROR_RECORDS_DELETE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="improperOperation != null">
+        IMPROPER_OPERATION,
+      </if>
+      <if test="faultStatus != null">
+        FAULT_STATUS,
+      </if>
+      <if test="flowPathId != null">
+        FLOW_PATH_ID,
+      </if>
+      <if test="flowPathType != null">
+        FLOW_PATH_TYPE
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="errorRecordsId != null" >
+        #{errorRecordsId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="robotCode != null" >
+        #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsModel != null" >
+        #{errorRecordsModel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsNo != null" >
+        #{errorRecordsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsAffect != null" >
+        #{errorRecordsAffect,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsStatus != null" >
+        #{errorRecordsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsReportSource != null" >
+        #{errorRecordsReportSource,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsType != null" >
+        #{errorRecordsType,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsName != null" >
+        #{errorRecordsName,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsDescription != null" >
+        #{errorRecordsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsPic != null" >
+        #{errorRecordsPic,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsPart != null" >
+        #{errorRecordsPart,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsAddress != null" >
+        #{errorRecordsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsSend != null" >
+        #{errorRecordsSend,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsReceive != null" >
+        #{errorRecordsReceive,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsDate != null" >
+        #{errorRecordsDate,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsPersonnel != null" >
+        #{errorRecordsPersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsTel != null" >
+        #{errorRecordsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsOrderNo != null" >
+        #{errorRecordsOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsQuality != null" >
+        #{errorRecordsQuality,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsAppRover != null" >
+        #{errorRecordsAppRover,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsApprove != null" >
+        #{errorRecordsApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsOpinion != null" >
+        #{errorRecordsOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsReplace != null" >
+        #{errorRecordsReplace,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsOldId != null" >
+        #{errorRecordsOldId,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsNewId != null" >
+        #{errorRecordsNewId,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsSource != null" >
+        #{errorRecordsSource,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsPartPrice != null" >
+        #{errorRecordsPartPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsPartBearer != null" >
+        #{errorRecordsPartBearer,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsUpkeepCost != null" >
+        #{errorRecordsUpkeepCost,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsUpkeepBearer != null" >
+        #{errorRecordsUpkeepBearer,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsRemark != null" >
+        #{errorRecordsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsLoss != null" >
+        #{errorRecordsLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsDelete != null" >
+        #{errorRecordsDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="improperOperation != null">
+        #{improperOperation,jdbcType=VARCHAR},
+      </if>
+      <if test="faultStatus != null">
+        #{faultStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="flowPathId != null">
+        #{flowPathId,jdbcType=VARCHAR},
+      </if>
+      <if test="flowPathType != null">
+        #{flowPathType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRecords" >
+    update SYS_ROBOT_ERROR_RECORDS
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="robotCode != null" >
+        ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsModel != null" >
+        ERROR_RECORDS_MODEL = #{errorRecordsModel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsNo != null" >
+        ERROR_RECORDS_NO = #{errorRecordsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsAffect != null" >
+        ERROR_RECORDS_AFFECT = #{errorRecordsAffect,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsStatus != null" >
+        ERROR_RECORDS_STATUS = #{errorRecordsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsReportSource != null" >
+        ERROR_RECORDS_REPORT_SOURCE = #{errorRecordsReportSource,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsType != null" >
+        ERROR_RECORDS_TYPE = #{errorRecordsType,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsName != null" >
+        ERROR_RECORDS_NAME = #{errorRecordsName,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsDescription != null" >
+        ERROR_RECORDS_DESCRIPTION = #{errorRecordsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsPic != null" >
+        ERROR_RECORDS_PIC = #{errorRecordsPic,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsPart != null" >
+        ERROR_RECORDS_PART = #{errorRecordsPart,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsAddress != null" >
+        ERROR_RECORDS_ADDRESS = #{errorRecordsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsSend != null" >
+        ERROR_RECORDS_SEND = #{errorRecordsSend,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsReceive != null" >
+        ERROR_RECORDS_RECEIVE = #{errorRecordsReceive,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsDate != null" >
+        ERROR_RECORDS_DATE = #{errorRecordsDate,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsPersonnel != null" >
+        ERROR_RECORDS_PERSONNEL = #{errorRecordsPersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsTel != null" >
+        ERROR_RECORDS_TEL = #{errorRecordsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsOrderNo != null" >
+        ERROR_RECORDS_ORDER_NO = #{errorRecordsOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsQuality != null" >
+        ERROR_RECORDS_QUALITY = #{errorRecordsQuality,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsAppRover != null" >
+        ERROR_RECORDS_APP_ROVER = #{errorRecordsAppRover,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsApprove != null" >
+        ERROR_RECORDS_APPROVE = #{errorRecordsApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsOpinion != null" >
+        ERROR_RECORDS_OPINION = #{errorRecordsOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsReplace != null" >
+        ERROR_RECORDS_REPLACE = #{errorRecordsReplace,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsOldId != null" >
+        ERROR_RECORDS_OLD_ID = #{errorRecordsOldId,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsNewId != null" >
+        ERROR_RECORDS_NEW_ID = #{errorRecordsNewId,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsSource != null" >
+        ERROR_RECORDS_SOURCE = #{errorRecordsSource,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsPartPrice != null" >
+        ERROR_RECORDS_PART_PRICE = #{errorRecordsPartPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsPartBearer != null" >
+        ERROR_RECORDS_PART_BEARER = #{errorRecordsPartBearer,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsUpkeepCost != null" >
+        ERROR_RECORDS_UPKEEP_COST = #{errorRecordsUpkeepCost,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsUpkeepBearer != null" >
+        ERROR_RECORDS_UPKEEP_BEARER = #{errorRecordsUpkeepBearer,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsRemark != null" >
+        ERROR_RECORDS_REMARK = #{errorRecordsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsLoss != null" >
+        ERROR_RECORDS_LOSS = #{errorRecordsLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsDelete != null" >
+        ERROR_RECORDS_DELETE = #{errorRecordsDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="improperOperation != null">
+        IMPROPER_OPERATION = #{improperOperation,jdbcType=VARCHAR},
+      </if>
+      <if test="faultStatus != null">
+        FAULT_STATUS = #{faultStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="flowPathId != null">
+        FLOW_PATH_ID = #{flowPathId,jdbcType=VARCHAR},
+      </if>
+      <if test="flowPathType != null">
+        FLOW_PATH_TYPE = #{flowPathType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ERROR_RECORDS_ID = #{errorRecordsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRecords" >
+    update SYS_ROBOT_ERROR_RECORDS
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+      ERROR_RECORDS_MODEL = #{errorRecordsModel,jdbcType=VARCHAR},
+      ERROR_RECORDS_NO = #{errorRecordsNo,jdbcType=VARCHAR},
+      ERROR_RECORDS_AFFECT = #{errorRecordsAffect,jdbcType=VARCHAR},
+      ERROR_RECORDS_STATUS = #{errorRecordsStatus,jdbcType=VARCHAR},
+      ERROR_RECORDS_REPORT_SOURCE = #{errorRecordsReportSource,jdbcType=VARCHAR},
+      ERROR_RECORDS_TYPE = #{errorRecordsType,jdbcType=VARCHAR},
+      ERROR_RECORDS_NAME = #{errorRecordsName,jdbcType=VARCHAR},
+      ERROR_RECORDS_DESCRIPTION = #{errorRecordsDescription,jdbcType=VARCHAR},
+      ERROR_RECORDS_PIC = #{errorRecordsPic,jdbcType=VARCHAR},
+      ERROR_RECORDS_PART = #{errorRecordsPart,jdbcType=VARCHAR},
+      ERROR_RECORDS_ADDRESS = #{errorRecordsAddress,jdbcType=VARCHAR},
+      ERROR_RECORDS_SEND = #{errorRecordsSend,jdbcType=VARCHAR},
+      ERROR_RECORDS_RECEIVE = #{errorRecordsReceive,jdbcType=VARCHAR},
+      ERROR_RECORDS_DATE = #{errorRecordsDate,jdbcType=VARCHAR},
+      ERROR_RECORDS_PERSONNEL = #{errorRecordsPersonnel,jdbcType=VARCHAR},
+      ERROR_RECORDS_TEL = #{errorRecordsTel,jdbcType=VARCHAR},
+      ERROR_RECORDS_ORDER_NO = #{errorRecordsOrderNo,jdbcType=VARCHAR},
+      ERROR_RECORDS_QUALITY = #{errorRecordsQuality,jdbcType=VARCHAR},
+      ERROR_RECORDS_APP_ROVER = #{errorRecordsAppRover,jdbcType=VARCHAR},
+      ERROR_RECORDS_APPROVE = #{errorRecordsApprove,jdbcType=VARCHAR},
+      ERROR_RECORDS_OPINION = #{errorRecordsOpinion,jdbcType=VARCHAR},
+      ERROR_RECORDS_REPLACE = #{errorRecordsReplace,jdbcType=VARCHAR},
+      ERROR_RECORDS_OLD_ID = #{errorRecordsOldId,jdbcType=VARCHAR},
+      ERROR_RECORDS_NEW_ID = #{errorRecordsNewId,jdbcType=VARCHAR},
+      ERROR_RECORDS_SOURCE = #{errorRecordsSource,jdbcType=VARCHAR},
+      ERROR_RECORDS_PART_PRICE = #{errorRecordsPartPrice,jdbcType=VARCHAR},
+      ERROR_RECORDS_PART_BEARER = #{errorRecordsPartBearer,jdbcType=VARCHAR},
+      ERROR_RECORDS_UPKEEP_COST = #{errorRecordsUpkeepCost,jdbcType=VARCHAR},
+      ERROR_RECORDS_UPKEEP_BEARER = #{errorRecordsUpkeepBearer,jdbcType=VARCHAR},
+      ERROR_RECORDS_REMARK = #{errorRecordsRemark,jdbcType=VARCHAR},
+      ERROR_RECORDS_LOSS = #{errorRecordsLoss,jdbcType=VARCHAR},
+      ERROR_RECORDS_DELETE = #{errorRecordsDelete,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      IMPROPER_OPERATION = #{improperOperation,jdbcType=VARCHAR},
+      FAULT_STATUS = #{faultStatus,jdbcType=VARCHAR}
+    where ERROR_RECORDS_ID = #{errorRecordsId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getRobotErrorRecordList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      A.ERROR_RECORDS_ID,
+      A.SCENIC_SPOT_ID,
+      A.ROBOT_CODE,
+      A.ERROR_RECORDS_MODEL,
+      A.ERROR_RECORDS_NO,
+      A.ERROR_RECORDS_AFFECT,
+      A.ERROR_RECORDS_STATUS,
+      A.ERROR_RECORDS_REPORT_SOURCE,
+      A.ERROR_RECORDS_TYPE,
+      A.ERROR_RECORDS_NAME,
+      A.ERROR_RECORDS_DESCRIPTION,
+      A.ERROR_RECORDS_PIC,
+      A.ERROR_RECORDS_PART,
+      A.ERROR_RECORDS_ADDRESS,
+      A.ERROR_RECORDS_SEND,
+      A.ERROR_RECORDS_RECEIVE,
+      A.ERROR_RECORDS_DATE,
+      A.ERROR_RECORDS_PERSONNEL,
+      A.ERROR_RECORDS_TEL,
+      A.ERROR_RECORDS_ORDER_NO,
+      A.ERROR_RECORDS_QUALITY,
+      A.ERROR_RECORDS_APP_ROVER,
+      A.ERROR_RECORDS_APPROVE,
+      A.ERROR_RECORDS_OPINION,
+      A.ERROR_RECORDS_REPLACE,
+      A.ERROR_RECORDS_OLD_ID,
+      A.ERROR_RECORDS_NEW_ID,
+      A.ERROR_RECORDS_SOURCE,
+      A.ERROR_RECORDS_PART_PRICE,
+      A.ERROR_RECORDS_PART_BEARER,
+      A.ERROR_RECORDS_UPKEEP_COST,
+      A.ERROR_RECORDS_UPKEEP_BEARER,
+      A.ERROR_RECORDS_REMARK,
+      A.ERROR_RECORDS_LOSS,
+      A.ERROR_RECORDS_DELETE,
+      A.CREATE_TIME,
+      A.UPDATE_TIME,
+      A.IMPROPER_OPERATION,
+      A.FAULT_STATUS,
+      B.SCENIC_SPOT_NAME AS scenicSpotName,
+      C.REPAIR_ID AS repairId,
+      C.USER_ID AS userId,
+      D.SERVICE_RECORDS_DETAILS AS serviceRecordsDetails,
+      D.SERVICE_RECORDS_LEVEL AS serviceRecordsLevel
+    FROM
+      SYS_ROBOT_ERROR_RECORDS A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        LEFT JOIN SYS_ROBOT_ERROR_REPAIR_USER C ON A.ERROR_RECORDS_ID = C.ERROR_ID
+        LEFT JOIN SYS_ROBOT_SERVICE_RECORDS D ON D.SERVICE_RECORDS_ID = C.REPAIR_ID
+    <where>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE = #{robotCode}
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+    </where>
+    ORDER BY
+        A.CREATE_TIME DESC
+  </select>
+  <select id="getRobotErrorRecordsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      A.ERROR_RECORDS_ID,
+      A.SCENIC_SPOT_ID,
+      A.ROBOT_CODE,
+      A.ERROR_RECORDS_MODEL,
+      A.ERROR_RECORDS_NO,
+      A.ERROR_RECORDS_AFFECT,
+      A.ERROR_RECORDS_STATUS,
+      A.ERROR_RECORDS_REPORT_SOURCE,
+      A.ERROR_RECORDS_TYPE,
+      A.ERROR_RECORDS_NAME,
+      A.ERROR_RECORDS_DESCRIPTION,
+      A.ERROR_RECORDS_PIC,
+      A.ERROR_RECORDS_PART,
+      A.ERROR_RECORDS_ADDRESS,
+      A.ERROR_RECORDS_SEND,
+      A.ERROR_RECORDS_RECEIVE,
+      A.ERROR_RECORDS_DATE,
+      A.ERROR_RECORDS_PERSONNEL,
+      A.ERROR_RECORDS_TEL,
+      A.ERROR_RECORDS_ORDER_NO,
+      A.ERROR_RECORDS_QUALITY,
+      A.ERROR_RECORDS_APP_ROVER,
+      A.ERROR_RECORDS_APPROVE,
+      A.ERROR_RECORDS_OPINION,
+      A.ERROR_RECORDS_REPLACE,
+      A.ERROR_RECORDS_OLD_ID,
+      A.ERROR_RECORDS_NEW_ID,
+      A.ERROR_RECORDS_SOURCE,
+      A.ERROR_RECORDS_PART_PRICE,
+      A.ERROR_RECORDS_PART_BEARER,
+      A.ERROR_RECORDS_UPKEEP_COST,
+      A.ERROR_RECORDS_UPKEEP_BEARER,
+      A.ERROR_RECORDS_REMARK,
+      A.ERROR_RECORDS_LOSS,
+      A.ERROR_RECORDS_DELETE,
+      A.CREATE_TIME,
+      A.UPDATE_TIME,
+      A.IMPROPER_OPERATION,
+      A.FAULT_STATUS,
+      B.SCENIC_SPOT_NAME AS scenicSpotName,
+      C.REPAIR_ID AS repairId,
+      C.USER_ID AS userId,
+      D.ROBOT_MODEL AS robotModel,
+      E.INVENTORY_NUMBER AS inventoryNumber
+    FROM
+      SYS_ROBOT_ERROR_RECORDS A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        LEFT JOIN SYS_ROBOT_ERROR_REPAIR_USER C ON A.ERROR_RECORDS_ID = C.ERROR_ID
+        LEFT JOIN SYS_ROBOT D ON A.ROBOT_CODE = D.ROBOT_CODE
+        LEFT JOIN SYS_ROBOT_ERROR_PARTS E ON A.ERROR_RECORDS_ID = E.ERROR_RECORDS_ID
+    <where>
+        <if test="robotCode != null and robotCode != ''">
+          AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+        </if>
+        <if test="scenicSpotId != null and scenicSpotId != ''">
+          AND A.SCENIC_SPOT_ID = ${scenicSpotId}
+        </if>
+        <if test="errorRecordsName != null and errorRecordsName != ''">
+          AND A.ERROR_RECORDS_NAME LIKE CONCAT('%',#{errorRecordsName},'%')
+        </if>
+        <if test="errorRecordsStatus != null and errorRecordsStatus != ''">
+          AND A.ERROR_RECORDS_STATUS = #{errorRecordsStatus}
+        </if>
+        <if test="errorRecordsQuality != null and errorRecordsQuality != ''">
+          AND A.ERROR_RECORDS_QUALITY = #{errorRecordsQuality}
+        </if>
+        <if test="errorRecordsReceive != null and errorRecordsReceive != ''">
+           AND A.ERROR_RECORDS_RECEIVE = #{errorRecordsReceive}
+        </if>
+        <if test="startTime != null and startTime != ''">
+          AND DATE(A.CREATE_TIME) <![CDATA[ >= ]]> #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+          AND DATE(A.CREATE_TIME) <![CDATA[ <= ]]> #{endTime}
+        </if>
+    </where>
+    ORDER BY
+      A.CREATE_TIME DESC
+  </select>
+
+  <select id="getSumPartPrice" resultType="java.lang.Double">
+    select SUM(ERROR_RECORDS_PART_PRICE)
+    from SYS_ROBOT_ERROR_RECORDS
+    where SCENIC_SPOT_ID = #{spotId}
+    <if test="date != null">
+      and CREATE_TIME like CONCAT('%',#{date},'%')
+    </if>
+    and IS_SETTLEMENT = 1
+  </select>
+
+  <select id="getSumUpkeepCost" resultType="java.lang.Double">
+    select SUM(ERROR_RECORDS_UPKEEP_COST)
+    from SYS_ROBOT_ERROR_RECORDS
+    where SCENIC_SPOT_ID = #{spotId}
+    <if test="date != null">
+      and CREATE_TIME like CONCAT('%',#{date},'%')
+    </if>
+    and IS_SETTLEMENT = 1
+  </select>
+  <select id="getSpotIdAndTimeLikeByRepairMoney" resultType="java.lang.Double">
+    select SUM(a.priceAll)
+    from
+    ( select SUM(ERROR_RECORDS_PART_PRICE + ERROR_RECORDS_UPKEEP_COST) as priceAll
+      from SYS_ROBOT_ERROR_RECORDS
+      <where>
+        <if test="spotId != null">
+          SCENIC_SPOT_ID = #{spotId}
+        </if>
+        <if test="date != null">
+          and CREATE_TIME like CONCAT('%',#{date},'%')
+        </if>
+          and  IS_SETTLEMENT = 1
+      </where>
+    ) as a
+  </select>
+
+  <select id="getSpotIdAndTimeLikeBySpotRepairMoney" resultType="java.lang.Double">
+    select SUM(a.priceAll)
+    from
+    ( select SUM(SPOT_PARTS_COST + SPOT_REPAIR_COST) as priceAll
+    from SYS_ROBOT_ERROR_RECORDS
+    <where>
+      <if test="spotId != null">
+        SCENIC_SPOT_ID = #{spotId}
+      </if>
+      <if test="last12Months != null">
+        and CREATE_TIME like CONCAT('%',#{last12Months},'%')
+      </if>
+      and  IS_SETTLEMENT = 1
+    </where>
+    ) as a
+  </select>
+
+  <select id="getFailureRecord" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List"></include>
+    from
+    SYS_ROBOT_ERROR_RECORDS
+    where
+    ROBOT_CODE = #{robotCode}
+  </select>
+  <select id="getGeneralFault" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRecords">
+
+  </select>
+  <select id="getAppRobotErrorRecords" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRecords">
+    select
+      srer.*
+    from
+    SYS_ROBOT_ERROR_RECORDS srer
+    LEFT JOIN SYS_SCENIC_SPOT B ON srer.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    LEFT JOIN SYS_APP_USERS_SPOT_ROLE C on srer.SCENIC_SPOT_ID = C.PRIMARY_KEY_PID
+    <where>
+      1=1
+      <if test="userId != null and userId != ''">
+        and C.PRIMARY_KEY_UID = #{userId}
+      </if>
+      <if test="scenicSpotId!=null and scenicSpotId!=''">
+        and srer.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="robotCode!=null and robotCode!=''">
+        and ROBOT_CODE = #{robotCode}
+      </if>
+      <if test="errorRecordsName!=null and errorRecordsName!=''">
+        and ERROR_RECORS_NAME = #{errorRecordsName}
+      </if>
+      <if test="errorRecordsStatus!=null and errorRecordsStatus!=''">
+        and ERROR_RECORDS_STATUS = #{errorRecordsStatus}
+      </if>
+      <if test="errorRecordsPersonnel!=null and errorRecordsPersonnel!=''">
+        and ERROR_RECORDS_PERSONNEL = #{errorRecordsPersonnel}
+      </if>
+      <if test="faultStatus != null and faultStatus != ''">
+        and FAULT_STATUS = #{faultStatus}
+      </if>
+    </where>
+    order by CREATE_TIME DESC
+  </select>
+
+</mapper>

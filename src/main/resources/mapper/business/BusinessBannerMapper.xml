@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessBannerMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.business.model.BusinessBanner" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="APP_IMAGE_ID" property="appImageId" jdbcType="BIGINT" />
+    <result column="WEB_IMAGE_ID" property="webImageId" jdbcType="BIGINT" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, TITLE, APP_IMAGE_ID, WEB_IMAGE_ID, URL, STATE, CREATE_TIME, UPDATE_TIME, TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BUSINESS_BANNER
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BUSINESS_BANNER
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.business.model.BusinessBanner" >
+    insert into BUSINESS_BANNER (ID, TITLE, APP_IMAGE_ID, 
+      WEB_IMAGE_ID, URL, STATE, 
+      CREATE_TIME, UPDATE_TIME, TYPE)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{appImageId,jdbcType=BIGINT}, 
+      #{webImageId,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessBanner" >
+    insert into BUSINESS_BANNER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="appImageId != null" >
+        APP_IMAGE_ID,
+      </if>
+      <if test="webImageId != null" >
+        WEB_IMAGE_ID,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="appImageId != null" >
+        #{appImageId,jdbcType=BIGINT},
+      </if>
+      <if test="webImageId != null" >
+        #{webImageId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessBanner" >
+    update BUSINESS_BANNER
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="appImageId != null" >
+        APP_IMAGE_ID = #{appImageId,jdbcType=BIGINT},
+      </if>
+      <if test="webImageId != null" >
+        WEB_IMAGE_ID = #{webImageId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.business.model.BusinessBanner" >
+    update BUSINESS_BANNER
+    set TITLE = #{title,jdbcType=VARCHAR},
+      APP_IMAGE_ID = #{appImageId,jdbcType=BIGINT},
+      WEB_IMAGE_ID = #{webImageId,jdbcType=BIGINT},
+      URL = #{url,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getBannerList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from BUSINESS_BANNER
+    <where>
+      1 = 1
+      <if test="type != null and type != ''">
+          and TYPE = #{type}
+      </if>
+    </where>
+    ORDER BY CREATE_TIME DESC
+  </select>
+</mapper>

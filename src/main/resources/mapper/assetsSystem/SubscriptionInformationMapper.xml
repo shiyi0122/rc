@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SubscriptionInformationMapper">
+
+    <select id="companyList" resultType="java.util.HashMap">
+        select distinct  sscc.COMPANY_ID , sscc.COMPANY_NAME from SYS_SCENIC_COOPERATIVE_COMPANY sscc
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION  sssi on sssi.COMPANY_ID = sscc.COMPANY_ID
+        <if test="array != null">
+            where SPOT_ID in
+            <foreach collection="array" separator="," close=")" open="(" item="id">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="spotList" resultType="java.util.HashMap">
+        select distinct SPOT_ID , SPOT_NAME , WECHAT , SAVING ,SAVING_WECHAT , DEPOSIT from SYS_SCENIC_SUBSCRIPTION_INFORMATION
+        <if test="_parameter != null">
+            where COMPANY_ID = #{companyId}
+        </if>
+    </select>
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.SubscriptionInformation">
+        select sssi.*,sssit.FORMULA as taxRateMethodName
+        from SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION_TAX sssit on sssi.TAX_RATE_METHOD = sssit.ID
+        <where>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId}
+            </if>
+            <if test="spotId != null">
+                and SPOT_ID in
+                <foreach collection="spotId" separator="," close=")" open="(" item="id">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="charge != null">
+                and CHARGE = #{charge}
+            </if>
+            <if test="tax != null">
+                and TAX = #{tax}
+            </if>
+            <if test="beginDate != null and endDate != null">
+                and  date(CONTRACT_VALIDITY) between #{beginDate} and #{endDate}
+            </if>
+
+        </where>
+        <if test="pageNum != null and pageSize != null">
+            limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer">
+        SELECT count(0) from SYS_SCENIC_SUBSCRIPTION_INFORMATION
+        <where>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId}
+            </if>
+            <if test="spotId != null">
+                and SPOT_ID in
+                <foreach collection="spotId" separator="," close=")" open="(" item="id">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="charge != null">
+                and CHARGE = #{charge}
+            </if>
+            <if test="tax != null">
+                and TAX = #{tax}
+            </if>
+        </where>
+    </select>
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.assetsSystem.model.SubscriptionInformation">
+        insert into SYS_SCENIC_SUBSCRIPTION_INFORMATION(ID, COMPANY_ID, COMPANY_NAME, SPOT_ID, SPOT_NAME, CHARGE, TAX,
+                                                        PROPORTION, REVENUE_EXPENDITURE, WECHAT, SAVING, SAVING_WECHAT,
+                                                        DEPOSIT, CONTRACT_NUMBER, CONTRACT_VALIDITY, CONTRACT_SIGN_DATE,
+                                                        RECONCILIATION_DATE, SETTLEMENT, SUBJECT_ID, SUBJECT_NAME,
+                                                        NOTES, CREATE_DATE, INVOICE_TYPE,SPOT_ACCESSORY_RATIO,SPOT_REPAIR_RATIO,TAX_RATE_METHOD)
+        values (#{id}, #{companyId}, #{companyName}, #{spotId}, #{spotName}, #{charge}, #{tax}, #{proportion},
+                #{revenueExpenditure}, #{wechat}, #{saving}, #{savingWechat}, #{deposit}, #{contractNumber},
+                #{contractValidity}, #{contractSignDate}, #{reconciliationDate}, #{settlement}, #{subjectId},
+                #{subjectName}, #{notes}, DATE_FORMAT(now(), '%Y-%m-%d %T'), #{invoiceType},#{spotAccessoryRatio},#{spotRepairRatio},#{taxRateMethod})
+    </insert>
+
+    <update id="edit" parameterType="com.hna.hka.archive.management.assetsSystem.model.SubscriptionInformation">
+        update SYS_SCENIC_SUBSCRIPTION_INFORMATION
+        set COMPANY_ID          = #{companyId},
+            COMPANY_NAME        = #{companyName},
+            SPOT_ID             = #{spotId},
+            SPOT_NAME           = #{spotName},
+            CHARGE              = #{charge},
+            TAX                 = #{tax},
+            PROPORTION          = #{proportion},
+            REVENUE_EXPENDITURE = #{revenueExpenditure},
+            WECHAT              = #{wechat},
+            SAVING              = #{saving},
+            SAVING_WECHAT       = #{savingWechat},
+            DEPOSIT             = #{deposit},
+            CONTRACT_NUMBER     = #{contractNumber},
+            CONTRACT_VALIDITY   = #{contractValidity},
+            CONTRACT_SIGN_DATE  = #{contractSignDate},
+            RECONCILIATION_DATE = #{reconciliationDate},
+            SETTLEMENT          = #{settlement},
+            SUBJECT_ID          = #{subjectId},
+            SUBJECT_NAME        = #{subjectName},
+            NOTES               = #{notes},
+            INVOICE_TYPE        = #{invoiceType},
+            SPOT_ACCESSORY_RATIO =#{spotAccessoryRatio},
+            SPOT_REPAIR_RATIO  = #{spotRepairRatio},
+            TAX_RATE_METHOD = #{taxRateMethod}
+        where ID = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from SYS_SCENIC_SUBSCRIPTION_INFORMATION where ID = #{id}
+    </delete>
+
+    <select id="allCompany" resultType="java.util.HashMap">
+        select COMPANY_ID , COMPANY_NAME from SYS_SCENIC_SPOT_ASCRIPTION_COMPANY
+    </select>
+
+    <select id="allSpot" resultType="java.util.HashMap">
+        select SCENIC_SPOT_ID , SCENIC_SPOT_NAME from SYS_SCENIC_SPOT
+    </select>
+
+    <select id="allSubject" resultType="java.util.HashMap">
+        select COMPANY_ID , COMPANY_NAME from SYS_SCENIC_SPOT_ASCRIPTION_COMPANY
+    </select>
+
+    <select id="queryById" resultType="com.hna.hka.archive.management.assetsSystem.model.SubscriptionInformation">
+        select * from SYS_SCENIC_SUBSCRIPTION_INFORMATION where ID = #{id}
+    </select>
+
+    <select id="selectSpotIdByContract" resultType="com.hna.hka.archive.management.assetsSystem.model.SubscriptionInformation">
+        select * from SYS_SCENIC_SUBSCRIPTION_INFORMATION where SPOT_ID = #{spotId}
+    </select>
+
+    <select id="selectJxzyCompanyId" resultType="java.util.Map">
+        select COMPANY_ID , COMPANY_NAME
+        from SYS_SCENIC_COOPERATIVE_COMPANY
+        where COMPANY_NAME like "%北京九星智元%"
+    </select>
+    <select id="companyListAll" resultType="java.util.Map">
+        select COMPANY_ID,COMPANY_NAME
+        from SYS_SCENIC_SUBSCRIPTION_INFORMATION
+    </select>
+
+    <select id="selectAll" resultType="com.hna.hka.archive.management.assetsSystem.model.SubscriptionInformation">
+        select * from SYS_SCENIC_SUBSCRIPTION_INFORMATION
+    </select>
+
+    <select id="getSpotIdCompanyIdData" resultType="java.util.Map">
+        select sssi.COMPANY_NAME , sscc.COLLECTION_ACCOUNT_NUMBER ,sscc.COLLECTION_ACCOUNT , sscc.BANK , sssi.PROPORTION , sssi.SUBJECT_NAME
+        from SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi
+        left join SYS_SCENIC_COOPERATIVE_COMPANY sscc on sssi.COMPANY_ID = sscc.COMPANY_ID
+        <where>
+            1=1
+            <if test="companyId != null and companyId != ''">
+                and  sssi.COMPANY_ID = #{companyId}
+            </if>
+            <if test="spotId != null and spotId != ''">
+                and  sssi.SPOT_ID = #{spotId}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="getStatementSummaryList" resultType="com.hna.hka.archive.management.assetsSystem.model.OrderMoney">
+        select sssi.*,sscc.COLLECTION_ACCOUNT_NUMBER,sscc.BANK
+        from SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi
+        left join SYS_SCENIC_COOPERATIVE_COMPANY sscc on sssi.COMPANY_ID = sscc.COMPANY_ID
+        <where>
+            1=1
+            <if test="subjectId != null and subjectId != ''">
+                and sssi.SUBJECT_ID = #{subjectId}
+            </if>
+            <if test="companyId != null and companyId != ''">
+                and sssi.COMPANY_ID = #{companyId}
+            </if>
+            <if test="spotId != null and spotId != ''">
+                and sssi.SPOT_ID = #{spotId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getTaxRateFormula" resultType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSubscriptionInformationTax">
+        select * from SYS_SCENIC_SUBSCRIPTION_INFORMATION_TAX
+    </select>
+
+    <select id="selectCompanyNameById" resultType="com.hna.hka.archive.management.assetsSystem.model.SubscriptionInformation">
+        select * from SYS_SCENIC_SUBSCRIPTION_INFORMATION where COMPANY_NAME = #{cooperation}
+    </select>
+
+</mapper>

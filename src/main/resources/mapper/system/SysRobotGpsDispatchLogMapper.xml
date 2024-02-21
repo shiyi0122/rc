@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotGpsDispatchLogMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotGpsDispatchLog" >
+        <id column="GPS_ID" property="gpsId" jdbcType="BIGINT" />
+        <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR" />
+        <result column="ROBOT_FAULT_CODE" property="robotFaultCode" jdbcType="VARCHAR" />
+        <result column="EXCEEDING_TIME" property="exceedingTime" jdbcType="BIGINT" />
+        <result column="REASON" property="reason" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        GPS_ID, ROBOT_CODE, SCENIC_SPOT_ID, SCENIC_SPOT_NAME, EXCEEDING_TIME, REASON, CREATE_DATE,
+        UPDATE_DATE
+    </sql>
+
+
+    <select id="getRobotGpsDispatchList" resultType="com.hna.hka.archive.management.system.model.SysRobotGpsDispatchLog">
+
+        select *
+        from SYS_ROBOT_GPS_DISPATCH_LOG
+        <where>
+            1=1
+            <if test="robotCode != null and robotCode != ''">
+                and ROBOT_CODE = #{robotCode}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        order by UPDATE_DATE
+    </select>
+
+
+
+
+</mapper>

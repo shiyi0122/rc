@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotSoftAssetInformationMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotSoftAssetInformation" >
+    <id column="SOFT_ASSET_INFORMATION_ID" property="softAssetInformationId" jdbcType="BIGINT" />
+    <result column="ROBOT_ID" property="robotId" jdbcType="BIGINT" />
+    <result column="DATE_PRODUCTION" property="dateProduction" jdbcType="VARCHAR" />
+    <result column="BATTERY_WARRANTY_DEADLINE" property="batteryWarrantyDeadline" jdbcType="VARCHAR" />
+    <result column="ROBOT_WARRANTY_DEADLINE" property="robotWarrantyDeadline" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="SERVICE_LIFE" property="serviceLife" jdbcType="VARCHAR"/>
+    <result column="FACTORY_COST" property="factoryCost" jdbcType="VARCHAR"/>
+    <result column="ACCUMULATE" property="accumulate" jdbcType="DOUBLE"/>
+    <result column="NET_PRICE" property="netPrice" jdbcType="DOUBLE"/>
+    <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SOFT_ASSET_INFORMATION_ID, ROBOT_ID, DATE_PRODUCTION, BATTERY_WARRANTY_DEADLINE, 
+    ROBOT_WARRANTY_DEADLINE, CREATE_DATE, UPDATE_DATE, SERVICE_LIFE, FACTORY_COST,
+    ACCUMULATE,NET_PRICE,ROBOT_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_SOFT_ASSET_INFORMATION
+    where SOFT_ASSET_INFORMATION_ID = #{softAssetInformationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_SOFT_ASSET_INFORMATION
+    where SOFT_ASSET_INFORMATION_ID = #{softAssetInformationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotSoftAssetInformation" >
+    insert into SYS_ROBOT_SOFT_ASSET_INFORMATION (SOFT_ASSET_INFORMATION_ID, ROBOT_ID, DATE_PRODUCTION, 
+      BATTERY_WARRANTY_DEADLINE, ROBOT_WARRANTY_DEADLINE, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{softAssetInformationId,jdbcType=BIGINT}, #{robotId,jdbcType=BIGINT}, #{dateProduction,jdbcType=VARCHAR}, 
+      #{batteryWarrantyDeadline,jdbcType=VARCHAR}, #{robotWarrantyDeadline,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotSoftAssetInformation" >
+    insert into SYS_ROBOT_SOFT_ASSET_INFORMATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="softAssetInformationId != null" >
+        SOFT_ASSET_INFORMATION_ID,
+      </if>
+      <if test="robotId != null" >
+        ROBOT_ID,
+      </if>
+      <if test="dateProduction != null" >
+        DATE_PRODUCTION,
+      </if>
+      <if test="batteryWarrantyDeadline != null" >
+        BATTERY_WARRANTY_DEADLINE,
+      </if>
+      <if test="robotWarrantyDeadline != null" >
+        ROBOT_WARRANTY_DEADLINE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="serviceLife != null and serviceLife != ''">
+        SERVICE_LIFE,
+      </if>
+      <if test="factoryCost != null and factoryCost != ''">
+        FACTORY_COST,
+      </if>
+      <if test="robotCode != null and robotCode != ''">
+        ROBOT_CODE,
+      </if>
+      <if test="accumulate != null and accumulate != ''">
+        ACCUMULATE,
+      </if>
+      <if test="netPrice != null and netPrice != ''">
+        NET_PRICE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="softAssetInformationId != null" >
+        #{softAssetInformationId,jdbcType=BIGINT},
+      </if>
+      <if test="robotId != null" >
+        #{robotId,jdbcType=BIGINT},
+      </if>
+      <if test="dateProduction != null" >
+        #{dateProduction,jdbcType=VARCHAR},
+      </if>
+      <if test="batteryWarrantyDeadline != null" >
+        #{batteryWarrantyDeadline,jdbcType=VARCHAR},
+      </if>
+      <if test="robotWarrantyDeadline != null" >
+        #{robotWarrantyDeadline,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceLife != null and serviceLife != ''">
+        #{serviceLife,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryCost != null and factoryCost != ''">
+        #{factoryCost,jdbcType=VARCHAR},
+      </if>
+      <if test="robotCode != null and robotCode != ''">
+        #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accumulate != null and accumulate != ''">
+        #{accumulate,jdbcType=DOUBLE},
+      </if>
+      <if test="netPrice != null and netPrice != ''">
+        #{netPrice,jdbcType = DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotSoftAssetInformation" >
+    update SYS_ROBOT_SOFT_ASSET_INFORMATION
+    <set >
+      <if test="robotId != null" >
+        ROBOT_ID = #{robotId,jdbcType=BIGINT},
+      </if>
+      <if test="dateProduction != null" >
+        DATE_PRODUCTION = #{dateProduction,jdbcType=VARCHAR},
+      </if>
+      <if test="batteryWarrantyDeadline != null" >
+        BATTERY_WARRANTY_DEADLINE = #{batteryWarrantyDeadline,jdbcType=VARCHAR},
+      </if>
+      <if test="robotWarrantyDeadline != null" >
+        ROBOT_WARRANTY_DEADLINE = #{robotWarrantyDeadline,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceLife != null and serviceLife != ''">
+        SERVICE_LIFE = #{serviceLife,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryCost != null and factoryCost != ''">
+        FACTORY_COST = #{factoryCost,jdbcType=VARCHAR},
+      </if>
+      <if test="accumulate != null and accumulate != ''" >
+        ACCUMULATE = #{accumulate,jdbcType = DOUBLE},
+      </if>
+      <if test="netPrice != null">
+        NET_PRICE = #{netPrice,jdbcType = DOUBLE},
+      </if>
+
+    </set>
+    where SOFT_ASSET_INFORMATION_ID = #{softAssetInformationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotSoftAssetInformation" >
+    update SYS_ROBOT_SOFT_ASSET_INFORMATION
+    set ROBOT_ID = #{robotId,jdbcType=BIGINT},
+      DATE_PRODUCTION = #{dateProduction,jdbcType=VARCHAR},
+      BATTERY_WARRANTY_DEADLINE = #{batteryWarrantyDeadline,jdbcType=VARCHAR},
+      ROBOT_WARRANTY_DEADLINE = #{robotWarrantyDeadline,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where SOFT_ASSET_INFORMATION_ID = #{softAssetInformationId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotSoftAssetInformationList" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotSoftAssetInformation" parameterType="java.util.Map">
+    SELECT
+    A.ROBOT_CODE AS robotCode,
+    A.ROBOT_ID,
+    A.ROBOT_MODEL as robotModel,
+<!--    A.CLIENT_VERSION AS clientVersion,-->
+    A.ROBOT_FAULT_STATE AS robotFaultState,
+    B.SCENIC_SPOT_NAME AS scenicSpotName,
+    A.ROBOT_BATCH_NUMBER AS robotBatchNumber,
+    A.ROBOT_MODEL AS robotModel,
+    C.SOFT_ASSET_INFORMATION_ID,
+    C.ROBOT_ID,
+    C.DATE_PRODUCTION,
+    C.BATTERY_WARRANTY_DEADLINE,
+    C.ROBOT_WARRANTY_DEADLINE,
+    C.CREATE_DATE,
+    C.UPDATE_DATE,
+    C.SERVICE_LIFE,
+    C.FACTORY_COST,
+    C.ACCUMULATE,
+    C.NET_PRICE,
+    A.EQUIPMENT_STATUS,
+    F.COMPANY_ID as ascriptionCompanyId,
+    F.COMPANY_NAME as ascriptionCompanyName,
+    G.ROBOT_VERSION_NUMBER AS clientVersion
+    FROM
+    SYS_ROBOT_SOFT_ASSET_INFORMATION C
+    LEFT JOIN SYS_ROBOT A ON A.ROBOT_ID = C.ROBOT_ID
+    LEFT JOIN SYS_USERS_ROLE_SPOT D ON D.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    LEFT JOIN SYS_ROBOT_COMPANY_ASCRIPTION E ON C.ROBOT_ID = E.ROBOT_ID
+    LEFT JOIN SYS_SCENIC_SPOT_ASCRIPTION_COMPANY F ON E.COMPANY_ID = F.COMPANY_ID
+    LEFT JOIN SYS_ROBOT_VERSION G ON A.ROBOT_ID = G.ROBOT_ID
+    <where>
+      <if test="userId != null and userId != ''">
+        AND D.USER_ID = #{userId}
+      </if>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="robotModel != null and robotModel != ''">
+        AND A.ROBOT_MODEL LIKE CONCAT('%',#{robotModel},'%')
+      </if>
+      <if test="ascriptionCompanyId != null and ascriptionCompanyId != ''">
+        AND F.COMPANY_ID = #{ascriptionCompanyId}
+      </if>
+      <if test="equipmentStatus != null and equipmentStatus != ''">
+        AND A.EQUIPMENT_STATUS = #{equipmentStatus}
+      </if>
+    </where>
+    ORDER BY
+      A.ROBOT_CODE DESC
+  </select>
+  <select id="getRobotSoftAssetInformationByRobotId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_SOFT_ASSET_INFORMATION
+    where ROBOT_ID = #{robotId,jdbcType=BIGINT}
+  </select>
+  <select id="getAppRobotSoftAssetInformation" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.ROBOT_CODE AS robotCode,
+    A.ROBOT_ID,
+    A.CLIENT_VERSION AS clientVersion,
+    B.SCENIC_SPOT_NAME AS scenicSpotName,
+    A.ROBOT_BATCH_NUMBER AS robotBatchNumber,
+    A.ROBOT_MODEL AS robotModel,
+    C.SOFT_ASSET_INFORMATION_ID,
+    C.ROBOT_ID,
+    C.DATE_PRODUCTION,
+    C.BATTERY_WARRANTY_DEADLINE,
+    C.ROBOT_WARRANTY_DEADLINE,
+    C.CREATE_DATE,
+    C.UPDATE_DATE
+    FROM
+    SYS_ROBOT A
+    LEFT JOIN SYS_ROBOT_SOFT_ASSET_INFORMATION C ON A.ROBOT_ID = C.ROBOT_ID
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+    </where>
+    ORDER BY
+    A.ROBOT_CODE DESC
+  </select>
+  <select id="getRobotSoftAssetInformationByRobotCode" resultMap="BaseResultMap">
+    SELECT
+      A.SOFT_ASSET_INFORMATION_ID
+    FROM
+      SYS_ROBOT_SOFT_ASSET_INFORMATION A
+        LEFT JOIN SYS_ROBOT B ON A.ROBOT_ID = B.ROBOT_ID
+    WHERE
+      B.ROBOT_CODE = #{robotCode}
+  </select>
+
+  <select id="getRobotSoftAssetInformationListAll" resultMap="BaseResultMap">
+    SELECT  srsai.*
+    FROM SYS_ROBOT_SOFT_ASSET_INFORMATION srsai
+    LEFT JOIN SYS_ROBOT sr
+    ON srsai.ROBOT_CODE = sr.ROBOT_CODE
+<!--    WHERE sr.EQUIPMENT_STATUS  NOT IN(40)-->
+  </select>
+
+  <select id="selectRobotSoftByRobotCode" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotSoftAssetInformation">
+    SELECT *
+    FROM SYS_ROBOT_SOFT_ASSET_INFORMATION
+    WHERE ROBOT_CODE = #{robotCode}
+
+  </select>
+</mapper>

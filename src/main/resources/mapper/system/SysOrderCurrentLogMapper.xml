@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysOrderCurrentLogMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysOrderCurrentLog" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+        <result column="ORDER_NUMBER" property="orderNumber" jdbcType="VARCHAR" />
+        <result column="FRONT_PHONE" property="frontPhone" jdbcType="VARCHAR" />
+        <result column="AFTER_PHONE" property="afterPhone" jdbcType="VARCHAR" />
+        <result column="FRONT_PRICE" property="frontPrice" jdbcType="VARCHAR" />
+        <result column="AFTER_PRICE" property="afterPrice" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+        <result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, ORDER_ID, ORDER_NUMBER, FRONT_PHONE, AFTER_PHONE,
+        FRONT_PRICE, AFTER_PRICE, CREATE_TIME, UPDATE_TIME,OPERATOR_ID
+    </sql>
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.system.model.SysOrderCurrentLog">
+        insert into SYS_ORDER_CURRENT_LOG
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="orderId != null" >
+                ORDER_ID,
+            </if>
+            <if test="orderNumber != null" >
+                ORDER_NUMBER,
+            </if>
+            <if test="frontPhone != null" >
+                FRONT_PHONE,
+            </if>
+            <if test="afterPhone != null" >
+                AFTER_PHONE,
+            </if>
+            <if test="frontPrice != null" >
+                FRONT_PRICE,
+            </if>
+            <if test="afterPrice != null" >
+                AFTER_PRICE,
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME,
+            </if>
+            <if test="operatorId != null">
+                OPERATOR_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orderId != null" >
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="orderNumber != null" >
+                #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="frontPhone != null" >
+                #{frontPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="afterPhone != null" >
+                #{afterPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="frontPrice != null" >
+                #{frontPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="afterPrice != null" >
+                #{afterPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorId != null">
+                #{operatorId,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+
+    <select id="getSysOrderCurrentLogList" resultType="com.hna.hka.archive.management.system.model.SysOrderCurrentLog">
+        select socl.*,su.USER_NAME
+        from SYS_ORDER_CURRENT_LOG socl
+        left join  SYS_USERS su on socl.OPERATOR_ID = su.USER_ID
+        <where>
+            1=1
+            <if test="afterPhone != null and afterPhone != ''">
+                and  socl.AFTER_PHONE like CONCAT('%',#{afterPhone},'%')
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                and socl.ORDER_NUMBER like CONCAT('%',#{orderNumber},'%')
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and DATE(socl.CREATE_TIME) <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and DATE(socl.CREATE_TIME) <![CDATA[ <= ]]> #{endTime}
+            </if>
+        </where>
+
+        order by CREATE_TIME DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.business.model.BusinessRole" >
+    <id column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="ROLE_IDENTITY" property="roleIdentity" jdbcType="VARCHAR" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="ROLE_PARENT_ID" property="roleParentId" jdbcType="BIGINT" />
+    <result column="ROLE_DESC" property="roleDesc" jdbcType="VARCHAR" />
+    <result column="ROLE_STATUS" property="roleStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="ROLE_TYPE" property="roleType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROLE_ID, ROLE_IDENTITY, ROLE_NAME, ROLE_PARENT_ID, ROLE_DESC, ROLE_STATUS, CREATE_DATE, 
+    UPDATE_DATE, ROLE_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BUSINESS_ROLE
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BUSINESS_ROLE
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.business.model.BusinessRole" >
+    insert into BUSINESS_ROLE (ROLE_ID, ROLE_IDENTITY, ROLE_NAME, 
+      ROLE_PARENT_ID, ROLE_DESC, ROLE_STATUS, 
+      CREATE_DATE, UPDATE_DATE, ROLE_TYPE
+      )
+    values (#{roleId,jdbcType=BIGINT}, #{roleIdentity,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
+      #{roleParentId,jdbcType=BIGINT}, #{roleDesc,jdbcType=VARCHAR}, #{roleStatus,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{roleType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessRole" >
+    insert into BUSINESS_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="roleIdentity != null" >
+        ROLE_IDENTITY,
+      </if>
+      <if test="roleName != null" >
+        ROLE_NAME,
+      </if>
+      <if test="roleParentId != null" >
+        ROLE_PARENT_ID,
+      </if>
+      <if test="roleDesc != null" >
+        ROLE_DESC,
+      </if>
+      <if test="roleStatus != null" >
+        ROLE_STATUS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="roleType != null" >
+        ROLE_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="roleIdentity != null" >
+        #{roleIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleParentId != null" >
+        #{roleParentId,jdbcType=BIGINT},
+      </if>
+      <if test="roleDesc != null" >
+        #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roleStatus != null" >
+        #{roleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null" >
+        #{roleType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessRole" >
+    update BUSINESS_ROLE
+    <set >
+      <if test="roleIdentity != null" >
+        ROLE_IDENTITY = #{roleIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleParentId != null" >
+        ROLE_PARENT_ID = #{roleParentId,jdbcType=BIGINT},
+      </if>
+      <if test="roleDesc != null" >
+        ROLE_DESC = #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roleStatus != null" >
+        ROLE_STATUS = #{roleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null" >
+        ROLE_TYPE = #{roleType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.business.model.BusinessRole" >
+    update BUSINESS_ROLE
+    set ROLE_IDENTITY = #{roleIdentity,jdbcType=VARCHAR},
+      ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      ROLE_PARENT_ID = #{roleParentId,jdbcType=BIGINT},
+      ROLE_DESC = #{roleDesc,jdbcType=VARCHAR},
+      ROLE_STATUS = #{roleStatus,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      ROLE_TYPE = #{roleType,jdbcType=VARCHAR}
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </update>
+  <select id="getBusinessRoleList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from BUSINESS_ROLE
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotCompanyAscriptionMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotCompanyAscription" >
+        <id column="ROBOT_COMPANY_ASCRIPTION_ID" property="robotCompanyAscriptionId" jdbcType="BIGINT" />
+        <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+        <result column="COMPANY_ID" property="companyId" jdbcType="VARCHAR" />
+        <result column="ROBOT_ID" property="robotId" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ROBOT_COMPANY_ASCRIPTION_ID,ROBOT_CODE,COMPANY_ID,ROBOT_ID,CREATE_DATE,UPDATE_DATE
+    </sql>
+
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotCompanyAscription" >
+        insert into SYS_ROBOT_COMPANY_ASCRIPTION
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="robotCompanyAscriptionId != null" >
+                ROBOT_COMPANY_ASCRIPTION_ID,
+            </if>
+            <if test="robotCode != null" >
+                ROBOT_CODE,
+            </if>
+            <if test="companyId != null" >
+                COMPANY_ID,
+            </if>
+            <if test="robotId != null" >
+                ROBOT_ID,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="robotCompanyAscriptionId != null" >
+                #{robotCompanyAscriptionId,jdbcType=BIGINT},
+            </if>
+            <if test="robotCode != null" >
+                #{robotCode,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null" >
+                #{companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="robotId != null" >
+                #{robotId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotCompanyAscription">
+            update SYS_ROBOT_COMPANY_ASCRIPTION
+            <set >
+                <if test="robotCode != null" >
+                    ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+                </if>
+                <if test="companyId != null" >
+                    COMPANY_ID = #{companyId,jdbcType=VARCHAR},
+                </if>
+                <if test="robotId != null" >
+                    ROBOT_ID = #{robotId,jdbcType=VARCHAR},
+                </if>
+                <if test="createDate != null" >
+                    CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+                </if>
+                <if test="updateDate != null" >
+                    UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+                </if>
+            </set>
+            where ROBOT_COMPANY_ASCRIPTION_ID = #{robotCompanyAscriptionId,jdbcType=BIGINT}
+    </update>
+
+    <select id="getAscriptionCompanyList" resultType="com.hna.hka.archive.management.system.model.SysRobotCompanyAscription">
+        select
+        <include refid="Base_Column_List" />
+        from SYS_ROBOT_COMPANY_ASCRIPTION
+        ORDER BY CREATE_DATE DESC
+    </select>
+
+    <select id="getAscriptionCompanyId" resultType="com.hna.hka.archive.management.system.model.SysRobotCompanyAscription">
+        select  srca.*,sssac.COMPANY_NAME
+        from SYS_ROBOT_COMPANY_ASCRIPTION srca
+        left join SYS_SCENIC_SPOT_ASCRIPTION_COMPANY sssac on srca.COMPANY_ID = sssac.COMPANY_ID
+        where ROBOT_ID = #{robotId}
+    </select>
+
+
+    <select id="getRobotCompanyList" resultType="com.hna.hka.archive.management.system.model.SysRobotCompanyAscription">
+        select  DISTINCT b.COMPANY_ID,c.COMPANY_NAME
+        from SYS_ROBOT a
+        left join SYS_ROBOT_COMPANY_ASCRIPTION b on a.ROBOT_ID = b.ROBOT_ID
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION c on b.COMPANY_ID =c.COMPANY_ID
+        where a.SCENIC_SPOT_ID = #{spotId}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

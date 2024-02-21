@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysCurrentUserFeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysCurrentUserFeedback" >
+    <id column="FEEDBACK_ID" property="feedbackId" jdbcType="BIGINT" />
+    <result column="CURRENT_USER_ID" property="currentUserId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="FEEDBACK_TYPE" property="feedbackType" jdbcType="VARCHAR" />
+    <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+    <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR" />
+    <result column="DESCRIBES" property="describes" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FEEDBACK_ID, CURRENT_USER_ID, SCENIC_SPOT_ID, FEEDBACK_TYPE, ROBOT_CODE, FEEDBACK, 
+    DESCRIBES, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_USER_FEEDBACK
+    where FEEDBACK_ID = #{feedbackId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_CURRENT_USER_FEEDBACK
+    where FEEDBACK_ID = #{feedbackId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysCurrentUserFeedback" >
+    insert into SYS_CURRENT_USER_FEEDBACK (FEEDBACK_ID, CURRENT_USER_ID, SCENIC_SPOT_ID, 
+      FEEDBACK_TYPE, ROBOT_CODE, FEEDBACK, 
+      DESCRIBES, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{feedbackId,jdbcType=BIGINT}, #{currentUserId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, 
+      #{feedbackType,jdbcType=VARCHAR}, #{robotCode,jdbcType=VARCHAR}, #{feedback,jdbcType=VARCHAR}, 
+      #{describes,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysCurrentUserFeedback" >
+    insert into SYS_CURRENT_USER_FEEDBACK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="feedbackId != null" >
+        FEEDBACK_ID,
+      </if>
+      <if test="currentUserId != null" >
+        CURRENT_USER_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="feedbackType != null" >
+        FEEDBACK_TYPE,
+      </if>
+      <if test="robotCode != null" >
+        ROBOT_CODE,
+      </if>
+      <if test="feedback != null" >
+        FEEDBACK,
+      </if>
+      <if test="describes != null" >
+        DESCRIBES,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="feedbackId != null" >
+        #{feedbackId,jdbcType=BIGINT},
+      </if>
+      <if test="currentUserId != null" >
+        #{currentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="feedbackType != null" >
+        #{feedbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="robotCode != null" >
+        #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="feedback != null" >
+        #{feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="describes != null" >
+        #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysCurrentUserFeedback" >
+    update SYS_CURRENT_USER_FEEDBACK
+    <set >
+      <if test="currentUserId != null" >
+        CURRENT_USER_ID = #{currentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="feedbackType != null" >
+        FEEDBACK_TYPE = #{feedbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="robotCode != null" >
+        ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="feedback != null" >
+        FEEDBACK = #{feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="describes != null" >
+        DESCRIBES = #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FEEDBACK_ID = #{feedbackId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysCurrentUserFeedback" >
+    update SYS_CURRENT_USER_FEEDBACK
+    set CURRENT_USER_ID = #{currentUserId,jdbcType=BIGINT},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      FEEDBACK_TYPE = #{feedbackType,jdbcType=VARCHAR},
+      ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+      FEEDBACK = #{feedback,jdbcType=VARCHAR},
+      DESCRIBES = #{describes,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where FEEDBACK_ID = #{feedbackId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotDamagesAppList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      A.FEEDBACK_ID,
+      A.CURRENT_USER_ID,
+      A.SCENIC_SPOT_ID,
+      A.FEEDBACK_TYPE,
+      A.ROBOT_CODE,
+      A.FEEDBACK,
+      A.DESCRIBES,
+      A.CREATE_DATE,
+      A.UPDATE_DATE,
+      B.CURRENT_USER_PHONE AS phone,
+      C.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+      SYS_CURRENT_USER_FEEDBACK A
+        LEFT JOIN SYS_CURRENT_USER B ON A.CURRENT_USER_ID = B.CURRENT_USER_ID
+        LEFT JOIN SYS_SCENIC_SPOT C ON A.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+    <where>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="phone != null and phone != ''">
+        AND B.CURRENT_USER_PHONE LIKE CONCAT('%',#{phone},'%')
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

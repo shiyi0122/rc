@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotServiceRecordsMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotServiceRecords" >
+    <id column="SERVICE_RECORDS_ID" property="serviceRecordsId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="SERVICE_RECORDS_CODE" property="serviceRecordsCode" jdbcType="VARCHAR" />
+    <result column="SERVICE_RECORDS_MODEL" property="serviceRecordsModel" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_MODEL" property="errorRecordsModel" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_NAME" property="errorRecordsName" jdbcType="VARCHAR" />
+    <result column="SERVICE_RECORDS_RESULT" property="serviceRecordsResult" jdbcType="VARCHAR" />
+    <result column="SERVICE_RECORDS_DETAILS" property="serviceRecordsDetails" jdbcType="VARCHAR" />
+    <result column="SERVICE_RECORDS_PERSONNEL" property="serviceRecordsPersonnel" jdbcType="VARCHAR" />
+    <result column="SERVICE_RECORDS_TEL" property="serviceRecordsTel" jdbcType="VARCHAR" />
+    <result column="SERVICE_RECORDS_LEVEL" property="serviceRecordsLevel" jdbcType="VARCHAR" />
+    <result column="SERVICE_RECORDS_SERVICE_DATE" property="serviceRecordsServiceDate" jdbcType="VARCHAR" />
+    <result column="SERVICE_RECORDS_SEND_DATE" property="serviceRecordsSendDate" jdbcType="VARCHAR" />
+    <result column="SERVICE_RECORDS_REMARK" property="serviceRecordsRemark" jdbcType="VARCHAR" />
+    <result column="SERVICE_RECORDS_DELETE" property="serviceRecordsDelete" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SERVICE_RECORDS_ID, SCENIC_SPOT_ID, SERVICE_RECORDS_CODE, SERVICE_RECORDS_MODEL, 
+    ERROR_RECORDS_MODEL, ERROR_RECORDS_NAME, SERVICE_RECORDS_RESULT, SERVICE_RECORDS_DETAILS, 
+    SERVICE_RECORDS_PERSONNEL, SERVICE_RECORDS_TEL, SERVICE_RECORDS_LEVEL, SERVICE_RECORDS_SERVICE_DATE, 
+    SERVICE_RECORDS_SEND_DATE, SERVICE_RECORDS_REMARK, SERVICE_RECORDS_DELETE, CREATE_TIME, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_SERVICE_RECORDS
+    where SERVICE_RECORDS_ID = #{serviceRecordsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_SERVICE_RECORDS
+    where SERVICE_RECORDS_ID = #{serviceRecordsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotServiceRecords" >
+    insert into SYS_ROBOT_SERVICE_RECORDS (SERVICE_RECORDS_ID, SCENIC_SPOT_ID, SERVICE_RECORDS_CODE, 
+      SERVICE_RECORDS_MODEL, ERROR_RECORDS_MODEL, 
+      ERROR_RECORDS_NAME, SERVICE_RECORDS_RESULT, 
+      SERVICE_RECORDS_DETAILS, SERVICE_RECORDS_PERSONNEL, 
+      SERVICE_RECORDS_TEL, SERVICE_RECORDS_LEVEL, 
+      SERVICE_RECORDS_SERVICE_DATE, SERVICE_RECORDS_SEND_DATE, 
+      SERVICE_RECORDS_REMARK, SERVICE_RECORDS_DELETE, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{serviceRecordsId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{serviceRecordsCode,jdbcType=VARCHAR}, 
+      #{serviceRecordsModel,jdbcType=VARCHAR}, #{errorRecordsModel,jdbcType=VARCHAR}, 
+      #{errorRecordsName,jdbcType=VARCHAR}, #{serviceRecordsResult,jdbcType=VARCHAR}, 
+      #{serviceRecordsDetails,jdbcType=VARCHAR}, #{serviceRecordsPersonnel,jdbcType=VARCHAR}, 
+      #{serviceRecordsTel,jdbcType=VARCHAR}, #{serviceRecordsLevel,jdbcType=VARCHAR}, 
+      #{serviceRecordsServiceDate,jdbcType=VARCHAR}, #{serviceRecordsSendDate,jdbcType=VARCHAR}, 
+      #{serviceRecordsRemark,jdbcType=VARCHAR}, #{serviceRecordsDelete,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotServiceRecords" >
+    insert into SYS_ROBOT_SERVICE_RECORDS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serviceRecordsId != null" >
+        SERVICE_RECORDS_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="serviceRecordsCode != null" >
+        SERVICE_RECORDS_CODE,
+      </if>
+      <if test="serviceRecordsModel != null" >
+        SERVICE_RECORDS_MODEL,
+      </if>
+      <if test="errorRecordsModel != null" >
+        ERROR_RECORDS_MODEL,
+      </if>
+      <if test="errorRecordsName != null" >
+        ERROR_RECORDS_NAME,
+      </if>
+      <if test="serviceRecordsResult != null" >
+        SERVICE_RECORDS_RESULT,
+      </if>
+      <if test="serviceRecordsDetails != null" >
+        SERVICE_RECORDS_DETAILS,
+      </if>
+      <if test="serviceRecordsPersonnel != null" >
+        SERVICE_RECORDS_PERSONNEL,
+      </if>
+      <if test="serviceRecordsTel != null" >
+        SERVICE_RECORDS_TEL,
+      </if>
+      <if test="serviceRecordsLevel != null" >
+        SERVICE_RECORDS_LEVEL,
+      </if>
+      <if test="serviceRecordsServiceDate != null" >
+        SERVICE_RECORDS_SERVICE_DATE,
+      </if>
+      <if test="serviceRecordsSendDate != null" >
+        SERVICE_RECORDS_SEND_DATE,
+      </if>
+      <if test="serviceRecordsRemark != null" >
+        SERVICE_RECORDS_REMARK,
+      </if>
+      <if test="serviceRecordsDelete != null" >
+        SERVICE_RECORDS_DELETE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serviceRecordsId != null" >
+        #{serviceRecordsId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceRecordsCode != null" >
+        #{serviceRecordsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsModel != null" >
+        #{serviceRecordsModel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsModel != null" >
+        #{errorRecordsModel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsName != null" >
+        #{errorRecordsName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsResult != null" >
+        #{serviceRecordsResult,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsDetails != null" >
+        #{serviceRecordsDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsPersonnel != null" >
+        #{serviceRecordsPersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsTel != null" >
+        #{serviceRecordsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsLevel != null" >
+        #{serviceRecordsLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsServiceDate != null" >
+        #{serviceRecordsServiceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsSendDate != null" >
+        #{serviceRecordsSendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsRemark != null" >
+        #{serviceRecordsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsDelete != null" >
+        #{serviceRecordsDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotServiceRecords" >
+    update SYS_ROBOT_SERVICE_RECORDS
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceRecordsCode != null" >
+        SERVICE_RECORDS_CODE = #{serviceRecordsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsModel != null" >
+        SERVICE_RECORDS_MODEL = #{serviceRecordsModel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsModel != null" >
+        ERROR_RECORDS_MODEL = #{errorRecordsModel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsName != null" >
+        ERROR_RECORDS_NAME = #{errorRecordsName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsResult != null" >
+        SERVICE_RECORDS_RESULT = #{serviceRecordsResult,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsDetails != null" >
+        SERVICE_RECORDS_DETAILS = #{serviceRecordsDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsPersonnel != null" >
+        SERVICE_RECORDS_PERSONNEL = #{serviceRecordsPersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsTel != null" >
+        SERVICE_RECORDS_TEL = #{serviceRecordsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsLevel != null" >
+        SERVICE_RECORDS_LEVEL = #{serviceRecordsLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsServiceDate != null" >
+        SERVICE_RECORDS_SERVICE_DATE = #{serviceRecordsServiceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsSendDate != null" >
+        SERVICE_RECORDS_SEND_DATE = #{serviceRecordsSendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsRemark != null" >
+        SERVICE_RECORDS_REMARK = #{serviceRecordsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsDelete != null" >
+        SERVICE_RECORDS_DELETE = #{serviceRecordsDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SERVICE_RECORDS_ID = #{serviceRecordsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotServiceRecords" >
+    update SYS_ROBOT_SERVICE_RECORDS
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      SERVICE_RECORDS_CODE = #{serviceRecordsCode,jdbcType=VARCHAR},
+      SERVICE_RECORDS_MODEL = #{serviceRecordsModel,jdbcType=VARCHAR},
+      ERROR_RECORDS_MODEL = #{errorRecordsModel,jdbcType=VARCHAR},
+      ERROR_RECORDS_NAME = #{errorRecordsName,jdbcType=VARCHAR},
+      SERVICE_RECORDS_RESULT = #{serviceRecordsResult,jdbcType=VARCHAR},
+      SERVICE_RECORDS_DETAILS = #{serviceRecordsDetails,jdbcType=VARCHAR},
+      SERVICE_RECORDS_PERSONNEL = #{serviceRecordsPersonnel,jdbcType=VARCHAR},
+      SERVICE_RECORDS_TEL = #{serviceRecordsTel,jdbcType=VARCHAR},
+      SERVICE_RECORDS_LEVEL = #{serviceRecordsLevel,jdbcType=VARCHAR},
+      SERVICE_RECORDS_SERVICE_DATE = #{serviceRecordsServiceDate,jdbcType=VARCHAR},
+      SERVICE_RECORDS_SEND_DATE = #{serviceRecordsSendDate,jdbcType=VARCHAR},
+      SERVICE_RECORDS_REMARK = #{serviceRecordsRemark,jdbcType=VARCHAR},
+      SERVICE_RECORDS_DELETE = #{serviceRecordsDelete,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where SERVICE_RECORDS_ID = #{serviceRecordsId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotServiceRecordsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      A.SERVICE_RECORDS_ID,
+      A.SCENIC_SPOT_ID,
+      A.SERVICE_RECORDS_CODE,
+      A.SERVICE_RECORDS_MODEL,
+      A.ERROR_RECORDS_MODEL,
+      A.ERROR_RECORDS_NAME,
+      A.SERVICE_RECORDS_RESULT,
+      A.SERVICE_RECORDS_DETAILS,
+      A.SERVICE_RECORDS_PERSONNEL,
+      A.SERVICE_RECORDS_TEL,
+      A.SERVICE_RECORDS_LEVEL,
+      A.SERVICE_RECORDS_SERVICE_DATE,
+      A.SERVICE_RECORDS_SEND_DATE,
+      A.SERVICE_RECORDS_REMARK,
+      A.SERVICE_RECORDS_DELETE,
+      A.CREATE_TIME,
+      A.UPDATE_TIME,
+      B.SCENIC_SPOT_NAME AS scenicSpotName,
+      C.ROBOT_MODEL AS robotModel
+    FROM
+      SYS_ROBOT_SERVICE_RECORDS A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        LEFT JOIN SYS_ROBOT C ON A.SERVICE_RECORDS_CODE = C.ROBOT_CODE
+    <where>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.SERVICE_RECORDS_CODE LIKE CONCAT('%', #{robotCode} ,'%')
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="errorRecordsName != null and errorRecordsName != ''">
+        AND A.ERROR_RECORDS_NAME LIKE CONCAT('%', #{errorRecordsName} ,'%')
+      </if>
+      <if test="errorRecordsModel != null and errorRecordsModel != ''">
+        AND A.ERROR_RECORDS_MODEL LIKE CONCAT('%', #{errorRecordsModel} ,'%')
+      </if>
+      <if test="serviceRecordsPersonnel != null and serviceRecordsPersonnel != ''">
+        AND A.SERVICE_RECORDS_PERSONNEL LIKE CONCAT('%', #{serviceRecordsPersonnel} ,'%')
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_TIME) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_TIME) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_TIME DESC
+  </select>
+
+  <select id="selectByErrorRecordsModel" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotServiceRecords">
+    select *
+    from SYS_ROBOT_SERVICE_RECORDS
+    where ERROR_RECORDS_MODEL = #{errorRecordsOrderNo}
+  </select>
+
+  <update id="updateByPrimaryKeySelectiveNO" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotServiceRecords" >
+    update SYS_ROBOT_SERVICE_RECORDS
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceRecordsCode != null" >
+        SERVICE_RECORDS_CODE = #{serviceRecordsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsModel != null" >
+        ERROR_RECORDS_MODEL = #{errorRecordsModel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsName != null" >
+        ERROR_RECORDS_NAME = #{errorRecordsName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsResult != null" >
+        SERVICE_RECORDS_RESULT = #{serviceRecordsResult,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsDetails != null" >
+        SERVICE_RECORDS_DETAILS = #{serviceRecordsDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsPersonnel != null" >
+        SERVICE_RECORDS_PERSONNEL = #{serviceRecordsPersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsTel != null" >
+        SERVICE_RECORDS_TEL = #{serviceRecordsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsLevel != null" >
+        SERVICE_RECORDS_LEVEL = #{serviceRecordsLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsServiceDate != null" >
+        SERVICE_RECORDS_SERVICE_DATE = #{serviceRecordsServiceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsSendDate != null" >
+        SERVICE_RECORDS_SEND_DATE = #{serviceRecordsSendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsRemark != null" >
+        SERVICE_RECORDS_REMARK = #{serviceRecordsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRecordsDelete != null" >
+        SERVICE_RECORDS_DELETE = #{serviceRecordsDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ERROR_RECORDS_MODEL = #{errorRecordsModel,jdbcType=BIGINT}
+  </update>
+</mapper>

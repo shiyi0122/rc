@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysAppFlowPathMapper">
+
+    <select id="getSysAppFlowPathList" resultType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPath">
+        select safp.*
+        from SYS_APP_FLOW_PATH safp
+        left join SYS_APP_FLOW_PATH_SPOT safps on safp.ID = safps.FLOW_PATH_ID
+        <where>
+            1 = 1
+            <if test="flowPathName != null and flowPathName != ''">
+                and safp.FLOW_PATH_NAME = #{flowPathName}
+            </if>
+            <if test="scenicSpotId != null and  scenicSpotId != ''">
+                and safps.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        group by safp.ID
+        order by safp.CREATE_TIME DESC
+    </select>
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPath">
+
+        insert into SYS_APP_FLOW_PATH
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="flowPathName != null" >
+                FLOW_PATH_NAME,
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="flowPathName != null" >
+                #{flowPathName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPath">
+        update SYS_APP_FLOW_PATH
+        <set >
+            <if test="flowPathName != null" >
+                FLOW_PATH_NAME = #{flowPathName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from SYS_APP_FLOW_PATH
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <select id="getSysAppFlowPathDrop" resultType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPath">
+        select safp.*
+        from SYS_APP_FLOW_PATH safp
+        left join SYS_APP_FLOW_PATH_SPOT safps
+        on safp.ID = safps.FLOW_PATH_ID
+        <where>
+             1 = 1
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and  safps.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        group by safp.ID
+    </select>
+
+</mapper>

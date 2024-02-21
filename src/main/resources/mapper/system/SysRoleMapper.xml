@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRole" >
+    <id column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="ROLE_DESC" property="roleDesc" jdbcType="VARCHAR" />
+    <result column="ROLE_STATUS" property="roleStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROLE_ID, ROLE_NAME, ROLE_DESC, ROLE_STATUS, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROLE
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROLE
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRole" >
+    insert into SYS_ROLE (ROLE_ID, ROLE_NAME, ROLE_DESC, 
+      ROLE_STATUS, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR}, 
+      #{roleStatus,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRole" >
+    insert into SYS_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="roleName != null" >
+        ROLE_NAME,
+      </if>
+      <if test="roleDesc != null" >
+        ROLE_DESC,
+      </if>
+      <if test="roleStatus != null" >
+        ROLE_STATUS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roleStatus != null" >
+        #{roleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRole" >
+    update SYS_ROLE
+    <set >
+      <if test="roleName != null" >
+        ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        ROLE_DESC = #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roleStatus != null" >
+        ROLE_STATUS = #{roleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRole" >
+    update SYS_ROLE
+    set ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      ROLE_DESC = #{roleDesc,jdbcType=VARCHAR},
+      ROLE_STATUS = #{roleStatus,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </update>
+  <select id="getRolesByLoginName" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    SELECT DISTINCT
+	R.ROLE_ID,
+	R.ROLE_NAME,
+	R.ROLE_DESC,
+	R.ROLE_STATUS
+    FROM
+	SYS_USERS U
+	INNER JOIN SYS_USERS_ROLE_SPOT UR ON U.USER_ID = UR.USER_ID
+	INNER JOIN SYS_ROLE R ON UR.ROLE_ID = R.ROLE_ID
+	LEFT JOIN SYS_SCENIC_SPOT A ON UR.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+	<where>
+      AND U.LOGIN_NAME = #{loginName}
+      AND R.ROLE_STATUS = #{roleStatus}
+      AND UR.SCENIC_SPOT_ID = #{scenicSpotId}
+    </where>
+  </select>
+  <select id="getRoleResPrmsByLoginName" parameterType="java.util.HashMap" resultType="java.util.Map">
+    SELECT
+	RES.RES_CODE
+    FROM
+	SYS_USERS U
+	INNER JOIN SYS_USERS_ROLE_SPOT UR ON U.USER_ID = UR.USER_ID
+	INNER JOIN SYS_ROLE R ON UR.ROLE_ID = R.ROLE_ID
+	INNER JOIN SYS_SCENIC_SPOT A ON A.SCENIC_SPOT_ID = UR.SCENIC_SPOT_ID
+ 	INNER JOIN SYS_ROLE_RESOURCE RRP ON R.ROLE_ID = RRP.ROLE_ID
+	INNER JOIN SYS_RES RES ON RRP.RES_ID = RES.RES_ID
+    <where>
+      AND U.LOGIN_NAME = #{loginName}
+      AND R.ROLE_STATUS = #{roleStatus}
+      AND UR.SCENIC_SPOT_ID = #{scenicSpotId}
+    </where>
+  </select>
+  <select id="getRoleList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROLE
+    <where>
+      <if test="sysRole.roleName != null and sysRole.roleName != ''">
+        ROLE_NAME LIKE CONCAT('%',#{sysRole.roleName},'%')
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+
+  <select id="getUserRole" resultType="com.hna.hka.archive.management.system.model.SysRole">
+    SELECT DISTINCT a.*,c.USER_NAME
+    FROM SYS_ROLE a
+    LEFT JOIN SYS_USERS_ROLE_SPOT b ON a.ROLE_ID = b.ROLE_ID
+    LEFT JOIN SYS_USERS c on b.USER_ID = c.USER_ID
+    WHERE b.USER_ID = #{userId}
+  </select>
+
+  <select id="getUserExamineRole" resultType="com.hna.hka.archive.management.system.model.SysRole">
+    SELECT DISTINCT a.*,c.USER_NAME
+    FROM SYS_ROLE a
+    LEFT JOIN SYS_USERS_ROLE_SPOT_EXAMINE b ON a.ROLE_ID = b.ROLE_ID
+    LEFT JOIN SYS_USERS c on b.USER_ID = c.USER_ID
+    WHERE b.USER_ID = #{userId}
+  </select>
+</mapper>

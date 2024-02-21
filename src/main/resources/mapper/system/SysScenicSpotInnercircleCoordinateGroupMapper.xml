@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotInnercircleCoordinateGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotInnercircleCoordinateGroup" >
+    <id column="COORDINATE_INNERCIRCLE_ID" property="coordinateInnercircleId" jdbcType="BIGINT" />
+    <result column="COORDINATE_ID" property="coordinateId" jdbcType="BIGINT" />
+    <result column="COORDINATE_INNERCIRCLE_NAME" property="coordinateInnercircleName" jdbcType="VARCHAR" />
+    <result column="COORDINATE_INNERCIRCLE_CONTENT" property="coordinateInnercircleContent" jdbcType="VARCHAR" />
+    <result column="BUFFER_RADIUS" property="bufferRadius" jdbcType="VARCHAR" />
+    <result column="INNERCIRCLE_TYPE" property="innercircleType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysScenicSpotInnercircleCoordinateGroupWithBLOBs" extends="BaseResultMap" >
+    <result column="COORDINATE_INNERCIRCLE" property="coordinateInnercircle" jdbcType="LONGVARCHAR" />
+    <result column="COORDINATE_INNERCIRCLE_BAI_DU" property="coordinateInnercircleBaiDu" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    COORDINATE_INNERCIRCLE_ID, COORDINATE_ID, COORDINATE_INNERCIRCLE_NAME, COORDINATE_INNERCIRCLE_CONTENT, 
+    BUFFER_RADIUS, INNERCIRCLE_TYPE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    COORDINATE_INNERCIRCLE, COORDINATE_INNERCIRCLE_BAI_DU
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP
+    where COORDINATE_INNERCIRCLE_ID = #{coordinateInnercircleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP
+    where COORDINATE_INNERCIRCLE_ID = #{coordinateInnercircleId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotInnercircleCoordinateGroupWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP (COORDINATE_INNERCIRCLE_ID, COORDINATE_ID, 
+      COORDINATE_INNERCIRCLE_NAME, COORDINATE_INNERCIRCLE_CONTENT, 
+      BUFFER_RADIUS, INNERCIRCLE_TYPE, CREATE_DATE, 
+      UPDATE_DATE, COORDINATE_INNERCIRCLE, 
+      COORDINATE_INNERCIRCLE_BAI_DU)
+    values (#{coordinateInnercircleId,jdbcType=BIGINT}, #{coordinateId,jdbcType=BIGINT}, 
+      #{coordinateInnercircleName,jdbcType=VARCHAR}, #{coordinateInnercircleContent,jdbcType=VARCHAR}, 
+      #{bufferRadius,jdbcType=VARCHAR}, #{innercircleType,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR}, #{coordinateInnercircle,jdbcType=LONGVARCHAR}, 
+      #{coordinateInnercircleBaiDu,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotInnercircleCoordinateGroupWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coordinateInnercircleId != null" >
+        COORDINATE_INNERCIRCLE_ID,
+      </if>
+      <if test="coordinateId != null" >
+        COORDINATE_ID,
+      </if>
+      <if test="coordinateInnercircleName != null" >
+        COORDINATE_INNERCIRCLE_NAME,
+      </if>
+      <if test="coordinateInnercircleContent != null" >
+        COORDINATE_INNERCIRCLE_CONTENT,
+      </if>
+      <if test="bufferRadius != null" >
+        BUFFER_RADIUS,
+      </if>
+      <if test="innercircleType != null" >
+        INNERCIRCLE_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="coordinateInnercircle != null" >
+        COORDINATE_INNERCIRCLE,
+      </if>
+      <if test="coordinateInnercircleBaiDu != null" >
+        COORDINATE_INNERCIRCLE_BAI_DU,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coordinateInnercircleId != null" >
+        #{coordinateInnercircleId,jdbcType=BIGINT},
+      </if>
+      <if test="coordinateId != null" >
+        #{coordinateId,jdbcType=BIGINT},
+      </if>
+      <if test="coordinateInnercircleName != null" >
+        #{coordinateInnercircleName,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateInnercircleContent != null" >
+        #{coordinateInnercircleContent,jdbcType=VARCHAR},
+      </if>
+      <if test="bufferRadius != null" >
+        #{bufferRadius,jdbcType=VARCHAR},
+      </if>
+      <if test="innercircleType != null" >
+        #{innercircleType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateInnercircle != null" >
+        #{coordinateInnercircle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="coordinateInnercircleBaiDu != null" >
+        #{coordinateInnercircleBaiDu,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotInnercircleCoordinateGroupWithBLOBs" >
+    update SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP
+    <set >
+      <if test="coordinateId != null" >
+        COORDINATE_ID = #{coordinateId,jdbcType=BIGINT},
+      </if>
+      <if test="coordinateInnercircleName != null" >
+        COORDINATE_INNERCIRCLE_NAME = #{coordinateInnercircleName,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateInnercircleContent != null" >
+        COORDINATE_INNERCIRCLE_CONTENT = #{coordinateInnercircleContent,jdbcType=VARCHAR},
+      </if>
+      <if test="bufferRadius != null" >
+        BUFFER_RADIUS = #{bufferRadius,jdbcType=VARCHAR},
+      </if>
+      <if test="innercircleType != null" >
+        INNERCIRCLE_TYPE = #{innercircleType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateInnercircle != null" >
+        COORDINATE_INNERCIRCLE = #{coordinateInnercircle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="coordinateInnercircleBaiDu != null" >
+        COORDINATE_INNERCIRCLE_BAI_DU = #{coordinateInnercircleBaiDu,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where COORDINATE_INNERCIRCLE_ID = #{coordinateInnercircleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotInnercircleCoordinateGroupWithBLOBs" >
+    update SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP
+    set COORDINATE_ID = #{coordinateId,jdbcType=BIGINT},
+      COORDINATE_INNERCIRCLE_NAME = #{coordinateInnercircleName,jdbcType=VARCHAR},
+      COORDINATE_INNERCIRCLE_CONTENT = #{coordinateInnercircleContent,jdbcType=VARCHAR},
+      BUFFER_RADIUS = #{bufferRadius,jdbcType=VARCHAR},
+      INNERCIRCLE_TYPE = #{innercircleType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      COORDINATE_INNERCIRCLE = #{coordinateInnercircle,jdbcType=LONGVARCHAR},
+      COORDINATE_INNERCIRCLE_BAI_DU = #{coordinateInnercircleBaiDu,jdbcType=LONGVARCHAR}
+    where COORDINATE_INNERCIRCLE_ID = #{coordinateInnercircleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotInnercircleCoordinateGroup" >
+    update SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP
+    set COORDINATE_ID = #{coordinateId,jdbcType=BIGINT},
+      COORDINATE_INNERCIRCLE_NAME = #{coordinateInnercircleName,jdbcType=VARCHAR},
+      COORDINATE_INNERCIRCLE_CONTENT = #{coordinateInnercircleContent,jdbcType=VARCHAR},
+      BUFFER_RADIUS = #{bufferRadius,jdbcType=VARCHAR},
+      INNERCIRCLE_TYPE = #{innercircleType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where COORDINATE_INNERCIRCLE_ID = #{coordinateInnercircleId,jdbcType=BIGINT}
+  </update>
+  <select id="getInnercircleList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+	A.*,
+    B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+	SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP A
+	INNER JOIN SYS_SCENIC_SPOT B ON A.COORDINATE_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId != ''" >
+        and A.COORDINATE_ID = #{scenicSpotId}
+      </if>
+      <if test="coordinateInnercircleName != null and coordinateInnercircleName != ''">
+        AND A.COORDINATE_INNERCIRCLE_NAME LIKE CONCAT('%',#{coordinateInnercircleName},'%')
+      </if>
+    </where>
+    ORDER BY A.UPDATE_DATE DESC
+  </select>
+  <select id="getcoordinateGroupListBy" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP
+    where COORDINATE_ID = #{scenicSpotId}
+  </select>
+  <select id="getCoordinateGroupListByScenicSpotId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_INNERCIRCLE_COORDINATE_GROUP
+    where COORDINATE_ID = #{scenicSpotId}
+    and INNERCIRCLE_TYPE = '1'
+  </select>
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotResourceVersionMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotResourceVersion" >
+    <id column="RES_ID" property="resId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="RES_VERSION" property="resVersion" jdbcType="VARCHAR" />
+    <result column="RES_TYPE" property="resType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RES_ID, SCENIC_SPOT_ID, RES_VERSION, RES_TYPE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_RESOURCE_VERSION
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_RESOURCE_VERSION
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotResourceVersion" >
+    insert into SYS_SCENIC_SPOT_RESOURCE_VERSION (RES_ID, SCENIC_SPOT_ID, RES_VERSION, 
+      RES_TYPE, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{resId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{resVersion,jdbcType=VARCHAR}, 
+      #{resType,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotResourceVersion" >
+    insert into SYS_SCENIC_SPOT_RESOURCE_VERSION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resId != null" >
+        RES_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="resVersion != null" >
+        RES_VERSION,
+      </if>
+      <if test="resType != null" >
+        RES_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resId != null" >
+        #{resId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="resVersion != null" >
+        #{resVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="resType != null" >
+        #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotResourceVersion" >
+    update SYS_SCENIC_SPOT_RESOURCE_VERSION
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="resVersion != null" >
+        RES_VERSION = #{resVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="resType != null" >
+        RES_TYPE = #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotResourceVersion" >
+    update SYS_SCENIC_SPOT_RESOURCE_VERSION
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      RES_VERSION = #{resVersion,jdbcType=VARCHAR},
+      RES_TYPE = #{resType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </update>
+  <select id="selectResourceVersion" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    SYS_SCENIC_SPOT_RESOURCE_VERSION
+    <where>
+        AND SCENIC_SPOT_ID = #{sysScenicSpotResourceVersion.scenicSpotId}
+      AND RES_TYPE = #{sysScenicSpotResourceVersion.resType}
+    </where>
+  </select>
+  <update id="updateResourceVersion" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotResourceVersion">
+    update SYS_SCENIC_SPOT_RESOURCE_VERSION
+    set RES_VERSION = #{resVersion,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT}
+    AND RES_TYPE = #{resType,jdbcType=VARCHAR}
+  </update>
+
+
+
+</mapper>

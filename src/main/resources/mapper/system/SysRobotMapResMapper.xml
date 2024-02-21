@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotMapResMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotMapRes" >
+    <id column="RES_ID" property="resId" jdbcType="BIGINT" />
+    <result column="RES_SCENIC_SPOT_ID" property="resScenicSpotId" jdbcType="BIGINT" />
+    <result column="RES_URL" property="resUrl" jdbcType="VARCHAR" />
+    <result column="RES_TYPE" property="resType" jdbcType="VARCHAR" />
+    <result column="RES_SIZE" property="resSize" jdbcType="VARCHAR" />
+    <result column="RES_VERSION" property="resVersion" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RES_ID, RES_SCENIC_SPOT_ID, RES_URL, RES_TYPE, RES_SIZE, RES_VERSION, CREATE_DATE, 
+    UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_MAP_RES
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_MAP_RES
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotMapRes" >
+    insert into SYS_ROBOT_MAP_RES (RES_ID, RES_SCENIC_SPOT_ID, RES_URL, 
+      RES_TYPE, RES_SIZE, RES_VERSION, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{resId,jdbcType=BIGINT}, #{resScenicSpotId,jdbcType=BIGINT}, #{resUrl,jdbcType=VARCHAR}, 
+      #{resType,jdbcType=VARCHAR}, #{resSize,jdbcType=VARCHAR}, #{resVersion,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotMapRes" >
+    insert into SYS_ROBOT_MAP_RES
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resId != null" >
+        RES_ID,
+      </if>
+      <if test="resScenicSpotId != null" >
+        RES_SCENIC_SPOT_ID,
+      </if>
+      <if test="resUrl != null" >
+        RES_URL,
+      </if>
+      <if test="resType != null" >
+        RES_TYPE,
+      </if>
+      <if test="resSize != null" >
+        RES_SIZE,
+      </if>
+      <if test="resVersion != null" >
+        RES_VERSION,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resId != null" >
+        #{resId,jdbcType=BIGINT},
+      </if>
+      <if test="resScenicSpotId != null" >
+        #{resScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="resUrl != null" >
+        #{resUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="resType != null" >
+        #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="resSize != null" >
+        #{resSize,jdbcType=VARCHAR},
+      </if>
+      <if test="resVersion != null" >
+        #{resVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotMapRes" >
+    update SYS_ROBOT_MAP_RES
+    <set >
+      <if test="resScenicSpotId != null" >
+        RES_SCENIC_SPOT_ID = #{resScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="resUrl != null" >
+        RES_URL = #{resUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="resType != null" >
+        RES_TYPE = #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="resSize != null" >
+        RES_SIZE = #{resSize,jdbcType=VARCHAR},
+      </if>
+      <if test="resVersion != null" >
+        RES_VERSION = #{resVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotMapRes" >
+    update SYS_ROBOT_MAP_RES
+    set RES_SCENIC_SPOT_ID = #{resScenicSpotId,jdbcType=BIGINT},
+      RES_URL = #{resUrl,jdbcType=VARCHAR},
+      RES_TYPE = #{resType,jdbcType=VARCHAR},
+      RES_SIZE = #{resSize,jdbcType=VARCHAR},
+      RES_VERSION = #{resVersion,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotMapResList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	A.RES_ID,
+	A.RES_SCENIC_SPOT_ID,
+	A.RES_URL,
+	A.RES_TYPE,
+	A.RES_SIZE,
+	A.RES_VERSION,
+	A.CREATE_DATE,
+	A.UPDATE_DATE,
+	B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+	SYS_ROBOT_MAP_RES A
+	LEFT JOIN SYS_SCENIC_SPOT B ON A.RES_SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+	<where>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.RES_SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+  <select id="getSysRobotMapResBy" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    SYS_ROBOT_MAP_RES
+    WHERE
+    RES_SCENIC_SPOT_ID = #{scenicSpotId }
+    AND RES_TYPE = 1
+  </select>
+</mapper>

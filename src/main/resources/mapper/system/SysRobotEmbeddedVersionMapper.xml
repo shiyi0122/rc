@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotEmbeddedVersionMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotEmbeddedVersion" >
+    <id column="EMBEDDED_ID" property="embeddedId" jdbcType="BIGINT" />
+    <result column="EMBEDDED_VERSION" property="embeddedVersion" jdbcType="VARCHAR" />
+    <result column="EMBEDDED_DESCRIBE" property="embeddedDescribe" jdbcType="VARCHAR" />
+    <result column="EMBEDDED_URL" property="embeddedUrl" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="PUSH_STATUS" property="pushStatus" jdbcType="VARCHAR" />
+    <result column="ROBOT_VERSION" property="robotVersion" jdbcType="VARCHAR" />
+    <result column="FILE_SIZE" property="fileSize" jdbcType="VARCHAR" />
+    <result column="EMBEDDED_TYPE" property="embeddedType" jdbcType="VARCHAR" />
+    <result column="SOFTWARE_VERSION" property="softwareVersion" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    EMBEDDED_ID, EMBEDDED_VERSION, EMBEDDED_DESCRIBE, EMBEDDED_URL, SCENIC_SPOT_ID, CREATE_DATE, 
+    UPDATE_DATE, PUSH_STATUS, ROBOT_VERSION, FILE_SIZE, EMBEDDED_TYPE, SOFTWARE_VERSION
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_EMBEDDED_VERSION
+    where EMBEDDED_ID = #{embeddedId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_EMBEDDED_VERSION
+    where EMBEDDED_ID = #{embeddedId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotEmbeddedVersion" >
+    insert into SYS_ROBOT_EMBEDDED_VERSION (EMBEDDED_ID, EMBEDDED_VERSION, EMBEDDED_DESCRIBE, 
+      EMBEDDED_URL, SCENIC_SPOT_ID, CREATE_DATE, 
+      UPDATE_DATE, PUSH_STATUS, ROBOT_VERSION, 
+      FILE_SIZE, EMBEDDED_TYPE, SOFTWARE_VERSION
+      )
+    values (#{embeddedId,jdbcType=BIGINT}, #{embeddedVersion,jdbcType=VARCHAR}, #{embeddedDescribe,jdbcType=VARCHAR}, 
+      #{embeddedUrl,jdbcType=VARCHAR}, #{scenicSpotId,jdbcType=BIGINT}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR}, #{pushStatus,jdbcType=VARCHAR}, #{robotVersion,jdbcType=VARCHAR}, 
+      #{fileSize,jdbcType=VARCHAR}, #{embeddedType,jdbcType=VARCHAR}, #{softwareVersion,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotEmbeddedVersion" >
+    insert into SYS_ROBOT_EMBEDDED_VERSION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="embeddedId != null" >
+        EMBEDDED_ID,
+      </if>
+      <if test="embeddedVersion != null" >
+        EMBEDDED_VERSION,
+      </if>
+      <if test="embeddedDescribe != null" >
+        EMBEDDED_DESCRIBE,
+      </if>
+      <if test="embeddedUrl != null" >
+        EMBEDDED_URL,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="pushStatus != null" >
+        PUSH_STATUS,
+      </if>
+      <if test="robotVersion != null" >
+        ROBOT_VERSION,
+      </if>
+      <if test="fileSize != null" >
+        FILE_SIZE,
+      </if>
+      <if test="embeddedType != null" >
+        EMBEDDED_TYPE,
+      </if>
+      <if test="softwareVersion != null" >
+        SOFTWARE_VERSION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="embeddedId != null" >
+        #{embeddedId,jdbcType=BIGINT},
+      </if>
+      <if test="embeddedVersion != null" >
+        #{embeddedVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="embeddedDescribe != null" >
+        #{embeddedDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="embeddedUrl != null" >
+        #{embeddedUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="pushStatus != null" >
+        #{pushStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="robotVersion != null" >
+        #{robotVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        #{fileSize,jdbcType=VARCHAR},
+      </if>
+      <if test="embeddedType != null" >
+        #{embeddedType,jdbcType=VARCHAR},
+      </if>
+      <if test="softwareVersion != null" >
+        #{softwareVersion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotEmbeddedVersion" >
+    update SYS_ROBOT_EMBEDDED_VERSION
+    <set >
+      <if test="embeddedVersion != null" >
+        EMBEDDED_VERSION = #{embeddedVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="embeddedDescribe != null" >
+        EMBEDDED_DESCRIBE = #{embeddedDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="embeddedUrl != null" >
+        EMBEDDED_URL = #{embeddedUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="pushStatus != null" >
+        PUSH_STATUS = #{pushStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="robotVersion != null" >
+        ROBOT_VERSION = #{robotVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        FILE_SIZE = #{fileSize,jdbcType=VARCHAR},
+      </if>
+      <if test="embeddedType != null" >
+        EMBEDDED_TYPE = #{embeddedType,jdbcType=VARCHAR},
+      </if>
+      <if test="softwareVersion != null" >
+        SOFTWARE_VERSION = #{softwareVersion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EMBEDDED_ID = #{embeddedId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotEmbeddedVersion" >
+    update SYS_ROBOT_EMBEDDED_VERSION
+    set EMBEDDED_VERSION = #{embeddedVersion,jdbcType=VARCHAR},
+      EMBEDDED_DESCRIBE = #{embeddedDescribe,jdbcType=VARCHAR},
+      EMBEDDED_URL = #{embeddedUrl,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      PUSH_STATUS = #{pushStatus,jdbcType=VARCHAR},
+      ROBOT_VERSION = #{robotVersion,jdbcType=VARCHAR},
+      FILE_SIZE = #{fileSize,jdbcType=VARCHAR},
+      EMBEDDED_TYPE = #{embeddedType,jdbcType=VARCHAR},
+      SOFTWARE_VERSION = #{softwareVersion,jdbcType=VARCHAR}
+    where EMBEDDED_ID = #{embeddedId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotEmbeddedVersionList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	<include refid="Base_Column_List" />
+    FROM
+	SYS_ROBOT_EMBEDDED_VERSION 
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <select id="getRobotEmbeddedVersionByVersion" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_EMBEDDED_VERSION
+    where SOFTWARE_VERSION = #{softwareVersion}
+    LIMIT 1
+  </select>
+</mapper>

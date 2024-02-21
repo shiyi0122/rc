@@ -1,0 +1,1513 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotTreasureHuntMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureHunt">
+        <id column="TREASURE_ID" property="treasureId" jdbcType="BIGINT"/>
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT"/>
+        <result column="TREASURE_NAME" property="treasureName" jdbcType="VARCHAR"/>
+        <result column="TREASURE_TYPE" property="treasureType" jdbcType="VARCHAR"/>
+        <result column="COUPON_AMOUNT" property="couponAmount" jdbcType="VARCHAR"/>
+        <result column="INVENTORY" property="inventory" jdbcType="BIGINT"/>
+        <result column="END_VALIDITY" property="endValidity" jdbcType="VARCHAR"/>
+        <result column="START_VALIDITY" property="startValidity" jdbcType="VARCHAR"/>
+        <result column="PIC_URL" property="picUrl" jdbcType="VARCHAR"/>
+        <result column="PRIZE_WEIGHT" property="prizeWeight" jdbcType="BIGINT"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        TREASURE_ID
+        , SCENIC_SPOT_ID, TREASURE_NAME, TREASURE_TYPE, COUPON_AMOUNT,
+    INVENTORY, END_VALIDITY, START_VALIDITY, PIC_URL, PRIZE_WEIGHT,
+    CREATE_DATE, UPDATE_DATE
+    </sql>
+
+    <select id="getTreasureList" resultMap="BaseResultMap">
+        SELECT
+        A.*,
+        B.SCENIC_SPOT_NAME AS scenicSpotName
+        FROM
+        SYS_SCENIC_SPOT_TREASURE_HUNT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{sysScenicSpotTreasureHunt.scenicSpotId}
+            </if>
+        </where>
+        ORDER BY A.CREATE_DATE DESC
+    </select>
+
+    <select id="getTreasureListNew" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        A.*,
+        B.SCENIC_SPOT_NAME AS scenicSpotName
+        FROM
+        SYS_SCENIC_SPOT_TREASURE_HUNT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID LIKE CONCAT('%',#{scenicSpotId},'%')
+            </if>
+            <if test="treasureName != null and treasureName !=''">
+                AND A.TREASURE_NAME LIKE CONCAT('%',#{treasureName},'%')
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName !=''">
+                AND B.SCENIC_SPOT_NAME LIKE CONCAT('%',#{scenicSpotName},'%')
+            </if>
+        </where>
+        ORDER BY A.CREATE_DATE DESC
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_SCENIC_SPOT_TREASURE_HUNT
+        where TREASURE_ID = #{treasureId,jdbcType=BIGINT}
+    </select>
+    <select id="getJackpotNew"
+            resultType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureNewJackpot">
+        SELECT
+        a.JACKPOT_ID,
+        a.SCENIC_SPOT_ID,
+        b.SCENIC_SPOT_NAME,
+        a.INTEGRAL_NUM,
+        a.JACKPOT_TYPE,
+        a.CREATE_DATE,
+        a.UPDATE_DATE,
+        a.JACKPOT_NAME,
+        a.JACKPOT_SORT
+        FROM
+        SYS_SCENIC_SPOT_TREASURE_NEW_JACKPOT a
+        LEFT JOIN SYS_SCENIC_SPOT b ON a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        <where>
+            1=1
+            <if test="jackpotId != null and jackpotId != ''">
+                and a.JACKPOT_ID =#{jackpotId}
+            </if>
+            <if test="jackpotName != null and jackpotName != ''">
+                and a.JACKPOT_NAME LIKE CONCAT('%',#{jackpotName},'%')
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and a.SCENIC_SPOT_ID =#{scenicSpotId}
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName != ''">
+                AND a.SCENIC_SPOT_Name LIKE CONCAT('%',#{scenicSpotName},'%')
+            </if>
+            <if test="integralNum != null and integralNum != ''">
+                and a.INTEGRAL_NUM =#{integralNum}
+            </if>
+            <if test="jackpotType != null and jackpotType != ''">
+                and a.JACKPOT_TYPE =#{jackpotType}
+            </if>
+        </where>
+        ORDER BY
+        a.SCENIC_SPOT_ID ASC, a.JACKPOT_SORT ASC
+    </select>
+    <select id="getUserInteGral"
+            resultType="com.hna.hka.archive.management.system.model.SysCurrentUserIntegral">
+        SELECT
+        a.INTEGRAL_ID,
+        a.USER_ID,
+        a.USER_PHONE,
+        a.INTEGRAL,
+        a.CREATE_DATE,
+        a.UPDATE_DATE,
+        b.CURRENT_USER_PHONE AS userPhone1
+        FROM
+        SYS_CURRENT_USER_INTEGRAL a
+        LEFT JOIN SYS_CURRENT_USER b ON a.USER_ID = b.CURRENT_USER_ID
+        <where>
+            1=1
+            <if test="userId != null and userId != ''">
+                and a.USER_ID =#{userId}
+            </if>
+            <if test="userPhone1 != null and userPhone1 != ''">
+                and b.CURRENT_USER_PHONE =#{userPhone1}
+            </if>
+        </where>
+        order by a.CREATE_DATE DESC
+    </select>
+    <select id="getUserInteGralLog"
+            resultType="com.hna.hka.archive.management.system.model.SysCurrentUserIntegralLog">
+        SELECT
+        a.INTEGRAL_LOG_ID,
+        a.USER_ID,
+        a.USER_ACCOUNT,
+        a.FRONT_INTEGRAL,
+        a.AFTER_INTEGRAL,
+        a.CREATE_DATE,
+        a.UPDATE_DATE,
+        b.CURRENT_USER_PHONE as userPhone1
+        FROM
+        SYS_CURRENT_USER_INTEGRAL_LOG a
+        LEFT JOIN SYS_CURRENT_USER b ON b.CURRENT_USER_ID = a.USER_ID
+        <where>
+            1=1
+            <if test="integralLogId != null and integralLogId != ''">
+                and a.INTEGRAL_LOG_ID =#{integralLogId}
+            </if>
+            <if test="userId != null and userId != ''">
+                and a.USER_ID =#{userId}
+            </if>
+            <if test="userAccount != null and userAccount != ''">
+                and a.USER_ACCOUNT LIKE CONCAT('%',#{userAccount},'%')
+            </if>
+            <if test="userPhone1 != null and userPhone1 != ''">
+                and b.CURRENT_USER_PHONE =#{userPhone1}
+            </if>
+        </where>
+        order by a.CREATE_DATE DESC
+    </select>
+    <select id="getUserAddress" resultType="com.hna.hka.archive.management.system.model.SysCurrentUserAddress">
+        SELECT
+        a.ADDRESS_ID,
+        a.USER_ID,
+        a.MAILING_ADDRESS,
+        a.PHONE,
+        a.FULL_NAME,
+        a.CREATE_DATE,
+        a.UPDATE_DATE
+        FROM
+        SYS_CURRENT_USER_ADDRESS a
+        <where>
+            1=1
+            <if test="addressId != null and addressId != ''">
+                and a.ADDRESS_ID =#{addressId}
+            </if>
+            <if test="userId != null and userId != ''">
+                and a.USER_ID =#{userId}
+            </if>
+            <if test="mailingAddress != null and mailingAddress != ''">
+                and a.MAILING_ADDRESS LIKE CONCAT('%',#{mailingAddress},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and a.PHONE LIKE CONCAT('%',#{phone},'%')
+            </if>
+            <if test="fullName != null and fullName != ''">
+                and a.FULL_NAME LIKE CONCAT('%',#{fullName},'%')
+            </if>
+        </where>
+        order by a.CREATE_DATE DESC
+    </select>
+    <select id="getUserExchange"
+            resultType="com.hna.hka.archive.management.system.model.SysCurrentUserExchange">
+        SELECT
+        a.EXCHANGE_ID,
+        a.USER_ID,
+        a.USER_PHONE,
+        a.EXCHANGE_NUMBER,
+        c.SCENIC_SPOT_NAME,
+        a.SCENIC_SPOT_ID,
+        a.SHIPMENT_STATUS,
+        a.PIC_URL,
+        a.EXCHANGE_STATE,
+        a.EXCHANGE_NAME,
+        a.START_VALIDITY,
+        a.END_VALIDITY,
+        a.EXCHANGE_TYPE,
+        a.ADDRESS_ID,
+        a.LOGISTICS_ID,
+        a.CREATE_DATE,
+        a.UPDATE_DATE,
+        b.CURRENT_USER_PHONE AS userPhone1,
+        a.MAILING_ADDRESS,
+        a.FULL_NAME,
+        a.MAILING_PHONE,
+        a.WAY_TYPE
+        FROM
+        SYS_CURRENT_USER_EXCHANGE a
+        LEFT JOIN SYS_CURRENT_USER b ON b.CURRENT_USER_ID = a.USER_ID
+        LEFT JOIN SYS_SCENIC_SPOT c ON c.SCENIC_SPOT_ID = a.SCENIC_SPOT_ID
+        <where>
+            1=1
+            <if test="exchangeId != null and exchangeId != ''">
+                and a.EXCHANGE_ID =#{exchangeId}
+            </if>
+            <if test="userId != null and userId != ''">
+                and a.USER_ID =#{userId}
+            </if>
+            <if test="userPhone1 != null and userPhone1 != ''">
+                and b.CURRENT_USER_PHONE LIKE CONCAT('%',#{userPhone1},'%')
+            </if>
+            <if test="exchangeNumber != null and exchangeNumber != ''">
+                and a.EXCHANGE_NUMBER LIKE CONCAT('%',#{exchangeNumber},'%')
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName != ''">
+                and a.SCENIC_SPOT_NAME like CONCAT('%',#{scenicSpotName},'%')
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and a.SCENIC_SPOT_ID =#{scenicSpotId}
+            </if>
+            <if test="shipmentStatus != null and shipmentStatus != ''">
+                and a.SHIPMENT_STATUS =#{shipmentStatus}
+            </if>
+            <if test="exchangeState != null and exchangeState != ''">
+                and a.EXCHANGE_STATE =#{exchangeState}
+            </if>
+            <if test="exchangeName != null and exchangeName != ''">
+                and a.EXCHANGE_NAME like CONCAT('%',#{exchangeName},'%')
+            </if>
+            <if test="startValidity != null and startValidity != ''">
+                AND DATE(a.START_VALIDITY) <![CDATA[ >= ]]> #{startValidity}
+            </if>
+            <if test="endValidity != null and endValidity != ''">
+                AND DATE(a.END_VALIDITY) <![CDATA[ <= ]]> #{endValidity}
+            </if>
+            <if test="exchangeType != null and exchangeType != ''">
+                and a.EXCHANGE_TYPE =#{exchangeType}
+            </if>
+            <if test="addressId != null and addressId != ''">
+                and a.ADDRESS_ID like CONCAT('%',#{addressId},'%')
+            </if>
+            <if test="logisiticsId != null and logisiticsId != ''">
+                and a.LOGISTICS_ID like CONCAT('%',#{logisiticsId},'%')
+            </if>
+            <if test="wayType != null and wayType != ''">
+                and a.WAY_TYPE =#{wayType}
+            </if>
+        </where>
+        order by a.CREATE_DATE DESC
+    </select>
+    <select id="getBroadcastHunt"
+            resultType="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastHunt">
+        select
+        BROADCAST_ID,
+        SCENIC_SPOT_ID,
+        BROADCAST_GPS,
+        BROADCAST_GPS_BAI_DU,
+        SCENIC_SPOT_RANGE,
+        BROADCAST_NAME,
+        PIN_YIN_NAME,
+        INTRODUCTION_TYPES,
+        NAVIGATION_TYPE,
+        BROADCAST_PRIORITY,
+        TREASURE_TYPE,
+        INTEGRAL_NUM,
+        SORT_TYPE,
+        SWITCHS,
+        CREATE_DATE,
+        UPDATE_DATE
+        from
+        SYS_SCENIC_SPOT_BROADCAST_HUNT
+        <where>
+            1=1
+            <if test="broadcastId != null and broadcastId != ''">
+                and BROADCAST_ID =#{broadcastId}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and SCENIC_SPOT_ID =#{scenicSpotId}
+            </if>
+            <if test="broadcastGps != null and broadcastGps != ''">
+                and BROADCAST_GPS =#{broadcastGps}
+            </if>
+            <if test="broadcastGpsBaiDu != null and broadcastGpsBaiDu != ''">
+                and BROADCAST_GPS_BAI_DU =#{broadcastGpsBaiDu}
+            </if>
+            <if test="broadcastName != null and broadcastName != ''">
+                and BROADCAST_NAME like CONCAT('%',#{broadcastName},'%')
+            </if>
+            <if test="introductionTypes != null and introductionTypes != ''">
+                and INTRODUCTION_TYPES =#{introductionTypes}
+            </if>
+            <if test="navigationType != null and navigationType != ''">
+                and NAVIGATION_TYPE =#{navigationType}
+            </if>
+            <if test="treasureType != null and treasureType != ''">
+                and TREASURE_TYPE =#{treasureType}
+            </if>
+            <if test="sortType != null and sortType != ''">
+                and SORT_TYPE =#{sortType}
+            </if>
+            <if test="switchs != null and switchs != ''">
+                and SWITCHS =#{switchs}
+            </if>
+        </where>
+        order by CREATE_DATE DESC
+    </select>
+    <select id="getBroadcastHuntLog"
+            resultType="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastHuntLog">
+        SELECT
+        a.HUNT_LOG_ID,
+        a.SCENIC_SPOT_ID,
+        c.SCENIC_SPOT_NAME,
+        a.ORDER_NUMBER,
+        a.USER_ID,
+        a.USER_PHONE,
+        a.BROADCAST_ID,
+        a.BROADCAST_NAME,
+        a.INTEGRAL_NUM,
+        a.CREATE_DATE,
+        a.UPDATE_DATE,
+        b.CURRENT_USER_PHONE AS userPhone1
+        FROM
+        SYS_SCENIC_SPOT_BROADCAST_HUNT_LOG a
+        LEFT JOIN SYS_CURRENT_USER b ON b.CURRENT_USER_ID = a.USER_ID
+        LEFT JOIN SYS_SCENIC_SPOT c ON c.SCENIC_SPOT_ID = a.SCENIC_SPOT_ID
+        <where>
+            1=1
+            <if test="huntLogId != null and huntLogId != ''">
+                and a.HUNT_LOG_ID =#{huntLogId}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and a.SCENIC_SPOT_ID =#{scenicSpotId}
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName != ''">
+                and a.SCENIC_SPOT_NAME like CONCAT('%',#{scenicSpotName},'%')
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                and a.ORDER_NUMBER like CONCAT('%',#{orderNumber},'%')
+            </if>
+            <if test="userId != null and userId != ''">
+                and a.USER_ID =#{userId}
+            </if>
+            <if test="userPhone1 != null and userPhone1 != ''">
+                and b.CURRENT_USER_PHONE =#{userPhone1}
+            </if>
+            <if test="broadcastId != null and broadcastId != ''">
+                and a.BROADCAST_ID =#{broadcastId}
+            </if>
+            <if test="broadcastName != null and broadcastName != ''">
+                and a.BROADCAST_NAME like CONCAT('%',#{broadcastName},'%')
+            </if>
+            <if test="integralNum != null and integralNum != ''">
+                and a.INTEGRAL_NUM =#{integralNum}
+            </if>
+        </where>
+        order by a.CREATE_DATE DESC
+    </select>
+    <select id="getTreasureNewHunt"
+            resultType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureNewHunt">
+        select
+        TREASURE_ID,
+        JACKPOT_ID,
+        TREASURE_NAME,
+        TREASURE_TYPE,
+        COUPON_AMOUNT,
+        INVENTORY,
+        END_VALIDITY,
+        START_VALIDITY,
+        PIC_URL,
+        WAY_TYPE,
+        PRIZE_SIZE,
+        PROBABILITY,
+        CREATE_DATE,
+        UPDATE_DATE
+        from
+        SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
+        <where>
+            1=1
+            <if test="treasureId != null and treasureId != ''">
+                and TREASURE_ID =#{treasureId}
+            </if>
+            <if test="jackpotId != null and jackpotId != ''">
+                and JACKPOT_ID =#{jackpotId}
+            </if>
+            <if test="treasureName != null and treasureName != ''">
+                and TREASURE_NAME like CONCAT('%',#{treasureName},'%')
+            </if>
+            <if test="treasureType != null and treasureType != ''">
+                and TREASURE_TYPE =#{treasureType}
+            </if>
+            <if test="couponAmount != null and couponAmount != ''">
+                and COUPON_AMOUNT =#{couponAmount}
+            </if>
+            <if test="endValidity != null and endValidity != ''">
+                and END_VALIDITY =#{endValidity}
+            </if>
+            <if test="startValidity != null and startValidity != ''">
+                and START_VALIDITY =#{startValidity}
+            </if>
+            <if test="prizeSize != null and prizeSize != ''">
+                and PRIZE_SIZE =#{prizeSize}
+            </if>
+            <if test="probability != null and probability != ''">
+                and PROBABILITY =#{probability}
+            </if>
+        </where>
+        order by CREATE_DATE DESC
+    </select>
+    <select id="getUserIntegralHuntLog"
+            resultType="com.hna.hka.archive.management.system.model.SysCurrentUserIntegralHuntLog">
+        select
+        a.TREASURE_LOG_ID,
+        a.USER_ID,
+        a.USER_PHONE,
+        a.SCENIC_SPOT_ID,
+        c.SCENIC_SPOT_NAME,
+        a.TREASURE_LOG_NAME,
+        a.TREASURE_LOG_TYPE,
+        a.FRONT_INTEGRAL_NUM,
+        a.AFTER_INTEGRAL_NUM,
+        a.USE_INTEGRAL_NUM,
+        a.PRIZE_SIZE,
+        a.CREATE_DATE,
+        a.UPDATE_DATE,
+        b.CURRENT_USER_PHONE as userPhone1
+        from
+        SYS_CURRENT_USER_INTEGRAL_HUNT_LOG a
+        LEFT JOIN SYS_CURRENT_USER b ON b.CURRENT_USER_ID = a.USER_ID
+        LEFT JOIN SYS_SCENIC_SPOT c ON a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            1=1
+            <if test="treasureLogId != null and treasureLogId != ''">
+                and a.TREASURE_LOG_ID =#{treasureLogId}
+            </if>
+            <if test="userId != null and userId != ''">
+                and a.USER_ID =#{userId}
+            </if>
+            <if test="userPhone1 != null and userPhone1 != ''">
+                and b.CURRENT_USER_PHONE =#{userPhone1}
+            </if>
+            <if test="treasureLogName != null and treasureLogName != ''">
+                and a.TREASURE_LOG_NAME like CONCAT('%',#{treasureLogName},'%')
+            </if>
+            <if test="treasureLogType != null and treasureLogType != ''">
+                and a.TREASURE_LOG_TYPE =#{treasureLogType}
+            </if>
+            <if test="prizeSize != null and prizeSize != ''">
+                and a.PRIZE_SIZE =#{prizeSize}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and a.SCENIC_SPOT_ID =#{scenicSpotId}
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName != ''">
+                and a.SCENIC_SPOT_NAME like CONCAT('%',#{scenicSpotName},'%')
+            </if>
+            order by a.CREATE_DATE DESC
+        </where>
+    </select>
+    <select id="getUserByUserId"
+            resultType="com.hna.hka.archive.management.system.model.SysCurrentUserIntegral">
+        select INTEGRAL_ID,
+               USER_ID,
+               USER_PHONE,
+               INTEGRAL,
+               CREATE_DATE,
+               UPDATE_DATE
+        from SYS_CURRENT_USER_INTEGRAL
+        where USER_ID = #{userId}
+    </select>
+    <select id="getSpotId" resultType="com.hna.hka.archive.management.system.model.SysScenicSpot">
+        select
+        SCENIC_SPOT_ID,
+        SCENIC_SPOT_NAME
+        from SYS_SCENIC_SPOT
+        <where>
+            1=1
+            <if test="spotId != null and spotId != ''">
+                and SCENIC_SPOT_ID = #{spotId}
+            </if>
+        </where>
+    </select>
+    <select id="getUserExchangeId"
+            resultType="com.hna.hka.archive.management.system.model.SysCurrentUserExchange">
+        SELECT EXCHANGE_ID,
+               USER_ID,
+               USER_PHONE,
+               EXCHANGE_NUMBER,
+               SCENIC_SPOT_NAME,
+               SCENIC_SPOT_ID,
+               SHIPMENT_STATUS,
+               PIC_URL,
+               EXCHANGE_STATE,
+               EXCHANGE_NAME,
+               START_VALIDITY,
+               END_VALIDITY,
+               EXCHANGE_TYPE,
+               ADDRESS_ID,
+               LOGISTICS_ID,
+               CREATE_DATE,
+               UPDATE_DATE,
+               MAILING_ADDRESS,
+               FULL_NAME,
+               MAILING_PHONE
+        FROM SYS_CURRENT_USER_EXCHANGE
+        where EXCHANGE_ID = #{exchangeId}
+    </select>
+    <select id="getbroadCast"
+            resultType="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcast">
+        SELECT DISTINCT
+        BROADCAST_ID,
+        BROADCAST_NAME
+        FROM
+        SYS_SCENIC_SPOT_BROADCAST
+        <where>
+            1=1
+            <if test="broadcastId != null and broadcastId != ''">
+                and BROADCAST_ID =#{broadcastId}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and SCENIC_SPOT_ID =#{scenicSpotId}
+            </if>
+        </where>
+    </select>
+    <select id="selectByPhone" resultType="com.hna.hka.archive.management.system.model.SysCurrentUser">
+        select CURRENT_USER_ID,
+               CURRENT_USER_PHONE
+        from SYS_CURRENT_USER
+        where CURRENT_USER_PHONE = #{userPhone}
+    </select>
+    <select id="getUserExchangeLog"
+            resultType="com.hna.hka.archive.management.system.model.SysCurrentUserExchangeLog">
+        SELECT
+        a.EXCHANGE_LOG_ID,
+        a.USER_ID,
+        a.PRIZE_ID,
+        d.EXCHANGE_NAME as treasureName,
+        a.SCENIC_SPOT_ID,
+        a.EXCHANGE_PORT,
+        a.OPERATIONAL_STATE,
+        a.ACCOUNT_NAME,
+        a.MAILING_ADDRESS,
+        a.USER_PHONE,
+        a.FULL_NAME,
+        a.CRATE_DATE,
+        a.UPDATE_DATE,
+        b.CURRENT_USER_PHONE as userPhone1,
+        c.SCENIC_SPOT_NAME as scenicSpotName
+        FROM
+        SYS_CURRENT_USER_EXCHANGE_LOG a
+        LEFT JOIN SYS_CURRENT_USER b ON a.USER_ID = b.CURRENT_USER_ID
+        LEFT JOIN SYS_SCENIC_SPOT c ON a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        LEFT JOIN SYS_CURRENT_USER_EXCHANGE d ON a.PRIZE_ID = d.EXCHANGE_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                SCENIC_SPOT_ID =#{scenicSpotId}
+            </if>
+            <if test="prizeId != null and prizeId != null">
+                PRIZE_ID =#{prizeId}
+            </if>
+            <if test="exchangePort != null and exchangePort != ''">
+                EXCHANGE_PORT =#{exchangePort}
+            </if>
+            <if test="operationalState != null and operationalState != ''">
+                OPERATIONAL_STATE =#{operationalState}
+            </if>
+            <if test="userPhone1 != null and userPhone1 != ''">
+                USER_PHONE =#{userPhone1}
+            </if>
+            <if test="fullName != null and fullName != ''">
+                FULL_NAME like CONCAT('%',#{fullName},'%')
+            </if>
+        </where>
+        order by a.CRATE_DATE DESC
+    </select>
+    <select id="getTreasureId"
+            resultType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureNewHunt">
+        select TREASURE_ID,
+               JACKPOT_ID,
+               TREASURE_NAME,
+               TREASURE_TYPE,
+               COUPON_AMOUNT,
+               INVENTORY,
+               END_VALIDITY,
+               START_VALIDITY,
+               PIC_URL,
+               WAY_TYPE,
+               PRIZE_SIZE,
+               PROBABILITY,
+               CREATE_DATE,
+               UPDATE_DATE
+        FROM SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
+        WHERE TREASURE_ID = #{treasureId}
+    </select>
+    <select id="getUpdateTreasureLog"
+            resultType="com.hna.hka.archive.management.system.model.SysCurrentUserUpdateTreasureLog">
+        SELECT
+        a.INTEGRAL_LOG_ID,
+        a.USER_ACCOUNT,
+        a.FRONT_PROBABILITY,
+        a.AFTER_PROBABILITY,
+        a.FRONT_TREASURE_NAME,
+        a.AFTER_TREASURE_NAME,
+        a.FRONT_TREASURE_TYPE,
+        a.AFTER_TREASURE_TYPE,
+        a.FRONT_WAY_TYPE,
+        a.AFTER_WAY_TYPE,
+        a.FRONT_TYPE,
+        a.ARTER_TYPE,
+        a.FRONT_COUPON,
+        a.ARTER_COUPON,
+        a.CREATE_DATE,
+        a.UPDATE_DATE
+        FROM
+        SYS_CURRENT_USER_UPDATE_TREASURE_LOG a
+        <where>
+            1=1
+            <!--后台账号账号查询-->
+            <if test="userAccount != null and userAccount != ''">
+                and a.USER_ACCOUNT like CONCAT('%',#{userAccount},'%')
+            </if>
+            <!--修改前的奖品名称查询-->
+            <if test="frontTreasureName != null and frontTreasureName != ''">
+                and a.FRONT_TREASURE_NAME like CONCAT('%',#{frontTreasureName},'%')
+            </if>
+            <!--时间范围查询-->
+            <if test="createDate != null and createDate != ''">
+                AND a.CREATE_DATE <![CDATA[ >= ]]> #{createDate}
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                AND a.CREATE_DATE <![CDATA[ <= ]]> #{updateDate}
+            </if>
+        </where>
+    </select>
+    <select id="getTreasureHuntDetail" resultType="com.hna.hka.archive.management.system.model.SysOrderDetail">
+        SELECT
+        o.ORDER_SCENIC_SPOT_ID,
+        s.SCENIC_SPOT_NAME AS scenicSpotName,
+        COALESCE(COUNT(o.ORDER_ID), 0) AS allOrder,
+        COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '0' THEN 1 ELSE 0 END), 0) AS huntOrder,
+        COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0) AS lotteryOrder,
+        ROUND((COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '0' THEN 1 ELSE 0 END), 0) / COALESCE(COUNT(o.ORDER_ID), 0)) * 100, 2) AS huntProportion,
+        ROUND((COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0) / COALESCE(COUNT(o.ORDER_ID), 0)) * 100, 2) AS lotteryProportion,
+        ROUND(COALESCE(SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2)), 0) / COALESCE(COUNT(o.ORDER_ID), 0), 2) AS perCustomerTransaction,
+        ROUND(
+        COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0),
+        2
+        ) AS huntPerCustomerTransaction,
+        ROUND(
+        COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '0' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '0' THEN 1 ELSE 0 END), 0),
+        2
+        ) AS lotteryPerCustomerTransaction
+        FROM
+        SYS_ORDER o
+        JOIN SYS_SCENIC_SPOT s ON o.ORDER_SCENIC_SPOT_ID = s.SCENIC_SPOT_ID
+        WHERE
+        1 = 1
+        <if test="scenicSpotId != null and scenicSpotId != ''">
+            AND o.ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+        </if>
+        <if test='dataType == "0"'>
+            AND STR_TO_DATE(o.CREATE_DATE,'%Y-%m-%d') between #{orderStartTime} and #{orderEndTime}
+        </if>
+        <if test='dataType == "1"'>
+            AND DATE_FORMAT(STR_TO_DATE(o.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{orderStartTime} and #{orderEndTime}
+        </if>
+        <if test='dataType == "2"'>
+            AND DATE_FORMAT(STR_TO_DATE(o.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{orderStartTime} and #{orderEndTime}
+        </if>
+          <if test="huntsState != null and huntsState != ''">
+            AND s.HUNTS_STATE = #{huntsState}
+        </if>
+        AND o.ORDER_STATUS = 30
+        GROUP BY o.ORDER_SCENIC_SPOT_ID
+    </select>
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from SYS_SCENIC_SPOT_TREASURE_HUNT
+        where TREASURE_ID = #{treasureId,jdbcType=BIGINT}
+    </delete>
+    <delete id="delectJackpotNew" parameterType="java.lang.Long">
+        delete
+        from SYS_SCENIC_SPOT_TREASURE_NEW_JACKPOT
+        where JACKPOT_ID = #{jackpotId,jdbcType=BIGINT}
+    </delete>
+    <delete id="delectUserAddress" parameterType="java.lang.Long">
+        delete
+        from SYS_CURRENT_USER_ADDRESS
+        where ADDRESS_ID = #{addressId}
+    </delete>
+    <delete id="delectBroadcastHunt" parameterType="java.lang.Long">
+        delete
+        from SYS_SCENIC_SPOT_BROADCAST_HUNT
+        where BROADCAST_ID = #{broadcastId,jdbcType=BIGINT}
+    </delete>
+    <delete id="delectTreasureNewHunt" parameterType="java.lang.Long">
+        delete
+        from SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
+        where TREASURE_ID = #{treasureId}
+    </delete>
+    <delete id="delectJackpotHunt" parameterType="java.lang.Long">
+        delete
+        from SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
+        where JACKPOT_ID = #{jackpotId}
+    </delete>
+
+    <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureHunt">
+        insert into SYS_SCENIC_SPOT_TREASURE_HUNT (TREASURE_ID, SCENIC_SPOT_ID, TREASURE_NAME, TREASURE_TYPE,
+                                                   COUPON_AMOUNT,
+                                                   INVENTORY, END_VALIDITY, START_VALIDITY, PIC_URL, PRIZE_WEIGHT,
+                                                   CREATE_DATE, UPDATE_DATE)
+        values (#{treasureId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{treasureName,jdbcType=VARCHAR},
+                #{treasureType,jdbcType=VARCHAR}, #{couponAmount,jdbcType=VARCHAR}, #{inventory,jdbcType=BIGINT},
+                #{endValidity,jdbcType=VARCHAR}, #{startValidity,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR},
+                #{prizeWeight,jdbcType=BIGINT}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureHunt">
+        insert into SYS_SCENIC_SPOT_TREASURE_HUNT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="treasureId != null">
+                TREASURE_ID,
+            </if>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="treasureName != null">
+                TREASURE_NAME,
+            </if>
+            <if test="treasureType != null">
+                TREASURE_TYPE,
+            </if>
+            <if test="couponAmount != null and couponAmount != ''">
+                COUPON_AMOUNT,
+            </if>
+            <if test="inventory != null">
+                INVENTORY,
+            </if>
+            <if test="endValidity != null">
+                END_VALIDITY,
+            </if>
+            <if test="startValidity != null">
+                START_VALIDITY,
+            </if>
+            <if test="picUrl != null">
+                PIC_URL,
+            </if>
+            <if test="prizeWeight != null">
+                PRIZE_WEIGHT,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="treasureId != null">
+                #{treasureId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null">
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="treasureName != null">
+                #{treasureName,jdbcType=VARCHAR},
+            </if>
+            <if test="treasureType != null">
+                #{treasureType,jdbcType=VARCHAR},
+            </if>
+            <if test="couponAmount != null and couponAmount != ''">
+                #{couponAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="inventory != null">
+                #{inventory,jdbcType=BIGINT},
+            </if>
+            <if test="endValidity != null">
+                #{endValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="startValidity != null">
+                #{startValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeWeight != null">
+                #{prizeWeight,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="addJackpotNew">
+        insert into SYS_SCENIC_SPOT_TREASURE_NEW_JACKPOT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="jackpotId != null and jackpotId != ''">
+                JACKPOT_ID,
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId!= ''">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName != ''">
+                SCENIC_SPOT_NAME,
+            </if>
+            <if test="integralNum != null and integralNum != ''">
+                INTEGRAL_NUM,
+            </if>
+            <if test="jackpotType != null and jackpotType != ''">
+                JACKPOT_TYPE,
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE,
+            </if>
+            <if test="jackpotName != null and jackpotName != ''">
+                JACKPOT_NAME,
+            </if>
+            <if test="jackpotSort != null and jackpotSort != ''">
+                JACKPOT_SORT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="jackpotId != null and jackpotId != ''">
+                #{jackpotId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName != ''">
+                #{scenicSpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="integralNum != null and integralNum != ''">
+                #{integralNum,jdbcType=BIGINT},
+            </if>
+            <if test="jackpotType != null and jackpotType != ''">
+                #{jackpotType,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="jackpotName != null and jackpotName != ''">
+                #{jackpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="jackpotSort != null and jackpotSort != ''">
+                #{jackpotSort,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <insert id="addUserAddress">
+        insert into SYS_CURRENT_USER_ADDRESS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="addressId != null and addressId != ''">
+                ADDRESS_ID,
+            </if>
+            <if test="userId != null and userId!= ''">
+                USER_ID,
+            </if>
+            <if test="mailingAddress != null and mailingAddress != ''">
+                MAILING_ADDRESS,
+            </if>
+            <if test="phone != null and phone != ''">
+                PHONE,
+            </if>
+            <if test="fullName != null and fullName != ''">
+                FULL_NAME,
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="addressId != null and addressId != ''">
+                #{addressId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null and userId!= ''">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="mailingAddress != null and mailingAddress != ''">
+                #{mailingAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null and phone != ''">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="fullName != null and fullName != ''">
+                #{fullName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                #{updateDate,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertUserInteGralLog">
+        insert into SYS_CURRENT_USER_INTEGRAL_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="integralLogId != null and integralLogId != ''">
+                INTEGRAL_LOG_ID,
+            </if>
+            <if test="userId != null and userId!= ''">
+                USER_ID,
+            </if>
+            <if test="userAccount != null and userAccount!= ''">
+                USER_ACCOUNT,
+            </if>
+            <if test="frontIntegral != null and frontIntegral!= ''">
+                FRONT_INTEGRAL,
+            </if>
+            <if test="afterIntegral != null and afterIntegral!= ''">
+                AFTER_INTEGRAL,
+            </if>
+            <if test="createDate != null and createDate!= ''">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null and updateDate!= ''">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="integralLogId != null and integralLogId != ''">
+                #{integralLogId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null and userId != ''">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userAccount != null and userAccount != ''">
+                #{userAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="frontIntegral != null and frontIntegral != ''">
+                #{frontIntegral,jdbcType=VARCHAR},
+            </if>
+            <if test="afterIntegral != null and afterIntegral != ''">
+                #{afterIntegral,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                #{updateDate,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <insert id="addBroadcastHunt">
+        insert into SYS_SCENIC_SPOT_BROADCAST_HUNT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="broadcastId != null and broadcastId != ''">
+                BROADCAST_ID,
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="broadcastGps != null and broadcastGps != ''">
+                BROADCAST_GPS,
+            </if>
+            <if test="broadcastGpsBaiDu != null and broadcastGpsBaiDu != ''">
+                BROADCAST_GPS_BAI_DU,
+            </if>
+            <if test="scenicSpotRange != null and scenicSpotRange != ''">
+                SCENIC_SPOT_RANGE,
+            </if>
+            <if test="broadcastName != null and broadcastName != ''">
+                BROADCAST_NAME,
+            </if>
+            <if test="pinYinName != null and pinYinName != ''">
+                PIN_YIN_NAME,
+            </if>
+            <if test="introductionTypes != null and introductionTypes != ''">
+                INTRODUCTION_TYPES,
+            </if>
+            <if test="navigationType != null and navigationType != ''">
+                NAVIGATION_TYPE,
+            </if>
+            <if test="broadcastPriority != null and broadcastPriority != ''">
+                BROADCAST_PRIORITY,
+            </if>
+            <if test="sortType != null and sortType != ''">
+                SORT_TYPE,
+            </if>
+            <if test="switchs != null and switchs != ''">
+                SWITCHS,
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE,
+            </if>
+            <if test="treasureType != null and treasureType != ''">
+                TREASURE_TYPE,
+            </if>
+            <if test="integralNum != null and integralNum != ''">
+                INTEGRAL_NUM,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="broadcastId != null and broadcastId != ''">
+                #{broadcastId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="broadcastGps != null and broadcastGps != ''">
+                #{broadcastGps,jdbcType=VARCHAR},
+            </if>
+            <if test="broadcastGpsBaiDu != null and broadcastGpsBaiDu != ''">
+                #{broadcastGpsBaiDu,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotRange != null and scenicSpotRange != ''">
+                #{scenicSpotRange,jdbcType=VARCHAR},
+            </if>
+            <if test="broadcastName != null and broadcastName != ''">
+                #{broadcastName,jdbcType=VARCHAR},
+            </if>
+            <if test="pinYinName != null and pinYinName != ''">
+                #{pinYinName,jdbcType=VARCHAR},
+            </if>
+            <if test="introductionTypes != null and introductionTypes != ''">
+                #{introductionTypes,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationType != null and navigationType != ''">
+                #{navigationType,jdbcType=VARCHAR},
+            </if>
+            <if test="broadcastPriority != null and broadcastPriority != ''">
+                #{broadcastPriority,jdbcType=VARCHAR},
+            </if>
+            <if test="sortType != null and sortType != ''">
+                #{sortType,jdbcType=VARCHAR},
+            </if>
+            <if test="switchs != null and switchs != ''">
+                #{switchs,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="treasureType != null and treasureType != ''">
+                #{treasureType,jdbcType=VARCHAR},
+            </if>
+            <if test="integralNum != null and integralNum != ''">
+                #{integralNum,jdbcType=BIGINT}
+            </if>
+        </trim>
+    </insert>
+    <insert id="addTreasureNewHunt">
+        insert into SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="treasureId != null and treasureId != ''">
+                TREASURE_ID,
+            </if>
+            <if test="jackpotId != null and jackpotId != ''">
+                JACKPOT_ID,
+            </if>
+            <if test="treasureName != null and treasureName != ''">
+                TREASURE_NAME,
+            </if>
+            <if test="treasureType != null and treasureType != ''">
+                TREASURE_TYPE,
+            </if>
+            <if test="couponAmount != null and couponAmount != ''">
+                COUPON_AMOUNT,
+            </if>
+            <if test="inventory != null and inventory != ''">
+                INVENTORY,
+            </if>
+            <if test="endValidity != null and endValidity != ''">
+                END_VALIDITY,
+            </if>
+            <if test="startValidity != null and startValidity != ''">
+                START_VALIDITY,
+            </if>
+            <if test="picUrl != null and picUrl != ''">
+                PIC_URL,
+            </if>
+            <if test="prizeSize != null and prizeSize != ''">
+                PRIZE_SIZE,
+            </if>
+            <if test="probability != null and probability != ''">
+                PROBABILITY,
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE,
+            </if>
+            <if test="wayType != null and wayType != ''">
+                WAY_TYPE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="treasureId != null and treasureId != ''">
+                #{treasureId,jdbcType=BIGINT},
+            </if>
+            <if test="jackpotId != null and jackpotId != ''">
+                #{jackpotId,jdbcType=BIGINT},
+            </if>
+            <if test="treasureName != null and treasureName != ''">
+                #{treasureName,jdbcType=VARCHAR},
+            </if>
+            <if test="treasureType != null and treasureType != ''">
+                #{treasureType,jdbcType=VARCHAR},
+            </if>
+            <if test="couponAmount != null and couponAmount != ''">
+                #{couponAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="inventory != null and inventory != ''">
+                #{inventory,jdbcType=VARCHAR},
+            </if>
+            <if test="endValidity != null and endValidity != ''">
+                #{endValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="startValidity != null and startValidity != ''">
+                #{startValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null and picUrl != ''">
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeSize != null and prizeSize != ''">
+                #{prizeSize,jdbcType=VARCHAR},
+            </if>
+            <if test="probability != null and probability != ''">
+                #{probability,jdbcType=DOUBLE},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="wayType != null and wayType != ''">
+                #{wayType,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <insert id="addTreasureNewHuntLog">
+        insert into SYS_CURRENT_USER_UPDATE_TREASURE_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="integralLogId != null and integralLogId != ''">
+                INTEGRAL_LOG_ID,
+            </if>
+            <if test="userAccount != null and userAccount != ''">
+                USER_ACCOUNT,
+            </if>
+            <if test="frontProbability != null and frontProbability != ''">
+                FRONT_PROBABILITY,
+            </if>
+            <if test="afterProbability != null and afterProbability != ''">
+                AFTER_PROBABILITY,
+            </if>
+            <if test="frontTreasureName != null and frontTreasureName != ''">
+                FRONT_TREASURE_NAME,
+            </if>
+            <if test="afterTreasureName != null and afterTreasureName != ''">
+                AFTER_TREASURE_NAME,
+            </if>
+            <if test="frontTreasureType != null and frontTreasureType != ''">
+                FRONT_TREASURE_TYPE,
+            </if>
+            <if test="afterTreasureType != null and afterTreasureType != ''">
+                AFTER_TREASURE_TYPE,
+            </if>
+            <if test="frontWayType != null and frontWayType != ''">
+                FRONT_WAY_TYPE,
+            </if>
+            <if test="afterWayType != null and afterWayType != ''">
+                AFTER_WAY_TYPE,
+            </if>
+            <if test="frontType != null and frontType != ''">
+                FRONT_TYPE,
+            </if>
+            <if test="afterType != null and afterType != ''">
+                ARTER_TYPE,
+            </if>
+            <if test="frontCoupon != null and frontCoupon != ''">
+                FRONT_COUPON,
+            </if>
+            <if test="afterCoupon != null and afterCoupon != ''">
+                ARTER_COUPON,
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="integralLogId != null and integralLogId != ''">
+                #{integralLogId,jdbcType=BIGINT},
+            </if>
+            <if test="userAccount != null and userAccount != ''">
+                #{userAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="frontProbability != null and frontProbability != ''">
+                #{frontProbability,jdbcType=VARCHAR},
+            </if>
+            <if test="afterProbability != null and afterProbability != ''">
+                #{afterProbability,jdbcType=VARCHAR},
+            </if>
+            <if test="frontTreasureName != null and frontTreasureName != ''">
+                #{frontTreasureName,jdbcType=VARCHAR},
+            </if>
+            <if test="afterTreasureName != null and afterTreasureName != ''">
+                #{afterTreasureName,jdbcType=VARCHAR},
+            </if>
+            <if test="frontTreasureType != null and frontTreasureType != ''">
+                #{frontTreasureType,jdbcType=VARCHAR},
+            </if>
+            <if test="afterTreasureType != null and afterTreasureType != ''">
+                #{afterTreasureType,jdbcType=VARCHAR},
+            </if>
+            <if test="frontWayType != null and frontWayType != ''">
+                #{frontWayType,jdbcType=VARCHAR},
+            </if>
+            <if test="afterWayType != null and afterWayType != ''">
+                #{afterWayType,jdbcType=VARCHAR},
+            </if>
+            <if test="frontType != null and frontType != ''">
+                #{frontType,jdbcType=VARCHAR},
+            </if>
+            <if test="afterType != null and afterType != ''">
+                #{afterType,jdbcType=VARCHAR},
+            </if>
+            <if test="frontCoupon != null and frontCoupon != ''">
+                #{frontCoupon,jdbcType=VARCHAR},
+            </if>
+            <if test="afterCoupon != null and afterCoupon != ''">
+                #{afterCoupon,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                #{updateDate,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureHunt">
+        update SYS_SCENIC_SPOT_TREASURE_HUNT
+        <set>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="treasureName != null">
+                TREASURE_NAME = #{treasureName,jdbcType=VARCHAR},
+            </if>
+            <if test="treasureType != null">
+                TREASURE_TYPE = #{treasureType,jdbcType=VARCHAR},
+            </if>
+            <if test="couponAmount != null">
+                COUPON_AMOUNT = #{couponAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="inventory != null">
+                INVENTORY = #{inventory,jdbcType=BIGINT},
+            </if>
+            <if test="endValidity != null">
+                END_VALIDITY = #{endValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="startValidity != null">
+                START_VALIDITY = #{startValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                PIC_URL = #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeWeight != null">
+                PRIZE_WEIGHT = #{prizeWeight,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where TREASURE_ID = #{treasureId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey"
+            parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureHunt">
+        update SYS_SCENIC_SPOT_TREASURE_HUNT
+        set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            TREASURE_NAME  = #{treasureName,jdbcType=VARCHAR},
+            TREASURE_TYPE  = #{treasureType,jdbcType=VARCHAR},
+            COUPON_AMOUNT  = #{couponAmount,jdbcType=VARCHAR},
+            INVENTORY      = #{inventory,jdbcType=BIGINT},
+            END_VALIDITY   = #{endValidity,jdbcType=VARCHAR},
+            START_VALIDITY = #{startValidity,jdbcType=VARCHAR},
+            PIC_URL        = #{picUrl,jdbcType=VARCHAR},
+            PRIZE_WEIGHT   = #{prizeWeight,jdbcType=BIGINT},
+            CREATE_DATE    = #{createDate,jdbcType=VARCHAR},
+            UPDATE_DATE    = #{updateDate,jdbcType=VARCHAR}
+        where BROADCAST_ID = #{broadcastId,jdbcType=BIGINT}
+    </update>
+    <update id="updateJackpotNew"
+            parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureNewJackpot">
+        update SYS_SCENIC_SPOT_TREASURE_NEW_JACKPOT
+        <set>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                SCENIC_SPOT_ID =#{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName != ''">
+                SCENIC_SPOT_NAME =#{scenicSpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="integralNum != null and integralNum != ''">
+                INTEGRAL_NUM =#{integralNum,jdbcType=BIGINT},
+            </if>
+            <if test="jackpotType != null and jackpotType != ''">
+                JACKPOT_TYPE =#{jackpotType,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CREATE_DATE =#{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE =#{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="jackpotName != null and jackpotName != ''">
+                JACKPOT_NAME =#{jackpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="jackpotSort != null and jackpotSort != ''">
+                JACKPOT_SORT =#{jackpotSort,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where JACKPOT_ID =#{jackpotId,jdbcType=BIGINT}
+    </update>
+    <update id="editUserAddress">
+        update SYS_CURRENT_USER_ADDRESS
+        <set>
+            <if test="addressId != null and addressId != ''">
+                ADDRESS_ID =#{addressId,jdbcType=BIGINT},
+            </if>
+            <if test="mailingAddress!= null and mailingAddress != ''">
+                MAILING_ADDRESS =#{mailingAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null and phone != ''">
+                PHONE =#{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="fullName != null and fullName != ''">
+                FULL_NAME =#{fullName,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE =#{updateDate,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where ADDRESS_ID =#{addressId,jdbcType=BIGINT}
+    </update>
+    <update id="updateUserInteGral">
+        update SYS_CURRENT_USER_INTEGRAL
+        <set>
+            <if test="integral != null and integral != ''">
+                INTEGRAL =#{integral,jdbcType=BIGINT},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE =#{updateDate,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where INTEGRAL_ID =#{integralId,jdbcType=BIGINT}
+    </update>
+    <update id="editUserExchange">
+        update SYS_CURRENT_USER_EXCHANGE
+        <set>
+            <if test="addressId != null and addressId != ''">
+                ADDRESS_ID =#{addressId,jdbcType=BIGINT},
+            </if>
+            <if test="logisiticsId != null and logisiticsId != ''">
+                LOGISTICS_ID =#{logisiticsId,jdbcType=BIGINT}
+            </if>
+            <if test="shipmentStatus != null and shipmentStatus != ''">
+                SHIPMENT_STATUS =#{shipmentStatus}
+            </if>
+        </set>
+        where EXCHANGE_ID =#{exchangeId,jdbcType=BIGINT}
+    </update>
+    <update id="editBroadcastHunt">
+        update SYS_SCENIC_SPOT_BROADCAST_HUNT
+        <set>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                SCENIC_SPOT_ID =#{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="broadcastGps != null and broadcastGps != ''">
+                BROADCAST_GPS =#{broadcastGps,jdbcType=VARCHAR},
+            </if>
+            <if test="broadcastGpsBaiDu != null and broadcastGpsBaiDu != ''">
+                BROADCAST_GPS_BAI_DU =#{broadcastGpsBaiDu,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotRange != null and scenicSpotRange != ''">
+                SCENIC_SPOT_RANGE =#{scenicSpotRange,jdbcType=VARCHAR},
+            </if>
+            <if test="broadcastName != null and broadcastName != ''">
+                BROADCAST_NAME =#{broadcastName,jdbcType=VARCHAR},
+            </if>
+            <if test="pinYinName != null and pinYinName != ''">
+                PIN_YIN_NAME =#{pinYinName,jdbcType=VARCHAR},
+            </if>
+            <if test="introductionTypes != null and introductionTypes != ''">
+                INTRODUCTION_TYPES =#{introductionTypes,jdbcType=VARCHAR},
+            </if>
+            <if test="navigationType != null and navigationType != ''">
+                NAVIGATION_TYPE =#{navigationType,jdbcType=VARCHAR},
+            </if>
+            <if test="broadcastPriority != null and broadcastPriority != ''">
+                BROADCAST_PRIORITY =#{broadcastPriority,jdbcType=VARCHAR},
+            </if>
+            <if test="sortType != null and sortType != ''">
+                SORT_TYPE =#{sortType,jdbcType=VARCHAR},
+            </if>
+            <if test="switchs != null and switchs != ''">
+                SWITCHS =#{switchs,jdbcType=VARCHAR},
+            </if>
+            <if test="treasureType != null and treasureType != ''">
+                TREASURE_TYPE =#{treasureType,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE =#{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="integralNum != null and integralNum != ''">
+                INTEGRAL_NUM =#{integralNum,jdbcType=BIGINT}
+            </if>
+        </set>
+        where BROADCAST_ID =#{broadcastId,jdbcType=BIGINT}
+    </update>
+    <update id="editTreasureNewHunt">
+        update SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
+        <set>
+            <if test="jackpotId != null and jackpotId != ''">
+                JACKPOT_ID =#{jackpotId,jdbcType=BIGINT},
+            </if>
+            <if test="treasureName != null and treasureName != ''">
+                TREASURE_NAME =#{treasureName,jdbcType=VARCHAR},
+            </if>
+            <if test="treasureType != null and treasureType != ''">
+                TREASURE_TYPE =#{treasureType,jdbcType=VARCHAR},
+            </if>
+            <if test="couponAmount != null and couponAmount != ''">
+                COUPON_AMOUNT =#{couponAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="inventory != null and inventory != ''">
+                INVENTORY =#{inventory,jdbcType=VARCHAR},
+            </if>
+            <if test="endValidity != null and endValidity != ''">
+                END_VALIDITY =#{endValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="startValidity != null and startValidity != ''">
+                START_VALIDITY =#{startValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null and picUrl != ''">
+                PIC_URL =#{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeSize != null and prizeSize != ''">
+                PRIZE_SIZE =#{prizeSize,jdbcType=VARCHAR},
+            </if>
+            <if test="probability != null and probability != ''">
+                PROBABILITY =#{probability,jdbcType=DOUBLE},
+            </if>
+            <if test="wayType != null and wayType != ''">
+                WAY_TYPE =#{wayType,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE =#{updateDate,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where TREASURE_ID =#{treasureId}
+    </update>
+    <update id="editBroadcastHuntId">
+        update SYS_SCENIC_SPOT_BROADCAST_HUNT
+        <set>
+            <if test="switchs != null and switchs!= ''">
+                SWITCHS =#{switchs}
+            </if>
+        </set>
+        where SCENIC_SPOT_ID =#{scenicSpotId}
+    </update>
+
+
+</mapper>

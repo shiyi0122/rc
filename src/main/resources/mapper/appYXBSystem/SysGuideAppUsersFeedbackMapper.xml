@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.appYXBSystem.dao.SysGuideAppUsersFeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsersFeedback" >
+    <id column="FEEDBACK_ID" property="feedbackId" jdbcType="BIGINT" />
+    <result column="APP_USER_ID" property="appUserId" jdbcType="BIGINT" />
+    <result column="FEEDBACK_CONTENT" property="feedbackContent" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FEEDBACK_ID,APP_USER_ID,FEEDBACK_CONTENT,CREATE_DATE,UPDATE_DATE
+  </sql>
+
+  <select id="getUserList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM SYS_GUIDE_APP_USERS_FEEDBACK
+    <where>
+      <if test="sysUsers.userName != null and sysUsers.userName != ''">
+        AND USER_NAME LIKE CONCAT('%', #{sysUsers.userName },'%')
+      </if>
+      <if test="sysUsers.loginName != null and sysUsers.loginName != ''">
+        AND LOGIN_NAME LIKE CONCAT('%', #{sysUsers.loginName },'%')
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_GUIDE_APP_USERS_FEEDBACK
+    where APP_USER_ID = #{appUserId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsersFeedback" >
+    insert into SYS_GUIDE_APP_USERS_FEEDBACK (
+    APP_USER_ID, FEEDBACK_CONTENT,CREATE_DATE,UPDATE_DATE)
+    values (#{appUserId,jdbcType=BIGINT}, #{feedbackContent,jdbcType=VARCHAR},
+          #{createDate,jdbcType=VARCHAR},#{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsersFeedback" >
+    insert into SYS_GUIDE_APP_USERS_FEEDBACK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="feedbackId != null">
+        FEEDBACK_ID,
+      </if>
+      <if test="appUserId != null" >
+        APP_USER_ID,
+      </if>
+      <if test="feedbackContent != null" >
+        FEEDBACK_CONTENT,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="feedbackId != null">
+        #{feedbackId,jdbcType = BIGINT},
+      </if>
+      <if test="appUserId != null" >
+        #{appUserId,jdbcType=BIGINT},
+      </if>
+      <if test="feedbackContent != null" >
+        #{feedbackContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsersFeedback" >
+    update SYS_GUIDE_APP_USERS_FEEDBACK
+    <set >
+      <if test="appUserId != null" >
+        APP_USER_ID = #{appUserId,jdbcType=BIGINT},
+      </if>
+      <if test="feedbackContent != null" >
+        FEEDBACK_CONTENT = #{feedbackContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FEEDBACK_ID = #{feedbackId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getGuideAppUsersFeedbackList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM SYS_GUIDE_APP_USERS_FEEDBACK
+    <where>
+      <if test="sysGuideAppUsersFeedback.appUserId != null and sysGuideAppUsersFeedback.appUserId != ''">
+        AND APP_USER_ID LIKE CONCAT('%', #{sysGuideAppUsersFeedback.appUserId },'%')
+      </if>
+      <if test="sysGuideAppUsersFeedback.feedbackContent != null and sysGuideAppUsersFeedback.feedbackContent != ''">
+        AND FEEDBACK_CONTENT LIKE CONCAT('%', #{sysGuideAppUsersFeedback.feedbackContent },'%')
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+
+</mapper>

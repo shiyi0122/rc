@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysOrderOperationLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysOrderOperationLog" >
+    <id column="OPERATION_ID" property="operationId" jdbcType="BIGINT" />
+    <result column="OPERATION_NAME" property="operationName" jdbcType="VARCHAR" />
+    <result column="OPERATION_NUMBER" property="operationNumber" jdbcType="VARCHAR" />
+    <result column="OPERATION_PHONE" property="operationPhone" jdbcType="VARCHAR" />
+    <result column="OPERATION_SCENIC_SPOT_NAME" property="operationScenicSpotName" jdbcType="VARCHAR" />
+    <result column="OPERATION_ROBOT_CODE" property="operationRobotCode" jdbcType="VARCHAR" />
+    <result column="OPERATION_TOTAL_TIME" property="operationTotalTime" jdbcType="VARCHAR" />
+    <result column="OPERATION_FRONT" property="operationFront" jdbcType="VARCHAR" />
+    <result column="OPERATION_AFTER" property="operationAfter" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OPERATION_ID, OPERATION_NAME, OPERATION_NUMBER, OPERATION_PHONE, OPERATION_SCENIC_SPOT_NAME, 
+    OPERATION_ROBOT_CODE, OPERATION_TOTAL_TIME, OPERATION_FRONT, OPERATION_AFTER, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ORDER_OPERATION_LOG
+    where OPERATION_ID = #{operationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ORDER_OPERATION_LOG
+    where OPERATION_ID = #{operationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysOrderOperationLog" >
+    insert into SYS_ORDER_OPERATION_LOG (OPERATION_ID, OPERATION_NAME, OPERATION_NUMBER, 
+      OPERATION_PHONE, OPERATION_SCENIC_SPOT_NAME, 
+      OPERATION_ROBOT_CODE, OPERATION_TOTAL_TIME, 
+      OPERATION_FRONT, OPERATION_AFTER, CREATE_DATE
+      )
+    values (#{operationId,jdbcType=BIGINT}, #{operationName,jdbcType=VARCHAR}, #{operationNumber,jdbcType=VARCHAR}, 
+      #{operationPhone,jdbcType=VARCHAR}, #{operationScenicSpotName,jdbcType=VARCHAR}, 
+      #{operationRobotCode,jdbcType=VARCHAR}, #{operationTotalTime,jdbcType=VARCHAR}, 
+      #{operationFront,jdbcType=VARCHAR}, #{operationAfter,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysOrderOperationLog" >
+    insert into SYS_ORDER_OPERATION_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operationId != null" >
+        OPERATION_ID,
+      </if>
+      <if test="operationName != null" >
+        OPERATION_NAME,
+      </if>
+      <if test="operationNumber != null" >
+        OPERATION_NUMBER,
+      </if>
+      <if test="operationPhone != null" >
+        OPERATION_PHONE,
+      </if>
+      <if test="operationScenicSpotName != null" >
+        OPERATION_SCENIC_SPOT_NAME,
+      </if>
+      <if test="operationRobotCode != null" >
+        OPERATION_ROBOT_CODE,
+      </if>
+      <if test="operationTotalTime != null" >
+        OPERATION_TOTAL_TIME,
+      </if>
+      <if test="operationFront != null" >
+        OPERATION_FRONT,
+      </if>
+      <if test="operationAfter != null" >
+        OPERATION_AFTER,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operationId != null" >
+        #{operationId,jdbcType=BIGINT},
+      </if>
+      <if test="operationName != null" >
+        #{operationName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationNumber != null" >
+        #{operationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="operationPhone != null" >
+        #{operationPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="operationScenicSpotName != null" >
+        #{operationScenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationRobotCode != null" >
+        #{operationRobotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operationTotalTime != null" >
+        #{operationTotalTime,jdbcType=VARCHAR},
+      </if>
+      <if test="operationFront != null" >
+        #{operationFront,jdbcType=VARCHAR},
+      </if>
+      <if test="operationAfter != null" >
+        #{operationAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysOrderOperationLog" >
+    update SYS_ORDER_OPERATION_LOG
+    <set >
+      <if test="operationName != null" >
+        OPERATION_NAME = #{operationName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationNumber != null" >
+        OPERATION_NUMBER = #{operationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="operationPhone != null" >
+        OPERATION_PHONE = #{operationPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="operationScenicSpotName != null" >
+        OPERATION_SCENIC_SPOT_NAME = #{operationScenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationRobotCode != null" >
+        OPERATION_ROBOT_CODE = #{operationRobotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operationTotalTime != null" >
+        OPERATION_TOTAL_TIME = #{operationTotalTime,jdbcType=VARCHAR},
+      </if>
+      <if test="operationFront != null" >
+        OPERATION_FRONT = #{operationFront,jdbcType=VARCHAR},
+      </if>
+      <if test="operationAfter != null" >
+        OPERATION_AFTER = #{operationAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OPERATION_ID = #{operationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysOrderOperationLog" >
+    update SYS_ORDER_OPERATION_LOG
+    set OPERATION_NAME = #{operationName,jdbcType=VARCHAR},
+      OPERATION_NUMBER = #{operationNumber,jdbcType=VARCHAR},
+      OPERATION_PHONE = #{operationPhone,jdbcType=VARCHAR},
+      OPERATION_SCENIC_SPOT_NAME = #{operationScenicSpotName,jdbcType=VARCHAR},
+      OPERATION_ROBOT_CODE = #{operationRobotCode,jdbcType=VARCHAR},
+      OPERATION_TOTAL_TIME = #{operationTotalTime,jdbcType=VARCHAR},
+      OPERATION_FRONT = #{operationFront,jdbcType=VARCHAR},
+      OPERATION_AFTER = #{operationAfter,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR}
+    where OPERATION_ID = #{operationId,jdbcType=BIGINT}
+  </update>
+  <select id="getOrderOperationLogList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ORDER_OPERATION_LOG
+    <where>
+      <if test="operationPhone != null and operationPhone != ''">
+        AND OPERATION_PHONE LIKE CONCAT('%',#{operationPhone},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+
+  <select id="getOrderOperationLogExcel" resultType="com.hna.hka.archive.management.system.model.SysOrderOperationLogExcel" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ORDER_OPERATION_LOG
+    <where>
+      <if test="operationPhone != null and operationPhone != ''">
+        AND OPERATION_PHONE LIKE CONCAT('%',#{operationPhone},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

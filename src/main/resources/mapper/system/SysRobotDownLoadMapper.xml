@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotDownLoadLogMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotDownloadLog" >
+        <id column="LOG_ID" property="logId" jdbcType="BIGINT" />
+        <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+        <result column="DOWNLOAD_URL" property="downloadUrl" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+        <result column="SIZE" property="size" jdbcType="VARCHAR"/>
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        LOG_ID, ROBOT_CODE, SCENIC_SPOT_ID,
+        DOWNLOAD_URL, CREATE_DATE, UPDATE_DATE,SIZE,REMARKS
+    </sql>
+
+
+    <select id="getSysRobotDownloadLogList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        srdl.LOG_ID,
+        srdl.ROBOT_CODE,
+        srdl.SCENIC_SPOT_ID,
+        srdl.DOWNLOAD_URL,
+        srdl.CREATE_DATE,
+        srdl.UPDATE_DATE,
+        srdl.SIZE,
+        srdl.REMARKS,
+        sss.SCENIC_SPOT_NAME
+        from SYS_ROBOT_DOWNLOAD_LOG srdl
+        left join SYS_SCENIC_SPOT sss on srdl.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        <where>
+            <if test="robotCode != null and robotCode != ''">
+                AND srdl.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+            </if>
+            <if test="spotId != null and spotId != ''">
+                AND srdl.SCENIC_SPOT_ID LIKE CONCAT('%',#{spotId},'%')
+            </if>
+
+        </where>
+        ORDER BY srdl.CREATE_DATE DESC
+    </select>
+
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SpotProfitSharingStatisticsMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotFenfun" >
+        <id column="FENRUN_SCENIC_SPOT_ID" property="fenrunScenicSpotId" jdbcType="BIGINT" />
+        <result column="SUBJECT_ID" property="subjectId" jdbcType="BIGINT" />
+        <result column="COMPANY_ID" property="companyId" jdbcType="BIGINT" />
+        <result column="PAYEE" property="payee" jdbcType="VARCHAR" />
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+        <result column="PROFIT_SHARING_MONTH" property="profitSharingMonth" jdbcType="VARCHAR" />
+        <result column="WECHAT_PAYMENT_FLOW" property="wechatPaymentFlow" jdbcType="VARCHAR" />
+        <result column="STORED_VALUE_PAYMENT_FLOW" property="storedValuePaymentFlow" jdbcType="VARCHAR" />
+        <result column="WECHAT_STORED_PAYMENT_FLOW" property="wechatStoredPaymentFlow" jdbcType="VARCHAR" />
+        <result column="DEPOSIT_DEDUCTION_PAYMENT_FLOW" property="depositDeductionPaymentFlow" jdbcType="VARCHAR" />
+        <result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="VARCHAR" />
+        <result column="PLATFORM_FENRUN_BASE" property="platformFenrunBase" jdbcType="VARCHAR" />
+        <result column="PLATFORM_FENRUN_EXPENDITURE" property="platformFenrunExpenditure" jdbcType="VARCHAR" />
+        <result column="PLATFORM_FENRUN_INCOME" property="platformFenrunIncome" jdbcType="VARCHAR" />
+        <result column="PLATFORM_STATISTICS_PARTS_MAINTENANCE" property="platformStatisticsPartsMaintenance" jdbcType="VARCHAR" />
+        <result column="PLATFORM_STATISTICS_SETTLEMENT_EXPENDITURE" property="platformStatisticsSettlementExpenditure" jdbcType="VARCHAR" />
+        <result column="PLATFORM_STATISTICS_SETTLEMENT_INCOME" property="platformStatisticsSettlementIncome" jdbcType="VARCHAR" />
+        <result column="TYPE" property="type" jdbcType="BIGINT" />
+        <result column="CHARGE" property="charge" jdbcType="VARCHAR" />
+        <result column="PROPORTION" property="proportion" jdbcType="VARCHAR" />
+        <result column="TAX_POINT" property="taxPoint" jdbcType="VARCHAR" />
+        <result column="RECONCILIATION_REMARKS" property="reconciliationRemarks" jdbcType="VARCHAR" />
+        <result column="ACTUAL_FENRUN_BASE" property="actualFenrunBase" jdbcType="VARCHAR" />
+        <result column="ACTUAL_TAX_FENRUN_EXPENDITURE" property="actualTaxFenrunExpenditure" jdbcType="VARCHAR" />
+        <result column="ACTUAL_TAX_FENRUN_INCOME" property="actualTaxFenrunIncome" jdbcType="VARCHAR" />
+        <result column="FENRUN_SETTLEMEN_TYPE" property="fenrunSettlemenType" jdbcType="BIGINT" />
+        <result column="SPOT_PARTS_MAINTENANCE" property="spotPartsMaintenance" jdbcType="VARCHAR" />
+        <result column="SPOT_SETTLEMEN_TYPE" property="spotSettlemenType" jdbcType="BIGINT" />
+        <result column="ACTUAL_SETTLEMEN_EXPENDITURE" property="actualSettlemenExpenditure" jdbcType="VARCHAR" />
+        <result column="ACTUAL_SETTLEMEN_INCOME" property="actualSettlemenIncome" jdbcType="VARCHAR" />
+        <result column="FENRUN_REMARKS" property="fenrunRemarks" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        FENRUN_SCENIC_SPOT_ID, SUBJECT_ID, COMPANY_ID, PAYEE, SCENIC_SPOT_ID,
+        PROFIT_SHARING_MONTH, WECHAT_PAYMENT_FLOW,STORED_VALUE_PAYMENT_FLOW, WECHAT_STORED_PAYMENT_FLOW, DEPOSIT_DEDUCTION_PAYMENT_FLOW,
+        TOTAL_AMOUNT,PLATFORM_FENRUN_BASE,PLATFORM_FENRUN_EXPENDITURE,PLATFORM_FENRUN_INCOME,PLATFORM_STATISTICS_PARTS_MAINTENANCE,PLATFORM_STATISTICS_SETTLEMENT_EXPENDITURE,
+        PLATFORM_STATISTICS_SETTLEMENT_INCOME,TYPE,CHARGE,PROPORTION,TAX_POINT,RECONCILIATION_REMARKS,ACTUAL_FENRUN_BASE,ACTUAL_TAX_FENRUN_EXPENDITURE,ACTUAL_TAX_FENRUN_INCOME,
+        FENRUN_SETTLEMEN_TYPE,SPOT_PARTS_MAINTENANCE,SPOT_SETTLEMEN_TYPE,ACTUAL_SETTLEMEN_EXPENDITURE,ACTUAL_SETTLEMEN_INCOME,FENRUN_REMARKS,CREATE_DATE,UPDATE_DATE
+    </sql>
+
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from SYS_SCENIC_SPOT_FENFUN
+        where FENRUN_SCENIC_SPOT_ID = #{fenrunScenicSpotId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from SYS_SCENIC_SPOT_FENFUN
+        where FENRUN_SCENIC_SPOT_ID = #{fenrunScenicSpotId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotFenfun" >
+        insert into SYS_SCENIC_SPOT_FENFUN
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="fenrunScenicSpotId != null" >
+                FENRUN_SCENIC_SPOT_ID,
+            </if>
+            <if test="subjectId != null" >
+                SUBJECT_ID,
+            </if>
+            <if test="companyId != null" >
+                COMPANY_ID,
+            </if>
+            <if test="payee != null" >
+                PAYEE,
+            </if>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="profitSharingMonth != null" >
+                PROFIT_SHARING_MONTH,
+            </if>
+            <if test="wechatPaymentFlow != null" >
+                WECHAT_PAYMENT_FLOW,
+            </if>
+            <if test="storedValuePaymentFlow != null" >
+                STORED_VALUE_PAYMENT_FLOW,
+            </if>
+            <if test="wechatStoredPaymentFlow != null" >
+                WECHAT_STORED_PAYMENT_FLOW,
+            </if>
+
+            <if test="depositDeductionPaymentFlow != null" >
+                DEPOSIT_DEDUCTION_PAYMENT_FLOW,
+            </if>
+            <if test="totalAmount != null" >
+                TOTAL_AMOUNT,
+            </if>
+            <if test="platformFenrunBase != null" >
+                PLATFORM_FENRUN_BASE,
+            </if>
+            <if test="platformFenrunExpenditure != null" >
+                PLATFORM_FENRUN_EXPENDITURE,
+            </if>
+            <if test="platformFenrunIncome != null" >
+                PLATFORM_FENRUN_INCOME,
+            </if>
+
+            <if test="platformStatisticsPartsMaintenance != null" >
+                PLATFORM_STATISTICS_PARTS_MAINTENANCE,
+            </if>
+            <if test="platformStatisticsSettlementExpenditure != null" >
+                PLATFORM_STATISTICS_SETTLEMENT_EXPENDITURE,
+            </if>
+            <if test="platformStatisticsSettlementIncome != null" >
+                PLATFORM_STATISTICS_SETTLEMENT_INCOME,
+            </if>
+            <if test="type != null" >
+                TYPE,
+            </if>
+            <if test="charge != null" >
+                CHARGE,
+            </if>
+
+            <if test="proportion != null" >
+                PROPORTION,
+            </if>
+            <if test="taxPoint != null" >
+                TAX_POINT,
+            </if>
+            <if test="reconciliationRemarks != null" >
+                RECONCILIATION_REMARKS,
+            </if>
+            <if test="actualFenrunBase != null" >
+                ACTUAL_FENRUN_BASE,
+            </if>
+            <if test="actualTaxFenrunExpenditure != null" >
+                ACTUAL_TAX_FENRUN_EXPENDITURE,
+            </if>
+
+            <if test="actualTaxFenrunIncome != null" >
+                ACTUAL_TAX_FENRUN_INCOME,
+            </if>
+            <if test="fenrunSettlemenType != null" >
+                FENRUN_SETTLEMEN_TYPE,
+            </if>
+            <if test="spotPartsMaintenance != null" >
+                SPOT_PARTS_MAINTENANCE,
+            </if>
+            <if test="spotSettlemenType != null" >
+                SPOT_SETTLEMEN_TYPE,
+            </if>
+            <if test="actualSettlemenExpenditure != null" >
+                ACTUAL_SETTLEMEN_EXPENDITURE,
+            </if>
+
+            <if test="actualSettlemenIncome != null" >
+                ACTUAL_SETTLEMEN_INCOME,
+            </if>
+            <if test="fenrunRemarks != null" >
+                FENRUN_REMARKS,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="fenrunScenicSpotId != null" >
+                #{fenrunScenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="subjectId != null" >
+                #{subjectId,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null" >
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="payee != null" >
+                #{payee,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotId != null" >
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="profitSharingMonth != null" >
+                #{profitSharingMonth,jdbcType=VARCHAR},
+            </if>
+            <if test="wechatPaymentFlow != null" >
+                #{wechatPaymentFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="storedValuePaymentFlow != null" >
+                #{storedValuePaymentFlow,jdbcType=VARCHAR},
+            </if>
+
+            <if test="wechatStoredPaymentFlow != null" >
+                #{wechatStoredPaymentFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="depositDeductionPaymentFlow != null" >
+                #{depositDeductionPaymentFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null" >
+                #{totalAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="platformFenrunBase != null" >
+                #{platformFenrunBase,jdbcType=VARCHAR},
+            </if>
+            <if test="platformFenrunExpenditure != null" >
+                #{platformFenrunExpenditure,jdbcType=VARCHAR},
+            </if>
+            <if test="platformFenrunIncome != null" >
+                #{platformFenrunIncome,jdbcType=VARCHAR},
+            </if>
+
+            <if test="platformStatisticsPartsMaintenance != null" >
+                #{platformStatisticsPartsMaintenance,jdbcType=VARCHAR},
+            </if>
+            <if test="platformStatisticsSettlementExpenditure != null" >
+                #{platformStatisticsSettlementExpenditure,jdbcType=VARCHAR},
+            </if>
+            <if test="platformStatisticsSettlementIncome != null" >
+                #{platformStatisticsSettlementIncome,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=BIGINT},
+            </if>
+            <if test="charge != null" >
+                #{charge,jdbcType=VARCHAR},
+            </if>
+            <if test="proportion != null" >
+                #{proportion,jdbcType=VARCHAR},
+            </if>
+
+            <if test="taxPoint != null" >
+                #{taxPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="reconciliationRemarks != null" >
+                #{reconciliationRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="actualFenrunBase != null" >
+                #{actualFenrunBase,jdbcType=VARCHAR},
+            </if>
+            <if test="actualTaxFenrunExpenditure != null" >
+                #{actualTaxFenrunExpenditure,jdbcType=BIGINT},
+            </if>
+            <if test="actualTaxFenrunIncome != null" >
+                #{actualTaxFenrunIncome,jdbcType=VARCHAR},
+            </if>
+            <if test="fenrunSettlemenType != null" >
+                #{fenrunSettlemenType,jdbcType=BIGINT},
+            </if>
+            <if test="spotPartsMaintenance != null" >
+                #{spotPartsMaintenance,jdbcType=VARCHAR},
+            </if>
+            <if test="spotSettlemenType != null" >
+                #{spotSettlemenType,jdbcType=VARCHAR},
+            </if>
+            <if test="actualSettlemenExpenditure != null" >
+                #{actualSettlemenExpenditure,jdbcType=VARCHAR},
+            </if>
+            <if test="actualSettlemenIncome != null" >
+                #{actualSettlemenIncome,jdbcType=VARCHAR},
+            </if>
+            <if test="fenrunRemarks != null" >
+                #{fenrunRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotFenfun" >
+        update SYS_SCENIC_SPOT_FENFUN
+        <set >
+            <if test="subjectId != null" >
+                SUBJECT_ID = #{subjectId,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null" >
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="payee != null" >
+                PAYEE = #{payee,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="profitSharingMonth != null" >
+                PROFIT_SHARING_MONTH = #{profitSharingMonth,jdbcType=VARCHAR},
+            </if>
+            <if test="wechatPaymentFlow != null" >
+                WECHAT_PAYMENT_FLOW = #{wechatPaymentFlow,jdbcType=VARCHAR},
+            </if>
+
+            <if test="storedValuePaymentFlow != null" >
+                STORED_VALUE_PAYMENT_FLOW = #{storedValuePaymentFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="wechatStoredPaymentFlow != null" >
+                WECHAT_STORED_PAYMENT_FLOW = #{wechatStoredPaymentFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="depositDeductionPaymentFlow != null" >
+                DEPOSIT_DEDUCTION_PAYMENT_FLOW = #{depositDeductionPaymentFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null" >
+                TOTAL_AMOUNT = #{totalAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="platformFenrunBase != null" >
+                PLATFORM_FENRUN_BASE = #{platformFenrunBase,jdbcType=VARCHAR},
+            </if>
+            <if test="platformFenrunExpenditure != null" >
+                PLATFORM_FENRUN_EXPENDITURE = #{platformFenrunExpenditure,jdbcType=VARCHAR},
+            </if>
+            <if test="platformFenrunIncome != null" >
+                PLATFORM_FENRUN_INCOME = #{platformFenrunIncome,jdbcType=VARCHAR},
+            </if>
+            <if test="platformStatisticsPartsMaintenance != null" >
+                PLATFORM_STATISTICS_PARTS_MAINTENANCE = #{platformStatisticsPartsMaintenance,jdbcType=VARCHAR},
+            </if>
+            <if test="platformStatisticsSettlementExpenditure != null" >
+                PLATFORM_STATISTICS_SETTLEMENT_EXPENDITURE = #{platformStatisticsSettlementExpenditure,jdbcType=VARCHAR},
+            </if>
+            <if test="platformStatisticsSettlementIncome != null" >
+                PLATFORM_STATISTICS_SETTLEMENT_INCOME = #{platformStatisticsSettlementIncome,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                TYPE = #{type,jdbcType=BIGINT},
+            </if>
+            <if test="charge != null" >
+                CHARGE = #{charge,jdbcType=VARCHAR},
+            </if>
+            <if test="proportion != null" >
+                PROPORTION = #{proportion,jdbcType=VARCHAR},
+            </if>
+            <if test="taxPoint != null" >
+                TAX_POINT = #{taxPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="reconciliationRemarks != null" >
+                RECONCILIATION_REMARKS = #{reconciliationRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="actualFenrunBase != null" >
+                ACTUAL_FENRUN_BASE = #{actualFenrunBase,jdbcType=VARCHAR},
+            </if>
+            <if test="actualTaxFenrunExpenditure != null" >
+                ACTUAL_TAX_FENRUN_EXPENDITURE = #{actualTaxFenrunExpenditure,jdbcType=VARCHAR},
+            </if>
+            <if test="actualTaxFenrunIncome != null" >
+                ACTUAL_TAX_FENRUN_INCOME = #{actualTaxFenrunIncome,jdbcType=VARCHAR},
+            </if>
+            <if test="fenrunSettlemenType != null" >
+                FENRUN_SETTLEMEN_TYPE = #{fenrunSettlemenType,jdbcType=BIGINT},
+            </if>
+            <if test="spotPartsMaintenance != null" >
+                SPOT_PARTS_MAINTENANCE = #{spotPartsMaintenance,jdbcType=VARCHAR},
+            </if>
+            <if test="spotSettlemenType != null" >
+                SPOT_SETTLEMEN_TYPE = #{spotSettlemenType,jdbcType=BIGINT},
+            </if>
+            <if test="actualSettlemenExpenditure != null" >
+                ACTUAL_SETTLEMEN_EXPENDITURE = #{actualSettlemenExpenditure,jdbcType=VARCHAR},
+            </if>
+            <if test="actualSettlemenIncome != null" >
+                ACTUAL_SETTLEMEN_INCOME = #{actualSettlemenIncome,jdbcType=VARCHAR},
+            </if>
+            <if test="fenrunRemarks != null" >
+                FENRUN_REMARKS = #{fenrunRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where FENRUN_SCENIC_SPOT_ID = #{fenrunScenicSpotId,jdbcType=BIGINT}
+    </update>
+
+
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotFenfun">
+        select sssf.*,sss.SCENIC_SPOT_NAME ,sssi.COMPANY_NAME,sssi.SUBJECT_NAME
+        from SYS_SCENIC_SPOT_FENFUN sssf
+        left join SYS_SCENIC_SPOT sss on sssf.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on sssf.COMPANY_ID = sssi.COMPANY_ID
+        <where>
+            <if test="subjectId != null and subjectId != ''">
+                and sssf.SUBJECT_ID = #{subjectId}
+            </if>
+            <if test="spotId != null and spotId != ''">
+                and sssf.SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+                and  STR_TO_DATE(sssf.PROFIT_SHARING_MONTH,'%Y-%m') BETWEEN STR_TO_DATE(#{startDate},'%Y-%m') and STR_TO_DATE(#{endDate}, '%Y-%m')
+            </if>
+            <if test="type != null and type != ''">
+                and sssf.FENRUN_SETTLEMEN_TYPE =#{type}
+            </if>
+            <if test="companyId != null and companyId !=''">
+                and  sssf.COMPANY_ID = #{companyId}
+            </if>
+        </where>
+
+        group by FENRUN_SCENIC_SPOT_ID
+    </select>
+
+    <select id="getAmountTo" resultType="java.util.Map">
+
+        select ROUND(SUM(wx),2) as wechatPaymentFlowTotal ,ROUND(SUM(svpf),2) as storedValuePaymentFlowTotal ,ROUND(SUM(wspf),2) as  wechatStoredPaymentFlowTotal ,ROUND(SUM(ddpf),2) as depositDeductionPaymentFlowTotal ,ROUND(SUM(ta),2) as totalAmountTotal ,
+               ROUND(SUM(pfb),2) as platformFenrunBaseTotal, ROUND(SUM(pfe),2) as platformFenrunExpenditureTotal , ROUND(SUM(pfi),2) as platformFenrunIncomeTotal ,ROUND(SUM(pspm),2) as platformStatisticsPartsMaintenanceTotal ,ROUND(SUM(psse),2) as platformStatisticsSettlementExpenditureTotal ,
+               ROUND(SUM(pssi),2) as platformStatisticsSettlementIncomeTotal ,ROUND(SUM(afb),2) as actualFenrunBaseTotal ,ROUND(SUM(atfe),2) as actualTaxFenrunExpenditureTotal ,ROUND(SUM(atfi),2) as actualTaxFenrunIncomeTotal ,ROUND(SUM(spm),2) as spotPartsMaintenanceTotal ,ROUND(SUM(ase),2) as actualSettlemenExpenditureTotal ,
+               ROUND(SUM(asi),2) as actualSettlemenIncome
+        from
+        (
+        select   WECHAT_PAYMENT_FLOW as wx, STORED_VALUE_PAYMENT_FLOW as svpf, WECHAT_STORED_PAYMENT_FLOW as wspf , DEPOSIT_DEDUCTION_PAYMENT_FLOW ddpf , TOTAL_AMOUNT as  ta , PLATFORM_FENRUN_BASE as pfb , PLATFORM_FENRUN_EXPENDITURE as pfe ,PLATFORM_FENRUN_INCOME as pfi , PLATFORM_STATISTICS_PARTS_MAINTENANCE as pspm , PLATFORM_STATISTICS_SETTLEMENT_EXPENDITURE as psse, PLATFORM_STATISTICS_SETTLEMENT_INCOME pssi, ACTUAL_FENRUN_BASE as afb , ACTUAL_TAX_FENRUN_EXPENDITURE as atfe ,ACTUAL_TAX_FENRUN_INCOME atfi , SPOT_PARTS_MAINTENANCE as spm , ACTUAL_SETTLEMEN_EXPENDITURE  as ase, ACTUAL_SETTLEMEN_INCOME as asi
+        from  SYS_SCENIC_SPOT_FENFUN
+        <where>
+            <if test="subjectId != null and subjectId != ''">
+                and SUBJECT_ID = #{subjectId}
+            </if>
+            <if test="spotId != null and spot8Id != ''">
+                and SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+                and  STR_TO_DATE(PROFIT_SHARING_MONTH,'%Y-%m') BETWEEN STR_TO_DATE(#{startDate},'%Y-%m') and STR_TO_DATE(#{endDate}, '%Y-%m')
+            </if>
+            <if test="type != null and type != ''">
+                and FENRUN_SETTLEMEN_TYPE =#{type}
+            </if>
+        </where>
+        GROUP BY SCENIC_SPOT_ID ORDER BY ta
+        ) as p
+
+    </select>
+
+    <select id="getSpotIdAndDateByOne" resultType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotFenfun">
+        select * from SYS_SCENIC_SPOT_FENFUN
+        where COMPANY_ID = #{companyId}
+        and SCENIC_SPOT_ID = #{spotId}
+        and PROFIT_SHARING_MONTH = #{month}
+    </select>
+
+
+
+
+
+
+
+
+
+</mapper>

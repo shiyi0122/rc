@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotVersionMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotVersion" >
+    <id column="ROBOT_VERSION_ID" property="robotVersionId" jdbcType="BIGINT" />
+    <result column="ROBOT_ID" property="robotId" jdbcType="BIGINT" />
+    <result column="ROBOT_VERSION_NUMBER" property="robotVersionNumber" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROBOT_VERSION_ID, ROBOT_ID, ROBOT_VERSION_NUMBER, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_VERSION
+    where ROBOT_VERSION_ID = #{robotVersionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_VERSION
+    where ROBOT_VERSION_ID = #{robotVersionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotVersion" >
+    insert into SYS_ROBOT_VERSION (ROBOT_VERSION_ID, ROBOT_ID, ROBOT_VERSION_NUMBER, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{robotVersionId,jdbcType=BIGINT}, #{robotId,jdbcType=BIGINT}, #{robotVersionNumber,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotVersion" >
+    insert into SYS_ROBOT_VERSION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="robotVersionId != null" >
+        ROBOT_VERSION_ID,
+      </if>
+      <if test="robotId != null" >
+        ROBOT_ID,
+      </if>
+      <if test="robotVersionNumber != null" >
+        ROBOT_VERSION_NUMBER,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="robotVersionId != null" >
+        #{robotVersionId,jdbcType=BIGINT},
+      </if>
+      <if test="robotId != null" >
+        #{robotId,jdbcType=BIGINT},
+      </if>
+      <if test="robotVersionNumber != null" >
+        #{robotVersionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotVersion" >
+    update SYS_ROBOT_VERSION
+    <set >
+      <if test="robotId != null" >
+        ROBOT_ID = #{robotId,jdbcType=BIGINT},
+      </if>
+      <if test="robotVersionNumber != null" >
+        ROBOT_VERSION_NUMBER = #{robotVersionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROBOT_VERSION_ID = #{robotVersionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotVersion" >
+    update SYS_ROBOT_VERSION
+    set ROBOT_ID = #{robotId,jdbcType=BIGINT},
+      ROBOT_VERSION_NUMBER = #{robotVersionNumber,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where ROBOT_VERSION_ID = #{robotVersionId,jdbcType=BIGINT}
+  </update>
+  <select id="getSysRobotVersionByRobotId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_VERSION
+    where ROBOT_ID = #{robotId}
+  </select>
+</mapper>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessUsersScenicSpotMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.business.model.BusinessUsersScenicSpot" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="CONTRACT_ID" property="contractId" jdbcType="BIGINT" />
+    <result column="DIVIDEND_RATIO" property="dividendRatio" jdbcType="VARCHAR" />
+    <result column="REAL_TYPE" property="realType" jdbcType="VARCHAR" />
+    <result column="SWITCH_TYPE" property="switchType" jdbcType="VARCHAR" />
+    <result column="TOTAL_NUM" property="totalNum" jdbcType="VARCHAR" />
+    <result column="COOPERATION_TYPE" property="cooperationType" jdbcType="BIT" />
+    <result column="CONTRACT_START_TIME" property="contractStartTime" jdbcType="VARCHAR" />
+    <result column="CONTRACT_END_TIME" property="contractEndTime" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, SCENIC_SPOT_ID, CONTRACT_ID, DIVIDEND_RATIO, REAL_TYPE, SWITCH_TYPE, 
+    TOTAL_NUM, COOPERATION_TYPE, CONTRACT_START_TIME, CONTRACT_END_TIME, CREATE_TIME, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BUSINESS_USERS_SCENIC_SPOT
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BUSINESS_USERS_SCENIC_SPOT
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.business.model.BusinessUsersScenicSpot" >
+    insert into BUSINESS_USERS_SCENIC_SPOT (ID, USER_ID, SCENIC_SPOT_ID, 
+      CONTRACT_ID, DIVIDEND_RATIO, REAL_TYPE, 
+      SWITCH_TYPE, TOTAL_NUM, COOPERATION_TYPE, 
+      CONTRACT_START_TIME, CONTRACT_END_TIME, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, 
+      #{contractId,jdbcType=BIGINT}, #{dividendRatio,jdbcType=VARCHAR}, #{realType,jdbcType=VARCHAR}, 
+      #{switchType,jdbcType=VARCHAR}, #{totalNum,jdbcType=VARCHAR}, #{cooperationType,jdbcType=BIT}, 
+      #{contractStartTime,jdbcType=VARCHAR}, #{contractEndTime,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessUsersScenicSpot" >
+    insert into BUSINESS_USERS_SCENIC_SPOT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="contractId != null" >
+        CONTRACT_ID,
+      </if>
+      <if test="dividendRatio != null" >
+        DIVIDEND_RATIO,
+      </if>
+      <if test="realType != null" >
+        REAL_TYPE,
+      </if>
+      <if test="switchType != null" >
+        SWITCH_TYPE,
+      </if>
+      <if test="totalNum != null" >
+        TOTAL_NUM,
+      </if>
+      <if test="cooperationType != null" >
+        COOPERATION_TYPE,
+      </if>
+      <if test="contractStartTime != null" >
+        CONTRACT_START_TIME,
+      </if>
+      <if test="contractEndTime != null" >
+        CONTRACT_END_TIME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="contractId != null" >
+        #{contractId,jdbcType=BIGINT},
+      </if>
+      <if test="dividendRatio != null" >
+        #{dividendRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="realType != null" >
+        #{realType,jdbcType=VARCHAR},
+      </if>
+      <if test="switchType != null" >
+        #{switchType,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNum != null" >
+        #{totalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cooperationType != null" >
+        #{cooperationType,jdbcType=BIT},
+      </if>
+      <if test="contractStartTime != null" >
+        #{contractStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="contractEndTime != null" >
+        #{contractEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessUsersScenicSpot" >
+    update BUSINESS_USERS_SCENIC_SPOT
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="contractId != null" >
+        CONTRACT_ID = #{contractId,jdbcType=BIGINT},
+      </if>
+      <if test="dividendRatio != null" >
+        DIVIDEND_RATIO = #{dividendRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="realType != null" >
+        REAL_TYPE = #{realType,jdbcType=VARCHAR},
+      </if>
+      <if test="switchType != null" >
+        SWITCH_TYPE = #{switchType,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNum != null" >
+        TOTAL_NUM = #{totalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cooperationType != null" >
+        COOPERATION_TYPE = #{cooperationType,jdbcType=BIT},
+      </if>
+      <if test="contractStartTime != null" >
+        CONTRACT_START_TIME = #{contractStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="contractEndTime != null" >
+        CONTRACT_END_TIME = #{contractEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.business.model.BusinessUsersScenicSpot" >
+    update BUSINESS_USERS_SCENIC_SPOT
+    set USER_ID = #{userId,jdbcType=BIGINT},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      CONTRACT_ID = #{contractId,jdbcType=BIGINT},
+      DIVIDEND_RATIO = #{dividendRatio,jdbcType=VARCHAR},
+      REAL_TYPE = #{realType,jdbcType=VARCHAR},
+      SWITCH_TYPE = #{switchType,jdbcType=VARCHAR},
+      TOTAL_NUM = #{totalNum,jdbcType=VARCHAR},
+      COOPERATION_TYPE = #{cooperationType,jdbcType=BIT},
+      CONTRACT_START_TIME = #{contractStartTime,jdbcType=VARCHAR},
+      CONTRACT_END_TIME = #{contractEndTime,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getBusinessUsersScenicSpot" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from BUSINESS_USERS_SCENIC_SPOT
+    where USER_ID = #{userId}
+    AND SCENIC_SPOT_ID = #{scenicSpotId}
+  </select>
+  <select id="getBusinessUsersScenicSpotsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	t.CREATE_TIME,
+	t.USER_NAME AS userName,
+	t.SCENIC_SPOT_NAME AS scenicSpotName,
+    t.totalAmount AS totalAmount,
+    t.amount AS amount,
+    t.createTime AS createDate,
+    t.ID,
+    t.USER_ID,
+    t.SCENIC_SPOT_ID,
+    t.CONTRACT_ID,
+    t.DIVIDEND_RATIO,
+    t.REAL_TYPE,
+    t.SWITCH_TYPE,
+    t.TOTAL_NUM,
+    t.COOPERATION_TYPE,
+    t.CONTRACT_START_TIME,
+    t.CONTRACT_END_TIME,
+    t.CREATE_TIME,
+    t.UPDATE_TIME
+    FROM (SELECT
+          A.ID,
+          A.USER_ID,
+          A.SCENIC_SPOT_ID,
+          A.CONTRACT_ID,
+          A.DIVIDEND_RATIO,
+          A.REAL_TYPE,
+          A.SWITCH_TYPE,
+          A.TOTAL_NUM,
+          A.COOPERATION_TYPE,
+          A.CONTRACT_START_TIME,
+          A.CONTRACT_END_TIME,
+          A.CREATE_TIME,
+          A.UPDATE_TIME,
+          B.USER_NAME,
+          C.SCENIC_SPOT_NAME,
+          (SELECT SUM(AMOUNT) FROM BUSINESS_USERS_REVENUE_LOGS WHERE OBJECT_ID = A.SCENIC_SPOT_ID AND USER_ID = A.USER_ID AND REAL_TYPE = 1) AS totalAmount,
+          (SELECT AMOUNT FROM BUSINESS_USERS_REVENUE_LOGS WHERE OBJECT_ID = A.SCENIC_SPOT_ID AND USER_ID = A.USER_ID AND REAL_TYPE = 1 ORDER BY CREATE_TIME DESC LIMIT 1) AS amount,
+          (SELECT CREATE_TIME FROM BUSINESS_USERS_REVENUE_LOGS WHERE OBJECT_ID = A.SCENIC_SPOT_ID AND USER_ID = A.USER_ID AND REAL_TYPE = 1 ORDER BY CREATE_TIME DESC LIMIT 1) AS createTime
+          FROM
+          BUSINESS_USERS_SCENIC_SPOT A
+          LEFT JOIN BUSINESS_USERS B ON A.USER_ID = B.ID
+          LEFT JOIN SYS_SCENIC_SPOT C ON A.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+          <where>
+            1=1
+            <if test="userId != null and userId != ''">
+              and  A.USER_ID = #{userId}
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName != ''">
+              and  C.SCENIC_SPOT_NAME like CONCAT('%',#{scenicSpotName},'%')
+            </if>
+          </where>
+	) AS t
+    ORDER BY t.CREATE_TIME DESC
+  </select>
+</mapper>

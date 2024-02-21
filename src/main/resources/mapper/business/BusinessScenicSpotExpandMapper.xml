@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessScenicSpotExpandMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.business.model.BusinessScenicSpotExpand" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="IMAGE_ID" property="imageId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_AREA" property="scenicSpotArea" jdbcType="VARCHAR" />
+    <result column="REVENUE_YEAR" property="revenueYear" jdbcType="DECIMAL" />
+    <result column="REWARD_RATE" property="rewardRate" jdbcType="INTEGER" />
+    <result column="REAL_DATA" property="realData" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.business.model.BusinessScenicSpotExpand" extends="BaseResultMap" >
+    <result column="SCENIC_SPOT_INTRODUCE" property="scenicSpotIntroduce" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SCENIC_SPOT_ID, IMAGE_ID, SCENIC_SPOT_AREA, REVENUE_YEAR, REWARD_RATE, REAL_DATA, 
+    CREATE_TIME, UPDATE_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    SCENIC_SPOT_INTRODUCE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from BUSINESS_SCENIC_SPOT_EXPAND
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BUSINESS_SCENIC_SPOT_EXPAND
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.business.model.BusinessScenicSpotExpand" >
+    insert into BUSINESS_SCENIC_SPOT_EXPAND (ID, SCENIC_SPOT_ID, IMAGE_ID, 
+      SCENIC_SPOT_AREA, REVENUE_YEAR, REWARD_RATE, 
+      REAL_DATA, CREATE_TIME, UPDATE_TIME, 
+      SCENIC_SPOT_INTRODUCE)
+    values (#{id,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{imageId,jdbcType=BIGINT}, 
+      #{scenicSpotArea,jdbcType=VARCHAR}, #{revenueYear,jdbcType=DECIMAL}, #{rewardRate,jdbcType=INTEGER}, 
+      #{realData,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR},
+      #{scenicSpotIntroduce,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessScenicSpotExpand" >
+    insert into BUSINESS_SCENIC_SPOT_EXPAND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="imageId != null" >
+        IMAGE_ID,
+      </if>
+      <if test="scenicSpotArea != null" >
+        SCENIC_SPOT_AREA,
+      </if>
+      <if test="revenueYear != null" >
+        REVENUE_YEAR,
+      </if>
+      <if test="rewardRate != null" >
+        REWARD_RATE,
+      </if>
+      <if test="realData != null" >
+        REAL_DATA,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="scenicSpotIntroduce != null" >
+        SCENIC_SPOT_INTRODUCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="imageId != null" >
+        #{imageId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotArea != null" >
+        #{scenicSpotArea,jdbcType=VARCHAR},
+      </if>
+      <if test="revenueYear != null" >
+        #{revenueYear,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardRate != null" >
+        #{rewardRate,jdbcType=INTEGER},
+      </if>
+      <if test="realData != null" >
+        #{realData,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotIntroduce != null" >
+        #{scenicSpotIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessScenicSpotExpand" >
+    update BUSINESS_SCENIC_SPOT_EXPAND
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="imageId != null" >
+        IMAGE_ID = #{imageId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotArea != null" >
+        SCENIC_SPOT_AREA = #{scenicSpotArea,jdbcType=VARCHAR},
+      </if>
+      <if test="revenueYear != null" >
+        REVENUE_YEAR = #{revenueYear,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardRate != null" >
+        REWARD_RATE = #{rewardRate,jdbcType=INTEGER},
+      </if>
+      <if test="realData != null" >
+        REAL_DATA = #{realData,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotIntroduce != null" >
+        SCENIC_SPOT_INTRODUCE = #{scenicSpotIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.business.model.BusinessScenicSpotExpand" >
+    update BUSINESS_SCENIC_SPOT_EXPAND
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      IMAGE_ID = #{imageId,jdbcType=BIGINT},
+      SCENIC_SPOT_AREA = #{scenicSpotArea,jdbcType=VARCHAR},
+      REVENUE_YEAR = #{revenueYear,jdbcType=DECIMAL},
+      REWARD_RATE = #{rewardRate,jdbcType=INTEGER},
+      REAL_DATA = #{realData,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      SCENIC_SPOT_INTRODUCE = #{scenicSpotIntroduce,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.business.model.BusinessScenicSpotExpand" >
+    update BUSINESS_SCENIC_SPOT_EXPAND
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      IMAGE_ID = #{imageId,jdbcType=BIGINT},
+      SCENIC_SPOT_AREA = #{scenicSpotArea,jdbcType=VARCHAR},
+      REVENUE_YEAR = #{revenueYear,jdbcType=DECIMAL},
+      REWARD_RATE = #{rewardRate,jdbcType=INTEGER},
+      REAL_DATA = #{realData,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getScenicSpotExpandList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+	A.ID,
+	A.SCENIC_SPOT_ID,
+	A.IMAGE_ID,
+	A.SCENIC_SPOT_AREA,
+	A.REVENUE_YEAR,
+	A.REWARD_RATE,
+	A.REAL_DATA,
+	A.CREATE_TIME,
+	A.UPDATE_TIME,
+	A.SCENIC_SPOT_INTRODUCE,
+	B.SCENIC_SPOT_NAME AS scenicSpotName,
+	C.PROVINCE_ID AS provinceId,
+	C.CITY_ID AS cityId,
+	C.REGION_ID AS regionId
+    FROM
+	BUSINESS_SCENIC_SPOT_EXPAND A
+	LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+	LEFT JOIN BUSINESS_SCENIC_SPOT_AREA C ON A.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+    </where>
+	ORDER BY A.CREATE_TIME DESC
+  </select>
+  <select id="selectScenicSpotExpandByScenicId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from BUSINESS_SCENIC_SPOT_EXPAND
+    where SCENIC_SPOT_ID = #{scenicSpotId}
+  </select>
+  <select id="getScenicSpot" resultMap="ResultMapWithBLOBs">
+  	SELECT
+	sss.SCENIC_SPOT_NAME AS scenicSpotName,
+	sss.SCENIC_SPOT_ID 
+	FROM
+	SYS_SCENIC_SPOT sss
+	LEFT JOIN BUSINESS_SCENIC_SPOT_EXPAND bsse ON
+	sss.SCENIC_SPOT_ID = bsse.SCENIC_SPOT_ID
+	where
+	bsse.SCENIC_SPOT_ID is null
+  </select>
+  <select id="getScenicSpotExpandListByUserId" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+      A.ID,
+      A.SCENIC_SPOT_ID,
+      A.IMAGE_ID,
+      A.SCENIC_SPOT_AREA,
+      A.REVENUE_YEAR,
+      A.REWARD_RATE,
+      A.REAL_DATA,
+      A.CREATE_TIME,
+      A.UPDATE_TIME,
+      A.SCENIC_SPOT_INTRODUCE,
+      B.SCENIC_SPOT_NAME AS scenicSpotName,
+      C.PROVINCE_ID AS provinceId,
+      C.CITY_ID AS cityId,
+      C.REGION_ID AS regionId
+    FROM
+      BUSINESS_SCENIC_SPOT_EXPAND A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        LEFT JOIN BUSINESS_SCENIC_SPOT_AREA C ON A.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+        LEFT JOIN BUSINESS_USERS_SCENIC_SPOT D ON A.SCENIC_SPOT_ID = D.SCENIC_SPOT_ID
+    <where>
+      AND D.USER_ID = #{userId}
+    </where>
+    ORDER BY
+      A.CREATE_TIME DESC
+  </select>
+
+  <update id="updateByPrimaryKeySelectiveBySpotId" parameterType="com.hna.hka.archive.management.business.model.BusinessScenicSpotExpand" >
+    update BUSINESS_SCENIC_SPOT_EXPAND
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="imageId != null" >
+        IMAGE_ID = #{imageId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotArea != null" >
+        SCENIC_SPOT_AREA = #{scenicSpotArea,jdbcType=VARCHAR},
+      </if>
+      <if test="revenueYear != null" >
+        REVENUE_YEAR = #{revenueYear,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardRate != null" >
+        REWARD_RATE = #{rewardRate,jdbcType=INTEGER},
+      </if>
+      <if test="realData != null" >
+        REAL_DATA = #{realData,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotIntroduce != null" >
+        SCENIC_SPOT_INTRODUCE = #{scenicSpotIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteBySpotId" parameterType="java.lang.Long">
+    delete from BUSINESS_SCENIC_SPOT_EXPAND
+    where SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT}
+  </delete>
+
+
+
+
+</mapper>

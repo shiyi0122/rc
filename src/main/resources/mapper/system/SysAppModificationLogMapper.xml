@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysAppModificationLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysAppModificationLog" >
+    <id column="MODIFICATION_LOG_ID" property="modificationLogId" jdbcType="BIGINT" />
+    <result column="MODIFICATION_LOG_LOGIN_NAME" property="modificationLogLoginName" jdbcType="VARCHAR" />
+    <result column="MODIFICATION_LOG_ROBOT_CODE" property="modificationLogRobotCode" jdbcType="VARCHAR" />
+    <result column="MODIFICATION_LOG_FRONT" property="modificationLogFront" jdbcType="VARCHAR" />
+    <result column="MODIFICATION_LOG_AFTER" property="modificationLogAfter" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MODIFICATION_LOG_ID, MODIFICATION_LOG_LOGIN_NAME, MODIFICATION_LOG_ROBOT_CODE, MODIFICATION_LOG_FRONT, 
+    MODIFICATION_LOG_AFTER, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_APP_MODIFICATION_LOG
+    where MODIFICATION_LOG_ID = #{modificationLogId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_APP_MODIFICATION_LOG
+    where MODIFICATION_LOG_ID = #{modificationLogId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysAppModificationLog" >
+    insert into SYS_APP_MODIFICATION_LOG (MODIFICATION_LOG_ID, MODIFICATION_LOG_LOGIN_NAME, 
+      MODIFICATION_LOG_ROBOT_CODE, MODIFICATION_LOG_FRONT, 
+      MODIFICATION_LOG_AFTER, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{modificationLogId,jdbcType=BIGINT}, #{modificationLogLoginName,jdbcType=VARCHAR}, 
+      #{modificationLogRobotCode,jdbcType=VARCHAR}, #{modificationLogFront,jdbcType=VARCHAR}, 
+      #{modificationLogAfter,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysAppModificationLog" >
+    insert into SYS_APP_MODIFICATION_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="modificationLogId != null" >
+        MODIFICATION_LOG_ID,
+      </if>
+      <if test="modificationLogLoginName != null" >
+        MODIFICATION_LOG_LOGIN_NAME,
+      </if>
+      <if test="modificationLogRobotCode != null" >
+        MODIFICATION_LOG_ROBOT_CODE,
+      </if>
+      <if test="modificationLogFront != null" >
+        MODIFICATION_LOG_FRONT,
+      </if>
+      <if test="modificationLogAfter != null" >
+        MODIFICATION_LOG_AFTER,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="modificationLogId != null" >
+        #{modificationLogId,jdbcType=BIGINT},
+      </if>
+      <if test="modificationLogLoginName != null" >
+        #{modificationLogLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationLogRobotCode != null" >
+        #{modificationLogRobotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationLogFront != null" >
+        #{modificationLogFront,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationLogAfter != null" >
+        #{modificationLogAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysAppModificationLog" >
+    update SYS_APP_MODIFICATION_LOG
+    <set >
+      <if test="modificationLogLoginName != null" >
+        MODIFICATION_LOG_LOGIN_NAME = #{modificationLogLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationLogRobotCode != null" >
+        MODIFICATION_LOG_ROBOT_CODE = #{modificationLogRobotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationLogFront != null" >
+        MODIFICATION_LOG_FRONT = #{modificationLogFront,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationLogAfter != null" >
+        MODIFICATION_LOG_AFTER = #{modificationLogAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MODIFICATION_LOG_ID = #{modificationLogId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysAppModificationLog" >
+    update SYS_APP_MODIFICATION_LOG
+    set MODIFICATION_LOG_LOGIN_NAME = #{modificationLogLoginName,jdbcType=VARCHAR},
+      MODIFICATION_LOG_ROBOT_CODE = #{modificationLogRobotCode,jdbcType=VARCHAR},
+      MODIFICATION_LOG_FRONT = #{modificationLogFront,jdbcType=VARCHAR},
+      MODIFICATION_LOG_AFTER = #{modificationLogAfter,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where MODIFICATION_LOG_ID = #{modificationLogId,jdbcType=BIGINT}
+  </update>
+  <select id="getAppModificationLogList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_APP_MODIFICATION_LOG
+    <where>
+      <if test="modificationLogRobotCode != null and modificationLogRobotCode != ''">
+        AND MODIFICATION_LOG_ROBOT_CODE LIKE CONCAT('%',#{modificationLogRobotCode},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

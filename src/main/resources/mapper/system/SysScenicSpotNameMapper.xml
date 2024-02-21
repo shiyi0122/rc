@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotNameMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotName" >
+    <id column="SCENIC_SPOT_NAME_ID" property="scenicSpotNameId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SCENIC_SPOT_NAME_ID, SCENIC_SPOT_NAME, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_NAME
+    where SCENIC_SPOT_NAME_ID = #{scenicSpotNameId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_NAME
+    where SCENIC_SPOT_NAME_ID = #{scenicSpotNameId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotName" >
+    insert into SYS_SCENIC_SPOT_NAME (SCENIC_SPOT_NAME_ID, SCENIC_SPOT_NAME, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{scenicSpotNameId,jdbcType=BIGINT}, #{scenicSpotName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotName" >
+    insert into SYS_SCENIC_SPOT_NAME
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scenicSpotNameId != null" >
+        SCENIC_SPOT_NAME_ID,
+      </if>
+      <if test="scenicSpotName != null" >
+        SCENIC_SPOT_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scenicSpotNameId != null" >
+        #{scenicSpotNameId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotName != null" >
+        #{scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotName" >
+    update SYS_SCENIC_SPOT_NAME
+    <set >
+      <if test="scenicSpotName != null" >
+        SCENIC_SPOT_NAME = #{scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SCENIC_SPOT_NAME_ID = #{scenicSpotNameId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotName" >
+    update SYS_SCENIC_SPOT_NAME
+    set SCENIC_SPOT_NAME = #{scenicSpotName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where SCENIC_SPOT_NAME_ID = #{scenicSpotNameId,jdbcType=BIGINT}
+  </update>
+  <select id="getScenicSpotNameList" resultMap="BaseResultMap" parameterType="java.util.Map">
+
+  </select>
+</mapper>

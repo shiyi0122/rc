@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysAppFlowPathDetailsMapper">
+
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPathDetails">
+        insert into SYS_APP_FLOW_PATH_DETAILS
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="flowPathId != null" >
+                FLOW_PATH_ID,
+            </if>
+            <if test="sysAppUserId != null" >
+                SYS_APP_USER_ID,
+            </if>
+            <if test="sort != null" >
+                SORT,
+            </if>
+            <if test="type != null" >
+                TYPE,
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="flowPathId != null" >
+                #{flowPathId,jdbcType=BIGINT},
+            </if>
+            <if test="sysAppUserId != null" >
+                #{sysAppUserId,jdbcType=BIGINT},
+            </if>
+            <if test="sort != null" >
+                #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPathDetails">
+
+        update SYS_APP_FLOW_PATH_DETAILS
+        <set >
+            <if test="flowPathId != null" >
+                FLOW_PATH_ID = #{flowPathId,jdbcType=BIGINT},
+            </if>
+            <if test="sysAppUserId != null" >
+                SYS_APP_USER_ID = #{sysAppUserId,jdbcType=BIGINT},
+            </if>
+            <if test="sort != null" >
+                SORT = #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                TYPE = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from SYS_APP_FLOW_PATH_DETAILS
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByFlowPathId" parameterType="java.lang.Long">
+        delete from SYS_APP_FLOW_PATH_DETAILS
+        where FLOW_PATH_ID = #{flowPathId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="selectFlowPathIdByList" resultType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPathDetails">
+        select safpd.*,sau.USER_NAME
+        from SYS_APP_FLOW_PATH_DETAILS safpd
+        left join SYS_APP_USERS sau
+        on safpd.SYS_APP_USER_ID = sau.USER_ID
+        <where>
+            1 = 1
+            <if test="flowPathId != null and flowPathId != ''">
+               and  FLOW_PATH_ID = #{flowPathId}
+            </if>
+            <if test="flowPathType != null and flowPathType != ''">
+               and SORT = #{flowPathType}
+            </if>
+            <if test="type != null and type != ''">
+                and   TYPE = #{type}
+            </if>
+        </where>
+        order by SORT ASC
+    </select>
+
+    <select id="selectFlowPathIdByNumber" resultType="java.lang.Long">
+        select COUNT(0)
+        from   SYS_APP_FLOW_PATH_DETAILS
+        where  FLOW_PATH_ID = #{flowPathId}
+        and    TYPE = #{type}
+    </select>
+
+    <select id="getAppFlowPathIdByPeople" resultType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPathDetails">
+        select *
+        from SYS_APP_FLOW_PATH_DETAILS safpd
+        left join SYS_APP_USERS sau
+        on safpd.SYS_APP_USER_ID = sau.USER_ID
+        where FLOW_PATH_ID = #{id}
+        order by SORT ASC
+    </select>
+
+
+    <select id="getErrorRecordApprovalResults" resultType="com.hna.hka.archive.management.assetsSystem.model.SysAppFlowPathDetails">
+        SELECT
+        safpd.*,
+        sau.USER_NAME ,
+        sreral.APPROVAL_RESULTS,
+        sreral.REASON
+        FROM
+        SYS_APP_FLOW_PATH_DETAILS safpd
+        LEFT JOIN SYS_APP_USERS sau ON safpd.SYS_APP_USER_ID = sau.USER_ID
+        LEFT JOIN (select * from SYS_ROBOT_ERROR_RECORDS_APPROVAL_LOG where ROBOT_ERROR_RECORDS_ID = #{errorRecordsId}) sreral ON safpd.SYS_APP_USER_ID = sreral.APPROVED_USER
+        <where>
+            1 = 1
+            <if test="flowPathId != null and flowPathId != ''">
+                and  safpd.FLOW_PATH_ID = #{flowPathId}
+            </if>
+<!--            <if test="errorRecordsId != null and errorRecordsId != ''">-->
+<!--                and  sreral.ROBOT_ERROR_RECORDS_ID = #{errorRecordsId}-->
+<!--            </if>-->
+            and safpd.TYPE = #{type}
+        </where>
+        order by SORT ASC
+    </select>
+
+</mapper>

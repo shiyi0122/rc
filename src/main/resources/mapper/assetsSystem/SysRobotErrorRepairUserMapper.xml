@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotErrorRepairUserMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRepairUser" >
+    <id column="ERROR_REPAIR_USER_ID" property="errorRepairUserId" jdbcType="BIGINT" />
+    <result column="ERROR_ID" property="errorId" jdbcType="BIGINT" />
+    <result column="REPAIR_ID" property="repairId" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ERROR_REPAIR_USER_ID, ERROR_ID, REPAIR_ID, USER_ID, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_ERROR_REPAIR_USER
+    where ERROR_REPAIR_USER_ID = #{errorRepairUserId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_ERROR_REPAIR_USER
+    where ERROR_REPAIR_USER_ID = #{errorRepairUserId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRepairUser" >
+    insert into SYS_ROBOT_ERROR_REPAIR_USER (ERROR_REPAIR_USER_ID, ERROR_ID, REPAIR_ID, 
+      USER_ID, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{errorRepairUserId,jdbcType=BIGINT}, #{errorId,jdbcType=BIGINT}, #{repairId,jdbcType=BIGINT}, 
+      #{userId,jdbcType=BIGINT}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRepairUser" >
+    insert into SYS_ROBOT_ERROR_REPAIR_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="errorRepairUserId != null" >
+        ERROR_REPAIR_USER_ID,
+      </if>
+      <if test="errorId != null" >
+        ERROR_ID,
+      </if>
+      <if test="repairId != null" >
+        REPAIR_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="errorRepairUserId != null" >
+        #{errorRepairUserId,jdbcType=BIGINT},
+      </if>
+      <if test="errorId != null" >
+        #{errorId,jdbcType=BIGINT},
+      </if>
+      <if test="repairId != null" >
+        #{repairId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRepairUser" >
+    update SYS_ROBOT_ERROR_REPAIR_USER
+    <set >
+      <if test="errorId != null" >
+        ERROR_ID = #{errorId,jdbcType=BIGINT},
+      </if>
+      <if test="repairId != null" >
+        REPAIR_ID = #{repairId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ERROR_REPAIR_USER_ID = #{errorRepairUserId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRepairUser" >
+    update SYS_ROBOT_ERROR_REPAIR_USER
+    set ERROR_ID = #{errorId,jdbcType=BIGINT},
+      REPAIR_ID = #{repairId,jdbcType=BIGINT},
+      USER_ID = #{userId,jdbcType=BIGINT},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where ERROR_REPAIR_USER_ID = #{errorRepairUserId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotErrorRepairUser" resultMap="BaseResultMap" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRepairUser">
+    SELECT
+      ERROR_REPAIR_USER_ID,
+      ERROR_ID,
+      REPAIR_ID,
+      USER_ID,
+      CREATE_DATE,
+      UPDATE_DATE
+    FROM
+      SYS_ROBOT_ERROR_REPAIR_USER
+    WHERE
+      ERROR_ID = #{errorId}
+  </select>
+</mapper>

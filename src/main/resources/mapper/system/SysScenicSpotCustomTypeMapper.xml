@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotCustomTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotCustomType" >
+    <id column="TYPE_ID" property="typeId" jdbcType="BIGINT" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME_VALUE" property="typeNameValue" jdbcType="VARCHAR" />
+    <result column="TYPE_RES_ID" property="typeResId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TYPE_ID, TYPE_NAME, TYPE_NAME_VALUE, TYPE_RES_ID, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_CUSTOM_TYPE
+    where TYPE_ID = #{typeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_CUSTOM_TYPE
+    where TYPE_ID = #{typeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCustomType" >
+    insert into SYS_SCENIC_SPOT_CUSTOM_TYPE (TYPE_ID, TYPE_NAME, TYPE_NAME_VALUE, 
+      TYPE_RES_ID, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{typeId,jdbcType=BIGINT}, #{typeName,jdbcType=VARCHAR}, #{typeNameValue,jdbcType=VARCHAR}, 
+      #{typeResId,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCustomType" >
+    insert into SYS_SCENIC_SPOT_CUSTOM_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME,
+      </if>
+      <if test="typeNameValue != null" >
+        TYPE_NAME_VALUE,
+      </if>
+      <if test="typeResId != null" >
+        TYPE_RES_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="typeId != null" >
+        #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeNameValue != null" >
+        #{typeNameValue,jdbcType=VARCHAR},
+      </if>
+      <if test="typeResId != null" >
+        #{typeResId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCustomType" >
+    update SYS_SCENIC_SPOT_CUSTOM_TYPE
+    <set >
+      <if test="typeName != null" >
+        TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeNameValue != null" >
+        TYPE_NAME_VALUE = #{typeNameValue,jdbcType=VARCHAR},
+      </if>
+      <if test="typeResId != null" >
+        TYPE_RES_ID = #{typeResId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TYPE_ID = #{typeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCustomType" >
+    update SYS_SCENIC_SPOT_CUSTOM_TYPE
+    set TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      TYPE_NAME_VALUE = #{typeNameValue,jdbcType=VARCHAR},
+      TYPE_RES_ID = #{typeResId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where TYPE_ID = #{typeId,jdbcType=BIGINT}
+  </update>
+  <select id="getCustomTypeList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_CUSTOM_TYPE
+    WHERE (TYPE_RES_ID = 1 OR TYPE_RES_ID = 2)
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <select id="getCustomTypeById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_CUSTOM_TYPE
+    WHERE TYPE_NAME_VALUE = #{sysScenicSpotCustomType.typeNameValue}
+    AND TYPE_RES_ID = #{sysScenicSpotCustomType.typeResId}
+  </select>
+  <select id="getCueToneTypeList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_CUSTOM_TYPE
+    WHERE TYPE_RES_ID = 3
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <select id="getCustomTypeByType" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    SYS_SCENIC_SPOT_CUSTOM_TYPE
+    WHERE
+    TYPE_RES_ID = 3
+    AND TYPE_NAME_VALUE = #{typeNameValue}
+  </select>
+  <select id="selectCustomTypeByType" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    SYS_SCENIC_SPOT_CUSTOM_TYPE
+    WHERE
+    TYPE_NAME_VALUE = #{serviceType }
+    AND TYPE_RES_ID = 2
+  </select>
+  <select id="selectCustomType" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    SYS_SCENIC_SPOT_CUSTOM_TYPE
+    WHERE TYPE_RES_ID = 2
+  </select>
+  <select id="getCueToneTypeByResId" resultMap="BaseResultMap">
+  	SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    SYS_SCENIC_SPOT_CUSTOM_TYPE
+    WHERE TYPE_RES_ID = 1
+  </select>
+</mapper>

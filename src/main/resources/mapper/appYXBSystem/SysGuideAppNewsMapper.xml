@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.appYXBSystem.dao.SysGuideAppNewsMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppNews" >
+    <id column="GUIDE_ID" property="guideId" jdbcType="BIGINT" />
+    <result column="GUIDE_USER_ID" property="guideUserId" jdbcType="BIGINT" />
+    <result column="GUIDE_TITLE" property="guideTitle" jdbcType="VARCHAR" />
+    <result column="GUIDE_CONTENT" property="guideContent" jdbcType="VARCHAR" />
+    <result column="GUIDE_STATE" property="guideState" jdbcType="VARCHAR"/>
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    GUIDE_ID,GUIDE_USER_ID,GUIDE_TITLE,GUIDE_CONTENT,GUIDE_STATE,CREATE_DATE,UPDATE_DATE
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from SYS_GUIDE_APP_NEWS
+    where GUIDE_ID = #{guideId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_GUIDE_APP_NEWS
+    where GUIDE_ID = #{guideId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppNews" >
+    insert into SYS_GUIDE_APP_NEWS (
+    GUIDE_USER_ID, GUIDE_TITLE, GUIDE_CONTENT,
+    GUIDE_STATE, CREATE_DATE,UPDATE_DATE)
+    values (#{guideUserId,jdbcType=BIGINT}, #{guideTitle,jdbcType=BIGINT}, #{guideContent,jdbcType=BIGINT},
+    #{guideState,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR},#{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppNews" >
+    insert into SYS_GUIDE_APP_NEWS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="guideId != null">
+        GUIDE_ID,
+      </if>
+      <if test="guideUserId != null" >
+        GUIDE_USER_ID,
+      </if>
+      <if test="guideTitle != null" >
+        GUIDE_TITLE,
+      </if>
+      <if test="guideContent != null" >
+        GUIDE_CONTENT,
+      </if>
+      <if test="guideState != null">
+        GUIDE_STATE ,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="guideId != null">
+        #{guideId,jdbcType=BIGINT},
+      </if>
+      <if test="guideUserId != null" >
+        #{guideUserId,jdbcType=BIGINT},
+      </if>
+      <if test="guideTitle != null" >
+        #{guideTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="guideContent != null" >
+        #{guideContent,jdbcType=VARCHAR},
+      </if>
+      <if test="guideState != null" >
+        #{guideState,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppNews" >
+    update SYS_GUIDE_APP_NEWS
+    <set >
+      <if test="guideUserId != null" >
+        GUIDE_USER_ID = #{guideUserId,jdbcType=BIGINT},
+      </if>
+      <if test="guideTitle != null" >
+        GUIDE_TITLE = #{guideTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="guideContent != null" >
+        GUIDE_CONTENT = #{guideContent,jdbcType=VARCHAR},
+      </if>
+      <if test="guideState != null" >
+        GUIDE_STATE = #{guideState,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where GUIDE_USER_ID = #{guideUserId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getGuideAppNewsList" resultType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppNews" parameterType="java.util.Map">
+    SELECT
+    A.*,
+    B.USER_PHONE AS userPhone
+    FROM
+    SYS_GUIDE_APP_NEWS A
+    LEFT JOIN SYS_GUIDE_APP_USERS B ON A.GUIDE_USER_ID = B.USER_ID
+    <where>
+      <if test="guideContent != null and guideContent != ''">
+        AND A.GUIDE_CONTENT LIKE CONCAT('%',#{guideContent},'%')
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+
+  <select id="getGuideAppNewsListAll" resultType="com.hna.hka.archive.management.appYXBSystem.model.SysGuideAppUsers">
+      select USER_ID from  SYS_GUIDE_APP_USERS limit 1 ,5
+  </select>
+
+
+
+</mapper>

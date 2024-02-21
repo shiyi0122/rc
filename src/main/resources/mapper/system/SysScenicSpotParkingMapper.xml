@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotParkingMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotParking" >
+    <id column="PARKING_ID" property="parkingId" jdbcType="BIGINT" />
+    <result column="PARKING_NAME" property="parkingName" jdbcType="VARCHAR" />
+    <result column="PARKING_CONTENT" property="parkingContent" jdbcType="VARCHAR" />
+    <result column="PARKING_SCENIC_SPOT_ID" property="parkingScenicSpotId" jdbcType="BIGINT" />
+    <result column="PARKING_TYPE" property="parkingType" jdbcType="VARCHAR" />
+    <result column="COORDINATE_TYPE" property="coordinateType" jdbcType="VARCHAR"/>
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysScenicSpotParkingWithBLOBs" extends="BaseResultMap" >
+    <result column="PARKING_COORDINATE_GROUP" property="parkingCoordinateGroup" jdbcType="LONGVARCHAR" />
+    <result column="PARKING_COORDINATE_GROUP_BAIDU" property="parkingCoordinateGroupBaidu" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PARKING_ID, PARKING_NAME, PARKING_CONTENT, PARKING_SCENIC_SPOT_ID, PARKING_TYPE, COORDINATE_TYPE,
+    CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    PARKING_COORDINATE_GROUP, PARKING_COORDINATE_GROUP_BAIDU
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_PARKING
+    where PARKING_ID = #{parkingId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_PARKING
+    where PARKING_ID = #{parkingId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotParkingWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_PARKING (PARKING_ID, PARKING_NAME, PARKING_CONTENT,
+      PARKING_SCENIC_SPOT_ID, PARKING_TYPE,COORDINATE_TYPE,CREATE_DATE,
+      UPDATE_DATE, PARKING_COORDINATE_GROUP,
+      PARKING_COORDINATE_GROUP_BAIDU)
+    values (#{parkingId,jdbcType=BIGINT}, #{parkingName,jdbcType=VARCHAR}, #{parkingContent,jdbcType=VARCHAR},
+      #{parkingScenicSpotId,jdbcType=BIGINT}, #{parkingType,jdbcType=VARCHAR},#{coordinateType,jdbcType=VARCHAR},#{createDate,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=VARCHAR}, #{parkingCoordinateGroup,jdbcType=LONGVARCHAR},
+      #{parkingCoordinateGroupBaidu,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotParkingWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_PARKING
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parkingId != null" >
+        PARKING_ID,
+      </if>
+      <if test="parkingName != null" >
+        PARKING_NAME,
+      </if>
+      <if test="parkingContent != null" >
+        PARKING_CONTENT,
+      </if>
+      <if test="parkingScenicSpotId != null" >
+        PARKING_SCENIC_SPOT_ID,
+      </if>
+      <if test="parkingType != null" >
+        PARKING_TYPE,
+      </if>
+      <if test="coordinateType != null">
+        COORDINATE_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="parkingCoordinateGroup != null" >
+        PARKING_COORDINATE_GROUP,
+      </if>
+      <if test="parkingCoordinateGroupBaidu != null" >
+        PARKING_COORDINATE_GROUP_BAIDU,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parkingId != null" >
+        #{parkingId,jdbcType=BIGINT},
+      </if>
+      <if test="parkingName != null" >
+        #{parkingName,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingContent != null" >
+        #{parkingContent,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingScenicSpotId != null" >
+        #{parkingScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="parkingType != null" >
+        #{parkingType,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateType != null">
+        #{coordinateType,jdbcType = VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingCoordinateGroup != null" >
+        #{parkingCoordinateGroup,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="parkingCoordinateGroupBaidu != null" >
+        #{parkingCoordinateGroupBaidu,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotParkingWithBLOBs" >
+    update SYS_SCENIC_SPOT_PARKING
+    <set >
+      <if test="parkingName != null" >
+        PARKING_NAME = #{parkingName,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingContent != null" >
+        PARKING_CONTENT = #{parkingContent,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingScenicSpotId != null" >
+        PARKING_SCENIC_SPOT_ID = #{parkingScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="parkingType != null" >
+        PARKING_TYPE = #{parkingType,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateType != null">
+        COORDINATE_TYPE = #{coordinateType,jdbcType = VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingCoordinateGroup != null" >
+        PARKING_COORDINATE_GROUP = #{parkingCoordinateGroup,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="parkingCoordinateGroupBaidu != null" >
+        PARKING_COORDINATE_GROUP_BAIDU = #{parkingCoordinateGroupBaidu,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where PARKING_ID = #{parkingId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotParkingWithBLOBs" >
+    update SYS_SCENIC_SPOT_PARKING
+    set PARKING_NAME = #{parkingName,jdbcType=VARCHAR},
+      PARKING_CONTENT = #{parkingContent,jdbcType=VARCHAR},
+      PARKING_SCENIC_SPOT_ID = #{parkingScenicSpotId,jdbcType=BIGINT},
+      PARKING_TYPE = #{parkingType,jdbcType=VARCHAR},
+      COORDINATE_TYPE = #{coordinateType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      PARKING_COORDINATE_GROUP = #{parkingCoordinateGroup,jdbcType=LONGVARCHAR},
+      PARKING_COORDINATE_GROUP_BAIDU = #{parkingCoordinateGroupBaidu,jdbcType=LONGVARCHAR}
+    where PARKING_ID = #{parkingId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotParking" >
+    update SYS_SCENIC_SPOT_PARKING
+    set PARKING_NAME = #{parkingName,jdbcType=VARCHAR},
+      PARKING_CONTENT = #{parkingContent,jdbcType=VARCHAR},
+      PARKING_SCENIC_SPOT_ID = #{parkingScenicSpotId,jdbcType=BIGINT},
+      PARKING_TYPE = #{parkingType,jdbcType=VARCHAR},
+      COORDINATE_TYPE = #{coordinateType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where PARKING_ID = #{parkingId,jdbcType=BIGINT}
+  </update>
+  <select id="getParkingList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+    A.SCENIC_SPOT_NAME AS scenicSpotName,
+    B.*
+    FROM
+    SYS_SCENIC_SPOT A
+    INNER JOIN SYS_SCENIC_SPOT_PARKING B ON A.SCENIC_SPOT_ID = B.PARKING_SCENIC_SPOT_ID
+    <where>
+      B.PARKING_SCENIC_SPOT_ID = #{parkingScenicSpotId}
+      AND  B.COORDINATE_TYPE = 0
+      <if test="parkingName != null and parkingName !='' ">
+        AND B.PARKING_NAME LIKE CONCAT('%',#{parkingName},'%')
+      </if>
+    </where>
+    ORDER BY B.CREATE_DATE DESC
+  </select>
+  <select id="getAllSportParkingByScenicSpotId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_PARKING
+    where PARKING_SCENIC_SPOT_ID = #{scenicSpotId}
+    AND PARKING_TYPE = #{parkingType}
+  </select>
+  <select id="getParkingListByScenicSpotId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_PARKING
+    where PARKING_SCENIC_SPOT_ID = #{scenicSpotId}
+    AND PARKING_TYPE = '1'
+    AND COORDINATE_TYPE = '0'
+  </select>
+
+  <select id="getParkingCoordList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+    A.SCENIC_SPOT_NAME AS scenicSpotName,
+    B.*
+    FROM
+    SYS_SCENIC_SPOT A
+    INNER JOIN SYS_SCENIC_SPOT_PARKING B ON A.SCENIC_SPOT_ID = B.PARKING_SCENIC_SPOT_ID
+    <where>
+      B.PARKING_SCENIC_SPOT_ID = #{parkingScenicSpotId}
+      <if test="parkingName != null and parkingName !='' ">
+        AND B.PARKING_NAME LIKE CONCAT('%',#{parkingName},'%')
+      </if>
+      AND B.COORDINATE_TYPE = 1
+    </where>
+    ORDER BY B.CREATE_DATE DESC
+  </select>
+
+  <select id="getStorageRoomListBy" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_PARKING
+    where PARKING_SCENIC_SPOT_ID = #{scenicSpotId}
+    AND PARKING_TYPE = '1'
+    AND COORDINATE_TYPE = '1'
+  </select>
+
+
+  <select id="uploadScenicSpotCapPriceExcel" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_PARKING
+    where PARKING_SCENIC_SPOT_ID = #{scenicSpotId}
+  </select>
+
+  <select id="getScenicSpotParkingAll" resultMap="ResultMapWithBLOBs">
+    select * from SYS_SCENIC_SPOT_PARKING
+  </select>
+
+  <select id="parkingDropDown"  resultType="com.hna.hka.archive.management.system.model.SysScenicSpotParking">
+    select PARKING_ID,PARKING_NAME from SYS_SCENIC_SPOT_PARKING
+    where PARKING_TYPE = 1
+    and COORDINATE_TYPE = 0
+    and PARKING_SCENIC_SPOT_ID = #{scenicSpotId}
+  </select>
+
+
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.system.dao.CommonMapper">
+
+    <select id="getOrderNumber" resultType="java.lang.String">
+        select max(NUMBER) from D_ORDER_NUMBER where NUMBER like concat(#{prefer} , '%')
+    </select>
+
+    <insert id="insertOrderNumber">
+        insert into D_ORDER_NUMBER(NUMBER) value (#{_parameter})
+    </insert>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotWifiDataMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotWifiData" >
+        <id column="WIFI_ID" property="wifiId" jdbcType="BIGINT" />
+        <result column="MAC" property="mac" jdbcType="VARCHAR" />
+        <result column="RSSI" property="rssi" jdbcType="VARCHAR" />
+        <result column="RSSI_ONE" property="rssiOne" jdbcType="VARCHAR" />
+        <result column="RSSI_TWO" property="rssiTwo" jdbcType="VARCHAR" />
+        <result column="RSSI_THREE" property="rssiThree" jdbcType="VARCHAR" />
+        <result column="TMC" property="tmc" jdbcType="VARCHAR" />
+        <result column="ROUTER" property="router" jdbcType="VARCHAR" />
+        <result column="RANGES" property="ranges" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="getScenicSpotWifiData" resultType="com.hna.hka.archive.management.system.model.SysScenicSpotWifiData">
+            select WIFI_ID,MAC,RSSI,RSSI_ONE,RSSI_TWO,RSSI_THREE,TMC,ROUTER,RANGES,CREATE_DATE,UPDATE_DATE from SYS_SCENIC_SPOT_WIFI_DATA
+        <where>
+            <if test="router != null and router != ''">
+              and  ROUTER LIKE CONCAT('%',#{router},'%')
+            </if>
+        </where>
+            group by ROUTER
+    </select>
+
+    <select id="getMorningPeopleCounting" resultType="java.lang.Integer">
+
+        select COUNT(0)
+        from SYS_SCENIC_SPOT_WIFI_DATA
+        where CREATE_DATE  &gt;= DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00') and CREATE_DATE &lt;= DATE_FORMAT(NOW(),'%Y-%m-%d 11:59:59')
+
+    </select>
+
+    <select id="getAfternoonPeopleCounting" resultType="java.lang.Integer">
+
+        select COUNT(0)
+        from SYS_SCENIC_SPOT_WIFI_DATA
+        where CREATE_DATE &gt;=  DATE_FORMAT(NOW(),'%Y-%m-%d 12:00:00') and CREATE_DATE &lt;= DATE_FORMAT(NOW(),'%Y-%m-%d 23:59:59')
+
+    </select>
+
+    <select id="getCurrentPeopleCounting" resultType="java.lang.Integer">
+
+        select COUNT(0)
+        from SYS_SCENIC_SPOT_WIFI_DATA
+        where CREATE_DATE &gt;= DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00') and CREATE_DATE &lt;= DATE_FORMAT(NOW(),'%Y-%m-%d 23:59:59')
+
+    </select>
+
+
+
+
+
+</mapper>

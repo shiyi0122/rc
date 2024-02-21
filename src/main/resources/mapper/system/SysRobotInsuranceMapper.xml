@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotInsuranceMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotInsurance" >
+    <id column="INSURANCE_ID" property="insuranceId" jdbcType="BIGINT" />
+    <result column="ROBOT_ID" property="robotId" jdbcType="BIGINT" />
+    <result column="INSURANCE_NUMBER" property="insuranceNumber" jdbcType="VARCHAR" />
+    <result column="EMERGENCY_CALL" property="emergencyCall" jdbcType="VARCHAR" />
+    <result column="INSURANCE_TYPE" property="insuranceType" jdbcType="VARCHAR" />
+    <result column="INSURANCE_COMPANY" property="insuranceCompany" jdbcType="VARCHAR" />
+    <result column="INSURE_TIME" property="insureTime" jdbcType="VARCHAR" />
+    <result column="INSURE_START_TIME" property="insureStartTime" jdbcType="VARCHAR" />
+    <result column="INSURE_END_TIME" property="insureEndTime" jdbcType="VARCHAR" />
+    <result column="INSURE_URL" property="insureUrl" jdbcType="VARCHAR" />
+    <result column="ACCIDENT_PROCESS" property="accidentProcess" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="INSURANCE_UNIT" property="insuranceUnit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    INSURANCE_ID, ROBOT_ID, INSURANCE_NUMBER, EMERGENCY_CALL, INSURANCE_TYPE, INSURANCE_COMPANY, 
+    INSURE_TIME, INSURE_START_TIME, INSURE_END_TIME, INSURE_URL, ACCIDENT_PROCESS, CREATE_DATE, 
+    UPDATE_DATE, INSURANCE_UNIT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_INSURANCE
+    where INSURANCE_ID = #{insuranceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_INSURANCE
+    where INSURANCE_ID = #{insuranceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotInsurance" >
+    insert into SYS_ROBOT_INSURANCE (INSURANCE_ID, ROBOT_ID, INSURANCE_NUMBER, 
+      EMERGENCY_CALL, INSURANCE_TYPE, INSURANCE_COMPANY, 
+      INSURE_TIME, INSURE_START_TIME, INSURE_END_TIME, 
+      INSURE_URL, ACCIDENT_PROCESS, CREATE_DATE, 
+      UPDATE_DATE, INSURANCE_UNIT)
+    values (#{insuranceId,jdbcType=BIGINT}, #{robotId,jdbcType=BIGINT}, #{insuranceNumber,jdbcType=VARCHAR}, 
+      #{emergencyCall,jdbcType=VARCHAR}, #{insuranceType,jdbcType=VARCHAR}, #{insuranceCompany,jdbcType=VARCHAR}, 
+      #{insureTime,jdbcType=VARCHAR}, #{insureStartTime,jdbcType=VARCHAR}, #{insureEndTime,jdbcType=VARCHAR}, 
+      #{insureUrl,jdbcType=VARCHAR}, #{accidentProcess,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR}, #{insuranceUnit,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotInsurance" >
+    insert into SYS_ROBOT_INSURANCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="insuranceId != null" >
+        INSURANCE_ID,
+      </if>
+      <if test="robotId != null" >
+        ROBOT_ID,
+      </if>
+      <if test="insuranceNumber != null" >
+        INSURANCE_NUMBER,
+      </if>
+      <if test="emergencyCall != null" >
+        EMERGENCY_CALL,
+      </if>
+      <if test="insuranceType != null" >
+        INSURANCE_TYPE,
+      </if>
+      <if test="insuranceCompany != null" >
+        INSURANCE_COMPANY,
+      </if>
+      <if test="insureTime != null" >
+        INSURE_TIME,
+      </if>
+      <if test="insureStartTime != null" >
+        INSURE_START_TIME,
+      </if>
+      <if test="insureEndTime != null" >
+        INSURE_END_TIME,
+      </if>
+      <if test="insureUrl != null" >
+        INSURE_URL,
+      </if>
+      <if test="accidentProcess != null" >
+        ACCIDENT_PROCESS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="insuranceUnit != null" >
+        INSURANCE_UNIT,
+      </if>
+      <if test="configsId != null">
+        CONFIGS_ID
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="insuranceId != null" >
+        #{insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="robotId != null" >
+        #{robotId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceNumber != null" >
+        #{insuranceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyCall != null" >
+        #{emergencyCall,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceType != null" >
+        #{insuranceType,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceCompany != null" >
+        #{insuranceCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="insureTime != null" >
+        #{insureTime,jdbcType=VARCHAR},
+      </if>
+      <if test="insureStartTime != null" >
+        #{insureStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="insureEndTime != null" >
+        #{insureEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="insureUrl != null" >
+        #{insureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="accidentProcess != null" >
+        #{accidentProcess,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceUnit != null" >
+        #{insuranceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="configsId != null">
+        #{configsId,jdbcType=BIGINT}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotInsurance" >
+    update SYS_ROBOT_INSURANCE
+    <set >
+      <if test="robotId != null" >
+        ROBOT_ID = #{robotId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceNumber != null" >
+        INSURANCE_NUMBER = #{insuranceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyCall != null" >
+        EMERGENCY_CALL = #{emergencyCall,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceType != null" >
+        INSURANCE_TYPE = #{insuranceType,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceCompany != null" >
+        INSURANCE_COMPANY = #{insuranceCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="insureTime != null" >
+        INSURE_TIME = #{insureTime,jdbcType=VARCHAR},
+      </if>
+      <if test="insureStartTime != null" >
+        INSURE_START_TIME = #{insureStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="insureEndTime != null" >
+        INSURE_END_TIME = #{insureEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="insureUrl != null" >
+        INSURE_URL = #{insureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="accidentProcess != null" >
+        ACCIDENT_PROCESS = #{accidentProcess,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceUnit != null" >
+        INSURANCE_UNIT = #{insuranceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="configsId != null">
+        CONFIGS_ID = #{configsId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where INSURANCE_ID = #{insuranceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotInsurance" >
+    update SYS_ROBOT_INSURANCE
+    set ROBOT_ID = #{robotId,jdbcType=BIGINT},
+      INSURANCE_NUMBER = #{insuranceNumber,jdbcType=VARCHAR},
+      EMERGENCY_CALL = #{emergencyCall,jdbcType=VARCHAR},
+      INSURANCE_TYPE = #{insuranceType,jdbcType=VARCHAR},
+      INSURANCE_COMPANY = #{insuranceCompany,jdbcType=VARCHAR},
+      INSURE_TIME = #{insureTime,jdbcType=VARCHAR},
+      INSURE_START_TIME = #{insureStartTime,jdbcType=VARCHAR},
+      INSURE_END_TIME = #{insureEndTime,jdbcType=VARCHAR},
+      INSURE_URL = #{insureUrl,jdbcType=VARCHAR},
+      ACCIDENT_PROCESS = #{accidentProcess,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      INSURANCE_UNIT = #{insuranceUnit,jdbcType=VARCHAR}
+    where INSURANCE_ID = #{insuranceId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotInsuranceList" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	SELECT
+	A.ROBOT_CODE AS robotCode,
+	A.ROBOT_ID,
+	B.INSURANCE_ID,
+	B.ROBOT_ID,
+	B.INSURANCE_NUMBER,
+	B.EMERGENCY_CALL,
+	B.INSURANCE_TYPE,
+	B.INSURANCE_COMPANY,
+	B.INSURE_TIME,
+	B.INSURE_START_TIME,
+	B.INSURE_END_TIME,
+	B.INSURE_URL,
+	B.ACCIDENT_PROCESS,
+	B.CREATE_DATE,
+	B.UPDATE_DATE,
+	B.INSURANCE_UNIT,
+	C.SCENIC_SPOT_NAME AS scenicSpotName
+	FROM
+	SYS_ROBOT A
+	LEFT JOIN SYS_USERS_ROLE_SPOT D ON
+	D.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+	LEFT JOIN SYS_ROBOT_INSURANCE B ON
+	A.ROBOT_ID = B.ROBOT_ID
+	LEFT JOIN SYS_SCENIC_SPOT C ON A.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+	<where>
+      <if test="userId != null and userId != ''">
+        AND D.USER_ID = #{userId}
+      </if>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="insureState == 1">
+      	AND DATE_FORMAT(B.INSURE_END_TIME, '%Y-%m-%d') &lt;= DATE_add(CURDATE() - 1, INTERVAL 30 day)
+      </if>
+    </where>
+	ORDER BY A.CREATE_DATE DESC
+  </select>
+  
+  <select id="getRobotInsuranceByRobotId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_INSURANCE
+    where ROBOT_ID = #{robotId,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="uploadRobotInsuranceExcel" resultType="com.hna.hka.archive.management.system.model.SysRobotInsurance" parameterType="java.util.Map">
+    SELECT
+    A.ROBOT_CODE AS robotCode,
+    A.ROBOT_ID,
+    B.INSURANCE_ID,
+    B.ROBOT_ID,
+    B.INSURANCE_NUMBER,
+    B.EMERGENCY_CALL,
+    B.INSURANCE_TYPE,
+    B.INSURANCE_COMPANY,
+    B.INSURE_TIME,
+    B.INSURE_START_TIME,
+    B.INSURE_END_TIME,
+    B.INSURE_URL,
+    B.ACCIDENT_PROCESS,
+    B.CREATE_DATE,
+    B.UPDATE_DATE,
+    B.INSURANCE_UNIT,
+    B.CONFIGS_ID,
+    C.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+    SYS_ROBOT A
+    LEFT JOIN SYS_USERS_ROLE_SPOT D ON
+    D.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+    LEFT JOIN SYS_ROBOT_INSURANCE B ON
+    A.ROBOT_ID = B.ROBOT_ID
+    LEFT JOIN SYS_SCENIC_SPOT C ON A.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+
+    <where>
+      <if test="userId != null and userId != ''">
+        AND D.USER_ID = #{userId}
+      </if>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="insureState == 1">
+        AND DATE_FORMAT(B.INSURE_END_TIME, '%Y-%m-%d') &lt;= DATE_add(CURDATE() - 1, INTERVAL 30 day)
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

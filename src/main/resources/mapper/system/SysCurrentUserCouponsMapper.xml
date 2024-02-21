@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysCurrentUserCouponsMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysCurrentUserCoupons" >
+    <id column="USER_COUPONS_ID" property="userCouponsId" jdbcType="BIGINT" />
+    <result column="ACTIVITY_ID" property="activityId" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="USER_COUPONS_NAME" property="userCouponsName" jdbcType="VARCHAR" />
+    <result column="COUPONS_SCENIC_SPOT_ID" property="couponsScenicSpotId" jdbcType="BIGINT" />
+    <result column="COUPONS_SCENIC_SPOT_NAME" property="couponsScenicSpotName" jdbcType="VARCHAR" />
+    <result column="COUPONS_STANDARD" property="couponsStandard" jdbcType="VARCHAR" />
+    <result column="COUPONS_AMOUNT" property="couponsAmount" jdbcType="VARCHAR" />
+    <result column="COUPONS_START_TIME" property="couponsStartTime" jdbcType="VARCHAR" />
+    <result column="COUPONS_END_TIME" property="couponsEndTime" jdbcType="VARCHAR" />
+    <result column="COUPONS_TYPE" property="couponsType" jdbcType="VARCHAR" />
+    <result column="COUPONS_FAILURE" property="couponsFailure" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USER_COUPONS_ID, ACTIVITY_ID, USER_ID, USER_COUPONS_NAME, COUPONS_SCENIC_SPOT_ID, 
+    COUPONS_SCENIC_SPOT_NAME, COUPONS_STANDARD, COUPONS_AMOUNT, COUPONS_START_TIME, COUPONS_END_TIME, 
+    COUPONS_TYPE, COUPONS_FAILURE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_USER_COUPONS
+    where USER_COUPONS_ID = #{userCouponsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_CURRENT_USER_COUPONS
+    where USER_COUPONS_ID = #{userCouponsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserCoupons" >
+    insert into SYS_CURRENT_USER_COUPONS (USER_COUPONS_ID, ACTIVITY_ID, USER_ID, 
+      USER_COUPONS_NAME, COUPONS_SCENIC_SPOT_ID, COUPONS_SCENIC_SPOT_NAME, 
+      COUPONS_STANDARD, COUPONS_AMOUNT, COUPONS_START_TIME, 
+      COUPONS_END_TIME, COUPONS_TYPE, COUPONS_FAILURE, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{userCouponsId,jdbcType=BIGINT}, #{activityId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{userCouponsName,jdbcType=VARCHAR}, #{couponsScenicSpotId,jdbcType=BIGINT}, #{couponsScenicSpotName,jdbcType=VARCHAR}, 
+      #{couponsStandard,jdbcType=VARCHAR}, #{couponsAmount,jdbcType=VARCHAR}, #{couponsStartTime,jdbcType=VARCHAR}, 
+      #{couponsEndTime,jdbcType=VARCHAR}, #{couponsType,jdbcType=VARCHAR}, #{couponsFailure,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserCoupons" >
+    insert into SYS_CURRENT_USER_COUPONS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userCouponsId != null" >
+        USER_COUPONS_ID,
+      </if>
+      <if test="activityId != null" >
+        ACTIVITY_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userCouponsName != null" >
+        USER_COUPONS_NAME,
+      </if>
+      <if test="couponsScenicSpotId != null" >
+        COUPONS_SCENIC_SPOT_ID,
+      </if>
+      <if test="couponsScenicSpotName != null" >
+        COUPONS_SCENIC_SPOT_NAME,
+      </if>
+      <if test="couponsStandard != null" >
+        COUPONS_STANDARD,
+      </if>
+      <if test="couponsAmount != null" >
+        COUPONS_AMOUNT,
+      </if>
+      <if test="couponsStartTime != null" >
+        COUPONS_START_TIME,
+      </if>
+      <if test="couponsEndTime != null" >
+        COUPONS_END_TIME,
+      </if>
+      <if test="couponsType != null" >
+        COUPONS_TYPE,
+      </if>
+      <if test="couponsFailure != null" >
+        COUPONS_FAILURE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userCouponsId != null" >
+        #{userCouponsId,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userCouponsName != null" >
+        #{userCouponsName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsScenicSpotId != null" >
+        #{couponsScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="couponsScenicSpotName != null" >
+        #{couponsScenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsStandard != null" >
+        #{couponsStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsAmount != null" >
+        #{couponsAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsStartTime != null" >
+        #{couponsStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsEndTime != null" >
+        #{couponsEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsType != null" >
+        #{couponsType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsFailure != null" >
+        #{couponsFailure,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserCoupons" >
+    update SYS_CURRENT_USER_COUPONS
+    <set >
+      <if test="activityId != null" >
+        ACTIVITY_ID = #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userCouponsName != null" >
+        USER_COUPONS_NAME = #{userCouponsName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsScenicSpotId != null" >
+        COUPONS_SCENIC_SPOT_ID = #{couponsScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="couponsScenicSpotName != null" >
+        COUPONS_SCENIC_SPOT_NAME = #{couponsScenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsStandard != null" >
+        COUPONS_STANDARD = #{couponsStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsAmount != null" >
+        COUPONS_AMOUNT = #{couponsAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsStartTime != null" >
+        COUPONS_START_TIME = #{couponsStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsEndTime != null" >
+        COUPONS_END_TIME = #{couponsEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsType != null" >
+        COUPONS_TYPE = #{couponsType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsFailure != null" >
+        COUPONS_FAILURE = #{couponsFailure,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_COUPONS_ID = #{userCouponsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserCoupons" >
+    update SYS_CURRENT_USER_COUPONS
+    set ACTIVITY_ID = #{activityId,jdbcType=BIGINT},
+      USER_ID = #{userId,jdbcType=BIGINT},
+      USER_COUPONS_NAME = #{userCouponsName,jdbcType=VARCHAR},
+      COUPONS_SCENIC_SPOT_ID = #{couponsScenicSpotId,jdbcType=BIGINT},
+      COUPONS_SCENIC_SPOT_NAME = #{couponsScenicSpotName,jdbcType=VARCHAR},
+      COUPONS_STANDARD = #{couponsStandard,jdbcType=VARCHAR},
+      COUPONS_AMOUNT = #{couponsAmount,jdbcType=VARCHAR},
+      COUPONS_START_TIME = #{couponsStartTime,jdbcType=VARCHAR},
+      COUPONS_END_TIME = #{couponsEndTime,jdbcType=VARCHAR},
+      COUPONS_TYPE = #{couponsType,jdbcType=VARCHAR},
+      COUPONS_FAILURE = #{couponsFailure,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where USER_COUPONS_ID = #{userCouponsId,jdbcType=BIGINT}
+  </update>
+  <select id="getCurrentUserCouponsById" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_USER_COUPONS
+    <where>
+    	<if test="currentUserId != null and currentUserId != ''">
+    		AND USER_ID = #{currentUserId}
+    	</if>
+    	<if test="activityId != null and activityId != ''">
+    		AND ACTIVITY_ID = #{activityId}
+    	</if>
+    </where>
+  </select>
+  <select id="getCurrentUserCouponsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	SELECT
+	A.USER_COUPONS_ID,
+	A.ACTIVITY_ID,
+	A.USER_ID,
+	A.USER_COUPONS_NAME,
+	A.COUPONS_SCENIC_SPOT_ID,
+	A.COUPONS_SCENIC_SPOT_NAME,
+	A.COUPONS_STANDARD,
+	A.COUPONS_AMOUNT,
+	A.COUPONS_START_TIME,
+	A.COUPONS_END_TIME,
+	A.COUPONS_TYPE,
+	A.COUPONS_FAILURE,
+	A.CREATE_DATE,
+	A.UPDATE_DATE,
+	B.CURRENT_USER_PHONE AS phone
+	FROM
+	SYS_CURRENT_USER_COUPONS A
+	LEFT JOIN SYS_CURRENT_USER B ON
+	A.USER_ID = B.CURRENT_USER_ID
+	<where>
+		<if test = "phone != null and phone != ''">
+			AND B.CURRENT_USER_PHONE LIKE CONCAT('%', #{phone},'%')
+		</if>
+	</where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

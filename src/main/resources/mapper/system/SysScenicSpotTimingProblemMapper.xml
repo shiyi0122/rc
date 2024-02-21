@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotTimingProblemMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotTimingProblem" >
+    <id column="PROBLEM_ID" property="problemId" jdbcType="BIGINT" />
+    <result column="RANDOM_PROBLEM" property="randomProblem" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="RANDOM_TYPE" property="randomType" jdbcType="VARCHAR" />
+    <result column="RANDOM_STATE" property="randomState" jdbcType="VARCHAR" />
+    <result column="RANDOM_RES_RUL" property="randomResRul" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="WEIGHT" property="weight" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysScenicSpotTimingProblemWithBLOBs" extends="BaseResultMap" >
+    <result column="RANDOM_ANSWERS" property="randomAnswers" jdbcType="LONGVARCHAR" />
+    <result column="RANDOM_RES_RUL_PIC" property="randomResRulPic" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PROBLEM_ID, TIMING_PROBLEM, SCENIC_SPOT_ID, TIMING_TYPE, TIMING_STATE, TIMING_RES_RUL,WEIGHT,
+    CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    TIMING_ANSWERS, TIMING_RES_RUL_PIC
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_TIMING_PROBLEM
+    where PROBLEM_ID = #{problemId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_TIMING_PROBLEM
+    where PROBLEM_ID = #{problemId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTimingProblemWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_RANDOM_PROBLEM (PROBLEM_ID, TIMING_PROBLEM, SCENIC_SPOT_ID,
+    TIMING_TYPE, TIMING_STATE, TIMING_RES_RUL,
+      CREATE_DATE, UPDATE_DATE,TIMING_ANSWERS,
+      TIMING_RES_RUL_PIC)
+    values (#{problemId,jdbcType=BIGINT}, #{timingProblem,jdbcType=VARCHAR}, #{scenicSpotId,jdbcType=BIGINT},
+      #{timingType,jdbcType=VARCHAR}, #{timingState,jdbcType=VARCHAR}, #{timingResRul,jdbcType=VARCHAR},
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{timingAnswers,jdbcType=LONGVARCHAR},
+      #{randomResRulPic,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTimingProblemWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_TIMING_PROBLEM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="problemId != null" >
+        PROBLEM_ID,
+      </if>
+      <if test="timingProblem != null" >
+        TIMING_PROBLEM,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="timingType != null" >
+        TIMING_TYPE,
+      </if>
+      <if test="timingState != null" >
+        TIMING_STATE,
+      </if>
+      <if test="timingResRul != null" >
+        TIMING_RES_RUL,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="timingAnswers != null" >
+        TIMING_ANSWERS,
+      </if>
+      <if test="timingResRulPic != null" >
+        TIMING_RES_RUL_PIC,
+      </if>
+      <if test="weight != null">
+        WEIGHT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="problemId != null" >
+        #{problemId,jdbcType=BIGINT},
+      </if>
+      <if test="timingProblem != null" >
+        #{timingProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="timingType != null" >
+        #{timingType,jdbcType=VARCHAR},
+      </if>
+      <if test="timingState != null" >
+        #{timingState,jdbcType=VARCHAR},
+      </if>
+      <if test="timingResRul != null" >
+        #{timingResRul,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="timingAnswers != null" >
+        #{timingAnswers,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="timingResRulPic != null" >
+        #{timingResRulPic,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTimingProblemWithBLOBs" >
+    update SYS_SCENIC_SPOT_TIMING_PROBLEM
+    <set >
+      <if test="timingProblem != null" >
+        TIMING_PROBLEM = #{timingProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="timingType != null" >
+        TIMING_TYPE = #{timingType,jdbcType=VARCHAR},
+      </if>
+      <if test="timingState != null" >
+        TIMING_STATE = #{timingState,jdbcType=VARCHAR},
+      </if>
+      <if test="timingResRul != null" >
+        TIMING_RES_RUL = #{timingResRul,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="timingAnswers != null" >
+        TIMING_ANSWERS = #{timingAnswers,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="timingResRulPic != null" >
+        TIMING_RES_RUL_PIC = #{timingResRulPic,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="weight != null">
+        WEIGHT = #{weight,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PROBLEM_ID = #{problemId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTimingProblemWithBLOBs" >
+    update SYS_SCENIC_SPOT_TIMING_PROBLEM
+    set TIMING_PROBLEM = #{timingProblem,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      TIMING_TYPE = #{timingType,jdbcType=VARCHAR},
+      TIMING_STATE = #{timingState,jdbcType=VARCHAR},
+      TIMING_RES_RUL = #{timingResRul,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      TIMING_ANSWERS = #{timingAnswers,jdbcType=LONGVARCHAR},
+      TIMING_RES_RUL_PIC = #{timingResRulPic,jdbcType=LONGVARCHAR}
+      WEIGHT = #{weight,jdbcType=VARCHAR},
+    where PROBLEM_ID = #{problemId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTimingProblem" >
+    update SYS_SCENIC_SPOT_TIMING_PROBLEM
+    set TIMING_PROBLEM = #{timingProblem,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      TIMING_TYPE = #{timingType,jdbcType=VARCHAR},
+      TIMING_STATE = #{timingState,jdbcType=VARCHAR},
+      TIMING_RES_RUL = #{timingResRul,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      WEIGHT = #{weight,jdbcType = VARCHAR}
+    where PROBLEM_ID = #{problemId,jdbcType=BIGINT}
+  </update>
+  <select id="getTimingProblemList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+	A.*
+<!--	B.SCENIC_SPOT_NAME AS scenicSpotName-->
+    FROM
+	SYS_SCENIC_SPOT_TIMING_PROBLEM A
+<!--	LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID-->
+	<where>
+<!--      (A.SCENIC_SPOT_ID = 20200210 OR A.SCENIC_SPOT_ID = #{scenicSpotId})-->
+      <if test="timingProblem != null and timingProblem != ''">
+        AND A.TIMING_PROBLEM LIKE CONCAT('%',#{timingProblem},'%')
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

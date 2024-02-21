@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotPartsManagementTypeMapper">
+
+
+    <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagementType">
+        insert into SYS_ROBOT_PARTS_MANAGEMENT_TYPE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="partsManagementType != null" >
+                PARTS_MANAGEMENT_TYPE,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="partsManagementType != null" >
+                #{partsManagementType,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR}
+            </if>
+        </trim>
+
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagementType" >
+        update SYS_ROBOT_PARTS_MANAGEMENT_TYPE
+        <set>
+            <if test="partsManagementType != null" >
+                PARTS_MANAGEMENT_TYPE = #{partsManagementType,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''" >
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagementType" >
+        select * from SYS_ROBOT_PARTS_MANAGEMENT_TYPE
+        <where>
+            <if test="partsManagementType != null ">
+                PARTS_MANAGEMENT_TYPE like CONCAT('%',#{partsManagementType},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="listOne" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagementType">
+        select * from SYS_ROBOT_PARTS_MANAGEMENT_TYPE
+        where ID = #{id}
+    </select>
+
+    <delete id="del">
+        delete from SYS_ROBOT_PARTS_MANAGEMENT_TYPE
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <select id="getPartsManagementTypeByOne" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagementType">
+        select * from SYS_ROBOT_PARTS_MANAGEMENT_TYPE
+        where PARTS_MANAGEMENT_TYPE = #{accessoriesTypeName}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotProblemExtendMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotProblemExtend" >
+    <id column="EXTEND_ID" property="extendId" jdbcType="BIGINT" />
+    <result column="CORPUS_ID" property="corpusId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="EXTEND_CORPUS_PROBLEM" property="extendCorpusProblem" jdbcType="VARCHAR" />
+    <result column="EXTEND_CORPUS_PINYIN" property="extendCorpusPinyin" jdbcType="VARCHAR" />
+    <result column="EXTEND_TYPE" property="extendType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    EXTEND_ID, CORPUS_ID, SCENIC_SPOT_ID, EXTEND_CORPUS_PROBLEM, EXTEND_CORPUS_PINYIN, 
+    EXTEND_TYPE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_PROBLEM_EXTEND
+    where EXTEND_ID = #{extendId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_PROBLEM_EXTEND
+    where EXTEND_ID = #{extendId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotProblemExtend" >
+    insert into SYS_ROBOT_PROBLEM_EXTEND (EXTEND_ID, CORPUS_ID, SCENIC_SPOT_ID, 
+      EXTEND_CORPUS_PROBLEM, EXTEND_CORPUS_PINYIN, 
+      EXTEND_TYPE, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{extendId,jdbcType=BIGINT}, #{corpusId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, 
+      #{extendCorpusProblem,jdbcType=VARCHAR}, #{extendCorpusPinyin,jdbcType=VARCHAR}, 
+      #{extendType,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotProblemExtend" >
+    insert into SYS_ROBOT_PROBLEM_EXTEND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="extendId != null" >
+        EXTEND_ID,
+      </if>
+      <if test="corpusId != null" >
+        CORPUS_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="extendCorpusProblem != null" >
+        EXTEND_CORPUS_PROBLEM,
+      </if>
+      <if test="extendCorpusPinyin != null" >
+        EXTEND_CORPUS_PINYIN,
+      </if>
+      <if test="extendType != null" >
+        EXTEND_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="extendId != null" >
+        #{extendId,jdbcType=BIGINT},
+      </if>
+      <if test="corpusId != null" >
+        #{corpusId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="extendCorpusProblem != null" >
+        #{extendCorpusProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="extendCorpusPinyin != null" >
+        #{extendCorpusPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="extendType != null" >
+        #{extendType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotProblemExtend" >
+    update SYS_ROBOT_PROBLEM_EXTEND
+    <set >
+      <if test="corpusId != null" >
+        CORPUS_ID = #{corpusId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="extendCorpusProblem != null" >
+        EXTEND_CORPUS_PROBLEM = #{extendCorpusProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="extendCorpusPinyin != null" >
+        EXTEND_CORPUS_PINYIN = #{extendCorpusPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="extendType != null" >
+        EXTEND_TYPE = #{extendType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EXTEND_ID = #{extendId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotProblemExtend" >
+    update SYS_ROBOT_PROBLEM_EXTEND
+    set CORPUS_ID = #{corpusId,jdbcType=BIGINT},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      EXTEND_CORPUS_PROBLEM = #{extendCorpusProblem,jdbcType=VARCHAR},
+      EXTEND_CORPUS_PINYIN = #{extendCorpusPinyin,jdbcType=VARCHAR},
+      EXTEND_TYPE = #{extendType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where EXTEND_ID = #{extendId,jdbcType=BIGINT}
+  </update>
+  <select id="getSemanticsDetailsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_PROBLEM_EXTEND
+    where CORPUS_ID = #{corpusId}
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

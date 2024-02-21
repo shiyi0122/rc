@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysCurrentUserAccountRefundLogMapper" >
+
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysCurrentUserAccountRefundLog">
+        <id column="ACCOUNT_LOG_ID" property="accountLogId" jdbcType="BIGINT" />
+        <result column="ACCOUNT_LOG_USER_PHONE" property="accountLogUserPhone" jdbcType="VARCHAR" />
+        <result column="ACCOUNT_LOG_LOGIN_NAME" property="accountLogLoginName" jdbcType="VARCHAR" />
+        <result column="ACCOUNT_LOG_BEFORE" property="accountLogBefore" jdbcType="VARCHAR" />
+        <result column="ACCOUNT_LOG_AFTER" property="accountLogAfter" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+        <result column="ACCOUNT_LOG_PRICE" property="accountLogPrice" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="insertAccountRefundLog" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAccountRefundLog">
+        insert into SYS_CURRENT_USER_ACCOUNT_REFUND_LOG
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="accountLogId != null" >
+                ACCOUNT_LOG_ID,
+            </if>
+            <if test="accountLogUserPhone  != null">
+                ACCOUNT_LOG_USER_PHONE,
+            </if>
+            <if test="accountLogLoginName != null">
+                ACCOUNT_LOG_LOGIN_NAME,
+            </if>
+            <if test="accountLogBefore != null">
+                ACCOUNT_LOG_BEFORE,
+            </if>
+            <if test="accountLogAfter != null">
+                ACCOUNT_LOG_AFTER,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+            <if test="accountLogPrice != null">
+                ACCOUNT_LOG_PRICE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="accountLogId != null">
+                #{accountLogId,jdbcType = BIGINT},
+            </if>
+            <if test="accountLogUserPhone != null">
+                #{accountLogUserPhone,jdbcType = VARCHAR},
+            </if>
+            <if test="accountLogLoginName != null">
+                #{accountLogLoginName,jdbcType = VARCHAR},
+            </if>
+            <if test="accountLogBefore != null">
+                #{accountLogBefore,jdbcType = VARCHAR},
+            </if>
+            <if test="accountLogAfter != null">
+                #{accountLogAfter,jdbcType = VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType = VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType = VARCHAR},
+            </if>
+            <if test="accountLogPrice != null">
+                #{accountLogPrice,jdbcType = VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+
+</mapper>

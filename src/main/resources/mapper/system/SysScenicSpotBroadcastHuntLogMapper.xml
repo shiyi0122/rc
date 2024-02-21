@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotBroadcastHuntLogMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastHuntLog" >
+        <id column="HUNT_LOG_ID" property="huntLogId" jdbcType="BIGINT" />
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+        <result column="ORDER_NUMBER" property="orderNumber" jdbcType="VARCHAR" />
+        <result column="BROADCAST_ID" property="broadcastId" jdbcType="BIGINT" />
+        <result column="BROADCAST_NAME" property="broadcastName" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        HUNT_LOG_ID, SCENIC_SPOT_ID, ORDER_NUMBER, BROADCAST_ID, BROADCAST_NAME, CREATE_DATE, UPDATE_DATE
+    </sql>
+
+    <select id="getScenicSpotBroadcastHuntLogList" resultType="com.hna.hka.archive.management.system.model.SysScenicSpotBroadcastHuntLog">
+
+        select a.*,b.SCENIC_SPOT_NAME from SYS_SCENIC_SPOT_BROADCAST_HUNT_LOG a
+        left join SYS_SCENIC_SPOT b
+        on a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+               and  a.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+               and  a.ORDER_NUMBER like concat('%',#{orderNumber},'%')
+            </if>
+        </where>
+
+    </select>
+
+
+</mapper>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotAppVersionMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotAppVersion" >
+    <id column="VERSION_ID" property="versionId" jdbcType="BIGINT" />
+    <result column="VERSION_URL" property="versionUrl" jdbcType="VARCHAR" />
+    <result column="VERSION_NUMBER" property="versionNumber" jdbcType="VARCHAR" />
+    <result column="VERSION_DESCRIPTION" property="versionDescription" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    VERSION_ID, VERSION_URL, VERSION_NUMBER, VERSION_DESCRIPTION, SCENIC_SPOT_ID, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_APP_VERSION
+    where VERSION_ID = #{versionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_APP_VERSION
+    where VERSION_ID = #{versionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotAppVersion" >
+    insert into SYS_ROBOT_APP_VERSION (VERSION_ID, VERSION_URL, VERSION_NUMBER, 
+      VERSION_DESCRIPTION, SCENIC_SPOT_ID, CREATE_DATE
+      )
+    values (#{versionId,jdbcType=BIGINT}, #{versionUrl,jdbcType=VARCHAR}, #{versionNumber,jdbcType=VARCHAR}, 
+      #{versionDescription,jdbcType=VARCHAR}, #{scenicSpotId,jdbcType=BIGINT}, #{createDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotAppVersion" >
+    insert into SYS_ROBOT_APP_VERSION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="versionId != null" >
+        VERSION_ID,
+      </if>
+      <if test="versionUrl != null" >
+        VERSION_URL,
+      </if>
+      <if test="versionNumber != null" >
+        VERSION_NUMBER,
+      </if>
+      <if test="versionDescription != null" >
+        VERSION_DESCRIPTION,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="versionId != null" >
+        #{versionId,jdbcType=BIGINT},
+      </if>
+      <if test="versionUrl != null" >
+        #{versionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNumber != null" >
+        #{versionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="versionDescription != null" >
+        #{versionDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotAppVersion" >
+    update SYS_ROBOT_APP_VERSION
+    <set >
+      <if test="versionUrl != null" >
+        VERSION_URL = #{versionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNumber != null" >
+        VERSION_NUMBER = #{versionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="versionDescription != null" >
+        VERSION_DESCRIPTION = #{versionDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where VERSION_ID = #{versionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotAppVersion" >
+    update SYS_ROBOT_APP_VERSION
+    set VERSION_URL = #{versionUrl,jdbcType=VARCHAR},
+      VERSION_NUMBER = #{versionNumber,jdbcType=VARCHAR},
+      VERSION_DESCRIPTION = #{versionDescription,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR}
+    where VERSION_ID = #{versionId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotVersionPadList" resultMap="BaseResultMap">
+    select
+    A.*,
+    B.SCENIC_SPOT_NAME AS scenicSpotName
+    from SYS_ROBOT_APP_VERSION A LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="sysRobotAppVersion.scenicSpotId != null and sysRobotAppVersion.scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{sysRobotAppVersion.scenicSpotId}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+  <select id="getAppVersionNumber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_APP_VERSION
+    where SCENIC_SPOT_ID = #{scenicSpotId}
+    ORDER BY CREATE_DATE DESC
+    LIMIT 1
+  </select>
+  <select id="getScenicSpotPadList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	C.VERSION_ID,
+	C.VERSION_URL,
+	C.VERSION_NUMBER,
+	C.VERSION_DESCRIPTION,
+	B.SCENIC_SPOT_ID,
+	C.CREATE_DATE,
+	B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+	SYS_USERS_ROLE_SPOT A
+	LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+	LEFT JOIN SYS_ROBOT_APP_VERSION C ON B.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+    <where>
+      <if test="userId != null and userId != ''">
+        AND A.USER_ID = #{userId}
+      </if>
+      <if test="scenicSpotName != null and scenicSpotName != ''">
+        AND B.SCENIC_SPOT_NAME LIKE CONCAT('%',#{scenicSpotName},'%')
+      </if>
+      <if test="versionNumber != null and versionNumber != ''">
+        AND C.VERSION_NUMBER LIKE CONCAT('%',#{versionNumber},'%')
+      </if>
+    </where>
+    ORDER BY C.CREATE_DATE DESC
+  </select>
+</mapper>

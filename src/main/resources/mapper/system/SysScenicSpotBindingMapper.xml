@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotBindingMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotBinding" >
+    <id column="SCENIC_SPOT_FID" property="scenicSpotFid" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_FNAME" property="scenicSpotFname" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_PID" property="scenicSpotPid" jdbcType="BIGINT" />
+<!--    <result column="SCENIC_SPOT_SID" property="scenicSpotSid" jdbcType="BIGINT"/>-->
+<!--    <result column="SCENIC_SPOT_QID" property="scenicSpotQid" jdbcType="BIGINT"/>-->
+<!--    <result column="SCENIC_SPOT_TYPE" property="scenicSpotType" jdbcType="INTEGER"/>-->
+    <result column="CITY_LABEL" property="cityLabel" jdbcType="VARCHAR"/>
+    <result column="CITY_PIC" property="cityPic" jdbcType="VARCHAR"/>
+  </resultMap>
+  <resultMap id="BaseResultChinaMap" type="com.hna.hka.archive.management.assetsSystem.model.ChinaMap" >
+  </resultMap>
+<!--   ,SCENIC_SPOT_SID,SCENIC_SPOT_QID, SCENIC_SPOT_TYPE-->
+  <sql id="Base_Column_List" >
+    SCENIC_SPOT_FID, SCENIC_SPOT_FNAME, SCENIC_SPOT_PID,CITY_LABEL,CITY_PIC
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_BINDING
+    where SCENIC_SPOT_FID = #{scenicSpotFid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_BINDING
+    where SCENIC_SPOT_FID = #{scenicSpotFid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotBinding" >
+    insert into SYS_SCENIC_SPOT_BINDING (SCENIC_SPOT_FID, SCENIC_SPOT_FNAME, SCENIC_SPOT_PID
+      )
+    values (#{scenicSpotFid,jdbcType=BIGINT}, #{scenicSpotFname,jdbcType=VARCHAR}, #{scenicSpotPid,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotBinding" >
+    insert into SYS_SCENIC_SPOT_BINDING
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scenicSpotFid != null" >
+        SCENIC_SPOT_FID,
+      </if>
+      <if test="scenicSpotFname != null" >
+        SCENIC_SPOT_FNAME,
+      </if>
+      <if test="scenicSpotPid != null" >
+        SCENIC_SPOT_PID,
+      </if>
+      <if test="scenicSpotSid != null">
+        SCENIC_SPOT_SID,
+      </if>
+      <if test="scenicSpotQid != null">
+        SCENIC_SPOT_QID,
+      </if>
+      <if test="scenicSpotType != null" >
+        SCENIC_SPOT_TYPE,
+      </if>
+      <if test="cityPic != null">
+        CITY_PIC,
+      </if>
+      <if test="cityLabel != null">
+        CITY_LABEL
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scenicSpotFid != null" >
+        #{scenicSpotFid,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotFname != null" >
+        #{scenicSpotFname,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotPid != null" >
+        #{scenicSpotPid,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotSid != null">
+        #{scenicSpotSid,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotQid != null">
+        #{scenicSpotQid,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotType != null" >
+        #{scenicSpotType,jdbcType=INTEGER},
+      </if>
+      <if test="cityPic != null">
+        #{cityPic,jdbcType=VARCHAR},
+      </if>
+      <if test="cityLabel != null">
+        #{cityLabel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotBinding" >
+    update SYS_SCENIC_SPOT_BINDING
+    <set >
+      <if test="scenicSpotFname != null" >
+        SCENIC_SPOT_FNAME = #{scenicSpotFname,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotPid != null" >
+        SCENIC_SPOT_PID = #{scenicSpotPid,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotSid != null" >
+        SCENIC_SPOT_SID = #{scenicSpotSid,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotQid != null" >
+        SCENIC_SPOT_QID = #{scenicSpotQid,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotType != null" >
+        SCENIC_SPOT_TYPE = #{scenicSpotType,jdbcType=INTEGER},
+      </if>
+      <if test="cityPic != null">
+        CITY_PIC = #{cityPic,jdbcType=VARCHAR},
+      </if>
+      <if test="cityLabel != null">
+        CITY_LABEL = #{cityLabel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SCENIC_SPOT_FID = #{scenicSpotFid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotBinding" >
+    update SYS_SCENIC_SPOT_BINDING
+    set SCENIC_SPOT_FNAME = #{scenicSpotFname,jdbcType=VARCHAR},
+      SCENIC_SPOT_PID = #{scenicSpotPid,jdbcType=BIGINT},
+      SCENIC_SPOT_SID = #{scenicSpotSid,jdbcType=BIGINT},
+      SCENIC_SPOT_QID = #{scenicSpotQid,jdbcType=BIGINT}
+    where SCENIC_SPOT_FID = #{scenicSpotFid,jdbcType=BIGINT}
+  </update>
+  <select id="getScenicSpotRole" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_BINDING
+<!--    where SCENIC_SPOT_TYPE in (0,1,2)-->
+<!--    or SCENIC_SPOT_TYPE is null-->
+  </select>
+  <select id="getScenicSpotBindingList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_BINDING
+    where SCENIC_SPOT_PID IS NULL
+    <if test="sysScenicSpotBinding.scenicSpotFname != null and sysScenicSpotBinding.scenicSpotFname != ''">
+      AND SCENIC_SPOT_FNAME LIKE CONCAT('%',#{sysScenicSpotBinding.scenicSpotFname},'%')
+    </if>
+  </select>
+  <select id="getScenicSpotBindingListN" resultMap="BaseResultMap">
+    select
+    sssb.*
+    ,sssb1.SCENIC_SPOT_FNAME as scenicSpotSname
+    ,sssb2.SCENIC_SPOT_FNAME as scenicSpotQname
+    ,sssb3.SCENIC_SPOT_FNAME as scenicSpotPname
+    from SYS_SCENIC_SPOT_BINDING sssb
+    left join SYS_SCENIC_SPOT_BINDING sssb1 on sssb.SCENIC_SPOT_SID = sssb1.SCENIC_SPOT_FID
+    left join SYS_SCENIC_SPOT_BINDING sssb2 on sssb.SCENIC_SPOT_QID = sssb2.SCENIC_SPOT_FID
+    left join SYS_SCENIC_SPOT_BINDING sssb3 on sssb.SCENIC_SPOT_PID = sssb3.SCENIC_SPOT_FID
+    where
+<!--    sssb.SCENIC_SPOT_PID IS NULL-->
+    1=1
+    <if test="sysScenicSpotBinding.scenicSpotFname != null and sysScenicSpotBinding.scenicSpotFname != ''">
+      AND  sssb.SCENIC_SPOT_FNAME LIKE CONCAT('%',#{sysScenicSpotBinding.scenicSpotFname},'%')
+    </if>
+    <if test="sysScenicSpotBinding.scenicSpotType != null ">
+      AND  sssb.SCENIC_SPOT_TYPE  = #{sysScenicSpotBinding.scenicSpotType}
+    </if>
+  </select>
+  <select id="selectBindingsList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from SYS_SCENIC_SPOT_BINDING
+  </select>
+  <select id="selectBindingsByRecordList" resultType="com.hna.hka.archive.management.system.model.SysScenicSpotBinding">
+    select
+    <include refid="Base_Column_List"></include>,srut.SATURATION_LOW as saturationLow,srut.SATURATION_HIGH as saturationHigh
+    from SYS_SCENIC_SPOT_BINDING
+    left join SYS_ROBOT_UNUSUAL_TIME srut
+    on sssb.SCENIC_SPOT_FID = srut.SYS_SCENIC_SPOT_ID
+  </select>
+  <select id="selectUserName" resultMap="BaseResultMap">
+		SELECT
+		C.SCENIC_SPOT_FID,C.SCENIC_SPOT_FNAME,C.SCENIC_SPOT_PID
+		FROM
+		SYS_APP_USERS_SPOT_ROLE A
+		LEFT JOIN SYS_APP_USERS B ON A.PRIMARY_KEY_UID =
+		B.USER_ID
+		LEFT JOIN SYS_SCENIC_SPOT_BINDING C ON A.PRIMARY_KEY_PID =
+		C.SCENIC_SPOT_FID
+		WHERE
+		B.LOGIN_NAME = #{loginName}
+  </select>
+  <select id="selectUserPid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from SYS_SCENIC_SPOT_BINDING
+    WHERE SCENIC_SPOT_FID = #{scenicSpotPid}
+  </select>
+  <select id="selectUserFid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from SYS_SCENIC_SPOT_BINDING
+    WHERE SCENIC_SPOT_PID = #{scenicSpotfid}
+  </select>
+  <select id="getChinaMapList" resultMap="BaseResultChinaMap">
+    SELECT
+      B.SCENIC_SPOT_FID AS id,
+      B.SCENIC_SPOT_FNAME AS name,
+      coalesce( totalTime, 0 ) AS operateTime,
+      ROUND( coalesce( orderAmount, 0 ), 0 ) AS orderAmount
+    FROM
+      (
+        SELECT
+          SUM((
+            SELECT
+              SUM( TOTAL_TIME )
+            FROM
+              SYS_ORDER
+            WHERE
+              ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+              AND ORDER_STATUS = '30'
+              AND DATE_FORMAT( ORDER_START_TIME, '%Y%m' ) = DATE_FORMAT( CURDATE( ), '%Y%m' ))) AS totalTime,
+          SUM((
+            SELECT
+              SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT, 2 ) )
+            FROM
+              SYS_ORDER
+            WHERE
+              ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+              AND ORDER_STATUS = '30'
+              AND DATE_FORMAT( ORDER_START_TIME, '%Y%m' ) = DATE_FORMAT( CURDATE( ), '%Y%m' ))) AS orderAmount,
+          A.SCENIC_SPOT_FID
+        FROM
+          SYS_SCENIC_SPOT A
+        GROUP BY
+          A.SCENIC_SPOT_FID
+      ) AS SYS
+        LEFT JOIN SYS_SCENIC_SPOT_BINDING B ON SYS.SCENIC_SPOT_FID = B.SCENIC_SPOT_FID
+  </select>
+  <select id="getScenicSpotById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from SYS_SCENIC_SPOT_BINDING
+    WHERE SCENIC_SPOT_PID = #{scenicSpotfid}
+  </select>
+
+  <select id="spotFactoryList" resultMap="BaseResultMap" >
+    select SCENIC_SPOT_FID,SCENIC_SPOT_FNAME,SCENIC_SPOT_PID from SYS_SCENIC_SPOT_BINDING where SCENIC_SPOT_PID = 15724277775558
+  </select>
+
+  <select id="getSpotBindingProvince" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select SCENIC_SPOT_FID , SCENIC_SPOT_FNAME
+    from SYS_SCENIC_SPOT_BINDING
+    where SCENIC_SPOT_TYPE = 1
+    <if test="pid != null and  pid != ''">
+      and  SCENIC_SPOT_PID = #{pid}
+    </if>
+  </select>
+
+  <select id="getSpotBindingCity" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select SCENIC_SPOT_FID , SCENIC_SPOT_FNAME
+    from SYS_SCENIC_SPOT_BINDING
+    where
+      SCENIC_SPOT_TYPE = 3
+    <if test="pid != null and pid != ''">
+      and  SCENIC_SPOT_PID = #{pid}
+    </if>
+
+  </select>
+
+  <select id="getSpotBindingArea" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select SCENIC_SPOT_FID , SCENIC_SPOT_FNAME
+    from SYS_SCENIC_SPOT_BINDING
+    where
+    SCENIC_SPOT_TYPE = 4
+    <if test="pid != null and pid != ''">
+      and  SCENIC_SPOT_SID = #{pid}
+    </if>
+  </select>
+
+  <select id="selectUserFidByRecord" resultType="com.hna.hka.archive.management.system.model.SysScenicSpotBinding">
+    select
+    <include refid="Base_Column_List"></include>,srut.SATURATION_LOW as saturationLow,srut.SATURATION_HIGH as saturationHigh
+    from SYS_SCENIC_SPOT_BINDING sssb
+    left join SYS_ROBOT_UNUSUAL_TIME srut
+    on sssb.SCENIC_SPOT_FID = srut.SYS_SCENIC_SPOT_ID
+    WHERE sssb.SCENIC_SPOT_PID = #{scenicSpotfid}
+  </select>
+
+  <select id="selectUserNameByRecord" resultType="com.hna.hka.archive.management.system.model.SysScenicSpotBinding">
+
+    SELECT
+    C.SCENIC_SPOT_FID,C.SCENIC_SPOT_FNAME,C.SCENIC_SPOT_PID,D.SATURATION_LOW as saturationLow,D.SATURATION_HIGH as saturationHigh,
+    E.GPS_UPDATE_DATE as gpsUpdateDate
+    FROM
+    SYS_APP_USERS_SPOT_ROLE A
+    LEFT JOIN SYS_APP_USERS B ON A.PRIMARY_KEY_UID =
+    B.USER_ID
+    LEFT JOIN SYS_SCENIC_SPOT_BINDING C ON A.PRIMARY_KEY_PID =
+    C.SCENIC_SPOT_FID
+    LEFT JOIN SYS_ROBOT_UNUSUAL_TIME D ON C.SCENIC_SPOT_FID =
+    D.SYS_SCENIC_SPOT_ID
+    LEFT JOIN SYS_SCENIC_SPOT E ON A.PRIMARY_KEY_PID = E.SCENIC_SPOT_ID
+    WHERE
+    B.LOGIN_NAME = #{loginName}
+  </select>
+
+
+
+</mapper>

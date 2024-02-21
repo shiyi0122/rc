@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotPadNewMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotPadNew" >
+    <id column="PAD_ID" property="padId" jdbcType="BIGINT" />
+    <result column="PAD_URL" property="padUrl" jdbcType="VARCHAR" />
+    <result column="PAD_NUMBER" property="padNumber" jdbcType="VARCHAR" />
+    <result column="PAD_DESCRIPTION" property="padDescription" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_SCOPE" property="updateScope" jdbcType="VARCHAR"/>
+    <result column="UPDATE_TYPE" property="updateType" jdbcType="VARCHAR"/>
+    <result column="PACKAGE_TYPE" property="packageType" jdbcType="VARCHAR"/>
+    <result column="START_TIME" property="startTime" jdbcType="VARCHAR"/>
+    <result column="END_TIME" property="endTime" jdbcType="VARCHAR"/>
+    <result column="PAD_OSS_URL" property="padOssUrl" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PAD_ID, PAD_URL, PAD_NUMBER, PAD_DESCRIPTION, CREATE_DATE, UPDATE_DATE,UPDATE_SCOPE,UPDATE_TYPE, PACKAGE_TYPE,START_TIME,END_TIME,PAD_OSS_URL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_PAD_NEW
+    where PAD_ID = #{padId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from  SYS_ROBOT_PAD_NEW
+    where PAD_ID = #{padId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotPadNew" >
+    insert into  SYS_ROBOT_PAD_NEW (PAD_ID, PAD_URL, PAD_NUMBER,
+      PAD_DESCRIPTION, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{padId,jdbcType=BIGINT}, #{padUrl,jdbcType=VARCHAR}, #{padNumber,jdbcType=VARCHAR}, 
+      #{padDescription,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotPadNew" >
+    insert into SYS_ROBOT_PAD_NEW
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="padId != null" >
+        PAD_ID,
+      </if>
+      <if test="padUrl != null" >
+        PAD_URL,
+      </if>
+      <if test="padNumber != null" >
+        PAD_NUMBER,
+      </if>
+      <if test="padDescription != null" >
+        PAD_DESCRIPTION,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="updateScope != null">
+        UPDATE_SCOPE,
+      </if>
+      <if test="updateType != null">
+        UPDATE_TYPE,
+      </if>
+      <if test="packageType != null">
+        PACKAGE_TYPE,
+      </if>
+      <if test="startTime != null">
+        START_TIME,
+      </if>
+      <if test="endTime != null">
+        END_TIME,
+      </if>
+      <if test="padOssUrl != null">
+        PAD_OSS_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="padId != null" >
+        #{padId,jdbcType=BIGINT},
+      </if>
+      <if test="padUrl != null" >
+        #{padUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="padNumber != null" >
+        #{padNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="padDescription != null" >
+        #{padDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateScope != null" >
+        #{updateScope,jdbcType=VARCHAR},
+      </if>
+      <if test="updateType != null" >
+        #{updateType,jdbcType=VARCHAR},
+      </if>
+      <if test="packageType != null" >
+        #{packageType,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="padOssUrl != null">
+        #{padOssUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotPad" >
+    update  SYS_ROBOT_PAD_NEW
+    <set >
+      <if test="padUrl != null" >
+        PAD_URL = #{padUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="padNumber != null" >
+        PAD_NUMBER = #{padNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="padDescription != null" >
+        PAD_DESCRIPTION = #{padDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateScope != null">
+        UPDATE_SCOPE = #{updateScope,jdbcType=VARCHAR},
+      </if>
+      <if test="updateType != null">
+        UPDATE_TYPE = #{updateType,jdbcType=VARCHAR},
+      </if>
+      <if test="packageType != null">
+        PACKAGE_TYPE = #{packageType,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        START_TIME = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        END_TIME = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="padOssUrl != null">
+        PAD_OSS_URL = #{padOssUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PAD_ID = #{padId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotPad" >
+    update  SYS_ROBOT_PAD_NEW
+    set PAD_URL = #{padUrl,jdbcType=VARCHAR},
+      PAD_NUMBER = #{padNumber,jdbcType=VARCHAR},
+      PAD_DESCRIPTION = #{padDescription,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      UPDATE_SCOPE = #{updateScope,jdbcType=VARCHAR},
+      UPDATE_TYPE = #{updateType,jdbcType=VARCHAR},
+      PACKAGE_TYPE = #{packageType,jdbcType=VARCHAR},
+      PAD_OSS_URL = #{padOssUrl,jdbcType=VARCHAR}
+    where PAD_ID = #{padId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotMapResList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from  SYS_ROBOT_PAD_NEW
+    <where>
+      1=1
+      <if test="packageType != null and packageType != ''">
+        and  PACKAGE_TYPE = #{packageType}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <select id="getAppPadNumber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from  SYS_ROBOT_PAD_NEW
+    ORDER BY PAD_NUMBER DESC
+    LIMIT 1
+  </select>
+
+  <select id="getAppPadNumberNew" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from  SYS_ROBOT_PAD_NEW
+    where PACKAGE_TYPE = #{type}
+    ORDER BY CREATE_DATE DESC
+    LIMIT 1
+  </select>
+
+  <select id="getAppPadNumberNewList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from  SYS_ROBOT_PAD_NEW
+    where PACKAGE_TYPE = #{type}
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

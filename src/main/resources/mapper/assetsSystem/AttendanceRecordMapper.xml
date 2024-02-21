@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.AttendanceRecordMapper">
+    <resultMap id="AttendanceRecord" type="com.hna.hka.archive.management.assetsSystem.model.AttendanceRecord">
+        <id column="RECORD_ID" property="recordId" jdbcType="BIGINT"/>
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT"/>
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR"/>
+        <result column="USER_ID" property="userId" jdbcType="BIGINT"/>
+        <result column="USER_NAME" property="userName" jdbcType="BIGINT"/>
+        <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+        <result column="WORK_TIME" property="workTime" jdbcType="VARCHAR"/>
+        <result column="WORK_PLACE" property="workPlace" jdbcType="VARCHAR"/>
+        <result column="WORK_PHOTO" property="workPhoto" jdbcType="VARCHAR"/>
+        <result column="EMPLOYEE_POST" property="employeePost" jdbcType="VARCHAR"/>
+        <result column="EMPLOYEE_TYPE" property="employeeType" jdbcType="VARCHAR"/>
+        <result column="WORK_JOURNAL" property="workJournal" jdbcType="VARCHAR"/>
+        <result column="EMPLOYEE_ATTENDANCE" property="employeeAttendAnce" jdbcType="VARCHAR"/>
+        <result column="WEATHER" property="weather" jdbcType="VARCHAR"/>
+        <result column="TOTAL_NUMBER_PEOPLE" property="totalNumberPeople" jdbcType="VARCHAR"/>
+        <result column="ACTUAL_NUMBER_PEOPLE" property="actualNumberPeople" jdbcType="VARCHAR"/>
+        <result column="COMPENSATORY_LEAVE_PEOPLE" property="compensatoryLeavePeople" jdbcType="VARCHAR"/>
+        <result column="PARTTIME_PEOPLE" property="parttimePeople" jdbcType="VARCHAR"/>
+        <result column="SCENIC_SPOT_ROBOT_TOTAL" property="totalNumberRobot" jdbcType="VARCHAR"/>
+        <result column="NORMAL_ROBOT_NUMBER" property="NormalRobotNumber" jdbcType="VARCHAR"/>
+        <result column="FAULT_ROBOT_NUMBER" property="faultRobotNumber" jdbcType="VARCHAR"/>
+        <result column="ATTENDANCE_ROBOT_NUMBER" property="attendanceRobotNumber" jdbcType="VARCHAR"/>
+        <result column="START_TIME" property="startTime" jdbcType="VARCHAR"/>
+        <result column="SUSPEND_TIME" property="suspendTime" jdbcType="VARCHAR"/>
+        <result column="RECOVERY_TIME" property="RecoveryTime" jdbcType="VARCHAR"/>
+        <result column="END_TIME" property="endTime" jdbcType="VARCHAR"/>
+        <result column="CHARGE_DUTY_PEOPLE" property="chargeDutyPeople" jdbcType="VARCHAR"/>
+        <result column="FIREPERVENTION_DUTY_PEOPLE" property="fireperventionDutyPeople" jdbcType="VARCHAR"/>
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR"/>
+        <result column="TODAY_DATE" property="todayDate" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="addPeoPle" parameterType="com.hna.hka.archive.management.assetsSystem.model.AttendanceRecord">
+        insert into SYS_APP_PEOPLE_ATTENDANCE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">
+                RECORD_ID,
+            </if>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="workTime != null">
+                WORK_TIME,
+            </if>
+            <if test="workPlace != null">
+                WORK_PLACE,
+            </if>
+            <if test="workPhoto != null">
+                WORK_PHOTO,
+            </if>
+            <if test="employeePost != null">
+                EMPLOYEE_POST,
+            </if>
+            <if test="employeeType != null">
+                EMPLOYEE_TYPE,
+            </if>
+            <if test="workJournal != null">
+                WORK_JOURNAL,
+            </if>
+            <if test="employeeAttendAnce != null">
+                EMPLOYEE_ATTENDANCE,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">
+                #{recordId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null">
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="workTime != null">
+                #{workTime,jdbcType=VARCHAR},
+            </if>
+            <if test="workPlace != null">
+                #{workPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="workPhoto != null">
+                #{workPhoto,jdbcType=VARCHAR},
+            </if>
+            <if test="employeePost != null">
+                #{employeePost,jdbcType=VARCHAR},
+            </if>
+            <if test="employeeType != null">
+                #{employeeType,jdbcType=VARCHAR},
+            </if>
+            <if test="workJournal != null">
+                #{workJournal,jdbcType=VARCHAR},
+            </if>
+            <if test="employeeAttendAnce != null">
+                #{employeeAttendAnce,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="addEquipment" parameterType="com.hna.hka.archive.management.assetsSystem.model.AttendanceRecord">
+        insert into SYS_APP_EQUIPMENT_ATTENDANCE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">
+                RECORD_ID,
+            </if>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="weather != null">
+                WEATHER,
+            </if>
+            <if test="totalNumberPeople != null">
+                TOTAL_NUMBER_PEOPLE,
+            </if>
+            <if test="actualNumberPeople != null">
+                ACTUAL_NUMBER_PEOPLE,
+            </if>
+            <if test="compensatoryLeavePeople != null">
+                COMPENSATORY_LEAVE_PEOPLE,
+            </if>
+            <if test="parttimePeople != null">
+                PARTTIME_PEOPLE,
+            </if>
+            <if test="totalNumberRobot != null">
+                TOTAL_NUMBER_ROBOT,
+            </if>
+            <if test="NormalRobotNumber != null">
+                NORMAL_ROBOT_NUMBER,
+            </if>
+            <if test="faultRobotNumber != null">
+                FAULT_ROBOT_NUMBER,
+            </if>
+            <if test="attendanceRobotNumber != null">
+                ATTENDANCE_ROBOT_NUMBER,
+            </if>
+            <if test="startTime != null">
+                START_TIME,
+            </if>
+            <if test="suspendTime != null">
+                SUSPEND_TIME,
+            </if>
+            <if test="RecoveryTime != null">
+                RECOVERY_TIME,
+            </if>
+            <if test="endTime != null">
+                END_TIME,
+            </if>
+            <if test="chargeDutyPeople != null">
+                CHARGE_DUTY_PEOPLE,
+            </if>
+            <if test="fireperventionDutyPeople != null">
+                FIREPERVENTION_DUTY_PEOPLE,
+            </if>
+            <if test="remarks != null">
+                REMARKS,
+            </if>
+            <if test="todayDate != null">
+                TODAY_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">
+                #{recordId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null">
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="weather != null">
+                #{weather,jdbcType=VARCHAR},
+            </if>
+            <if test="totalNumberPeople != null">
+                #{totalNumberPeople,jdbcType=VARCHAR},
+            </if>
+            <if test="actualNumberPeople != null">
+                #{actualNumberPeople,jdbcType=VARCHAR},
+            </if>
+            <if test="compensatoryLeavePeople != null">
+                #{compensatoryLeavePeople,jdbcType=VARCHAR},
+            </if>
+            <if test="parttimePeople != null">
+                #{parttimePeople,jdbcType=VARCHAR},
+            </if>
+            <if test="NormalRobotNumber != null">
+                #{NormalRobotNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="totalNumberRobot != null">
+                #{totalNumberRobot,jdbcType=VARCHAR},
+            </if>
+            <if test="faultRobotNumber != null">
+                #{faultRobotNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="attendanceRobotNumber != null">
+                #{attendanceRobotNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="suspendTime != null">
+                #{suspendTime,jdbcType=VARCHAR},
+            </if>
+            <if test="RecoveryTime != null">
+                #{RecoveryTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeDutyPeople != null">
+                #{chargeDutyPeople,jdbcType=VARCHAR},
+            </if>
+            <if test="fireperventionDutyPeople != null">
+                #{fireperventionDutyPeople,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="todayDate != null">
+                #{todayDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <delete id="deleteEmployeeAttendance">
+        delete
+        from SYS_APP_PEOPLE_ATTENDANCE
+        where RECORD_ID = #{recordId}
+    </delete>
+    <delete id="deleteRobotAttendance">
+        delete
+        from
+        SYS_APP_ROBOT_ATTENDANCE
+        where RECORD_ID = #{recordId}
+    </delete>
+    <select id="selApp" resultMap="AttendanceRecord">
+        select b.SCENIC_SPOT_NAME,
+               a.TOTAL_NUMBER_PEOPLE,
+               a.ACTUAL_NUMBER_PEOPLE,
+               a.COMPENSATORY_LEAVE_PEOPLE,
+               a.PARTTIME_PEOPLE,
+               b.SCENIC_SPOT_ROBOT_TOTAL,
+               a.NORMAL_ROBOT_NUMBER,
+               b.CREATE_DATE,
+               a.FAULT_ROBOT_NUMBER,
+               a.ATTENDANCE_ROBOT_NUMBER,
+               a.START_TIME,
+               a.SUSPEND_TIME,
+               a.RECOVERY_TIME,
+               a.END_TIME,
+               a.CHARGE_DUTY_PEOPLE,
+               a.FIREPERVENTION_DUTY_PEOPLE,
+               a.REMARKS,
+               a.TODAY_DATE
+        from SYS_APP_EQUIPMENT_ATTENDANCE a
+                 left join SYS_SCENIC_SPOT b on a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        where USER_ID = #{userId}
+          and TODAY_DATE = #{todayDate}
+    </select>
+
+    <update id="upEquipment" parameterType="com.hna.hka.archive.management.assetsSystem.model.AttendanceRecord">
+        update SYS_APP_EQUIPMENT_ATTENDANCE
+        <set>
+            <if test="weather != null">
+                WEATHER=#{weather},
+            </if>
+            <if test="totalNumberPeople != null">
+                TOTAL_NUMBER_PEOPLE=#{totalNumberPeople},
+            </if>
+            <if test="actualNumberPeople != null">
+                ACTUAL_NUMBER_PEOPLE=#{actualNumberPeople,jdbcType=VARCHAR},
+            </if>
+            <if test="compensatoryLeavePeople != null">
+                COMPENSATORY_LEAVE_PEOPLE=#{compensatoryLeavePeople,jdbcType=VARCHAR},
+            </if>
+            <if test="parttimePeople != null">
+                PARTTIME_PEOPLE= #{parttimePeople,jdbcType=VARCHAR},
+            </if>
+            <if test="totalNumberRobot != null">
+                TOTAL_NUMBER_ROBOT=#{totalNumberRobot,jdbcType=VARCHAR},
+            </if>
+            <if test="NormalRobotNumber != null">
+                NORMAL_ROBOT_NUMBER= #{NormalRobotNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="faultRobotNumber != null">
+                FAULT_ROBOT_NUMBER = #{faultRobotNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="attendanceRobotNumber != null">
+                ATTENDANCE_ROBOT_NUMBER=#{attendanceRobotNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                START_TIME=#{startTime,jdbcType=VARCHAR},
+            </if>
+            <if test="suspendTime != null">
+                SUSPEND_TIME=#{suspendTime,jdbcType=VARCHAR},
+            </if>
+            <if test="RecoveryTime != null">
+                RECOVERY_TIME=#{RecoveryTime,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                END_TIME=#{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeDutyPeople != null">
+                CHARGE_DUTY_PEOPLE=#{chargeDutyPeople,jdbcType=VARCHAR},
+            </if>
+            <if test="fireperventionDutyPeople != null">
+                FIREPERVENTION_DUTY_PEOPLE=#{fireperventionDutyPeople,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                REMARKS=#{remarks,jdbcType=VARCHAR},
+            </if>
+        </set>
+    </update>
+    <select id="robotNum" resultType="java.lang.Integer">
+        select count(*) from SYS_ROBOT
+        <where>
+            SCENIC_SPOT_ID=#{scenicSpotId}
+            <if test="robotFaultState != null and robotFaultState !='' ">
+                and ROBOT_FAULT_STATE=#{robotFaultState}
+            </if>
+        </where>
+    </select>
+
+    <select id="list" resultMap="AttendanceRecord">
+        select
+        b.SCENIC_SPOT_NAME,c.USER_NAME,a.TYPE,a.WORK_TIME,a.WORK_PLACE,a.WORK_PHOTO,a.EMPLOYEE_POST,a.EMPLOYEE_TYPE,
+        a.WORK_JOURNAL,a.EMPLOYEE_ATTENDANCE,a.CREATE_DATE
+        from SYS_APP_PEOPLE_ATTENDANCE a
+        left join SYS_SCENIC_SPOT b on a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        left join SYS_APP_USERS c on a.USER_ID=c.USER_ID
+        <where>
+            <if test="employeeType != null and employeeType != '' ">
+                and a.EMPLOYEE_TYPE=#{employeeType}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId !=''">
+                and b.SCENIC_SPOT_ID=#{scenicSpotId}
+            </if>
+            <if test="userId !=null and userId != ''">
+                and a.USER_ID like CONCAT('%',#{userId},'%')
+            </if>
+            <if test="startDate !=null and startDate !=''">
+                and a.CREATE_DATE &gt;= #{startDate}
+            </if>
+            <if test="endDate !=null and endDate !=''">
+                and a.CREATE_DATE &lt;= #{endDate}
+            </if>
+        </where>
+        order by a.CREATE_DATE
+    </select>
+
+    <select id="selUser" resultMap="AttendanceRecord">
+        select USER_ID,EMPLOYEE_TYPE FROM SYS_APP_PEOPLE_ATTENDANCE
+        <where>
+            <if test="userId !=null and userId !=''">
+                and USER_ID=#{userId}
+            </if>
+            <if test="employeeType !=null and employeeType !=''">
+                and EMPLOYEE_TYPE=#{employeeType}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId !=''">
+                and SCENIC_SPOT_ID=#{scenicSpotId}
+            </if>
+            <if test="startDate !=null and startDate !=''">
+                and CREATE_DATE &gt;= #{startDate}
+            </if>
+            <if test="endDate !=null and endDate !=''">
+                and CREATE_DATE &lt;= #{endDate}
+            </if>
+        </where>
+        GROUP BY USER_ID
+    </select>
+
+    <select id="selTotal" resultType="java.lang.Integer">
+        select count(*) from SYS_APP_PEOPLE_ATTENDANCE
+        <where>
+            <if test="userId !=null and userId != ''">
+                and USER_ID=#{userId}
+            </if>
+            <if test="startDate !=null and startDate !=''">
+                and CREATE_DATE &gt;= #{startDate}
+            </if>
+            <if test="endDate !=null and endDate !=''">
+                and CREATE_DATE &lt; #{endDate}
+            </if>
+            <if test="employeeAttendance !=null and employeeAttendance!=''">
+                and EMPLOYEE_ATTENDANCE=#{employeeAttendance}
+            </if>
+            <if test="type !=null and type !=''">
+                and TYPE=#{type}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId !=''">
+                and SCENIC_SPOT_ID=#{scenicSpotId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selDetails" resultMap="AttendanceRecord">
+        select
+        b.USER_NAME,c.SCENIC_SPOT_NAME,a.TYPE,a.WORK_TIME,a.WORK_PLACE,a.WORK_PHOTO,a.EMPLOYEE_POST,a.EMPLOYEE_TYPE,
+        a.WORK_JOURNAL,a.EMPLOYEE_ATTENDANCE,a.CREATE_DATE,d.WEATHER,d.TOTAL_NUMBER_PEOPLE,d.ACTUAL_NUMBER_PEOPLE,
+        d.COMPENSATORY_LEAVE_PEOPLE,d.PARTTIME_PEOPLE,d.TOTAL_NUMBER_ROBOT,d.NORMAL_ROBOT_NUMBER,d.FAULT_ROBOT_NUMBER,d.ATTENDANCE_ROBOT_NUMBER,
+        d.START_TIME,d.SUSPEND_TIME,d.RECOVERY_TIME,d.END_TIME,d.CHARGE_DUTY_PEOPLE,d.FIREPERVENTION_DUTY_PEOPLE,d.REMARKS,
+        d.TODAY_DATE
+        from SYS_APP_PEOPLE_ATTENDANCE a
+        left join SYS_APP_EQUIPMENT_ATTENDANCE d on d.USER_ID=a.USER_ID
+        left join SYS_SCENIC_SPOT c on a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        left join SYS_APP_USERS b on a.USER_ID=b.USER_ID
+        <where>
+            <if test="userId !=null and userId != ''">
+                and a.USER_ID=#{userId}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId !=''">
+                and a.SCENIC_SPOT_ID=#{scenicSpotId}
+            </if>
+            <if test="startDate !=null and startDate !=''">
+                and a.CREATE_DATE &gt;= #{startDate}
+            </if>
+            <if test="endDate !=null and endDate !=''">
+                and a.CREATE_DATE &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="selSpotName" resultMap="AttendanceRecord">
+        select c.SCENIC_SPOT_NAME,a.SCENIC_SPOT_ID from SYS_APP_PEOPLE_ATTENDANCE a
+        left join SYS_SCENIC_SPOT c on a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId !=''">
+                and a.SCENIC_SPOT_ID=#{scenicSpotId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectEmployeeAttendanceTotal" resultType="java.lang.Integer">
+        select
+        count(*)
+        from
+        SYS_APP_PEOPLE_ATTENDANCE a
+        left join
+        SYS_APP_USERS b
+        on
+        a.USER_ID = b.USER_ID
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="userName != null and userName !=''">
+                and b.USER_NAME like CONCAT('%',#{userName},'%')
+            </if>
+            <if test="startDate != null  and startDate != '' ">
+                and a.WORK_TIME <![CDATA[ >= ]]> CAST(CONCAT(#{startDate},' 00:00:00') AS datetime)
+            </if>
+            <if test="endDate != null  and endDate != '' ">
+                and a.WORK_TIME <![CDATA[ <= ]]> CAST(CONCAT(#{endDate},' 23:59:59') AS datetime)
+            </if>
+        </where>
+    </select>
+    <!--  查询全部员工  -->
+    <select id="selectEmployeeAttendance"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.EmployeeAttendance">
+        select
+        a.TYPE,a.RECORD_ID,a.SCENIC_SPOT_ID,c.SCENIC_SPOT_NAME,a.USER_ID,b.USER_NAME,a.EMPLOYEE_POST,a.WORK_TIME,a.WORK_PHOTO,a.WORK_PLACE,a.EMPLOYEE_TYPE
+        from
+        SYS_APP_USERS b
+        left join
+        ( select
+        TYPE,RECORD_ID,SCENIC_SPOT_ID,USER_ID,EMPLOYEE_POST,WORK_TIME,WORK_PHOTO,WORK_PLACE,EMPLOYEE_TYPE
+        from
+        SYS_APP_PEOPLE_ATTENDANCE
+        <where>
+            <if test="startDate != null  and startDate != '' ">
+                and WORK_TIME <![CDATA[ >= ]]>CAST(CONCAT(#{startDate}) AS datetime)
+            </if>
+            <if test="endDate != null  and endDate != '' ">
+                and WORK_TIME <![CDATA[ <= ]]> CAST(CONCAT(#{endDate}) AS datetime)
+            </if>
+        </where>
+        ) a
+        on
+        a.USER_ID = b.USER_ID
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="userName != null and userName !=''">
+                and b.USER_NAME like CONCAT('%',#{userName},'%')
+            </if>
+            <if test="signInOrNot eq 0">
+                and a.RECORD_ID is null
+            </if>
+            <if test="signInOrNot eq 1">
+                and a.RECORD_ID is not null
+            </if>
+        </where>
+    </select>
+    <select id="selectAllEmployees" resultType="com.hna.hka.archive.management.assetsSystem.model.EmployeeAttendance">
+        select USER_ID,
+               USER_NAME
+        from SYS_APP_USERS
+    </select>
+    <select id="selectAllRecords" resultType="com.hna.hka.archive.management.assetsSystem.model.EmployeeAttendance">
+        select
+        a.RECORD_ID,
+        a.SCENIC_SPOT_ID,
+        b.SCENIC_SPOT_NAME,
+        a.USER_ID,
+        a.TYPE,
+        a.WORK_TIME,
+        a.WORK_PLACE,
+        a.WORK_PHOTO,
+        a.EMPLOYEE_POST,
+        a.EMPLOYEE_TYPE,
+        a.WORK_JOURNAL,
+        a.EMPLOYEE_ATTENDANCE
+        from
+        SYS_APP_PEOPLE_ATTENDANCE a
+        left join
+        SYS_SCENIC_SPOT b
+        on
+        a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        <where>
+            <if test="(startDate != null  and startDate != '') and (endDate != null  and endDate != '') ">
+                and a.WORK_TIME not between #{startDate} and #{endDate}
+            </if>
+            <if test="(startDate == null  and startDate == '') and (endDate == null  and endDate == '') ">
+                and startDate = null
+            </if>
+        </where>
+
+    </select>
+    <select id="selectEmployeeAttendances"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.EmployeeAttendance">
+        select
+        a.TYPE,
+        a.RECORD_ID,
+        a.SCENIC_SPOT_ID,
+        c.SCENIC_SPOT_NAME,
+        a.USER_ID,
+        b.USER_NAME,
+        a.EMPLOYEE_POST,
+        a.WORK_TIME,
+        a.WORK_PHOTO,
+        a.WORK_PLACE,
+        a.EMPLOYEE_TYPE
+        from
+        SYS_APP_USERS b
+        left join
+        ( select
+        TYPE,
+        RECORD_ID,
+        SCENIC_SPOT_ID,
+        USER_ID,
+        EMPLOYEE_POST,
+        WORK_TIME,
+        WORK_PHOTO,
+        WORK_PLACE,
+        EMPLOYEE_TYPE
+        from
+        SYS_APP_PEOPLE_ATTENDANCE
+        <where>
+            DATEDIFF(WORK_TIME,NOW())=0
+        </where>) a
+        on
+        a.USER_ID = b.USER_ID
+        left join
+        SYS_SCENIC_SPOT c
+        on
+        a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="userName != null and userName !=''">
+                and b.USER_NAME like CONCAT('%',#{userName},'%')
+            </if>
+            <if test="signInOrNot eq 0">
+                and RECORD_ID is null
+            </if>
+            <if test="signInOrNot eq 1">
+                and RECORD_ID is not null
+            </if>
+        </where>
+    </select>
+    <select id="timePeriod" resultType="java.lang.Integer">
+        select
+        Count(*)
+        from
+        SYS_APP_PEOPLE_ATTENDANCE
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+               and SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="startDate != null  and startDate != '' ">
+                and WORK_TIME <![CDATA[ >= ]]>CAST(CONCAT(#{startDate}) AS datetime)
+            </if>
+            <if test="endDate != null  and endDate != '' ">
+                and WORK_TIME <![CDATA[ <= ]]> CAST(CONCAT(#{endDate}) AS datetime)
+            </if>
+        </where>
+    </select>
+    <select id="selectScenicSpotName" resultType="java.lang.String">
+        select
+              SCENIC_SPOT_NAME
+        from
+              SYS_SCENIC_SPOT
+        where
+              SCENIC_SPOT_ID = #{scenicSpotId}
+    </select>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.SysAppLoginLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.appSystem.model.SysAppLoginLog" >
+    <id column="LOGIN_LOG_ID" property="loginLogId" jdbcType="BIGINT" />
+    <result column="OPERATION_PEOPLE" property="operationPeople" jdbcType="VARCHAR" />
+    <result column="OPERATION_TIME" property="operationTime" jdbcType="TIMESTAMP" />
+    <result column="OPERATION_ACTION" property="operationAction" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    LOGIN_LOG_ID, OPERATION_PEOPLE, OPERATION_TIME, OPERATION_ACTION
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_APP_LOGIN_LOG
+    where LOGIN_LOG_ID = #{loginLogId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_APP_LOGIN_LOG
+    where LOGIN_LOG_ID = #{loginLogId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.appSystem.model.SysAppLoginLog" >
+    insert into SYS_APP_LOGIN_LOG (LOGIN_LOG_ID, OPERATION_PEOPLE, OPERATION_TIME, 
+      OPERATION_ACTION)
+    values (#{loginLogId,jdbcType=BIGINT}, #{operationPeople,jdbcType=VARCHAR}, #{operationTime,jdbcType=TIMESTAMP}, 
+      #{operationAction,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.appSystem.model.SysAppLoginLog" >
+    insert into SYS_APP_LOGIN_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="loginLogId != null" >
+        LOGIN_LOG_ID,
+      </if>
+      <if test="operationPeople != null" >
+        OPERATION_PEOPLE,
+      </if>
+      <if test="operationTime != null" >
+        OPERATION_TIME,
+      </if>
+      <if test="operationAction != null" >
+        OPERATION_ACTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="loginLogId != null" >
+        #{loginLogId,jdbcType=BIGINT},
+      </if>
+      <if test="operationPeople != null" >
+        #{operationPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="operationTime != null" >
+        #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operationAction != null" >
+        #{operationAction,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.appSystem.model.SysAppLoginLog" >
+    update SYS_APP_LOGIN_LOG
+    <set >
+      <if test="operationPeople != null" >
+        OPERATION_PEOPLE = #{operationPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="operationTime != null" >
+        OPERATION_TIME = #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operationAction != null" >
+        OPERATION_ACTION = #{operationAction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LOGIN_LOG_ID = #{loginLogId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.appSystem.model.SysAppLoginLog" >
+    update SYS_APP_LOGIN_LOG
+    set OPERATION_PEOPLE = #{operationPeople,jdbcType=VARCHAR},
+      OPERATION_TIME = #{operationTime,jdbcType=TIMESTAMP},
+      OPERATION_ACTION = #{operationAction,jdbcType=VARCHAR}
+    where LOGIN_LOG_ID = #{loginLogId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotDateHuntMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotDateHunt" >
+        <id column="DATE_TREASURE_ID" property="dateTreasureId" jdbcType="BIGINT" />
+        <result column="SPOT_ID" property="spotId" jdbcType="BIGINT" />
+        <result column="RANDOM_TIME" property="randomTime" jdbcType="VARCHAR" />
+        <result column="SORT" property="sort" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        DATE_TREASURE_ID,SPOT_ID,RANDOM_TIME,SORT,CREATE_DATE,UPDATE_DATE
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from SYS_SCENIC_SPOT_DATE_HUNT
+        where DATE_TREASURE_ID = #{dateTreasureId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from SYS_SCENIC_SPOT_DATE_HUNT
+        where DATE_TREASURE_ID = #{dateTreasureId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotDateHunt" >
+        insert into SYS_SCENIC_SPOT_DATE_HUNT
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="dateTreasureId != null" >
+                DATE_TREASURE_ID,
+            </if>
+            <if test="spotId != null" >
+                SPOT_ID,
+            </if>
+            <if test="randomTime != null" >
+                RANDOM_TIME,
+            </if>
+            <if test="sort != null" >
+                SORT,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="dateTreasureId != null" >
+                #{dateTreasureId,jdbcType=BIGINT},
+            </if>
+            <if test="spotId != null" >
+                #{spotId,jdbcType=BIGINT},
+            </if>
+            <if test="randomTime != null" >
+                #{randomTime,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null" >
+                #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotDateHunt" >
+        update SYS_SCENIC_SPOT_DATE_HUNT
+        <set >
+            <if test="spotId != null" >
+                SPOT_ID = #{spotId,jdbcType=BIGINT},
+            </if>
+            <if test="randomTime != null" >
+                RANDOM_TIME = #{randomTime,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null" >
+                SORT = #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where DATE_TREASURE_ID = #{dateTreasureId,jdbcType=BIGINT}
+    </update>
+    <select id="getSpotDateHuntList" resultType="com.hna.hka.archive.management.system.model.SysScenicSpotDateHunt">
+        select A.*,B.SCENIC_SPOT_NAME
+        from SYS_SCENIC_SPOT_DATE_HUNT A
+        left join SYS_SCENIC_SPOT B
+        on A.SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="spotId != null and spotId !=''">
+                AND A.SPOT_ID = #{spotId}
+            </if>
+        </where>
+
+        order by sort desc
+
+    </select>
+
+    <select id="getSpotDateHuntIdList" resultType="com.hna.hka.archive.management.system.model.SysScenicSpotDateHunt">
+        select DATE_TREASURE_ID,RANDOM_TIME
+        from SYS_SCENIC_SPOT_DATE_HUNT
+        where SPOT_ID = #{spotId}
+    </select>
+
+
+
+
+</mapper>

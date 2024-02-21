@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotInfraredBroadcastMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotInfraredBroadcast" >
+    <id column="INFRARED_ID" property="infraredId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="INFRARED_TITLE" property="infraredTitle" jdbcType="VARCHAR" />
+    <result column="INFRARED_CONTENT" property="infraredContent" jdbcType="VARCHAR" />
+    <result column="INFRARED_ENABLE_TYPE" property="infraredEnableType" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    INFRARED_ID, SCENIC_SPOT_ID, INFRARED_TITLE, INFRARED_CONTENT, INFRARED_ENABLE_TYPE, 
+    TYPE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_INFRARED_BROADCAST
+    where INFRARED_ID = #{infraredId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_INFRARED_BROADCAST
+    where INFRARED_ID = #{infraredId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotInfraredBroadcast" >
+    insert into SYS_SCENIC_SPOT_INFRARED_BROADCAST (INFRARED_ID, SCENIC_SPOT_ID, INFRARED_TITLE, 
+      INFRARED_CONTENT, INFRARED_ENABLE_TYPE, TYPE, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{infraredId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{infraredTitle,jdbcType=VARCHAR}, 
+      #{infraredContent,jdbcType=VARCHAR}, #{infraredEnableType,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotInfraredBroadcast" >
+    insert into SYS_SCENIC_SPOT_INFRARED_BROADCAST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="infraredId != null" >
+        INFRARED_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="infraredTitle != null" >
+        INFRARED_TITLE,
+      </if>
+      <if test="infraredContent != null" >
+        INFRARED_CONTENT,
+      </if>
+      <if test="infraredEnableType != null" >
+        INFRARED_ENABLE_TYPE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="infraredId != null" >
+        #{infraredId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="infraredTitle != null" >
+        #{infraredTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="infraredContent != null" >
+        #{infraredContent,jdbcType=VARCHAR},
+      </if>
+      <if test="infraredEnableType != null" >
+        #{infraredEnableType,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotInfraredBroadcast" >
+    update SYS_SCENIC_SPOT_INFRARED_BROADCAST
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="infraredTitle != null" >
+        INFRARED_TITLE = #{infraredTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="infraredContent != null" >
+        INFRARED_CONTENT = #{infraredContent,jdbcType=VARCHAR},
+      </if>
+      <if test="infraredEnableType != null" >
+        INFRARED_ENABLE_TYPE = #{infraredEnableType,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where INFRARED_ID = #{infraredId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotInfraredBroadcast" >
+    update SYS_SCENIC_SPOT_INFRARED_BROADCAST
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      INFRARED_TITLE = #{infraredTitle,jdbcType=VARCHAR},
+      INFRARED_CONTENT = #{infraredContent,jdbcType=VARCHAR},
+      INFRARED_ENABLE_TYPE = #{infraredEnableType,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where INFRARED_ID = #{infraredId,jdbcType=BIGINT}
+  </update>
+  <select id="getInfraredBroadcastList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	A.INFRARED_ID,
+	A.SCENIC_SPOT_ID,
+	A.INFRARED_TITLE,
+	A.INFRARED_CONTENT,
+	A.INFRARED_ENABLE_TYPE,
+	A.TYPE,
+	A.CREATE_DATE,
+	A.UPDATE_DATE,
+	B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+	SYS_SCENIC_SPOT_INFRARED_BROADCAST A
+	LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId !=''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

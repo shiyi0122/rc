@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotGpsCoordinateMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotGpsCoordinate" >
+    <id column="COORDINATE_ID" property="coordinateId" jdbcType="BIGINT" />
+    <result column="COORDINATE_SCENIC_SPOT_ID" property="coordinateScenicSpotId" jdbcType="BIGINT" />
+    <result column="INSIDE_WARNING" property="insideWarning" jdbcType="VARCHAR" />
+    <result column="COORDINATE_PARKING_TYPE" property="coordinateParkingType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysScenicSpotGpsCoordinateWithBLOBs" extends="BaseResultMap" >
+    <result column="COORDINATE_OUTERRING" property="coordinateOuterring" jdbcType="LONGVARCHAR" />
+    <result column="COORDINATE_OUTERRING_BAI_DU" property="coordinateOuterringBaiDu" jdbcType="LONGVARCHAR" />
+    <result column="WARNING_LOOP_COORDINATE_GROUP" property="warningLoopCoordinateGroup" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    COORDINATE_ID, COORDINATE_SCENIC_SPOT_ID, INSIDE_WARNING, COORDINATE_PARKING_TYPE, 
+    CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    COORDINATE_OUTERRING, COORDINATE_OUTERRING_BAI_DU, WARNING_LOOP_COORDINATE_GROUP
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_GPS_COORDINATE
+    where COORDINATE_ID = #{coordinateId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_GPS_COORDINATE
+    where COORDINATE_ID = #{coordinateId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotGpsCoordinateWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_GPS_COORDINATE (COORDINATE_ID, COORDINATE_SCENIC_SPOT_ID, 
+      INSIDE_WARNING, COORDINATE_PARKING_TYPE, CREATE_DATE, 
+      UPDATE_DATE, COORDINATE_OUTERRING, COORDINATE_OUTERRING_BAI_DU, 
+      WARNING_LOOP_COORDINATE_GROUP)
+    values (#{coordinateId,jdbcType=BIGINT}, #{coordinateScenicSpotId,jdbcType=BIGINT}, 
+      #{insideWarning,jdbcType=VARCHAR}, #{coordinateParkingType,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR}, #{coordinateOuterring,jdbcType=LONGVARCHAR}, #{coordinateOuterringBaiDu,jdbcType=LONGVARCHAR}, 
+      #{warningLoopCoordinateGroup,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotGpsCoordinateWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_GPS_COORDINATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coordinateId != null" >
+        COORDINATE_ID,
+      </if>
+      <if test="coordinateScenicSpotId != null" >
+        COORDINATE_SCENIC_SPOT_ID,
+      </if>
+      <if test="insideWarning != null" >
+        INSIDE_WARNING,
+      </if>
+      <if test="coordinateParkingType != null" >
+        COORDINATE_PARKING_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="coordinateOuterring != null" >
+        COORDINATE_OUTERRING,
+      </if>
+      <if test="coordinateOuterringBaiDu != null" >
+        COORDINATE_OUTERRING_BAI_DU,
+      </if>
+      <if test="warningLoopCoordinateGroup != null" >
+        WARNING_LOOP_COORDINATE_GROUP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coordinateId != null" >
+        #{coordinateId,jdbcType=BIGINT},
+      </if>
+      <if test="coordinateScenicSpotId != null" >
+        #{coordinateScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="insideWarning != null" >
+        #{insideWarning,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateParkingType != null" >
+        #{coordinateParkingType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateOuterring != null" >
+        #{coordinateOuterring,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="coordinateOuterringBaiDu != null" >
+        #{coordinateOuterringBaiDu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="warningLoopCoordinateGroup != null" >
+        #{warningLoopCoordinateGroup,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotGpsCoordinateWithBLOBs" >
+    update SYS_SCENIC_SPOT_GPS_COORDINATE
+    <set >
+      <if test="coordinateScenicSpotId != null" >
+        COORDINATE_SCENIC_SPOT_ID = #{coordinateScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="insideWarning != null" >
+        INSIDE_WARNING = #{insideWarning,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateParkingType != null" >
+        COORDINATE_PARKING_TYPE = #{coordinateParkingType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateOuterring != null" >
+        COORDINATE_OUTERRING = #{coordinateOuterring,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="coordinateOuterringBaiDu != null" >
+        COORDINATE_OUTERRING_BAI_DU = #{coordinateOuterringBaiDu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="warningLoopCoordinateGroup != null" >
+        WARNING_LOOP_COORDINATE_GROUP = #{warningLoopCoordinateGroup,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where COORDINATE_ID = #{coordinateId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotGpsCoordinateWithBLOBs" >
+    update SYS_SCENIC_SPOT_GPS_COORDINATE
+    set COORDINATE_SCENIC_SPOT_ID = #{coordinateScenicSpotId,jdbcType=BIGINT},
+      INSIDE_WARNING = #{insideWarning,jdbcType=VARCHAR},
+      COORDINATE_PARKING_TYPE = #{coordinateParkingType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      COORDINATE_OUTERRING = #{coordinateOuterring,jdbcType=LONGVARCHAR},
+      COORDINATE_OUTERRING_BAI_DU = #{coordinateOuterringBaiDu,jdbcType=LONGVARCHAR},
+      WARNING_LOOP_COORDINATE_GROUP = #{warningLoopCoordinateGroup,jdbcType=LONGVARCHAR}
+    where COORDINATE_ID = #{coordinateId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotGpsCoordinate" >
+    update SYS_SCENIC_SPOT_GPS_COORDINATE
+    set COORDINATE_SCENIC_SPOT_ID = #{coordinateScenicSpotId,jdbcType=BIGINT},
+      INSIDE_WARNING = #{insideWarning,jdbcType=VARCHAR},
+      COORDINATE_PARKING_TYPE = #{coordinateParkingType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where COORDINATE_ID = #{coordinateId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKeyScenicSpotId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_GPS_COORDINATE
+    where COORDINATE_SCENIC_SPOT_ID = #{coordinateScenicSpotId,jdbcType=BIGINT}
+  </select>
+  <select id="getScenicSpotGpsCoordinateList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+	C.COORDINATE_ID,
+	C.COORDINATE_SCENIC_SPOT_ID,
+	C.INSIDE_WARNING,
+	C.COORDINATE_PARKING_TYPE,
+	C.CREATE_DATE,
+	C.UPDATE_DATE,
+	C.COORDINATE_OUTERRING,
+	C.COORDINATE_OUTERRING_BAI_DU,
+	C.WARNING_LOOP_COORDINATE_GROUP,
+	B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+	SYS_USERS_ROLE_SPOT A
+	LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+	LEFT JOIN SYS_SCENIC_SPOT_GPS_COORDINATE C ON B.SCENIC_SPOT_ID = C.COORDINATE_SCENIC_SPOT_ID
+    <where>
+      <if test="userId != null and userId != ''">
+        AND A.USER_ID = #{userId}
+      </if>
+      <if test="scenicSpotName != null and scenicSpotName != ''">
+        AND B.SCENIC_SPOT_NAME LIKE CONCAT('%',#{scenicSpotName},'%')
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+
+  <select id="getScenicSpotGpsCoordinateAll" resultMap="ResultMapWithBLOBs">
+    select * from SYS_SCENIC_SPOT_GPS_COORDINATE
+  </select>
+</mapper>

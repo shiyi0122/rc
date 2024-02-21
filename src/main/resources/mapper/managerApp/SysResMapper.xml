@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.SysResMapper">
+  <resultMap id="sysResource" type="com.hna.hka.archive.management.appSystem.model.SysResource">
+    <result property="resId" column="RES_ID" />
+    <result property="resIdentity" column="RES_IDENTITY" />
+    <result property="resName" column="RES_NAME" />
+    <result property="resContent" column="RES_CONTENT" />
+    <result property="resIcon" column="RES_ICON" />
+    <result property="resDesc" column="RES_DESC" />
+    <result property="resParentId" column="RES_PARENT_ID" />
+    <result property="resType" column="RES_TYPE" />
+    <result property="resSeq" column="RES_SEQ" />
+    <result property="resStatus" column="RES_STATUS" />
+  </resultMap>
+
+  <select id="getMenuByAppLoginName" parameterType="java.util.HashMap" resultMap="sysResource">
+    SELECT DISTINCT
+    RES.RES_ID,
+    RES.RES_IDENTITY,
+    RES.RES_NAME,
+    RES.RES_CONTENT,
+    RES.RES_ICON,
+    RES.RES_DESC,
+    RES.RES_PARENT_ID,
+    RES.RES_TYPE,
+    RES.RES_SEQ,
+    RES.RES_STATUS
+    FROM
+    SYS_APP_USERS U
+    INNER JOIN SYS_APP_USERS_SPOT_ROLE UR ON U.USER_ID = UR.PRIMARY_KEY_UID
+    INNER JOIN SYS_APP_ROLE R ON UR.PRIMARY_KEY_RID = R.ROLE_ID
+    INNER JOIN SYS_APP_ROLE_RESOURCE_PRMS RRP ON R.ROLE_ID = RRP.ROLE_ID
+    INNER JOIN SYS_RESOURCE RES ON RRP.RES_ID = RES.RES_ID
+    LEFT JOIN SYS_PERMISSION PRMS ON RRP.PRMS_ID = RRP.PRMS_ID
+    WHERE
+    1=1
+    AND U.USER_STATE = #{status}
+    AND R.ROLE_STATUS = #{roleStatus}
+    AND ( PRMS.PRMS_STATUS = #{prmsStatus} OR PRMS.PRMS_STATUS IS NULL )
+    AND RES.RES_STATUS = #{resStatus}
+    AND RES.RES_TYPE = #{resType}
+    <if test="loginName != null and loginName != ''">
+      AND U.LOGIN_NAME = #{loginName}
+    </if>
+    ORDER BY
+    RES.RES_SEQ ASC
+  </select>
+</mapper>

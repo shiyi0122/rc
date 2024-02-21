@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotObstacleAvoidanceModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotObstacleAvoidanceModule" >
+    <id column="OBSTACLE_AVOIDANCE_MODULAR_ID" property="obstacleAvoidanceModularId" jdbcType="BIGINT" />
+    <result column="OBSTACLE_AVOIDANCE__ID" property="obstacleAvoidanceId" jdbcType="VARCHAR" />
+    <result column="OBSTACLE_AVOIDANCE_NAME" property="obstacleAvoidanceName" jdbcType="VARCHAR" />
+    <result column="MODULAR_MODEL" property="modularModel" jdbcType="VARCHAR" />
+    <result column="MODULAR_MANUFACTOR" property="modularManufactor" jdbcType="VARCHAR" />
+    <result column="MODULAR_ID" property="modularId" jdbcType="VARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OBSTACLE_AVOIDANCE_MODULAR_ID, OBSTACLE_AVOIDANCE__ID, OBSTACLE_AVOIDANCE_NAME, MODULAR_MODEL, 
+    MODULAR_MANUFACTOR, MODULAR_ID, REMARKS, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_OBSTACLE_AVOIDANCE_MODULE
+    where OBSTACLE_AVOIDANCE_MODULAR_ID = #{obstacleAvoidanceModularId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_OBSTACLE_AVOIDANCE_MODULE
+    where OBSTACLE_AVOIDANCE_MODULAR_ID = #{obstacleAvoidanceModularId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotObstacleAvoidanceModule" >
+    insert into SYS_ROBOT_OBSTACLE_AVOIDANCE_MODULE (OBSTACLE_AVOIDANCE_MODULAR_ID, OBSTACLE_AVOIDANCE__ID, 
+      OBSTACLE_AVOIDANCE_NAME, MODULAR_MODEL, MODULAR_MANUFACTOR, 
+      MODULAR_ID, REMARKS, CREATE_DATE, 
+      UPDATE_DATE)
+    values (#{obstacleAvoidanceModularId,jdbcType=BIGINT}, #{obstacleAvoidanceId,jdbcType=VARCHAR}, 
+      #{obstacleAvoidanceName,jdbcType=VARCHAR}, #{modularModel,jdbcType=VARCHAR}, #{modularManufactor,jdbcType=VARCHAR}, 
+      #{modularId,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotObstacleAvoidanceModule" >
+    insert into SYS_ROBOT_OBSTACLE_AVOIDANCE_MODULE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="obstacleAvoidanceModularId != null" >
+        OBSTACLE_AVOIDANCE_MODULAR_ID,
+      </if>
+      <if test="obstacleAvoidanceId != null" >
+        OBSTACLE_AVOIDANCE__ID,
+      </if>
+      <if test="obstacleAvoidanceName != null" >
+        OBSTACLE_AVOIDANCE_NAME,
+      </if>
+      <if test="modularModel != null" >
+        MODULAR_MODEL,
+      </if>
+      <if test="modularManufactor != null" >
+        MODULAR_MANUFACTOR,
+      </if>
+      <if test="modularId != null" >
+        MODULAR_ID,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="obstacleAvoidanceModularId != null" >
+        #{obstacleAvoidanceModularId,jdbcType=BIGINT},
+      </if>
+      <if test="obstacleAvoidanceId != null" >
+        #{obstacleAvoidanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="obstacleAvoidanceName != null" >
+        #{obstacleAvoidanceName,jdbcType=VARCHAR},
+      </if>
+      <if test="modularModel != null" >
+        #{modularModel,jdbcType=VARCHAR},
+      </if>
+      <if test="modularManufactor != null" >
+        #{modularManufactor,jdbcType=VARCHAR},
+      </if>
+      <if test="modularId != null" >
+        #{modularId,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotObstacleAvoidanceModule" >
+    update SYS_ROBOT_OBSTACLE_AVOIDANCE_MODULE
+    <set >
+      <if test="obstacleAvoidanceId != null" >
+        OBSTACLE_AVOIDANCE__ID = #{obstacleAvoidanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="obstacleAvoidanceName != null" >
+        OBSTACLE_AVOIDANCE_NAME = #{obstacleAvoidanceName,jdbcType=VARCHAR},
+      </if>
+      <if test="modularModel != null" >
+        MODULAR_MODEL = #{modularModel,jdbcType=VARCHAR},
+      </if>
+      <if test="modularManufactor != null" >
+        MODULAR_MANUFACTOR = #{modularManufactor,jdbcType=VARCHAR},
+      </if>
+      <if test="modularId != null" >
+        MODULAR_ID = #{modularId,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OBSTACLE_AVOIDANCE_MODULAR_ID = #{obstacleAvoidanceModularId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotObstacleAvoidanceModule" >
+    update SYS_ROBOT_OBSTACLE_AVOIDANCE_MODULE
+    set OBSTACLE_AVOIDANCE__ID = #{obstacleAvoidanceId,jdbcType=VARCHAR},
+      OBSTACLE_AVOIDANCE_NAME = #{obstacleAvoidanceName,jdbcType=VARCHAR},
+      MODULAR_MODEL = #{modularModel,jdbcType=VARCHAR},
+      MODULAR_MANUFACTOR = #{modularManufactor,jdbcType=VARCHAR},
+      MODULAR_ID = #{modularId,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where OBSTACLE_AVOIDANCE_MODULAR_ID = #{obstacleAvoidanceModularId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotObstacleAvoidanceModuleList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_OBSTACLE_AVOIDANCE_MODULE
+    <where>
+      <if test="obstacleAvoidanceId != null and obstacleAvoidanceId != ''">
+        AND OBSTACLE_AVOIDANCE__ID LIKE CONCAT('%',#{obstacleAvoidanceId},'%')
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

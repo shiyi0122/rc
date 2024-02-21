@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.FixedAssetsMapper">
+    <resultMap id="cost" type="com.hna.hka.archive.management.assetsSystem.model.Cost">
+        <id column="SCENIC_SPOT_ID" property="scenicSpotId"/>
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName"/>
+        <result column="DATE_PRODUCTION" property="dateProduction"/>
+        <result column="COST" property="cost"/>
+        <result column="actualCost" property="actualCost"/>
+        <result column="flowingWater" property="flowingWater"/>
+        <result column="total" property="total"/>
+        <result column="grossProfit" property="grossProfit"/>
+        <result column="DATE" property="date"/>
+    </resultMap>
+    
+    <select id="selDateAndCost" resultMap="cost">
+        select a.SCENIC_SPOT_ID,c.SCENIC_SPOT_NAME,b.DATE_PRODUCTION,sum(cast(b.COST as SIGNED )) as cost from SYS_ROBOT a
+        left join SYS_ROBOT_SOFT_ASSET_INFORMATION b on a.ROBOT_ID=b.ROBOT_ID
+        left join SYS_SCENIC_SPOT c on a.SCENIC_SPOT_ID=c.SCENIC_SPOT_ID
+        <where>
+        <if test="scenicSpotId !=null and scenicSpotId !=''">
+            a.SCENIC_SPOT_ID=#{scenicSpotId}
+        </if>
+        </where>
+        GROUP BY b.DATE_PRODUCTION,a.SCENIC_SPOT_ID
+    </select>
+    
+    <select id="selActualCost" resultMap="cost" parameterType="java.lang.String">
+        select (sum(cast(ROBOT_COST as Decimal(10,2)))+sum(cast(OPERATE_COST as Decimal(10,2)))+sum(cast(SPOT_MARKET_COST as Decimal(10,2)))+sum(cast(RENT as Decimal(10,2)))+sum(cast(MAINTAIN_COST as Decimal(10,2))))as actualCost
+        from SYS_SCENIC_SPOT_TARGET_AMOUNT
+        <where>
+            <if test="scenicSpotId !=null and scenicSpotId !=''">
+                SCENIC_SPOT_ID=#{scenicSpotId}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and DATE  &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and DATE  &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="selFlowingWater" resultMap="cost" parameterType="com.hna.hka.archive.management.assetsSystem.model.Cost">
+        select   sum(a.flowingWater)as flowingWater,count(a.total)as total from
+        (select count(b.DATE) as total,sum(b.REAL_AMOUNT) as flowingWater
+        from SYS_SCENIC_OPERATIONAL_INVENTORY b
+        <where>
+            <if test="scenicSpotId !=null and scenicSpotId !=''">
+                SPOT_ID=#{scenicSpotId}
+            </if>
+            <if test="dateProduction !=null and dateProduction !=''">
+                and DATE >=#{dateProduction}
+            </if>
+            <if test="start !=null and start !=''">
+                and DATE &lt;= #{start}
+            </if>
+            <if test="end !=null and end!=''">
+                and DATE &lt;= #{end}
+            </if>
+        </where>
+        GROUP BY DATE ) a
+    </select>
+
+    <select id="selGrossProfit" resultMap="cost" parameterType="java.lang.String">
+        select sum(FINAL_AMOUNT) as grossProfit
+        from SYS_SCENIC_OPERATIONAL_INVENTORY
+        <where>
+            <if test="scenicSpotId !=null and scenicSpotId !=''">
+                SPOT_ID=#{scenicSpotId}
+            </if>
+            <if test="startDate !=null and startDate!=''">
+                and DATE >= #{startDate}
+            </if>
+            <if test="endDate !=null and endDate!=''">
+                and DATE &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="reportActualCost" resultMap="cost" parameterType="java.lang.String">
+        select c.SCENIC_SPOT_NAME,a.DATE,(sum(cast(a.ROBOT_COST as Decimal(10,2)))+sum(cast(a.OPERATE_COST as Decimal(10,2)))+sum(cast(a.SPOT_MARKET_COST as Decimal(10,2)))+sum(cast(a.RENT as Decimal(10,2)))+sum(cast(a.MAINTAIN_COST as Decimal(10,2))))as actualCost
+        from SYS_SCENIC_SPOT_TARGET_AMOUNT a
+        left join SYS_SCENIC_SPOT c on a.SCENIC_SPOT_ID=c.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId !=null and scenicSpotId !=''">
+                a.SCENIC_SPOT_ID=#{scenicSpotId}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and a.DATE  &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and a.DATE  &lt;= #{endDate}
+            </if>
+        </where>
+        group by a.DATE
+    </select>
+
+    <select id="reportGrossProfit" resultMap="cost" parameterType="java.lang.String">
+        select substr(DATE,1,7) as DATE ,sum(FINAL_AMOUNT) as grossProfit
+        from SYS_SCENIC_OPERATIONAL_INVENTORY
+        <where>
+            <if test="scenicSpotId !=null and scenicSpotId !=''">
+                SPOT_ID=#{scenicSpotId}
+            </if>
+            <if test="startDate !=null and startDate!=''">
+                and substr(DATE,1,7) >= #{startDate}
+            </if>
+            <if test="endDate !=null and endDate!=''">
+                and substr(DATE,1,7) &lt;= #{endDate}
+            </if>
+        </where>
+        group by substr(DATE,1,7)
+    </select>
+
+</mapper>

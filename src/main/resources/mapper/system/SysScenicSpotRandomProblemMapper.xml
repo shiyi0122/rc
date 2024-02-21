@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotRandomProblemMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotRandomProblem" >
+    <id column="PROBLEM_ID" property="problemId" jdbcType="BIGINT" />
+    <result column="RANDOM_PROBLEM" property="randomProblem" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="RANDOM_TYPE" property="randomType" jdbcType="VARCHAR" />
+    <result column="RANDOM_STATE" property="randomState" jdbcType="VARCHAR" />
+    <result column="RANDOM_RES_RUL" property="randomResRul" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+<!--    <result column="WEIGHT" property="weight" jdbcType="VARCHAR" />-->
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysScenicSpotRandomProblemWithBLOBs" extends="BaseResultMap" >
+    <result column="RANDOM_ANSWERS" property="randomAnswers" jdbcType="LONGVARCHAR" />
+    <result column="RANDOM_RES_RUL_PIC" property="randomResRulPic" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PROBLEM_ID, RANDOM_PROBLEM, SCENIC_SPOT_ID, RANDOM_TYPE, RANDOM_STATE, RANDOM_RES_RUL, 
+    CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    RANDOM_ANSWERS, RANDOM_RES_RUL_PIC
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_RANDOM_PROBLEM
+    where PROBLEM_ID = #{problemId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_RANDOM_PROBLEM
+    where PROBLEM_ID = #{problemId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRandomProblemWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_RANDOM_PROBLEM (PROBLEM_ID, RANDOM_PROBLEM, SCENIC_SPOT_ID, 
+      RANDOM_TYPE, RANDOM_STATE, RANDOM_RES_RUL, 
+      CREATE_DATE, UPDATE_DATE,RANDOM_ANSWERS,
+      RANDOM_RES_RUL_PIC)
+    values (#{problemId,jdbcType=BIGINT}, #{randomProblem,jdbcType=VARCHAR}, #{scenicSpotId,jdbcType=BIGINT}, 
+      #{randomType,jdbcType=VARCHAR}, #{randomState,jdbcType=VARCHAR}, #{randomResRul,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{randomAnswers,jdbcType=LONGVARCHAR},
+      #{randomResRulPic,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRandomProblemWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_RANDOM_PROBLEM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="problemId != null" >
+        PROBLEM_ID,
+      </if>
+      <if test="randomProblem != null" >
+        RANDOM_PROBLEM,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="randomType != null" >
+        RANDOM_TYPE,
+      </if>
+      <if test="randomState != null" >
+        RANDOM_STATE,
+      </if>
+      <if test="randomResRul != null" >
+        RANDOM_RES_RUL,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="randomAnswers != null" >
+        RANDOM_ANSWERS,
+      </if>
+      <if test="randomResRulPic != null" >
+        RANDOM_RES_RUL_PIC,
+      </if>
+<!--      <if test="weight != null">-->
+<!--        WEIGHT,-->
+<!--      </if>-->
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="problemId != null" >
+        #{problemId,jdbcType=BIGINT},
+      </if>
+      <if test="randomProblem != null" >
+        #{randomProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="randomType != null" >
+        #{randomType,jdbcType=VARCHAR},
+      </if>
+      <if test="randomState != null" >
+        #{randomState,jdbcType=VARCHAR},
+      </if>
+      <if test="randomResRul != null" >
+        #{randomResRul,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="randomAnswers != null" >
+        #{randomAnswers,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="randomResRulPic != null" >
+        #{randomResRulPic,jdbcType=LONGVARCHAR},
+      </if>
+<!--      <if test="weight != null">-->
+<!--        #{weight,jdbcType=VARCHAR}-->
+<!--      </if>-->
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRandomProblemWithBLOBs" >
+    update SYS_SCENIC_SPOT_RANDOM_PROBLEM
+    <set >
+      <if test="randomProblem != null" >
+        RANDOM_PROBLEM = #{randomProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="randomType != null" >
+        RANDOM_TYPE = #{randomType,jdbcType=VARCHAR},
+      </if>
+      <if test="randomState != null" >
+        RANDOM_STATE = #{randomState,jdbcType=VARCHAR},
+      </if>
+      <if test="randomResRul != null" >
+        RANDOM_RES_RUL = #{randomResRul,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="randomAnswers != null" >
+        RANDOM_ANSWERS = #{randomAnswers,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="randomResRulPic != null" >
+        RANDOM_RES_RUL_PIC = #{randomResRulPic,jdbcType=LONGVARCHAR},
+      </if>
+<!--      <if test="weight != null">-->
+<!--        WEIGHT = #{weight,jdbcType=VARCHAR},-->
+<!--      </if>-->
+    </set>
+    where PROBLEM_ID = #{problemId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRandomProblemWithBLOBs" >
+    update SYS_SCENIC_SPOT_RANDOM_PROBLEM
+    set RANDOM_PROBLEM = #{randomProblem,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      RANDOM_TYPE = #{randomType,jdbcType=VARCHAR},
+      RANDOM_STATE = #{randomState,jdbcType=VARCHAR},
+      RANDOM_RES_RUL = #{randomResRul,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      RANDOM_ANSWERS = #{randomAnswers,jdbcType=LONGVARCHAR},
+      RANDOM_RES_RUL_PIC = #{randomResRulPic,jdbcType=LONGVARCHAR}
+<!--      WEIGHT = #{weight,jdbcType=VARCHAR}-->
+    where PROBLEM_ID = #{problemId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRandomProblem" >
+    update SYS_SCENIC_SPOT_RANDOM_PROBLEM
+    set RANDOM_PROBLEM = #{randomProblem,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      RANDOM_TYPE = #{randomType,jdbcType=VARCHAR},
+      RANDOM_STATE = #{randomState,jdbcType=VARCHAR},
+      RANDOM_RES_RUL = #{randomResRul,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+<!--      WEIGHT = #{weight,jdbcType = VARCHAR}-->
+    where PROBLEM_ID = #{problemId,jdbcType=BIGINT}
+  </update>
+  <select id="getRandomProblemList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+	A.*,
+	B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+	SYS_SCENIC_SPOT_RANDOM_PROBLEM A
+	LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+	<where>
+      (A.SCENIC_SPOT_ID = 20200210 OR A.SCENIC_SPOT_ID = #{scenicSpotId})
+      <if test="randomProblem != null and randomProblem != ''">
+        AND A.RANDOM_PROBLEM LIKE CONCAT('%',#{randomProblem},'%')
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

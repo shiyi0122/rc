@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.FactorySendMapper">
+
+
+    <sql id="list">
+        select
+        ID,
+        ROBOT_COUNT ,
+        TYPE ,
+        scfs.APPLICANT_ID,
+        scfs.FACTORY_ID,
+        scfs.CONSIGNOR_ID,
+        scfs.RECEIVING_ID,
+        scfs.CONSIGNEE_ID,
+        scfs.CONSIGNOR_PHONE,
+        scfs.CONSIGNMENT_DATE,
+        scfs.RECEIVING_DATE,
+<!--        (SELECT su.USER_NAME from SYS_APP_USERS su WHERE su.USER_ID = scfs.APPLICANT_ID) as APPLICANT_NAME,-->
+        (SELECT sss.SCENIC_SPOT_NAME from SYS_SCENIC_SPOT sss WHERE sss.SCENIC_SPOT_ID = scfs.FACTORY_ID) as
+        FACTORY_NAME,
+        (SELECT su.USER_NAME from SYS_APP_USERS su WHERE su.USER_ID = scfs.CONSIGNOR_ID) as CONSIGNOR_NAME,
+        (SELECT sss.SCENIC_SPOT_NAME from SYS_SCENIC_SPOT sss WHERE sss.SCENIC_SPOT_ID = scfs.RECEIVING_ID) as
+        RECEIVING_NAME,
+        (SELECT su.USER_NAME from SYS_APP_USERS su WHERE su.USER_ID = scfs.CONSIGNEE_ID) as CONSIGNEE_NAME,
+        CONSIGNEE_PHONE ,
+        RECEINING_ADDRESS ,
+        APPLICANT_NAME,
+        APPLICANT_TIME
+        from
+        SYS_SCENIC_FACTORY_SEND scfs
+        <where>
+            form = #{form}
+            <if test="spotId != null">
+                and RECEIVING_ID = #{spotId}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and substr(APPLICANT_TIME , 1 , 10) &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(APPLICANT_TIME , 1 , 10) &lt;= #{endDate}
+            </if>
+            <if test="userId != null">
+                and (APPLICANT_ID = #{userId} or CONSIGNOR_ID = #{userId} or CONSIGNEE_ID = #{userId})
+<!--                and type &lt;&gt; 4-->
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+        </where>
+        order by APPLICANT_TIME desc
+    </sql>
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.FactorySend">
+        <include refid="list"></include>
+        <if test="pageNum != null and pageSize != null">
+            limit #{pageNum , jdbcType = INTEGER} , #{pageSize , jdbcType = INTEGER}
+        </if>
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(0) from (<include refid="list"></include>) a
+    </select>
+
+
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.assetsSystem.model.FactorySend">
+        insert into SYS_SCENIC_FACTORY_SEND(ID, ROBOT_COUNT, TYPE, APPLICANT_ID, FACTORY_ID, CONSIGNOR_ID, RECEIVING_ID,
+                                            CONSIGNEE_ID, CONSIGNEE_PHONE, RECEINING_ADDRESS, APPLICANT_TIME,
+                                            ROBOT_CODES, CONSIGNMENT_COUNT, CAR_TYPE, LICENSE, LOADING_TYPE,
+                                            LOADING_COST, DRIVER_NAME, DRIVER_PHONE, CONSIGNMENT_PICTURE,
+                                            COMSIGNMENT_NOTES, CONSIGNMENT_DATE, RECEIVING_COUNT,RECEIVING_ROBOT_COUNT, RECEIVING_NOTES,
+                                            RECEIVING_PICTURE, RECEIVING_DATE, APPLICANT_NAME, FACTORY_NAME,
+                                            CONSIGNOR_NAME, RECEIVING_NAME, CONSIGNEE_NAME, form,CONSIGNOR_PHONE)
+        values (#{id}, #{robotCount}, #{type}, #{applicantId}, #{factoryId}, #{consignorId}, #{receivingId},
+                #{consigneeId}, #{consigneePhone}, #{receiningAddress}, #{applicantTime}, #{robotCodes},
+                #{consignmentCount}, #{carType}, #{license}, #{loadingType}, #{loadingCost}, #{driverName},
+                #{driverPhone}, #{consignmentPicture}, #{comsignmentNotes}, #{consignmentDate}, #{receivingCount},#{receivingRobotCount},
+                #{receivingNotes}, #{receivingPicture}, #{receivingDate}, #{applicantName}, #{factoryName},
+                #{consignorName}, #{receivingName}, #{consigneeName}, #{form},#{consignorPhone})
+    </insert>
+
+    <select id="getPId" resultType="java.lang.String">
+        select USER_CLIENT_GT_ID
+        from SYS_APP_USERS
+        where USER_ID = #{applicantId}
+    </select>
+
+    <update id="edit" parameterType="com.hna.hka.archive.management.assetsSystem.model.FactorySend">
+        update SYS_SCENIC_FACTORY_SEND set
+        <if test="robotCount != null">
+            ROBOT_COUNT = #{robotCount},
+        </if>
+        <if test="type != null">
+            TYPE = #{type},
+        </if>
+        <if test="consignorId != null">
+            CONSIGNOR_ID = #{consignorId},
+        </if>
+        <if test="consigneeId != null">
+            CONSIGNEE_ID = #{consigneeId},
+        </if>
+        <if test="consigneePhone != null">
+            CONSIGNEE_PHONE = #{consigneePhone},
+        </if>
+        <if test="receiningAddress != null">
+            RECEINING_ADDRESS = #{receiningAddress},
+        </if>
+        <if test="robotCodes != null">
+            ROBOT_CODES = #{robotCodes},
+        </if>
+        <if test="consignmentCount != null">
+            CONSIGNMENT_COUNT = #{consignmentCount},
+        </if>
+        <if test="carType != null">
+            CAR_TYPE = #{carType},
+        </if>
+        <if test="license != null">
+            LICENSE = #{license},
+        </if>
+        <if test="loadingType != null">
+            LOADING_TYPE = #{loadingType},
+        </if>
+        <if test="loadingCost != null">
+            LOADING_COST = #{loadingCost},
+        </if>
+        <if test="driverName != null">
+            DRIVER_NAME = #{driverName},
+        </if>
+        <if test="driverPhone != null">
+            DRIVER_PHONE = #{driverPhone},
+        </if>
+        <if test="consignmentPicture != null">
+            CONSIGNMENT_PICTURE = #{consignmentPicture},
+        </if>
+        <if test="comsignmentNotes != null">
+            COMSIGNMENT_NOTES = #{comsignmentNotes},
+        </if>
+        <if test="consignmentDate != null">
+            CONSIGNMENT_DATE = #{consignmentDate},
+        </if>
+        <if test="receivingCount != null">
+            RECEIVING_COUNT = #{receivingCount},
+        </if>
+        <if test="receivingRobotCount != null">
+            RECEIVING_ROBOT_COUNT = #{receivingRobotCount},
+        </if>
+        <if test="receivingNotes != null">
+            RECEIVING_NOTES = #{receivingNotes},
+        </if>
+        <if test="receivingPicture != null">
+            RECEIVING_PICTURE = #{receivingPicture},
+        </if>
+        <if test="receivingDate != null">
+            RECEIVING_DATE = #{receivingDate},
+        </if>
+        <if test="consignorName != null">
+            CONSIGNOR_NAME = #{consignorName},
+        </if>
+        <if test="consigneeName != null">
+            CONSIGNEE_NAME = #{consigneeName},
+        </if>
+        UPDATE_TIME = now(),
+        form = #{form}
+        where ID = #{id}
+    </update>
+
+    <select id="findByKey" resultType="com.hna.hka.archive.management.assetsSystem.model.FactorySend">
+        select *
+        from SYS_SCENIC_FACTORY_SEND
+        where ID = #{id}
+    </select>
+
+    <select id="factoryList" resultType="java.util.HashMap">
+        select sa.SPOT_ID as spotId, sss.SCENIC_SPOT_NAME as spotName ,NAME as userName , PHONE as phone , USER_ID as userId
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_SPOT sss on sa.SPOT_ID = sss.SCENIC_SPOT_ID
+        where TYPE  in  (2,3)
+    </select>
+
+    <select id="spotList" resultType="java.util.HashMap">
+        select sa.ADDRESS as address ,sa.NAME as userName,sa.PHONE as phone,sa.USER_ID userId,sss.SCENIC_SPOT_ID as spotId,sss.SCENIC_SPOT_NAME as  spotName
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_SPOT sss on sa.SPOT_ID = sss.SCENIC_SPOT_ID
+        where TYPE in (1,3)
+    </select>
+
+    <select id="userList" resultType="java.util.HashMap">
+        select sa.USER_ID as userId, sa.PHONE as phone , sau.USER_NAME as userName
+        from SYS_ADDRESS sa
+        left join SYS_APP_USERS sau on sa.USER_ID = sau.USER_ID
+    </select>
+
+    <select id="trailList" resultType="java.util.HashMap">
+        select *
+        from SYS_SCENIC_FACTORY_SEND
+        where ROBOT_CODES like concat('%', #{robotCode}, '%')
+          and TYPE &lt;&gt; 4
+        order by UPDATE_TIME desc
+    </select>
+
+
+    <select id="spotAllList" resultType="java.util.Map">
+        select sa.SPOT_ID , sss.SCENIC_SPOT_NAME
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_SPOT sss on sa.SPOT_ID = sss.SCENIC_SPOT_ID
+    </select>
+
+    <select id="lists" resultType="com.hna.hka.archive.management.assetsSystem.model.FactorySend">
+        <include refid="list"></include>
+    </select>
+
+</mapper>

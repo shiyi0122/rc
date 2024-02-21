@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotParkingMapper">
+    <resultMap id="ParkingMap" type="com.hna.hka.archive.management.system.model.SysParkingExcel" >
+        <id column="PARKING_ID" property="parkingId" jdbcType="BIGINT" />
+        <result column="PARKING_NAME" property="parkingName" jdbcType="VARCHAR" />
+        <result column="PARKING_CONTENT" property="parkingContent" jdbcType="VARCHAR" />
+        <result column="PARKING_SCENIC_SPOT_ID" property="parkingScenicSpotId" jdbcType="BIGINT" />
+        <result column="PARKING_TYPE" property="parkingType" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR"/>
+        <result column="PARKING_COORDINATE_GROUP" property="parkingCoordinateGroup" jdbcType="LONGVARCHAR" />
+        <result column="PARKING_COORDINATE_GROUP_BAIDU" property="parkingCoordinateGroupBaidu" jdbcType="LONGVARCHAR" />
+    </resultMap>
+
+    <select id="getParkingExcel" resultMap="ParkingMap" parameterType="com.hna.hka.archive.management.system.model.SysParkingExcel">
+        select a.PARKING_ID,b.SCENIC_SPOT_NAME,a.PARKING_COORDINATE_GROUP,a.PARKING_COORDINATE_GROUP_BAIDU,a.PARKING_NAME,a.PARKING_CONTENT,a.PARKING_TYPE,a.COORDINATE_TYPE,a.CREATE_DATE,a.UPDATE_DATE
+        from SYS_SCENIC_SPOT_PARKING a
+        left join SYS_SCENIC_SPOT b on a.PARKING_SCENIC_SPOT_ID=b.SCENIC_SPOT_ID
+        where b.SCENIC_SPOT_ID=#{scenicSpotId}
+    </select>
+
+    <select id="selScenicSpotParking" resultMap="ParkingMap" parameterType="com.hna.hka.archive.management.system.model.SysParkingExcel">
+        select a.PARKING_ID,b.SCENIC_SPOT_NAME,a.PARKING_COORDINATE_GROUP,a.PARKING_COORDINATE_GROUP_BAIDU,a.PARKING_NAME,a.PARKING_CONTENT,a.PARKING_TYPE,a.COORDINATE_TYPE,a.CREATE_DATE,a.UPDATE_DATE
+        from SYS_SCENIC_SPOT_PARKING a
+        left join SYS_SCENIC_SPOT b on a.PARKING_SCENIC_SPOT_ID=b.SCENIC_SPOT_ID
+        where a.PARKING_SCENIC_SPOT_ID=#{parkingScenicSpotId} and a.PARKING_NAME=#{parkingName}
+    </select>
+
+    <insert id="addParkingExcel" parameterType="com.hna.hka.archive.management.system.model.SysParkingExcel" >
+    insert into SYS_SCENIC_SPOT_PARKING (PARKING_ID, PARKING_NAME, PARKING_CONTENT,
+      PARKING_SCENIC_SPOT_ID, PARKING_TYPE,CREATE_DATE,
+      UPDATE_DATE, PARKING_COORDINATE_GROUP,
+      PARKING_COORDINATE_GROUP_BAIDU)
+    values (#{parkingId,jdbcType=BIGINT}, #{parkingName,jdbcType=VARCHAR}, #{parkingContent,jdbcType=VARCHAR},
+      #{parkingScenicSpotId,jdbcType=BIGINT}, #{parkingType,jdbcType=VARCHAR},#{createDate,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=VARCHAR}, #{parkingCoordinateGroup,jdbcType=LONGVARCHAR},
+      #{parkingCoordinateGroupBaidu,jdbcType=LONGVARCHAR})
+  </insert>
+
+    <update id="upParking" parameterType="com.hna.hka.archive.management.system.model.SysParkingExcel" >
+    update SYS_SCENIC_SPOT_PARKING
+    set PARKING_NAME = #{parkingName,jdbcType=VARCHAR},
+      PARKING_CONTENT = #{parkingContent,jdbcType=VARCHAR},
+      PARKING_SCENIC_SPOT_ID = #{parkingScenicSpotId,jdbcType=BIGINT},
+      PARKING_TYPE = #{parkingType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      PARKING_COORDINATE_GROUP = #{parkingCoordinateGroup,jdbcType=LONGVARCHAR},
+      PARKING_COORDINATE_GROUP_BAIDU = #{parkingCoordinateGroupBaidu,jdbcType=LONGVARCHAR}
+    where PARKING_ID = #{parkingId,jdbcType=BIGINT}
+  </update>
+</mapper>

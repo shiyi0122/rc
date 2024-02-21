@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessFilingMessageMapper" >
+    <select id="getFilingMessageList" resultType="com.hna.hka.archive.management.business.model.BusinessFilingMessage">
+        select  bfm.*,bfmn.DOCKING_UNIT_NAME,bfmn.SIGNATORY_NAME,bfmn.DOCKING_DATE,bfmn.DOCKING_NAME,bfmn.DOCKING_POSITION,bfmn.DOCKING_RESULT,bfmn.DOCKING_PLACE,
+                bfmd.REASON,bfmd.DAYS
+        from BUSINESS_FILING_MESSAGE bfm
+        left join BUSINESS_FILING_MESSAGE_NEGOTIATION bfmn on bfm.ID = bfmn.MESSAGE_ID
+        left join BUSINESS_FILING_MESSAGE_DELAY bfmd on bfm.ID = bfmd.MESSAGE_ID
+        <where>
+            <if test="filingName != null and filingName != ''">
+                bfm.FILING_NAME LIKE CONCAT('%',#{filingName},'%')
+            </if>
+            <if test="filingPhone !=null and filingPhone != ''">
+                and bfm.FILING_PHONE LIKE CONCAT('%',#{filingPhone},'%')
+            </if>
+            <if test="findingsOfAudit != null and findingsOfAudit != ''">
+                and bfm.FINDINGS_OF_AUDIT = #{findingsOfAudit}
+            </if>
+                and bfm.FILING_STATE = 1
+        </where>
+        order by bfm.CREATE_TIME DESC
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultType="com.hna.hka.archive.management.business.model.BusinessFilingMessage" parameterType="java.lang.Long" >
+        select
+         *
+        from BUSINESS_FILING_MESSAGE
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessFilingMessage"  >
+        update BUSINESS_FILING_MESSAGE
+        <set>
+            <if test="filingId != null">
+                FILING_ID = #{filingId,jdbcType=BIGINT},
+            </if>
+            <if test="filingName != null">
+                FILING_NAME = #{filingName,jdbcType=VARCHAR},
+            </if>
+            <if test="filingPhone != null">
+                FILING_PHONE = #{filingPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="filingRegion != null">
+                FILING_REGION = #{filingRegion,jdbcType=VARCHAR},
+            </if>
+            <if test="filingCycle != null">
+                FILING_CYCLE = #{filingCycle,jdbcType=VARCHAR},
+            </if>
+            <if test="filingState != null">
+                FILING_STATE = #{filingState,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotName != null">
+                FILING_SPOT_NAME = #{filingSpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotContacts != null">
+                FILING_SPOT_CONTACTS = #{filingSpotContacts,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotContactsPhone != null">
+                FILING_SPOT_CONTACTS_PHONE = #{filingSpotContactsPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="filingTime != null">
+                FILING_TIME = #{filingTime,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotContactsPosition != null">
+                FILING_SPOT_CONTACTS_POSITION = #{filingSpotContactsPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="filingRobotCount != null">
+                FILING_ROBOT_COUNT = #{filingRobotCount,jdbcType=INTEGER},
+            </if>
+            <if test="filingSpotCity != null">
+                FILING_SPOT_CITY = #{filingSpotCity,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotStarLevel != null">
+                FILING_SPOT_STAR_LEVEL = #{filingSpotStarLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotMeasure != null">
+                FILING_SPOT_MEASURE = #{filingSpotMeasure,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotVisitorsFlowrate != null">
+                FILING_SPOT_VISITORS_FLOWRATE = #{filingSpotVisitorsFlowrate,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalId != null">
+                APPROVAL_ID = #{approvalId,jdbcType=BIGINT},
+            </if>
+            <if test="approvalName != null">
+                APPROVAL_NAME = #{approvalName,jdbcType=VARCHAR},
+            </if>
+            <if test="signingTime != null">
+                SIGNING_TIME = #{signingTime,jdbcType=VARCHAR},
+            </if>
+            <if test="findingsOfAudit != null">
+                FINDINGS_OF_AUDIT = #{findingsOfAudit,jdbcType=INTEGER},
+            </if>
+            <if test="auditDate != null">
+                AUDIT_DATE = #{auditDate,jdbcType=VARCHAR},
+            </if>
+            <if test="reson != null">
+                RESON = #{reson,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="isSigning != null">
+                IS_SIGNING = #{isSigning,jdbcType=VARCHAR},
+            </if>
+            <if test="signingTimeDetermine != null">
+                SIGNING_TIME_DETERMINE = #{signingTimeDetermine,jdbcType=VARCHAR},
+            </if>
+            <if test="signingTimeDetermineInvalid != null">
+                SIGNING_TIME_DETERMINE_INVALID = #{signingTimeDetermineInvalid,jdbcType=VARCHAR},
+            </if>
+            <if test="executiveDirectorName != null">
+                EXECUTIVE_DIRECTOR_NAME = #{executiveDirectorName,jdbcType=VARCHAR},
+            </if>
+            <if test="executiveDirectorPhone != null">
+                EXECUTIVE_DIRECTOR_PHONE = #{executiveDirectorPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="traffic != null">
+                TRAFFIC = #{traffic,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                STATE =   #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="roadConditions != null">
+                ROAD_CONDITIONS = #{roadConditions,jdbcType=VARCHAR},
+            </if>
+            <if test="pavement != null">
+                PAVEMENT = #{pavement,jdbcType=VARCHAR},
+            </if>
+            <if test="roadWidth != null">
+                ROAD_WIDTH = #{roadWidth,jdbcType=VARCHAR},
+            </if>
+            <if test="robotLinesInOperation != null">
+                ROBOT_LINES_IN_OPERATION = #{robotLinesInOperation,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicle != null">
+                VEHICLE = #{vehicle,jdbcType=VARCHAR},
+            </if>
+            <if test="proportionOfPassengerFlow != null">
+                PROPORTION_OF_PASSENGER_FLOW = #{proportionOfPassengerFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotNameChange != null">
+                FILING_SPOT_NAME_CHANGE = #{filingSpotNameChange,jdbcType=VARCHAR},
+            </if>
+            <if test="isHighQualitySpot != null">
+                IS_HIGH_QUALITY_SPOT = #{isHighQualitySpot,jdbcType=VARCHAR},
+            </if>
+            <if test="reportingStatus != null">
+                REPORTING_STATUS = #{reportingStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="submitId != null">
+                SUBMIT_ID = #{submitId,jdbcType=BIGINT},
+            </if>
+            <if test="filingAgentId != null">
+                FILING_AGENT_ID = #{filingAgentId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessFilingMessage">
+        insert into BUSINESS_FILING_MESSAGE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="filingId != null">
+                FILING_ID,
+            </if>
+            <if test="filingName != null">
+                FILING_NAME,
+            </if>
+            <if test="filingPhone != null">
+                FILING_PHONE,
+            </if>
+            <if test="filingRegion != null">
+                FILING_REGION,
+            </if>
+            <if test="filingCycle != null">
+                FILING_CYCLE,
+            </if>
+            <if test="filingState != null">
+                FILING_STATE,
+            </if>
+            <if test="filingSpotName != null">
+                FILING_SPOT_NAME,
+            </if>
+            <if test="filingSpotContacts != null">
+                FILING_SPOT_CONTACTS,
+            </if>
+            <if test="filingSpotContactsPhone != null">
+                FILING_SPOT_CONTACTS_PHONE,
+            </if>
+            <if test="filingTime != null">
+                FILING_TIME,
+            </if>
+            <if test="filingSpotContactsPosition != null">
+                FILING_SPOT_CONTACTS_POSITION,
+            </if>
+            <if test="filingRobotCount != null">
+                FILING_ROBOT_COUNT,
+            </if>
+            <if test="filingSpotCity != null">
+                FILING_SPOT_CITY,
+            </if>
+            <if test="filingSpotStarLevel != null">
+                FILING_SPOT_STAR_LEVEL,
+            </if>
+            <if test="filingSpotMeasure != null">
+                FILING_SPOT_MEASURE,
+            </if>
+            <if test="filingSpotVisitorsFlowrate != null">
+                FILING_SPOT_VISITORS_FLOWRATE,
+            </if>
+            <if test="remarks != null">
+                REMARKS,
+            </if>
+            <if test="approvalId != null">
+                APPROVAL_ID,
+            </if>
+            <if test="approvalName != null">
+                APPROVAL_NAME,
+            </if>
+            <if test="signingTime != null">
+                SIGNING_TIME,
+            </if>
+            <if test="findingsOfAudit != null">
+                FINDINGS_OF_AUDIT,
+            </if>
+            <if test="auditDate != null">
+                AUDIT_DATE,
+            </if>
+            <if test="reson != null">
+                RESON,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="signingTimeDetermine != null ">
+                SIGNING_TIME_DETERMINE,
+            </if>
+            <if test="signingTimeDetermineInvalid != null">
+                SIGNING_TIME_DETERMINE_INVALID,
+            </if>
+            <if test="executiveDirectorName != null">
+                EXECUTIVE_DIRECTOR_NAME,
+            </if>
+            <if test="executiveDirectorPhone != null">
+                EXECUTIVE_DIRECTOR_PHONE,
+            </if>
+            <if test="traffic != null">
+                TRAFFIC,
+            </if>
+            <if test="state != null">
+                STATE,
+            </if>
+            <if test="roadConditions != null">
+                ROAD_CONDITIONS,
+            </if>
+            <if test="pavement != null ">
+                PAVEMENT,
+            </if>
+            <if test="roadWidth != null">
+                ROAD_WIDTH,
+            </if>
+            <if test="robotLinesInOperation != null">
+                ROBOT_LINES_IN_OPERATION,
+            </if>
+            <if test="vehicle != null">
+                VEHICLE,
+            </if>
+            <if test="proportionOfPassengerFlow != null">
+                PROPORTION_OF_PASSENGER_FLOW,
+            </if>
+            <if test="filingSpotNameChange != null">
+                FILING_SPOT_NAME_CHANGE,
+            </if>
+            <if test="spotRelationshipId != null">
+                SPOT_RELATIONSHIP_ID,
+            </if>
+            <if test="isHighQualitySpot != null">
+                IS_HIGH_QUALITY_SPOT,
+            </if>
+            <if test="reportingStatus != null">
+                REPORTING_STATUS,
+            </if>
+            <if test="submitId != null">
+                SUBMIT_ID,
+            </if>
+            <if test="filingAgentId != null">
+                FILING_AGENT_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="filingId != null">
+                #{filingId,jdbcType=BIGINT},
+            </if>
+            <if test="filingName != null">
+                #{filingName,jdbcType=VARCHAR},
+            </if>
+            <if test="filingPhone != null">
+                #{filingPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="filingRegion != null">
+                #{filingRegion,jdbcType=VARCHAR},
+            </if>
+            <if test="filingCycle != null">
+                #{filingCycle,jdbcType=VARCHAR},
+            </if>
+            <if test="filingState != null">
+                #{filingState,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotName != null">
+                #{filingSpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotContacts != null">
+                #{filingSpotContacts,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotContactsPhone != null">
+                #{filingSpotContactsPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="filingTime != null">
+                #{filingTime,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotContactsPosition != null">
+                #{filingSpotContactsPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="filingRobotCount != null">
+                #{filingRobotCount,jdbcType=INTEGER},
+            </if>
+            <if test="filingSpotCity != null">
+                #{filingSpotCity,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotStarLevel != null">
+                #{filingSpotStarLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotMeasure != null">
+                #{filingSpotMeasure,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotVisitorsFlowrate != null">
+                #{filingSpotVisitorsFlowrate,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalId != null">
+                #{approvalId,jdbcType=BIGINT},
+            </if>
+            <if test="approvalName != null">
+                #{approvalName,jdbcType=VARCHAR},
+            </if>
+            <if test="signingTime != null">
+                #{signingTime,jdbcType=VARCHAR},
+            </if>
+            <if test="findingsOfAudit != null">
+                #{findingsOfAudit,jdbcType=INTEGER},
+            </if>
+            <if test="auditDate != null">
+                #{auditDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="signingTimeDetermine != null">
+                #{signingTimeDetermine,jdbcType=VARCHAR},
+            </if>
+            <if test="signingTimeDetermineInvalid != null">
+                #{signingTimeDetermineInvalid,jdbcType= VARCHAR},
+            </if>
+            <if test="executiveDirectorName != null">
+                #{executiveDirectorName,jdbcType=VARCHAR},
+            </if>
+            <if test="executiveDirectorPhone != null">
+                #{executiveDirectorPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="traffic != null">
+                #{traffic,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="roadConditions != null">
+                #{roadConditions,jdbcType=VARCHAR},
+            </if>
+            <if test="pavement != null">
+                #{pavement,jdbcType=VARCHAR},
+            </if>
+            <if test="roadWidth != null">
+                #{roadWidth,jdbcType=VARCHAR},
+            </if>
+            <if test="robotLinesInOperation != null">
+                #{robotLinesInOperation,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicle != null">
+                #{vehicle,jdbcType=VARCHAR},
+            </if>
+            <if test="proportionOfPassengerFlow != null">
+                #{proportionOfPassengerFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="filingSpotNameChange != null">
+                #{filingSpotNameChange,jdbcType=VARCHAR},
+            </if>
+            <if test="spotRelationshipId != null">
+                #{spotRelationshipId,jdbcType=BIGINT},
+            </if>
+            <if test="isHighQualitySpot != null">
+                #{isHighQualitySpot,jdbcType=VARCHAR},
+            </if>
+            <if test="reportingStatus != null">
+                #{reportingStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="submitId != null">
+                #{submitId,jdbcType=VARCHAR},
+            </if>
+            <if test="filingAgentId != null">
+                #{filingAgentId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getSpotNameFilingMessage" resultType="com.hna.hka.archive.management.business.model.BusinessFilingMessage">
+        select * from BUSINESS_FILING_MESSAGE
+        <where>
+            1=1
+            <if test="filingSpotName != null">
+                and FILING_SPOT_NAME_CHANGE like CONCAT('%',#{filingSpotName},'%')
+            </if>
+            and FINDINGS_OF_AUDIT in (2,4,6,7)
+        </where>
+        order by CREATE_TIME ASC
+    </select>
+
+
+</mapper>

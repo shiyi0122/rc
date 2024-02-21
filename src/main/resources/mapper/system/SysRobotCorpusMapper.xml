@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotCorpusMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotCorpus" >
+    <id column="CORPUS_ID" property="corpusId" jdbcType="BIGINT" />
+    <result column="CORPUS_PROBLEM" property="corpusProblem" jdbcType="VARCHAR" />
+    <result column="PIN_YIN_PROBLEM" property="pinYinProblem" jdbcType="VARCHAR" />
+    <result column="SEMANTIC_TYPE" property="semanticType" jdbcType="VARCHAR" />
+    <result column="CORPUS_TYPE" property="corpusType" jdbcType="VARCHAR" />
+    <result column="GENERIC_TYPE" property="genericType" jdbcType="VARCHAR" />
+    <result column="CORPUS_RES_URL" property="corpusResUrl" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysRobotCorpusWithBLOBs" extends="BaseResultMap" >
+    <result column="CORPUS_ANSWER" property="corpusAnswer" jdbcType="LONGVARCHAR" />
+    <result column="CORPUS_RES_URL_PIC" property="corpusResUrlPic" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CORPUS_ID, CORPUS_PROBLEM, PIN_YIN_PROBLEM, SEMANTIC_TYPE, CORPUS_TYPE, GENERIC_TYPE, 
+    CORPUS_RES_URL, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    CORPUS_ANSWER, CORPUS_RES_URL_PIC
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_ROBOT_CORPUS
+    where CORPUS_ID = #{corpusId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_CORPUS
+    where CORPUS_ID = #{corpusId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotCorpusWithBLOBs" >
+    insert into SYS_ROBOT_CORPUS (CORPUS_ID, CORPUS_PROBLEM, PIN_YIN_PROBLEM, 
+      SEMANTIC_TYPE, CORPUS_TYPE, GENERIC_TYPE, 
+      CORPUS_RES_URL, CREATE_DATE, UPDATE_DATE, 
+      CORPUS_ANSWER, CORPUS_RES_URL_PIC)
+    values (#{corpusId,jdbcType=BIGINT}, #{corpusProblem,jdbcType=VARCHAR}, #{pinYinProblem,jdbcType=VARCHAR}, 
+      #{semanticType,jdbcType=VARCHAR}, #{corpusType,jdbcType=VARCHAR}, #{genericType,jdbcType=VARCHAR}, 
+      #{corpusResUrl,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, 
+      #{corpusAnswer,jdbcType=LONGVARCHAR}, #{corpusResUrlPic,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotCorpusWithBLOBs" >
+    insert into SYS_ROBOT_CORPUS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="corpusId != null" >
+        CORPUS_ID,
+      </if>
+      <if test="corpusProblem != null" >
+        CORPUS_PROBLEM,
+      </if>
+      <if test="pinYinProblem != null" >
+        PIN_YIN_PROBLEM,
+      </if>
+      <if test="semanticType != null" >
+        SEMANTIC_TYPE,
+      </if>
+      <if test="corpusType != null" >
+        CORPUS_TYPE,
+      </if>
+      <if test="genericType != null" >
+        GENERIC_TYPE,
+      </if>
+      <if test="corpusResUrl != null" >
+        CORPUS_RES_URL,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="corpusAnswer != null" >
+        CORPUS_ANSWER,
+      </if>
+      <if test="corpusResUrlPic != null" >
+        CORPUS_RES_URL_PIC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="corpusId != null" >
+        #{corpusId,jdbcType=BIGINT},
+      </if>
+      <if test="corpusProblem != null" >
+        #{corpusProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="pinYinProblem != null" >
+        #{pinYinProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="semanticType != null" >
+        #{semanticType,jdbcType=VARCHAR},
+      </if>
+      <if test="corpusType != null" >
+        #{corpusType,jdbcType=VARCHAR},
+      </if>
+      <if test="genericType != null" >
+        #{genericType,jdbcType=VARCHAR},
+      </if>
+      <if test="corpusResUrl != null" >
+        #{corpusResUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="corpusAnswer != null" >
+        #{corpusAnswer,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="corpusResUrlPic != null" >
+        #{corpusResUrlPic,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotCorpusWithBLOBs" >
+    update SYS_ROBOT_CORPUS
+    <set >
+      <if test="corpusProblem != null" >
+        CORPUS_PROBLEM = #{corpusProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="pinYinProblem != null" >
+        PIN_YIN_PROBLEM = #{pinYinProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="semanticType != null" >
+        SEMANTIC_TYPE = #{semanticType,jdbcType=VARCHAR},
+      </if>
+      <if test="corpusType != null" >
+        CORPUS_TYPE = #{corpusType,jdbcType=VARCHAR},
+      </if>
+      <if test="genericType != null" >
+        GENERIC_TYPE = #{genericType,jdbcType=VARCHAR},
+      </if>
+      <if test="corpusResUrl != null" >
+        CORPUS_RES_URL = #{corpusResUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="corpusAnswer != null" >
+        CORPUS_ANSWER = #{corpusAnswer,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="corpusResUrlPic != null" >
+        CORPUS_RES_URL_PIC = #{corpusResUrlPic,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CORPUS_ID = #{corpusId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysRobotCorpusWithBLOBs" >
+    update SYS_ROBOT_CORPUS
+    set CORPUS_PROBLEM = #{corpusProblem,jdbcType=VARCHAR},
+      PIN_YIN_PROBLEM = #{pinYinProblem,jdbcType=VARCHAR},
+      SEMANTIC_TYPE = #{semanticType,jdbcType=VARCHAR},
+      CORPUS_TYPE = #{corpusType,jdbcType=VARCHAR},
+      GENERIC_TYPE = #{genericType,jdbcType=VARCHAR},
+      CORPUS_RES_URL = #{corpusResUrl,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      CORPUS_ANSWER = #{corpusAnswer,jdbcType=LONGVARCHAR},
+      CORPUS_RES_URL_PIC = #{corpusResUrlPic,jdbcType=LONGVARCHAR}
+    where CORPUS_ID = #{corpusId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotCorpus" >
+    update SYS_ROBOT_CORPUS
+    set CORPUS_PROBLEM = #{corpusProblem,jdbcType=VARCHAR},
+      PIN_YIN_PROBLEM = #{pinYinProblem,jdbcType=VARCHAR},
+      SEMANTIC_TYPE = #{semanticType,jdbcType=VARCHAR},
+      CORPUS_TYPE = #{corpusType,jdbcType=VARCHAR},
+      GENERIC_TYPE = #{genericType,jdbcType=VARCHAR},
+      CORPUS_RES_URL = #{corpusResUrl,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where CORPUS_ID = #{corpusId,jdbcType=BIGINT}
+  </update>
+  <select id="getSemanticsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+    A.*,
+    B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+    SYS_ROBOT_CORPUS A LEFT JOIN SYS_SCENIC_SPOT B ON A.GENERIC_TYPE = B.SCENIC_SPOT_ID
+    <where>
+      AND (A.GENERIC_TYPE = #{scenicSpotId} OR A.GENERIC_TYPE = 2019924)
+      <if test="corpusProblem != null and corpusProblem != ''">
+        AND A.CORPUS_PROBLEM LIKE CONCAT('%',#{corpusProblem},'%')
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

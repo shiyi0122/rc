@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotRestrictedAreaMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotRestrictedArea" >
+    <id column="RESTRICTED_WARNING_ID" property="restrictedWarningId" jdbcType="BIGINT" />
+    <result column="RESTRICTED_WARNING_SCENIC_SPOT_ID" property="restrictedWarningScenicSpotId" jdbcType="BIGINT" />
+    <result column="RESTRICTED_WARNING_ROBOT_CODE" property="restrictedWarningRobotCode" jdbcType="VARCHAR" />
+    <result column="RESTRICTED_WARNING_INNERCIRCLE_NAME" property="restrictedWarningInnercircleName" jdbcType="VARCHAR" />
+    <result column="RESTRICTED_WARNING_USER_PHONE" property="restrictedWarningUserPhone" jdbcType="VARCHAR" />
+    <result column="RESTRICTED_WARNING_MSG" property="restrictedWarningMsg" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysScenicSpotRestrictedAreaWithBLOBs" extends="BaseResultMap" >
+    <result column="RESTRICTED_WARNING_GPS" property="restrictedWarningGps" jdbcType="LONGVARCHAR" />
+    <result column="RESTRICTED_WARNING_BAIDU_GPS" property="restrictedWarningBaiduGps" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RESTRICTED_WARNING_ID, RESTRICTED_WARNING_SCENIC_SPOT_ID, RESTRICTED_WARNING_ROBOT_CODE, 
+    RESTRICTED_WARNING_INNERCIRCLE_NAME, RESTRICTED_WARNING_USER_PHONE, RESTRICTED_WARNING_MSG, 
+    CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    RESTRICTED_WARNING_GPS, RESTRICTED_WARNING_BAIDU_GPS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_RESTRICTED_AREA
+    where RESTRICTED_WARNING_ID = #{restrictedWarningId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_RESTRICTED_AREA
+    where RESTRICTED_WARNING_ID = #{restrictedWarningId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRestrictedAreaWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_RESTRICTED_AREA (RESTRICTED_WARNING_ID, RESTRICTED_WARNING_SCENIC_SPOT_ID, 
+      RESTRICTED_WARNING_ROBOT_CODE, RESTRICTED_WARNING_INNERCIRCLE_NAME, 
+      RESTRICTED_WARNING_USER_PHONE, RESTRICTED_WARNING_MSG, 
+      CREATE_DATE, UPDATE_DATE, RESTRICTED_WARNING_GPS, 
+      RESTRICTED_WARNING_BAIDU_GPS)
+    values (#{restrictedWarningId,jdbcType=BIGINT}, #{restrictedWarningScenicSpotId,jdbcType=BIGINT}, 
+      #{restrictedWarningRobotCode,jdbcType=VARCHAR}, #{restrictedWarningInnercircleName,jdbcType=VARCHAR}, 
+      #{restrictedWarningUserPhone,jdbcType=VARCHAR}, #{restrictedWarningMsg,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{restrictedWarningGps,jdbcType=LONGVARCHAR}, 
+      #{restrictedWarningBaiduGps,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRestrictedAreaWithBLOBs" >
+    insert into SYS_SCENIC_SPOT_RESTRICTED_AREA
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="restrictedWarningId != null" >
+        RESTRICTED_WARNING_ID,
+      </if>
+      <if test="restrictedWarningScenicSpotId != null" >
+        RESTRICTED_WARNING_SCENIC_SPOT_ID,
+      </if>
+      <if test="restrictedWarningRobotCode != null" >
+        RESTRICTED_WARNING_ROBOT_CODE,
+      </if>
+      <if test="restrictedWarningInnercircleName != null" >
+        RESTRICTED_WARNING_INNERCIRCLE_NAME,
+      </if>
+      <if test="restrictedWarningUserPhone != null" >
+        RESTRICTED_WARNING_USER_PHONE,
+      </if>
+      <if test="restrictedWarningMsg != null" >
+        RESTRICTED_WARNING_MSG,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="restrictedWarningGps != null" >
+        RESTRICTED_WARNING_GPS,
+      </if>
+      <if test="restrictedWarningBaiduGps != null" >
+        RESTRICTED_WARNING_BAIDU_GPS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="restrictedWarningId != null" >
+        #{restrictedWarningId,jdbcType=BIGINT},
+      </if>
+      <if test="restrictedWarningScenicSpotId != null" >
+        #{restrictedWarningScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="restrictedWarningRobotCode != null" >
+        #{restrictedWarningRobotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="restrictedWarningInnercircleName != null" >
+        #{restrictedWarningInnercircleName,jdbcType=VARCHAR},
+      </if>
+      <if test="restrictedWarningUserPhone != null" >
+        #{restrictedWarningUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="restrictedWarningMsg != null" >
+        #{restrictedWarningMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="restrictedWarningGps != null" >
+        #{restrictedWarningGps,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="restrictedWarningBaiduGps != null" >
+        #{restrictedWarningBaiduGps,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRestrictedAreaWithBLOBs" >
+    update SYS_SCENIC_SPOT_RESTRICTED_AREA
+    <set >
+      <if test="restrictedWarningScenicSpotId != null" >
+        RESTRICTED_WARNING_SCENIC_SPOT_ID = #{restrictedWarningScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="restrictedWarningRobotCode != null" >
+        RESTRICTED_WARNING_ROBOT_CODE = #{restrictedWarningRobotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="restrictedWarningInnercircleName != null" >
+        RESTRICTED_WARNING_INNERCIRCLE_NAME = #{restrictedWarningInnercircleName,jdbcType=VARCHAR},
+      </if>
+      <if test="restrictedWarningUserPhone != null" >
+        RESTRICTED_WARNING_USER_PHONE = #{restrictedWarningUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="restrictedWarningMsg != null" >
+        RESTRICTED_WARNING_MSG = #{restrictedWarningMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="restrictedWarningGps != null" >
+        RESTRICTED_WARNING_GPS = #{restrictedWarningGps,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="restrictedWarningBaiduGps != null" >
+        RESTRICTED_WARNING_BAIDU_GPS = #{restrictedWarningBaiduGps,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where RESTRICTED_WARNING_ID = #{restrictedWarningId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRestrictedAreaWithBLOBs" >
+    update SYS_SCENIC_SPOT_RESTRICTED_AREA
+    set RESTRICTED_WARNING_SCENIC_SPOT_ID = #{restrictedWarningScenicSpotId,jdbcType=BIGINT},
+      RESTRICTED_WARNING_ROBOT_CODE = #{restrictedWarningRobotCode,jdbcType=VARCHAR},
+      RESTRICTED_WARNING_INNERCIRCLE_NAME = #{restrictedWarningInnercircleName,jdbcType=VARCHAR},
+      RESTRICTED_WARNING_USER_PHONE = #{restrictedWarningUserPhone,jdbcType=VARCHAR},
+      RESTRICTED_WARNING_MSG = #{restrictedWarningMsg,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      RESTRICTED_WARNING_GPS = #{restrictedWarningGps,jdbcType=LONGVARCHAR},
+      RESTRICTED_WARNING_BAIDU_GPS = #{restrictedWarningBaiduGps,jdbcType=LONGVARCHAR}
+    where RESTRICTED_WARNING_ID = #{restrictedWarningId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRestrictedArea" >
+    update SYS_SCENIC_SPOT_RESTRICTED_AREA
+    set RESTRICTED_WARNING_SCENIC_SPOT_ID = #{restrictedWarningScenicSpotId,jdbcType=BIGINT},
+      RESTRICTED_WARNING_ROBOT_CODE = #{restrictedWarningRobotCode,jdbcType=VARCHAR},
+      RESTRICTED_WARNING_INNERCIRCLE_NAME = #{restrictedWarningInnercircleName,jdbcType=VARCHAR},
+      RESTRICTED_WARNING_USER_PHONE = #{restrictedWarningUserPhone,jdbcType=VARCHAR},
+      RESTRICTED_WARNING_MSG = #{restrictedWarningMsg,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where RESTRICTED_WARNING_ID = #{restrictedWarningId,jdbcType=BIGINT}
+  </update>
+  <select id="getRestrictedAreatList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    SELECT
+	A.*,
+	B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+	SYS_SCENIC_SPOT_RESTRICTED_AREA A
+	LEFT JOIN SYS_SCENIC_SPOT B ON A.RESTRICTED_WARNING_SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="restrictedWarningUserPhone != null and restrictedWarningUserPhone != ''">
+        AND A.RESTRICTED_WARNING_USER_PHONE LIKE CONCAT('%',#{restrictedWarningUserPhone},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

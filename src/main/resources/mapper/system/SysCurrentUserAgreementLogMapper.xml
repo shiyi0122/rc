@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysCurrentUserAgreementLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysCurrentUserAgreementLog" >
+    <id column="AGREEMENT_ID" property="agreementId" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+    <result column="AGREEMENT_TYPE" property="agreementType" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AGREEMENT_ID, USER_ID, USER_PHONE, AGREEMENT_TYPE, SCENIC_SPOT_ID, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_USER_AGREEMENT_LOG
+    where AGREEMENT_ID = #{agreementId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_CURRENT_USER_AGREEMENT_LOG
+    where AGREEMENT_ID = #{agreementId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAgreementLog" >
+    insert into SYS_CURRENT_USER_AGREEMENT_LOG (AGREEMENT_ID, USER_ID, USER_PHONE, 
+      AGREEMENT_TYPE, SCENIC_SPOT_ID, CREATE_DATE, 
+      UPDATE_DATE)
+    values (#{agreementId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userPhone,jdbcType=VARCHAR}, 
+      #{agreementType,jdbcType=VARCHAR}, #{scenicSpotId,jdbcType=BIGINT}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAgreementLog" >
+    insert into SYS_CURRENT_USER_AGREEMENT_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="agreementId != null" >
+        AGREEMENT_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE,
+      </if>
+      <if test="agreementType != null" >
+        AGREEMENT_TYPE,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="agreementId != null" >
+        #{agreementId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementType != null" >
+        #{agreementType,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAgreementLog" >
+    update SYS_CURRENT_USER_AGREEMENT_LOG
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementType != null" >
+        AGREEMENT_TYPE = #{agreementType,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AGREEMENT_ID = #{agreementId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAgreementLog" >
+    update SYS_CURRENT_USER_AGREEMENT_LOG
+    set USER_ID = #{userId,jdbcType=BIGINT},
+      USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      AGREEMENT_TYPE = #{agreementType,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where AGREEMENT_ID = #{agreementId,jdbcType=BIGINT}
+  </update>
+  <select id="getCurrentUserAgreementLogList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.AGREEMENT_ID,
+    A.USER_ID,
+    A.USER_PHONE,
+    A.AGREEMENT_TYPE,
+    A.SCENIC_SPOT_ID,
+    A.CREATE_DATE,
+    A.UPDATE_DATE,
+    B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+    SYS_CURRENT_USER_AGREEMENT_LOG A
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="userPhone != null and userPhone != ''">
+        AND A.USER_PHONE LIKE CONCAT('%',#{userPhone},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

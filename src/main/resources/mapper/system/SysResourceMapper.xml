@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysResource" >
+    <id column="RES_ID" property="resId" jdbcType="BIGINT" />
+    <result column="RES_CODE" property="resCode" jdbcType="VARCHAR" />
+    <result column="RES_PCODE" property="resPcode" jdbcType="VARCHAR" />
+    <result column="RES_NAME" property="resName" jdbcType="VARCHAR" />
+    <result column="RES_ICON" property="resIcon" jdbcType="VARCHAR" />
+    <result column="RES_URL" property="resUrl" jdbcType="VARCHAR" />
+    <result column="RES_SORT" property="resSort" jdbcType="INTEGER" />
+    <result column="RES_LEVELS" property="resLevels" jdbcType="INTEGER" />
+    <result column="RES_MENU_FLAG" property="resMenuFlag" jdbcType="VARCHAR" />
+    <result column="RES_DESCRIPTION" property="resDescription" jdbcType="VARCHAR" />
+    <result column="RES_STATUS" property="resStatus" jdbcType="VARCHAR" />
+    <result column="RES_SYSTEM_TYPE" property="resSystemType" jdbcType="VARCHAR" />
+    <result column="RES_SYSTEM_STATUS" property="resSystemStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RES_ID, RES_CODE, RES_PCODE, RES_NAME, RES_ICON, RES_URL, RES_SORT, RES_LEVELS, RES_MENU_FLAG, 
+    RES_DESCRIPTION, RES_STATUS, RES_SYSTEM_TYPE, RES_SYSTEM_STATUS, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT
+	A.RES_ID,
+	A.RES_CODE,
+	A.RES_PCODE,
+	A.RES_NAME,
+	A.RES_ICON,
+	A.RES_URL,
+	A.RES_SORT,
+	A.RES_LEVELS,
+	A.RES_MENU_FLAG,
+	A.RES_DESCRIPTION,
+	A.RES_STATUS,
+	A.RES_SYSTEM_TYPE,
+	A.RES_SYSTEM_STATUS,
+	A.CREATE_TIME,
+	A.UPDATE_TIME,
+	B.RES_NAME AS resPcodeName
+    FROM
+	SYS_RES A LEFT JOIN SYS_RES B ON A.RES_PCODE = B.RES_CODE
+    WHERE A.RES_ID = #{resId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_RES
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysResource" >
+    insert into SYS_RES (RES_ID, RES_CODE, RES_PCODE,
+      RES_NAME, RES_ICON, RES_URL, 
+      RES_SORT, RES_LEVELS, RES_MENU_FLAG, 
+      RES_DESCRIPTION, RES_STATUS, RES_SYSTEM_TYPE, 
+      RES_SYSTEM_STATUS, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{resId,jdbcType=BIGINT}, #{resCode,jdbcType=VARCHAR}, #{resPcode,jdbcType=VARCHAR}, 
+      #{resName,jdbcType=VARCHAR}, #{resIcon,jdbcType=VARCHAR}, #{resUrl,jdbcType=VARCHAR}, 
+      #{resSort,jdbcType=INTEGER}, #{resLevels,jdbcType=INTEGER}, #{resMenuFlag,jdbcType=VARCHAR}, 
+      #{resDescription,jdbcType=VARCHAR}, #{resStatus,jdbcType=VARCHAR}, #{resSystemType,jdbcType=VARCHAR}, 
+      #{resSystemStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysResource" >
+    insert into SYS_RES
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resId != null" >
+        RES_ID,
+      </if>
+      <if test="resCode != null" >
+        RES_CODE,
+      </if>
+      <if test="resPcode != null" >
+        RES_PCODE,
+      </if>
+      <if test="resName != null" >
+        RES_NAME,
+      </if>
+      <if test="resIcon != null" >
+        RES_ICON,
+      </if>
+      <if test="resUrl != null" >
+        RES_URL,
+      </if>
+      <if test="resSort != null" >
+        RES_SORT,
+      </if>
+      <if test="resLevels != null" >
+        RES_LEVELS,
+      </if>
+      <if test="resMenuFlag != null" >
+        RES_MENU_FLAG,
+      </if>
+      <if test="resDescription != null" >
+        RES_DESCRIPTION,
+      </if>
+      <if test="resStatus != null" >
+        RES_STATUS,
+      </if>
+      <if test="resSystemType != null" >
+        RES_SYSTEM_TYPE,
+      </if>
+      <if test="resSystemStatus != null" >
+        RES_SYSTEM_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resId != null" >
+        #{resId,jdbcType=BIGINT},
+      </if>
+      <if test="resCode != null" >
+        #{resCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resPcode != null" >
+        #{resPcode,jdbcType=VARCHAR},
+      </if>
+      <if test="resName != null" >
+        #{resName,jdbcType=VARCHAR},
+      </if>
+      <if test="resIcon != null" >
+        #{resIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="resUrl != null" >
+        #{resUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="resSort != null" >
+        #{resSort,jdbcType=INTEGER},
+      </if>
+      <if test="resLevels != null" >
+        #{resLevels,jdbcType=INTEGER},
+      </if>
+      <if test="resMenuFlag != null" >
+        #{resMenuFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="resDescription != null" >
+        #{resDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="resStatus != null" >
+        #{resStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="resSystemType != null" >
+        #{resSystemType,jdbcType=VARCHAR},
+      </if>
+      <if test="resSystemStatus != null" >
+        #{resSystemStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysResource" >
+    update SYS_RES
+    <set >
+      <if test="resCode != null" >
+        RES_CODE = #{resCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resPcode != null" >
+        RES_PCODE = #{resPcode,jdbcType=VARCHAR},
+      </if>
+      <if test="resName != null" >
+        RES_NAME = #{resName,jdbcType=VARCHAR},
+      </if>
+      <if test="resIcon != null" >
+        RES_ICON = #{resIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="resUrl != null" >
+        RES_URL = #{resUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="resSort != null" >
+        RES_SORT = #{resSort,jdbcType=INTEGER},
+      </if>
+      <if test="resLevels != null" >
+        RES_LEVELS = #{resLevels,jdbcType=INTEGER},
+      </if>
+      <if test="resMenuFlag != null" >
+        RES_MENU_FLAG = #{resMenuFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="resDescription != null" >
+        RES_DESCRIPTION = #{resDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="resStatus != null" >
+        RES_STATUS = #{resStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="resSystemType != null" >
+        RES_SYSTEM_TYPE = #{resSystemType,jdbcType=VARCHAR},
+      </if>
+      <if test="resSystemStatus != null" >
+        RES_SYSTEM_STATUS = #{resSystemStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysResource" >
+    update SYS_RES
+    set RES_CODE = #{resCode,jdbcType=VARCHAR},
+      RES_PCODE = #{resPcode,jdbcType=VARCHAR},
+      RES_NAME = #{resName,jdbcType=VARCHAR},
+      RES_ICON = #{resIcon,jdbcType=VARCHAR},
+      RES_URL = #{resUrl,jdbcType=VARCHAR},
+      RES_SORT = #{resSort,jdbcType=INTEGER},
+      RES_LEVELS = #{resLevels,jdbcType=INTEGER},
+      RES_MENU_FLAG = #{resMenuFlag,jdbcType=VARCHAR},
+      RES_DESCRIPTION = #{resDescription,jdbcType=VARCHAR},
+      RES_STATUS = #{resStatus,jdbcType=VARCHAR},
+      RES_SYSTEM_TYPE = #{resSystemType,jdbcType=VARCHAR},
+      RES_SYSTEM_STATUS = #{resSystemStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where RES_ID = #{resId,jdbcType=BIGINT}
+  </update>
+  <select id="getResourceNav" resultMap="BaseResultMap">
+    SELECT DISTINCT
+	B.RES_ID,
+	B.RES_CODE,
+	B.RES_PCODE,
+	B.RES_NAME,
+	B.RES_ICON,
+	B.RES_URL,
+	B.RES_SORT,
+	B.RES_LEVELS,
+	B.RES_MENU_FLAG,
+	B.RES_DESCRIPTION,
+	B.RES_STATUS,
+	B.RES_SYSTEM_TYPE,
+	B.RES_SYSTEM_STATUS,
+	B.CREATE_TIME,
+	B.UPDATE_TIME
+    FROM
+	SYS_ROLE_RESOURCE A
+	LEFT JOIN SYS_RES B ON A.RES_ID = B.RES_ID
+	LEFT JOIN SYS_USERS_ROLE_SPOT C ON A.ROLE_ID = C.ROLE_ID
+	LEFT JOIN SYS_USERS D ON D.USER_ID = C.USER_ID
+    WHERE
+	1 = 1
+	AND B.RES_SYSTEM_STATUS = 1
+	AND D.LOGIN_NAME = #{userName}
+	AND C.SCENIC_SPOT_ID = #{scenicSpotId}
+  </select>
+  <select id="getResourceLeft" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT DISTINCT
+    B.RES_ID,
+    B.RES_CODE,
+    B.RES_PCODE,
+    B.RES_NAME,
+    B.RES_ICON,
+    B.RES_URL,
+    B.RES_SORT,
+    B.RES_LEVELS,
+    B.RES_MENU_FLAG,
+    B.RES_DESCRIPTION,
+    B.RES_STATUS,
+    B.RES_SYSTEM_TYPE,
+    B.RES_SYSTEM_STATUS,
+    B.CREATE_TIME,
+    B.UPDATE_TIME
+    FROM
+    SYS_ROLE_RESOURCE A
+    LEFT JOIN SYS_RES B ON A.RES_ID = B.RES_ID
+    LEFT JOIN SYS_USERS_ROLE_SPOT C ON A.ROLE_ID = C.ROLE_ID
+    LEFT JOIN SYS_USERS D ON D.USER_ID = C.USER_ID
+    WHERE
+    1 = 1
+    AND B.RES_SYSTEM_TYPE = #{pid}
+    AND D.LOGIN_NAME = #{loginName}
+    AND C.SCENIC_SPOT_ID = #{scenicSpotId}
+    AND B.RES_MENU_FLAG = 'Y'
+    ORDER BY B.RES_SORT
+  </select>
+  <select id="getResourceList" resultMap="BaseResultMap" parameterType="com.hna.hka.archive.management.system.model.SysResource">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_RES
+    <where>
+      <if test="resName != null and resName != ''">
+        and RES_NAME like CONCAT('%',#{resName},'%')
+      </if>
+    </where>
+  </select>
+  <select id="selectByPrimaryKeyCode" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_RES WHERE RES_CODE = #{resCode}
+  </select>
+  <select id="getEchoZtree" resultMap="BaseResultMap">
+    SELECT
+	B.RES_CODE
+    FROM
+	SYS_ROLE_RESOURCE A
+	LEFT JOIN SYS_RES B ON A.RES_ID = B.RES_ID
+    WHERE
+	A.ROLE_ID = #{roleId}
+  </select>
+
+  <select id="getRoleResourceList" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    sr.RES_ID,sr.RES_CODE,sr.RES_PCODE,sr.RES_NAME,sr.RES_MENU_FLAG,sr.RES_STATUS
+    from SYS_RES sr
+    left join SYS_ROLE_RESOURCE srr on sr.RES_ID = srr.RES_ID
+    <where>
+      <if test="roleId !=null and roleId != ''">
+        srr.ROLE_ID = #{roleId}
+      </if>
+    </where>
+  </select>
+</mapper>

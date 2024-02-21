@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysCurrentUserAccountDeductionMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysCurrentUserAccountDeduction" >
+        <id column="DEDUCTION_ID" property="deductionId" jdbcType="BIGINT" />
+        <result column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+        <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+        <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR" />
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+        <result column="ORDER_NUMBER" property="orderNumber" jdbcType="VARCHAR" />
+        <result column="ACCOUNT_AMOUNT_FRONT" property="accountAmountFront" jdbcType="VARCHAR" />
+        <result column="DEDUCTION_AMOUNT" property="deductionAmount" jdbcType="VARCHAR" />
+        <result column="ACCOUNT_AMOUNT_REAR" property="accountAmountRear" jdbcType="VARCHAR" />
+        <result column="ACCOUNT_TYPE" property="accountType" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAccountDeduction">
+        insert into SYS_CURRENT_USER_ACCOUNT_DEDUCTION
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="deductionId != null" >
+                DEDUCTION_ID,
+            </if>
+            <if test="orderId != null" >
+                ORDER_ID,
+            </if>
+            <if test="userPhone != null" >
+                USER_PHONE,
+            </if>
+            <if test="userId != null" >
+                USER_ID,
+            </if>
+            <if test="scenicSpotName != null" >
+                SCENIC_SPOT_NAME,
+            </if>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="orderNumber != null" >
+                ORDER_NUMBER,
+            </if>
+            <if test="accountAmountFront != null" >
+                ACCOUNT_AMOUNT_FRONT,
+            </if>
+            <if test="deductionAmount != null" >
+                DEDUCTION_AMOUNT,
+            </if>
+            <if test="accountAmountRear != null" >
+                ACCOUNT_AMOUNT_REAR,
+            </if>
+            <if test="accountType != null" >
+                ACCOUNT_TYPE,
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="deductionId != null" >
+                #{deductionId,jdbcType=BIGINT},
+            </if>
+            <if test="orderId != null" >
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="userPhone != null" >
+                #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotName != null" >
+                #{scenicSpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotId != null" >
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="orderNumber != null" >
+                #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="accountAmountFront != null" >
+                #{accountAmountFront,jdbcType=VARCHAR},
+            </if>
+            <if test="deductionAmount != null" >
+                #{deductionAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="accountAmountRear != null" >
+                #{accountAmountRear,jdbcType=VARCHAR},
+            </if>
+            <if test="accountType != null" >
+                #{accountType,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="list" resultType="com.hna.hka.archive.management.system.model.SysCurrentUserAccountDeduction">
+        select scuad.*,sss.SCENIC_SPOT_NAME
+        from SYS_CURRENT_USER_ACCOUNT_DEDUCTION scuad
+        left join SYS_SCENIC_SPOT sss on scuad.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        <where>
+            1=1
+            <if test="userPhone != null and userPhone != ''">
+               and  USER_PHONE = #{userPhone}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND DATE(scuad.CREATE_TIME) <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND DATE(scuad.UPDATE_TIME) <![CDATA[ <= ]]> #{endTime}
+            </if>
+        </where>
+    </select>
+
+</mapper>

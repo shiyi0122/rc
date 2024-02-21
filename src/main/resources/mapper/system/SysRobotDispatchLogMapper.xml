@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotDispatchLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotDispatchLog" >
+    <id column="ROBOT_DISPATCH_ID" property="robotDispatchId" jdbcType="BIGINT" />
+    <result column="ROBOT_DISPATCH_CALL_OUT_NAME" property="robotDispatchCallOutName" jdbcType="VARCHAR" />
+    <result column="ROBOT_DISPATCH_TRANSFER_IN_NAME" property="robotDispatchTransferInName" jdbcType="VARCHAR" />
+    <result column="ROBOT_DISPATCH_USERS_NAME" property="robotDispatchUsersName" jdbcType="VARCHAR" />
+    <result column="ROBOT_DISPATCH_CODE" property="robotDispatchCode" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+<!--    <result column="DEPARTURE_TIME" property="departureTime" jdbcType="VARCHAR"/>-->
+<!--    <result column="ARRIVAL_TIME" property="arrivalTime" jdbcType="VARCHAR"/>-->
+<!--    <result column="COMPLETION_TIME" property="completionTime" jdbcType="VARCHAR"/>-->
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROBOT_DISPATCH_ID, ROBOT_DISPATCH_CALL_OUT_NAME, ROBOT_DISPATCH_TRANSFER_IN_NAME, 
+    ROBOT_DISPATCH_USERS_NAME, ROBOT_DISPATCH_CODE, CREATE_DATE, UPDATE_DATE
+<!--    DEPARTURE_TIME,-->
+<!--    ARRIVAL_TIME,COMPLETION_TIME-->
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_DISPATCH_LOG
+    where ROBOT_DISPATCH_ID = #{robotDispatchId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_DISPATCH_LOG
+    where ROBOT_DISPATCH_ID = #{robotDispatchId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotDispatchLog" >
+    insert into SYS_ROBOT_DISPATCH_LOG (ROBOT_DISPATCH_ID, ROBOT_DISPATCH_CALL_OUT_NAME, 
+      ROBOT_DISPATCH_TRANSFER_IN_NAME, ROBOT_DISPATCH_USERS_NAME, 
+      ROBOT_DISPATCH_CODE, CREATE_DATE, UPDATE_DATE
+<!--    , DEPARTURE_TIME, ARRIVAL_TIME,-->
+<!--      COMPLETION_TIME-->
+      )
+    values (#{robotDispatchId,jdbcType=BIGINT}, #{robotDispatchCallOutName,jdbcType=VARCHAR}, 
+      #{robotDispatchTransferInName,jdbcType=VARCHAR}, #{robotDispatchUsersName,jdbcType=VARCHAR}, 
+      #{robotDispatchCode,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+<!--    , #{departureTime,jdbcType=VARCHAR},#{arrivalTime,jdbcType = VARCHAR},#{completionTime,jdbcType = VARCHAR}-->
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotDispatchLog" >
+    insert into SYS_ROBOT_DISPATCH_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="robotDispatchId != null" >
+        ROBOT_DISPATCH_ID,
+      </if>
+      <if test="robotDispatchCallOutName != null" >
+        ROBOT_DISPATCH_CALL_OUT_NAME,
+      </if>
+      <if test="robotDispatchTransferInName != null" >
+        ROBOT_DISPATCH_TRANSFER_IN_NAME,
+      </if>
+      <if test="robotDispatchUsersName != null" >
+        ROBOT_DISPATCH_USERS_NAME,
+      </if>
+      <if test="robotDispatchCode != null" >
+        ROBOT_DISPATCH_CODE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+<!--      <if  test="departureTime !=null">-->
+<!--        DEPARTURE_TIME,-->
+<!--      </if>-->
+<!--      <if test="arrivalTime != null">-->
+<!--        ARRIVAL_TIME,-->
+<!--      </if>-->
+<!--      <if test="completionTime != null">-->
+<!--        COMPLETION_TIME,-->
+<!--      </if>-->
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="robotDispatchId != null" >
+        #{robotDispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="robotDispatchCallOutName != null" >
+        #{robotDispatchCallOutName,jdbcType=VARCHAR},
+      </if>
+      <if test="robotDispatchTransferInName != null" >
+        #{robotDispatchTransferInName,jdbcType=VARCHAR},
+      </if>
+      <if test="robotDispatchUsersName != null" >
+        #{robotDispatchUsersName,jdbcType=VARCHAR},
+      </if>
+      <if test="robotDispatchCode != null" >
+        #{robotDispatchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+<!--      <if test="departureTime != null">-->
+<!--        #{departureTime,jdbcType = VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="arrivalTime != null">-->
+<!--        #{arrivalTime,jdbcType = VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="completionTime != null">-->
+<!--        #{completionTime,jdbcType = VARCHAR},-->
+<!--      </if>-->
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotDispatchLog" >
+    update SYS_ROBOT_DISPATCH_LOG
+    <set >
+      <if test="robotDispatchCallOutName != null" >
+        ROBOT_DISPATCH_CALL_OUT_NAME = #{robotDispatchCallOutName,jdbcType=VARCHAR},
+      </if>
+      <if test="robotDispatchTransferInName != null" >
+        ROBOT_DISPATCH_TRANSFER_IN_NAME = #{robotDispatchTransferInName,jdbcType=VARCHAR},
+      </if>
+      <if test="robotDispatchUsersName != null" >
+        ROBOT_DISPATCH_USERS_NAME = #{robotDispatchUsersName,jdbcType=VARCHAR},
+      </if>
+      <if test="robotDispatchCode != null" >
+        ROBOT_DISPATCH_CODE = #{robotDispatchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+<!--      <if test="departureTime != null">-->
+<!--        DEPARTURE_TIME = #{departureTime,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="arrivalTime != null">-->
+<!--        ARRIVAL_TIME = #{arrivalTime,jdbcType = VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="completionTime != null">-->
+<!--        COMPLETION_TIME = #{completionTime,jdbcType = VARCHAR},-->
+<!--      </if>-->
+    </set>
+    where ROBOT_DISPATCH_ID = #{robotDispatchId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotDispatchLog" >
+    update SYS_ROBOT_DISPATCH_LOG
+    set ROBOT_DISPATCH_CALL_OUT_NAME = #{robotDispatchCallOutName,jdbcType=VARCHAR},
+      ROBOT_DISPATCH_TRANSFER_IN_NAME = #{robotDispatchTransferInName,jdbcType=VARCHAR},
+      ROBOT_DISPATCH_USERS_NAME = #{robotDispatchUsersName,jdbcType=VARCHAR},
+      ROBOT_DISPATCH_CODE = #{robotDispatchCode,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where ROBOT_DISPATCH_ID = #{robotDispatchId,jdbcType=BIGINT}
+  </update>
+  <select id="getOperationLogRobotAlarmList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_DISPATCH_LOG
+    <where>
+      <if test="robotDispatchCode != null and robotDispatchCode != ''">
+        AND ROBOT_DISPATCH_CODE LIKE CONCAT('%',#{robotDispatchCode},'%')
+      </if>
+      <if test="robotDispatchCallOutName != null and robotDispatchCallOutName != ''">
+        AND ROBOT_DISPATCH_CALL_OUT_NAME LIKE CONCAT('%',#{robotDispatchCallOutName},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+
+  <select id="getOperationLogRobotAlarmListNew" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_DISPATCH_LOG
+    <where>
+      <if test="robotDispatchCode != null and robotDispatchCode != ''">
+        AND ROBOT_DISPATCH_CODE LIKE CONCAT('%',#{robotDispatchCode},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+      <if test="robotDispatchCallOutName != null and robotDispatchCallOutName != ''">
+        OR ROBOT_DISPATCH_CALL_OUT_NAME LIKE CONCAT('%',#{robotDispatchCallOutName},'%')
+      </if>
+      <if test="robotDispatchCallOutName != null and robotDispatchCallOutName != ''">
+        OR ROBOT_DISPATCH_TRANSFER_IN_NAME LIKE CONCAT('%',#{robotDispatchCallOutName},'%')
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+
+  <select id="getRobotDispatchLogDate" resultType="java.lang.String">
+    SELECT SUBSTR( CREATE_DATE, 1, 10 ) FROM SYS_ROBOT_DISPATCH_LOG
+    WHERE ( ROBOT_DISPATCH_CALL_OUT_NAME LIKE CONCAT('%',#{scenicSpotName},'%')
+    OR ROBOT_DISPATCH_TRANSFER_IN_NAME LIKE CONCAT('%',#{scenicSpotName},'%'))
+    AND DATE( CREATE_DATE ) <![CDATA[ >= ]]> #{startDate}
+    AND DATE( CREATE_DATE )  <![CDATA[ <= ]]> #{endDate}
+    GROUP BY SUBSTR(CREATE_DATE, 1, 10)
+    ORDER BY CREATE_DATE ASC
+  </select>
+
+  <select id="getRobotDispatchLogInCount" resultType="java.lang.Integer">
+    SELECT COUNT(0) FROM SYS_ROBOT_DISPATCH_LOG
+    WHERE ROBOT_DISPATCH_TRANSFER_IN_NAME LIKE CONCAT('%',#{scenicSpotName},'%')
+    AND  CREATE_DATE like CONCAT('%',#{date},'%')
+    ORDER BY
+    CREATE_DATE ASC
+  </select>
+  <select id="getRobotDispatchLogOutCount" resultType="java.lang.Integer">
+    SELECT COUNT(0) FROM SYS_ROBOT_DISPATCH_LOG
+    WHERE ROBOT_DISPATCH_CALL_OUT_NAME LIKE CONCAT('%',#{scenicSpotName},'%')
+    AND  CREATE_DATE like CONCAT('%',#{date},'%')
+    ORDER BY
+    CREATE_DATE ASC
+  </select>
+
+
+</mapper>

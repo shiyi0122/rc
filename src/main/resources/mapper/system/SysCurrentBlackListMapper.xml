@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysCurrentBlackListMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysCurrentBlackList" >
+    <id column="BLACK_LIST_ID" property="blackListId" jdbcType="BIGINT" />
+    <result column="CURRENT_USER_ID" property="currentUserId" jdbcType="BIGINT" />
+    <result column="BLACK_LIST_TYPE" property="blackListType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    BLACK_LIST_ID, CURRENT_USER_ID, BLACK_LIST_TYPE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_BLACK_LIST
+    where BLACK_LIST_ID = #{blackListId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_CURRENT_BLACK_LIST
+    where BLACK_LIST_ID = #{blackListId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysCurrentBlackList" >
+    insert into SYS_CURRENT_BLACK_LIST (BLACK_LIST_ID, CURRENT_USER_ID, BLACK_LIST_TYPE, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{blackListId,jdbcType=BIGINT}, #{currentUserId,jdbcType=BIGINT}, #{blackListType,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentBlackList" >
+    insert into SYS_CURRENT_BLACK_LIST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="blackListId != null" >
+        BLACK_LIST_ID,
+      </if>
+      <if test="currentUserId != null" >
+        CURRENT_USER_ID,
+      </if>
+      <if test="blackListType != null" >
+        BLACK_LIST_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="blackListId != null" >
+        #{blackListId,jdbcType=BIGINT},
+      </if>
+      <if test="currentUserId != null" >
+        #{currentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="blackListType != null" >
+        #{blackListType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentBlackList" >
+    update SYS_CURRENT_BLACK_LIST
+    <set >
+      <if test="currentUserId != null" >
+        CURRENT_USER_ID = #{currentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="blackListType != null" >
+        BLACK_LIST_TYPE = #{blackListType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BLACK_LIST_ID = #{blackListId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysCurrentBlackList" >
+    update SYS_CURRENT_BLACK_LIST
+    set CURRENT_USER_ID = #{currentUserId,jdbcType=BIGINT},
+      BLACK_LIST_TYPE = #{blackListType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where BLACK_LIST_ID = #{blackListId,jdbcType=BIGINT}
+  </update>
+  <select id="getBlacklistByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_BLACK_LIST
+    where CURRENT_USER_ID = #{userId}
+  </select>
+</mapper>

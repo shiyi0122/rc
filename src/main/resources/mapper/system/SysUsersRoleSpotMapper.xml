@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysUsersRoleSpotMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysUsersRoleSpot" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, SCENIC_SPOT_ID, ROLE_ID, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_USERS_ROLE_SPOT
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_USERS_ROLE_SPOT
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysUsersRoleSpot" >
+    insert into SYS_USERS_ROLE_SPOT (ID, USER_ID, SCENIC_SPOT_ID, 
+      ROLE_ID, CREATE_DATE)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, 
+      #{roleId,jdbcType=BIGINT}, #{createDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysUsersRoleSpot" >
+    insert into SYS_USERS_ROLE_SPOT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysUsersRoleSpot" >
+    update SYS_USERS_ROLE_SPOT
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysUsersRoleSpot" >
+    update SYS_USERS_ROLE_SPOT
+    set USER_ID = #{userId,jdbcType=BIGINT},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      ROLE_ID = #{roleId,jdbcType=BIGINT},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteByScenicSpotId" parameterType="java.lang.Long" >
+    delete from SYS_USERS_ROLE_SPOT
+    where SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT}
+  </delete>
+  <select id="getUserRoleSpotList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+	A.ID,
+	A.USER_ID,
+	A.SCENIC_SPOT_ID,
+	A.ROLE_ID,
+	A.CREATE_DATE,
+	B.USER_NAME AS userName,
+	C.SCENIC_SPOT_NAME AS scenicSpotName,
+	D.ROLE_NAME AS roleName
+    FROM
+	SYS_USERS_ROLE_SPOT A
+	LEFT JOIN SYS_USERS B ON A.USER_ID = B.USER_ID
+	LEFT JOIN SYS_SCENIC_SPOT C ON A.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+	LEFT JOIN SYS_ROLE D ON A.ROLE_ID = D.ROLE_ID
+	<where>
+      <if test="userId != null and userId != ''">
+        AND A.USER_ID = #{userId}
+      </if>
+      <if test="scenicSpotName != null and scenicSpotName != ''">
+        AND C.SCENIC_SPOT_NAME LIKE CONCAT('%', #{scenicSpotName},'%')
+      </if>
+      <if test="userName != null and userName != ''">
+        AND B.USER_NAME LIKE CONCAT('%', #{userName},'%')
+      </if>
+    </where>
+	ORDER BY A.CREATE_DATE DESC
+  </select>
+
+  <delete id="deleteByUserId">
+    delete from SYS_USERS_ROLE_SPOT
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </delete>
+
+
+  <select id="selectUserSRoleSpotById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_USERS_ROLE_SPOT
+    where USER_ID = #{userId} and SCENIC_SPOT_ID = #{scenicSpotId} and ROLE_ID = #{roleId}
+  </select>
+</mapper>

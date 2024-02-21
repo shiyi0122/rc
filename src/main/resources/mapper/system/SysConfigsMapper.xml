@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysConfigsMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysConfigs" >
+    <id column="CONFIGS_ID" property="configsId" jdbcType="BIGINT" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="CONFIGS_TYPE" property="configsType" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysConfigs" extends="BaseResultMap" >
+    <result column="CONFIGS_VALUES" property="configsValues" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CONFIGS_ID, TITLE, CONFIGS_TYPE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONFIGS_VALUES
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_CONFIGS
+    where CONFIGS_ID = #{configsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_CONFIGS
+    where CONFIGS_ID = #{configsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysConfigs" >
+    insert into SYS_CONFIGS (CONFIGS_ID, TITLE, CONFIGS_TYPE, 
+      CREATE_TIME, UPDATE_TIME, CONFIGS_VALUES
+      )
+    values (#{configsId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{configsType,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{configsValues,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysConfigs" >
+    insert into SYS_CONFIGS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="configsId != null" >
+        CONFIGS_ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="configsType != null" >
+        CONFIGS_TYPE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="configsValues != null" >
+        CONFIGS_VALUES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="configsId != null" >
+        #{configsId,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="configsType != null" >
+        #{configsType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="configsValues != null" >
+        #{configsValues,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysConfigs" >
+    update SYS_CONFIGS
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="configsType != null" >
+        CONFIGS_TYPE = #{configsType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="configsValues != null" >
+        CONFIGS_VALUES = #{configsValues,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CONFIGS_ID = #{configsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysConfigs" >
+    update SYS_CONFIGS
+    set TITLE = #{title,jdbcType=VARCHAR},
+      CONFIGS_TYPE = #{configsType,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      CONFIGS_VALUES = #{configsValues,jdbcType=LONGVARCHAR}
+    where CONFIGS_ID = #{configsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysConfigs" >
+    update SYS_CONFIGS
+    set TITLE = #{title,jdbcType=VARCHAR},
+      CONFIGS_TYPE = #{configsType,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where CONFIGS_ID = #{configsId,jdbcType=BIGINT}
+  </update>
+  <select id="getConfigsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_CONFIGS
+    ORDER BY CREATE_TIME DESC
+  </select>
+</mapper>

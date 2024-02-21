@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotServiceResMapper">
+    <resultMap id="Res" type="com.hna.hka.archive.management.system.model.SysResExcel">
+        <id column="SERVICE_ID" property="serviceId" jdbcType="BIGINT" />
+        <result column="SERVICE_NAME" property="serviceName" jdbcType="VARCHAR" />
+        <result column="SERVICE_GPS" property="serviceGps" jdbcType="VARCHAR" />
+        <result column="SERVICE_GPS_BAI_DU" property="serviceGpsBaiDu" jdbcType="VARCHAR" />
+        <result column="SERVICE_INTRODUCE" property="serviceIntroduce" jdbcType="VARCHAR" />
+        <result column="SERVICE_PIC" property="servicePic" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getSysResExcel" resultMap="Res" parameterType="com.hna.hka.archive.management.system.model.SysResExcel">
+     select a.SERVICE_ID,b.SCENIC_SPOT_NAME,a.SERVICE_NAME,a.SERVICE_GPS,a.SERVICE_GPS_BAI_DU,a.SERVICE_INTRODUCE,a.SERVICE_PIC,a.CREATE_DATE,a.UPDATE_DATE
+     from SYS_SCENIC_SPOT_SERVICE_RES a
+     left join SYS_SCENIC_SPOT b on a.SCENIC_SPOT_ID=b.SCENIC_SPOT_ID
+     where
+      b.SCENIC_SPOT_ID=#{scenicSpotId}
+    </select>
+
+    <select id="selSysRes" resultMap="Res" parameterType="com.hna.hka.archive.management.system.model.SysResExcel">
+     select a.SERVICE_ID,b.SCENIC_SPOT_NAME,a.SERVICE_NAME,a.SERVICE_GPS,a.SERVICE_GPS_BAI_DU,a.SERVICE_INTRODUCE,a.SERVICE_PIC,a.CREATE_DATE,a.UPDATE_DATE
+     from SYS_SCENIC_SPOT_SERVICE_RES a
+     left join SYS_SCENIC_SPOT b on a.SCENIC_SPOT_ID=b.SCENIC_SPOT_ID
+     where
+      a.SCENIC_SPOT_ID=#{scenicSpotId} and a.SERVICE_INTRODUCE=#{serviceIntroduce}
+    </select>
+
+    <insert id="addSysRes" parameterType="com.hna.hka.archive.management.system.model.SysResExcel" >
+    insert into SYS_SCENIC_SPOT_SERVICE_RES (SERVICE_ID, SERVICE_NAME, SCENIC_SPOT_ID, SERVICE_GPS,
+      SERVICE_GPS_BAI_DU, SERVICE_INTRODUCE, SERVICE_PIC,
+      CREATE_DATE, UPDATE_DATE)
+    values (#{serviceId,jdbcType=BIGINT}, #{serviceName,jdbcType=VARCHAR},
+       #{scenicSpotId,jdbcType=BIGINT}, #{serviceGps,jdbcType=VARCHAR},
+      #{serviceGpsBaiDu,jdbcType=VARCHAR}, #{serviceIntroduce,jdbcType=VARCHAR}, #{servicePic,jdbcType=VARCHAR},
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+
+    <update id="upSysRes" parameterType="com.hna.hka.archive.management.system.model.SysResExcel" >
+    update SYS_SCENIC_SPOT_SERVICE_RES
+    set SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      SERVICE_GPS = #{serviceGps,jdbcType=VARCHAR},
+      SERVICE_GPS_BAI_DU = #{serviceGpsBaiDu,jdbcType=VARCHAR},
+      SERVICE_INTRODUCE = #{serviceIntroduce,jdbcType=VARCHAR},
+      SERVICE_PIC = #{servicePic,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where SERVICE_ID = #{serviceId,jdbcType=BIGINT}
+  </update>
+
+
+</mapper>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysDepositRefundLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysDepositRefundLog" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+    <result column="ORDER_NUMBER" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+    <result column="ORDER_MONEY" property="orderMoney" jdbcType="VARCHAR" />
+    <result column="DEPOSIT_MONEY" property="depositMoney" jdbcType="VARCHAR" />
+    <result column="BLACK_LIST_TYPE" property="blackListType" jdbcType="VARCHAR" />
+    <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+    <result column="ORDER_START_TIME" property="orderStartTime" jdbcType="VARCHAR" />
+    <result column="ORDER_END_TIME" property="orderEndTime" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, LOGIN_NAME, ORDER_NUMBER, USER_PHONE, ORDER_MONEY, DEPOSIT_MONEY, BLACK_LIST_TYPE, 
+    ROBOT_CODE, ORDER_START_TIME, ORDER_END_TIME, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_DEPOSIT_REFUND_LOG
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_DEPOSIT_REFUND_LOG
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysDepositRefundLog" >
+    insert into SYS_DEPOSIT_REFUND_LOG (ID, LOGIN_NAME, ORDER_NUMBER, 
+      USER_PHONE, ORDER_MONEY, DEPOSIT_MONEY, 
+      BLACK_LIST_TYPE, ROBOT_CODE, ORDER_START_TIME, 
+      ORDER_END_TIME, CREATE_DATE)
+    values (#{id,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR}, 
+      #{userPhone,jdbcType=VARCHAR}, #{orderMoney,jdbcType=VARCHAR}, #{depositMoney,jdbcType=VARCHAR}, 
+      #{blackListType,jdbcType=VARCHAR}, #{robotCode,jdbcType=VARCHAR}, #{orderStartTime,jdbcType=VARCHAR}, 
+      #{orderEndTime,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysDepositRefundLog" >
+    insert into SYS_DEPOSIT_REFUND_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME,
+      </if>
+      <if test="orderNumber != null" >
+        ORDER_NUMBER,
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE,
+      </if>
+      <if test="orderMoney != null" >
+        ORDER_MONEY,
+      </if>
+      <if test="depositMoney != null" >
+        DEPOSIT_MONEY,
+      </if>
+      <if test="blackListType != null" >
+        BLACK_LIST_TYPE,
+      </if>
+      <if test="robotCode != null" >
+        ROBOT_CODE,
+      </if>
+      <if test="orderStartTime != null" >
+        ORDER_START_TIME,
+      </if>
+      <if test="orderEndTime != null" >
+        ORDER_END_TIME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderMoney != null" >
+        #{orderMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="depositMoney != null" >
+        #{depositMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="blackListType != null" >
+        #{blackListType,jdbcType=VARCHAR},
+      </if>
+      <if test="robotCode != null" >
+        #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStartTime != null" >
+        #{orderStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderEndTime != null" >
+        #{orderEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysDepositRefundLog" >
+    update SYS_DEPOSIT_REFUND_LOG
+    <set >
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null" >
+        ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderMoney != null" >
+        ORDER_MONEY = #{orderMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="depositMoney != null" >
+        DEPOSIT_MONEY = #{depositMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="blackListType != null" >
+        BLACK_LIST_TYPE = #{blackListType,jdbcType=VARCHAR},
+      </if>
+      <if test="robotCode != null" >
+        ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStartTime != null" >
+        ORDER_START_TIME = #{orderStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderEndTime != null" >
+        ORDER_END_TIME = #{orderEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysDepositRefundLog" >
+    update SYS_DEPOSIT_REFUND_LOG
+    set LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
+      USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      ORDER_MONEY = #{orderMoney,jdbcType=VARCHAR},
+      DEPOSIT_MONEY = #{depositMoney,jdbcType=VARCHAR},
+      BLACK_LIST_TYPE = #{blackListType,jdbcType=VARCHAR},
+      ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+      ORDER_START_TIME = #{orderStartTime,jdbcType=VARCHAR},
+      ORDER_END_TIME = #{orderEndTime,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getDepositRefundLogList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_DEPOSIT_REFUND_LOG
+    <where>
+      <if test="userPhone != null and userPhone != ''">
+        AND USER_PHONE LIKE CONCAT('%',#{userPhone},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

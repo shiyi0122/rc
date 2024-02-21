@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysCurrentUserAccountMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysCurrentUserAccount" >
+    <id column="ACCOUNT_ID" property="accountId" jdbcType="BIGINT" />
+    <result column="ACCOUNT_USER_ID" property="accountUserId" jdbcType="BIGINT" />
+    <result column="ACCOUNT_AMOUNT" property="accountAmount" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
+    <result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_TYPE" property="accountType" jdbcType="VARCHAR" />
+    <result column="LOGIN_STATUS" property="loginStatus" jdbcType="VARCHAR" />
+    <result column="DISCOUNT" property="discount" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ACCOUNT_ID, ACCOUNT_USER_ID, ACCOUNT_AMOUNT, START_TIME, END_TIME, USER_TYPE, USER_NAME, 
+    PASSWORD, ACCOUNT_TYPE, LOGIN_STATUS, DISCOUNT, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_USER_ACCOUNT
+    where ACCOUNT_ID = #{accountId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_CURRENT_USER_ACCOUNT
+    where ACCOUNT_ID = #{accountId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAccount" >
+    insert into SYS_CURRENT_USER_ACCOUNT (ACCOUNT_ID, ACCOUNT_USER_ID, ACCOUNT_AMOUNT, 
+      START_TIME, END_TIME, USER_TYPE, 
+      USER_NAME, PASSWORD, ACCOUNT_TYPE, 
+      LOGIN_STATUS, DISCOUNT, CREATE_DATE, 
+      UPDATE_DATE)
+    values (#{accountId,jdbcType=BIGINT}, #{accountUserId,jdbcType=BIGINT}, #{accountAmount,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR}, 
+      #{loginStatus,jdbcType=VARCHAR}, #{discount,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAccount" >
+    insert into SYS_CURRENT_USER_ACCOUNT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="accountUserId != null" >
+        ACCOUNT_USER_ID,
+      </if>
+      <if test="accountAmount != null" >
+        ACCOUNT_AMOUNT,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="userType != null" >
+        USER_TYPE,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE,
+      </if>
+      <if test="loginStatus != null" >
+        LOGIN_STATUS,
+      </if>
+      <if test="discount != null" >
+        DISCOUNT,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountUserId != null" >
+        #{accountUserId,jdbcType=BIGINT},
+      </if>
+      <if test="accountAmount != null" >
+        #{accountAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="loginStatus != null" >
+        #{loginStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAccount" >
+    update SYS_CURRENT_USER_ACCOUNT
+    <set >
+      <if test="accountUserId != null" >
+        ACCOUNT_USER_ID = #{accountUserId,jdbcType=BIGINT},
+      </if>
+      <if test="accountAmount != null" >
+        ACCOUNT_AMOUNT = #{accountAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        USER_TYPE = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="loginStatus != null" >
+        LOGIN_STATUS = #{loginStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        DISCOUNT = #{discount,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ACCOUNT_ID = #{accountId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysCurrentUserAccount" >
+    update SYS_CURRENT_USER_ACCOUNT
+    set ACCOUNT_USER_ID = #{accountUserId,jdbcType=BIGINT},
+      ACCOUNT_AMOUNT = #{accountAmount,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=VARCHAR},
+      END_TIME = #{endTime,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      ACCOUNT_TYPE = #{accountType,jdbcType=VARCHAR},
+      LOGIN_STATUS = #{loginStatus,jdbcType=VARCHAR},
+      DISCOUNT = #{discount,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where ACCOUNT_ID = #{accountId,jdbcType=BIGINT}
+  </update>
+  <select id="getCurrentUserAccountList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.*,
+    B.CURRENT_USER_PHONE AS currentUserPhone
+    FROM
+    SYS_CURRENT_USER_ACCOUNT A
+    LEFT JOIN SYS_CURRENT_USER B ON A.ACCOUNT_USER_ID = B.CURRENT_USER_ID
+    <where>
+      <if test="currentUserPhone!=null and currentUserPhone!=''">
+        AND B.CURRENT_USER_PHONE LIKE CONCAT('%',#{currentUserPhone},'%')
+      </if>
+      <if test="startTime != null and startTime !=''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+  <select id="getUploadExcelCurrentUserAccount" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.*,
+    B.CURRENT_USER_PHONE AS currentUserPhone,
+    (SELECT ROUND(sum(RECHARGE_AMOUNT),2) FROM SYS_CURRENT_USER_ACCOUNT_ORDER WHERE USER_ID = A.ACCOUNT_USER_ID AND ORDER_START = 30) AS accumulatedAmount
+    FROM
+    SYS_CURRENT_USER_ACCOUNT A
+    LEFT JOIN SYS_CURRENT_USER B ON A.ACCOUNT_USER_ID = B.CURRENT_USER_ID
+    <where>
+      <if test="currentUserPhone!=null and currentUserPhone!=''">
+        AND B.CURRENT_USER_PHONE LIKE CONCAT('%',#{currentUserPhone},'%')
+      </if>
+      <if test="startTime != null and startTime !=''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+  <select id="selectAccountByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_CURRENT_USER_ACCOUNT
+    where ACCOUNT_USER_ID = #{userId}
+  </select>
+  <select id="getSysCurrentUserAccountById" resultMap="BaseResultMap">
+    SELECT
+    A.*,
+    B.CURRENT_USER_PHONE AS currentUserPhone
+    FROM
+    SYS_CURRENT_USER_ACCOUNT A
+    LEFT JOIN SYS_CURRENT_USER B ON A.ACCOUNT_USER_ID = B.CURRENT_USER_ID
+    <where>
+      ACCOUNT_ID = #{accountId}
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessUsersMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.business.model.BusinessUsers" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="IMAGE_ID" property="imageId" jdbcType="BIGINT" />
+    <result column="LICENSE_ATTACH_ID" property="licenseAttachId" jdbcType="BIGINT" />
+    <result column="UNION_ID" property="unionId" jdbcType="VARCHAR" />
+    <result column="PROVINCE_ID" property="provinceId" jdbcType="INTEGER" />
+    <result column="CITY_ID" property="cityId" jdbcType="INTEGER" />
+    <result column="REGION_ID" property="regionId" jdbcType="INTEGER" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="IDENTITY_CARD" property="identityCard" jdbcType="VARCHAR" />
+    <result column="INTEGRAL" property="integral" jdbcType="INTEGER" />
+    <result column="WECHAT" property="wechat" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_BALANCE" property="accountBalance" jdbcType="DECIMAL" />
+    <result column="WX_SALT" property="wxSalt" jdbcType="VARCHAR" />
+    <result column="SALT" property="salt" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+    <result column="USER_STATE" property="userState" jdbcType="VARCHAR" />
+    <result column="SCENIC_TYPE" property="scenicType" jdbcType="VARCHAR" />
+    <result column="PARTNER_TYPE" property="partnerType" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    <result column="EXAMINE_TYPE" property="examineType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, IMAGE_ID, LICENSE_ATTACH_ID, UNION_ID, PROVINCE_ID, CITY_ID, REGION_ID, PHONE, 
+    PASSWORD, USER_NAME, COMPANY_NAME, IDENTITY_CARD, INTEGRAL, WECHAT, ACCOUNT_BALANCE, 
+    WX_SALT, SALT, ADDRESS, USER_TYPE, USER_STATE, SCENIC_TYPE, PARTNER_TYPE, CREATE_TIME, 
+    UPDATE_TIME,EXAMINE_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BUSINESS_USERS
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BUSINESS_USERS
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.business.model.BusinessUsers" >
+    insert into BUSINESS_USERS (ID, IMAGE_ID, LICENSE_ATTACH_ID, 
+      UNION_ID, PROVINCE_ID, CITY_ID, 
+      REGION_ID, PHONE, PASSWORD, 
+      USER_NAME, COMPANY_NAME, IDENTITY_CARD, 
+      INTEGRAL, WECHAT, ACCOUNT_BALANCE, 
+      WX_SALT, SALT, ADDRESS, 
+      USER_TYPE, USER_STATE, SCENIC_TYPE, 
+      PARTNER_TYPE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{imageId,jdbcType=BIGINT}, #{licenseAttachId,jdbcType=BIGINT}, 
+      #{unionId,jdbcType=VARCHAR}, #{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, 
+      #{regionId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{identityCard,jdbcType=VARCHAR}, 
+      #{integral,jdbcType=INTEGER}, #{wechat,jdbcType=VARCHAR}, #{accountBalance,jdbcType=DECIMAL}, 
+      #{wxSalt,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=BIT}, #{userState,jdbcType=TINYINT}, #{scenicType,jdbcType=BIT}, 
+      #{partnerType,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessUsers" >
+    insert into BUSINESS_USERS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="imageId != null" >
+        IMAGE_ID,
+      </if>
+      <if test="licenseAttachId != null" >
+        LICENSE_ATTACH_ID,
+      </if>
+      <if test="unionId != null" >
+        UNION_ID,
+      </if>
+      <if test="provinceId != null" >
+        PROVINCE_ID,
+      </if>
+      <if test="cityId != null" >
+        CITY_ID,
+      </if>
+      <if test="regionId != null" >
+        REGION_ID,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="identityCard != null" >
+        IDENTITY_CARD,
+      </if>
+      <if test="integral != null" >
+        INTEGRAL,
+      </if>
+      <if test="wechat != null" >
+        WECHAT,
+      </if>
+      <if test="accountBalance != null" >
+        ACCOUNT_BALANCE,
+      </if>
+      <if test="wxSalt != null" >
+        WX_SALT,
+      </if>
+      <if test="salt != null" >
+        SALT,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="userType != null" >
+        USER_TYPE,
+      </if>
+      <if test="userState != null" >
+        USER_STATE,
+      </if>
+      <if test="scenicType != null" >
+        SCENIC_TYPE,
+      </if>
+      <if test="partnerType != null" >
+        PARTNER_TYPE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="imageId != null" >
+        #{imageId,jdbcType=BIGINT},
+      </if>
+      <if test="licenseAttachId != null" >
+        #{licenseAttachId,jdbcType=BIGINT},
+      </if>
+      <if test="unionId != null" >
+        #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null" >
+        #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCard != null" >
+        #{identityCard,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="wechat != null" >
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBalance != null" >
+        #{accountBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="wxSalt != null" >
+        #{wxSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=BIT},
+      </if>
+      <if test="userState != null" >
+        #{userState,jdbcType=TINYINT},
+      </if>
+      <if test="scenicType != null" >
+        #{scenicType,jdbcType=BIT},
+      </if>
+      <if test="partnerType != null" >
+        #{partnerType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessUsers" >
+    update BUSINESS_USERS
+    <set >
+      <if test="imageId != null" >
+        IMAGE_ID = #{imageId,jdbcType=BIGINT},
+      </if>
+      <if test="licenseAttachId != null" >
+        LICENSE_ATTACH_ID = #{licenseAttachId,jdbcType=BIGINT},
+      </if>
+      <if test="unionId != null" >
+        UNION_ID = #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        PROVINCE_ID = #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        CITY_ID = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null" >
+        REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCard != null" >
+        IDENTITY_CARD = #{identityCard,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null" >
+        INTEGRAL = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="wechat != null" >
+        WECHAT = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBalance != null" >
+        ACCOUNT_BALANCE = #{accountBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="wxSalt != null" >
+        WX_SALT = #{wxSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        SALT = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        USER_TYPE = #{userType,jdbcType=BIT},
+      </if>
+      <if test="userState != null" >
+        USER_STATE = #{userState,jdbcType=TINYINT},
+      </if>
+      <if test="scenicType != null" >
+        SCENIC_TYPE = #{scenicType,jdbcType=BIT},
+      </if>
+      <if test="partnerType != null" >
+        PARTNER_TYPE = #{partnerType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.business.model.BusinessUsers" >
+    update BUSINESS_USERS
+    set IMAGE_ID = #{imageId,jdbcType=BIGINT},
+      LICENSE_ATTACH_ID = #{licenseAttachId,jdbcType=BIGINT},
+      UNION_ID = #{unionId,jdbcType=VARCHAR},
+      PROVINCE_ID = #{provinceId,jdbcType=INTEGER},
+      CITY_ID = #{cityId,jdbcType=INTEGER},
+      REGION_ID = #{regionId,jdbcType=INTEGER},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      IDENTITY_CARD = #{identityCard,jdbcType=VARCHAR},
+      INTEGRAL = #{integral,jdbcType=INTEGER},
+      WECHAT = #{wechat,jdbcType=VARCHAR},
+      ACCOUNT_BALANCE = #{accountBalance,jdbcType=DECIMAL},
+      WX_SALT = #{wxSalt,jdbcType=VARCHAR},
+      SALT = #{salt,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=BIT},
+      USER_STATE = #{userState,jdbcType=TINYINT},
+      SCENIC_TYPE = #{scenicType,jdbcType=BIT},
+      PARTNER_TYPE = #{partnerType,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getBusinessUsersList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM BUSINESS_USERS
+    <where>
+      <if test="phone != null and phone != ''">
+        AND PHONE LIKE CONCAT('%',#{phone},'%')
+      </if>
+      <if test="userName != null and userName != ''">
+        AND USER_NAME LIKE CONCAT('%',#{userName},'%')
+      </if>
+      <if test="userType != null and userType != ''">
+        AND USER_TYPE = #{userType}
+      </if>
+      <if test="priceMin != null and priceMin != ''">
+        AND ACCOUNT_BALANCE &gt;= #{priceMin}
+      </if>
+      <if test="priceMax != null and priceMax != ''">
+        AND ACCOUNT_BALANCE &lt;= #{priceMax}
+      </if>
+    </where>
+    ORDER BY CREATE_TIME DESC
+  </select>
+
+  <update id="editBusinessUsersFilling">
+    update BUSINESS_USERS
+      set EXAMINE_TYPE = #{examineType,jdbcType=VARCHAR}
+      where ID = #{userId}
+  </update>
+
+  <update id="editBusinessUsersDeposit">
+    update BUSINESS_USERS
+      set DEPOSIT_CHECK_TYPE = #{depositCheckType}
+      where ID = #{userId}
+  </update>
+
+
+</mapper>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotPartsManagementMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagement">
+        <id column="PARTS_MANAGEMENT_ID" property="partsManagementId" jdbcType="BIGINT"/>
+        <result column="ACCESSORIES_TYPE" property="accessoriesType" jdbcType="VARCHAR"/>
+        <result column="FAULT_NAME" property="faultName" jdbcType="VARCHAR"/>
+        <result column="ACCESSORY_NAME" property="accessoryName" jdbcType="VARCHAR"/>
+        <result column="ACCESSORY_MODEL" property="accessoryModel" jdbcType="VARCHAR"/>
+        <result column="ACCESSORY_PRICE" property="accessoryPrice" jdbcType="VARCHAR"/>
+        <result column="WARRANTY_PERIOD" property="warrantyPeriod" jdbcType="VARCHAR"/>
+        <result column="APPLICABLE_MODELS" property="applicableModels" jdbcType="VARCHAR"/>
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR"/>
+        <result column="ACCESSORIES_CODE" property="accessoriesCode" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="UNIT" property="unit" jdbcType="CHAR"/>
+        <result column="ACCESSORY_PRICE_OUT" property="accessoryPriceOut" jdbcType="VARCHAR"/>
+        <result column="ACCESSORIES_TYPE_ID" property="accessoriesTypeId" jdbcType="BIGINT"/>
+        <result column="BRAND" property="brand" jdbcType="VARCHAR"/>
+        <result column="PROCUREMENT_CHANNELS" property="procurementChannels" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    PARTS_MANAGEMENT_ID, ACCESSORIES_TYPE, FAULT_NAME, ACCESSORY_NAME, ACCESSORY_MODEL,
+    ACCESSORY_PRICE,ACCESSORY_PRICE_OUT, WARRANTY_PERIOD, APPLICABLE_MODELS, REMARKS, CREATE_TIME, UPDATE_TIME, UNIT, ACCESSORIES_CODE,ACCESSORIES_TYPE_ID,BRAND,PROCUREMENT_CHANNELS
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_ROBOT_PARTS_MANAGEMENT
+        where PARTS_MANAGEMENT_ID = #{partsManagementId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SYS_ROBOT_PARTS_MANAGEMENT
+    where PARTS_MANAGEMENT_ID = #{partsManagementId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagement">
+    insert into SYS_ROBOT_PARTS_MANAGEMENT (PARTS_MANAGEMENT_ID, ACCESSORIES_TYPE,
+      FAULT_NAME, ACCESSORY_NAME, ACCESSORY_MODEL,
+      ACCESSORY_PRICE, WARRANTY_PERIOD, APPLICABLE_MODELS,
+      REMARKS, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{partsManagementId,jdbcType=BIGINT}, #{accessoriesType,jdbcType=VARCHAR},
+      #{faultName,jdbcType=VARCHAR}, #{accessoryName,jdbcType=VARCHAR}, #{accessoryModel,jdbcType=VARCHAR},
+      #{accessoryPrice,jdbcType=VARCHAR}, #{warrantyPeriod,jdbcType=VARCHAR}, #{applicableModels,jdbcType=VARCHAR},
+      #{remarks,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagement">
+        insert into SYS_ROBOT_PARTS_MANAGEMENT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="partsManagementId != null">
+                PARTS_MANAGEMENT_ID,
+            </if>
+            <if test="accessoriesType != null">
+                ACCESSORIES_TYPE,
+            </if>
+            <if test="faultName != null">
+                FAULT_NAME,
+            </if>
+            <if test="accessoriesCode != null">
+                ACCESSORIES_CODE,
+            </if>
+            <if test="accessoryName != null">
+                ACCESSORY_NAME,
+            </if>
+            <if test="accessoryModel != null">
+                ACCESSORY_MODEL,
+            </if>
+            <if test="unit != null">
+                UNIT,
+            </if>
+            <if test="accessoryPrice != null">
+                ACCESSORY_PRICE,
+            </if>
+            <if test="accessoryPriceOut != null">
+                ACCESSORY_PRICE_OUT,
+            </if>
+            <if test="warrantyPeriod != null">
+                WARRANTY_PERIOD,
+            </if>
+            <if test="applicableModels != null">
+                APPLICABLE_MODELS,
+            </if>
+            <if test="remarks != null">
+                REMARKS,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="accessoriesTypeId != null">
+                ACCESSORIES_TYPE_ID,
+            </if>
+            <if test="brand != null">
+                BRAND,
+            </if>
+            <if test="procurementChannels != null">
+                PROCUREMENT_CHANNELS,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="partsManagementId != null">
+                #{partsManagementId,jdbcType=BIGINT},
+            </if>
+            <if test="accessoriesType != null">
+                #{accessoriesType,jdbcType=VARCHAR},
+            </if>
+            <if test="faultName != null">
+                #{faultName,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoriesCode != null">
+                #{accessoriesCode,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryName != null">
+                #{accessoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryModel != null">
+                #{accessoryModel,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryPrice != null">
+                #{accessoryPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryPriceOut != null">
+                #{accessoryPriceOut,jdbcType=VARCHAR},
+            </if>
+            <if test="warrantyPeriod != null">
+                #{warrantyPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="applicableModels != null">
+                #{applicableModels,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoriesTypeId != null">
+                #{accessoriesTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="brand != null">
+                #{brand,jdbcType = VARCHAR},
+            </if>
+            <if test="procurementChannels != null">
+                #{procurementChannels,jdbcType = VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagement">
+        update SYS_ROBOT_PARTS_MANAGEMENT
+        <set>
+            <if test="accessoriesType != null">
+                ACCESSORIES_TYPE = #{accessoriesType,jdbcType=VARCHAR},
+            </if>
+            <if test="faultName != null">
+                FAULT_NAME = #{faultName,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryName != null">
+                ACCESSORY_NAME = #{accessoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryModel != null">
+                ACCESSORY_MODEL = #{accessoryModel,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryPrice != null">
+                ACCESSORY_PRICE = #{accessoryPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoryPriceOut != null">
+                ACCESSORY_PRICE_OUT = #{accessoryPriceOut,jdbcType=VARCHAR},
+            </if>
+            <if test="warrantyPeriod != null">
+                WARRANTY_PERIOD = #{warrantyPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="applicableModels != null">
+                APPLICABLE_MODELS = #{applicableModels,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="accessoriesCode != null">
+                ACCESSORIES_CODE = #{accessoriesCode,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=CHAR},
+            </if>
+            <if test="accessoriesTypeId != null">
+                ACCESSORIES_TYPE_ID = #{accessoriesTypeId,jdbcType = BIGINT},
+            </if>
+            <if test="brand != null">
+                BRAND = #{brand,jdbcType = VARCHAR},
+            </if>
+            <if test="procurementChannels != null">
+                PROCUREMENT_CHANNELS = #{procurementChannels,jdbcType = VARCHAR},
+            </if>
+        </set>
+        where PARTS_MANAGEMENT_ID = #{partsManagementId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagement">
+    update SYS_ROBOT_PARTS_MANAGEMENT
+    set ACCESSORIES_TYPE = #{accessoriesType,jdbcType=VARCHAR},
+      FAULT_NAME = #{faultName,jdbcType=VARCHAR},
+      ACCESSORY_NAME = #{accessoryName,jdbcType=VARCHAR},
+      ACCESSORY_MODEL = #{accessoryModel,jdbcType=VARCHAR},
+      ACCESSORY_PRICE = #{accessoryPrice,jdbcType=VARCHAR},
+      WARRANTY_PERIOD = #{warrantyPeriod,jdbcType=VARCHAR},
+      APPLICABLE_MODELS = #{applicableModels,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=CHAR}
+    where PARTS_MANAGEMENT_ID = #{partsManagementId,jdbcType=BIGINT}
+  </update>
+    <select id="getRobotPartsManagementList"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagement"
+            parameterType="java.util.Map">
+        select
+        srpm.*,
+        srpmt.PARTS_MANAGEMENT_TYPE as accessoriesTypeName
+        from SYS_ROBOT_PARTS_MANAGEMENT srpm
+        left join SYS_ROBOT_PARTS_MANAGEMENT_TYPE srpmt on srpm.ACCESSORIES_TYPE_ID = srpmt.ID
+        <where>
+            <if test="accessoriesTypeId != null and accessoriesTypeId != ''">
+                AND ACCESSORIES_TYPE_ID LIKE CONCAT('%',#{accessoriesTypeId},'%')
+            </if>
+            <if test="faultName != null and faultName != ''">
+                AND FAULT_NAME LIKE CONCAT('%',#{faultName},'%')
+            </if>
+            <if test="accessoryModel != null and accessoryModel != ''">
+                AND ACCESSORY_MODEL LIKE CONCAT('%',#{accessoryModel},'%')
+            </if>
+            <if test="accessoryName != null and accessoryName != ''">
+                AND ACCESSORY_NAME LIKE CONCAT('%',#{accessoryName},'%')
+            </if>
+        </where>
+        ORDER BY srpmt.PARTS_MANAGEMENT_TYPE DESC, srpm.ACCESSORIES_CODE
+    </select>
+    <select id="getAppAccessoriesApplicationName" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        srpm.PARTS_MANAGEMENT_ID,
+        srpm.ACCESSORIES_TYPE,
+        srpm.FAULT_NAME,
+        srpm.ACCESSORY_NAME,
+        srpm.ACCESSORY_MODEL,
+        srpm.ACCESSORY_PRICE,
+        srpm.WARRANTY_PERIOD,
+        srpm.APPLICABLE_MODELS,
+        srpm.REMARKS,
+        srpm.CREATE_TIME,
+        srpm.UPDATE_TIME,
+        srpm.ACCESSORY_PRICE_OUT,
+        srpm.UNIT,
+        srpm.ACCESSORIES_CODE ,
+        sgs.AMOUNT,
+        sgs.SPOT_ID
+        <!--    <if test="robotCode != null and robotCode != ''">-->
+        <!--       ,(-->
+        <!--       SELECT-->
+        <!--       A.DATE_PRODUCTION-->
+        <!--       FROM SYS_ROBOT_SOFT_ASSET_INFORMATION A-->
+        <!--       LEFT JOIN SYS_ROBOT B ON A.ROBOT_ID = B.ROBOT_ID WHERE B.ROBOT_CODE = #{robotCode}-->
+        <!--       ) AS robotWarrantyDeadline-->
+        <!--    </if>-->
+        FROM
+        SYS_ROBOT_PARTS_MANAGEMENT srpm
+        LEFT JOIN
+        SYS_GOODS_STOCK sgs ON sgs.MANAGEMENT_ID = srpm.PARTS_MANAGEMENT_ID
+        <where>
+            <if test="accessoriesType != null and accessoriesType != ''">
+                AND srpm.ACCESSORIES_TYPE_ID LIKE CONCAT('%',#{accessoriesType},'%')
+            </if>
+            <if test="accessoryName != null and accessoryName != ''">
+                AND srpm.ACCESSORY_NAME LIKE CONCAT('%',#{accessoryName},'%')
+            </if>
+            <if test="spotId != null and spotId != ''">
+                AND sgs.SPOT_ID =#{spotId}
+            </if>
+        </where>
+        ORDER BY CREATE_TIME DESC
+    </select>
+
+
+    <select id="getAmount" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotPartsManagement">
+        SELECT
+        sgs.AMOUNT,
+        sgs.SPOT_ID,
+        srpm.ACCESSORY_NAME
+        FROM
+        SYS_ROBOT_PARTS_MANAGEMENT srpm
+        LEFT JOIN SYS_GOODS_STOCK sgs ON sgs.MANAGEMENT_ID = srpm.PARTS_MANAGEMENT_ID
+        <where>
+            1=1
+            <if test="spotId != null and spotId != ''">
+                AND sgs.SPOT_ID =#{spotId}
+            </if>
+            <if test="accessoriesCode != null and accessoriesCode != ''">
+                and ACCESSORIES_CODE =#{accessoriesCode}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="accessoriesDetails" resultMap="BaseResultMap">
+    SELECT
+    A.PARTS_MANAGEMENT_ID,
+    A.ACCESSORIES_TYPE,
+    A.FAULT_NAME,
+    A.ACCESSORY_NAME,
+    A.ACCESSORY_MODEL,
+    A.ACCESSORY_PRICE,
+    A.WARRANTY_PERIOD,
+    A.APPLICABLE_MODELS,
+    A.REMARKS,
+    A.CREATE_TIME,
+    A.UPDATE_TIME
+    FROM   SYS_ROBOT_ERROR_PARTS as B
+    LEFT JOIN SYS_ROBOT_PARTS_MANAGEMENT as A  on B.PARTS_MANAGEMENT_ID = A.PARTS_MANAGEMENT_ID
+    WHERE B.ERROR_RECORDS_ID = #{errorRecordsId}
+  </select>
+
+    <select id="selectRobotByName" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SYS_ROBOT_PARTS_MANAGEMENT
+        <where>
+            1=1
+            <if test="accessoryName != null and accessoryName != ''">
+                and ACCESSORY_NAME = #{accessoryName}
+            </if>
+            <if test="accessoriesCode != null and accessoriesCode != ''">
+                and ACCESSORIES_CODE = #{accessoriesCode}
+            </if>
+        </where>
+
+
+    </select>
+
+
+</mapper>

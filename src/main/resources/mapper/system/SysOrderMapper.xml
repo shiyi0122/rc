@@ -1,0 +1,4773 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysOrderMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysOrder">
+        <id column="ORDER_ID" property="orderId" jdbcType="BIGINT"/>
+        <result column="USER_ID" property="userId" jdbcType="BIGINT"/>
+        <result column="ORDER_AMOUNT" property="orderAmount" jdbcType="VARCHAR"/>
+        <result column="ACTUAL_AMOUNT" property="actualAmount" jdbcType="VARCHAR"/>
+        <result column="ORDER_DISCOUNT" property="orderDiscount" jdbcType="VARCHAR"/>
+        <result column="PAYMENT_METHOD" property="paymentMethod" jdbcType="VARCHAR"/>
+        <result column="ORDER_STATUS" property="orderStatus" jdbcType="VARCHAR"/>
+        <result column="ORDER_SCENIC_SPOT_ID" property="orderScenicSpotId" jdbcType="BIGINT"/>
+        <result column="ORDER_SCENIC_SPOT_NAME" property="orderScenicSpotName" jdbcType="VARCHAR"/>
+        <result column="ORDER_NUMBER" property="orderNumber" jdbcType="VARCHAR"/>
+        <result column="ORDER_START_TIME" property="orderStartTime" jdbcType="VARCHAR"/>
+        <result column="ORDER_END_TIME" property="orderEndTime" jdbcType="VARCHAR"/>
+        <result column="ORDER_ROBOT_CODE" property="orderRobotCode" jdbcType="VARCHAR"/>
+        <result column="DISPATCHING_FEE" property="dispatchingFee" jdbcType="VARCHAR"/>
+        <result column="COUPON" property="coupon" jdbcType="VARCHAR"/>
+        <result column="REASONS_REFUNDS" property="reasonsRefunds" jdbcType="VARCHAR"/>
+        <result column="RUNNING_TRACK" property="runningTrack" jdbcType="VARCHAR"/>
+        <result column="ORDER_REFUND_AMOUNT" property="orderRefundAmount" jdbcType="VARCHAR"/>
+        <result column="DELETE_TYPE" property="deleteType" jdbcType="VARCHAR"/>
+        <result column="TOTAL_TIME" property="totalTime" jdbcType="VARCHAR"/>
+        <result column="CURRENT_USER_PHONE" property="currentUserPhone" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+        <result column="ORDER_GPS_COORDINATE" property="orderGpsCoordinate" jdbcType="VARCHAR"/>
+        <result column="SUB_STATUS" property="subStatus" jdbcType="VARCHAR"/>
+        <result column="DEDUCTIBLE_AMOUNT" property="deductibleAmount" jdbcType="VARCHAR"/>
+        <result column="SUB_METHOD" property="subMethod" jdbcType="VARCHAR"/>
+        <result column="ACCOUNT_ID" property="accountId" jdbcType="BIGINT"/>
+        <result column="PAYMENT_PORT" property="paymentPort" jdbcType="VARCHAR"/>
+        <result column="OUT_TRADE_NO" property="outTradeNo" jdbcType="VARCHAR"/>
+        <result column="DISTINGUISH_TYPE" property="distinguishType" jdbcType="VARCHAR"/>
+        <result column="ORDER_ROBOT_ID" property="orderRobotId" jdbcType="BIGINT"/>
+        <result column="DEDUCTIBLE_REFUND_AMOUNT" property="deductibleRefundAmount" jdbcType="VARCHAR"/>
+        <result column="IS_PAYING" property="isPaying" jdbcType="VARCHAR"/>
+        <result column="HUNTS_STATE" property="huntsState" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="orderExcelBean" type="com.hna.hka.archive.management.system.model.UploadOrderExcelBean">
+    </resultMap>
+    <resultMap id="orderExcelVoBean" type="com.hna.hka.archive.management.system.model.UploadOrderExcelVoBean">
+    </resultMap>
+    <resultMap id="realTimeAccess" type="com.hna.hka.archive.management.wenYuRiverInterface.model.RealTimeAccess">
+    </resultMap>
+    <resultMap id="robotUtilizationRate"
+               type="com.hna.hka.archive.management.wenYuRiverInterface.model.RobotUtilizationRate">
+    </resultMap>
+    <resultMap id="wenYuRiverOrder" type="com.hna.hka.archive.management.wenYuRiverInterface.model.WenYuRiverOrder">
+    </resultMap>
+    <resultMap id="orderAmountLine" type="com.hna.hka.archive.management.assetsSystem.model.OrderAmountLine">
+    </resultMap>
+    <resultMap id="tradeEcharts" type="com.hna.hka.archive.management.assetsSystem.model.TradeEcharts">
+    </resultMap>
+    <resultMap id="BaseResultAppOrder" type="com.hna.hka.archive.management.appSystem.model.SysAppOrder">
+    </resultMap>
+    <resultMap id="ScenicSpotRanking" type="com.hna.hka.archive.management.assetsSystem.model.ScenicSpotRanking">
+    </resultMap>
+    <resultMap id="operationData" type="com.hna.hka.archive.management.assetsSystem.model.OperationData">
+    </resultMap>
+    <resultMap id="operatingTime" type="com.hna.hka.archive.management.assetsSystem.model.OperatingTime">
+    </resultMap>
+    <resultMap id="operateStream" type="com.hna.hka.archive.management.assetsSystem.model.OperateStream">
+    </resultMap>
+    <resultMap id="reportForm" type="com.hna.hka.archive.management.assetsSystem.model.ReportForm">
+    </resultMap>
+    <resultMap id="bugStatus" type="com.hna.hka.archive.management.assetsSystem.model.BugStatus">
+    </resultMap>
+    <resultMap id="sysOrderExcel" type="com.hna.hka.archive.management.system.model.SysOrderExcel">
+    </resultMap>
+    <sql id="Base_Column_List">
+        ORDER_ID
+        , USER_ID, ORDER_AMOUNT, ACTUAL_AMOUNT, ORDER_DISCOUNT, PAYMENT_METHOD, ORDER_STATUS,
+    ORDER_SCENIC_SPOT_ID, ORDER_SCENIC_SPOT_NAME, ORDER_NUMBER, ORDER_START_TIME, ORDER_END_TIME,
+    ORDER_ROBOT_CODE, DISPATCHING_FEE, COUPON, REASONS_REFUNDS, RUNNING_TRACK, ORDER_REFUND_AMOUNT,
+    DELETE_TYPE, TOTAL_TIME, CURRENT_USER_PHONE, CREATE_DATE, UPDATE_DATE, ORDER_GPS_COORDINATE,
+    SUB_STATUS, DEDUCTIBLE_AMOUNT, SUB_METHOD, ACCOUNT_ID, PAYMENT_PORT, OUT_TRADE_NO,
+    DISTINGUISH_TYPE, ORDER_ROBOT_ID, DEDUCTIBLE_REFUND_AMOUNT
+    ,IS_DISPATCHING_FEE,REFUND_STATUS,IS_PAYING
+    </sql>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_ORDER
+        where ORDER_ID = #{orderId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from SYS_ORDER
+        where ORDER_ID = #{orderId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysOrder">
+        insert into SYS_ORDER (ORDER_ID, USER_ID, ORDER_AMOUNT,
+                               ACTUAL_AMOUNT, ORDER_DISCOUNT, PAYMENT_METHOD,
+                               ORDER_STATUS, ORDER_SCENIC_SPOT_ID, ORDER_SCENIC_SPOT_NAME,
+                               ORDER_NUMBER, ORDER_START_TIME, ORDER_END_TIME,
+                               ORDER_ROBOT_CODE, DISPATCHING_FEE, COUPON,
+                               REASONS_REFUNDS, RUNNING_TRACK, ORDER_REFUND_AMOUNT,
+                               DELETE_TYPE, TOTAL_TIME, CURRENT_USER_PHONE,
+                               CREATE_DATE, UPDATE_DATE, ORDER_GPS_COORDINATE,
+                               SUB_STATUS, DEDUCTIBLE_AMOUNT, SUB_METHOD,
+                               ACCOUNT_ID, PAYMENT_PORT, OUT_TRADE_NO,
+                               DISTINGUISH_TYPE, ORDER_ROBOT_ID, DEDUCTIBLE_REFUND_AMOUNT)
+        values (#{orderId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{orderAmount,jdbcType=VARCHAR},
+                #{actualAmount,jdbcType=VARCHAR}, #{orderDiscount,jdbcType=VARCHAR}, #{paymentMethod,jdbcType=VARCHAR},
+                #{orderStatus,jdbcType=VARCHAR}, #{orderScenicSpotId,jdbcType=BIGINT},
+                #{orderScenicSpotName,jdbcType=VARCHAR},
+                #{orderNumber,jdbcType=VARCHAR}, #{orderStartTime,jdbcType=VARCHAR}, #{orderEndTime,jdbcType=VARCHAR},
+                #{orderRobotCode,jdbcType=VARCHAR}, #{dispatchingFee,jdbcType=VARCHAR}, #{coupon,jdbcType=VARCHAR},
+                #{reasonsRefunds,jdbcType=VARCHAR}, #{runningTrack,jdbcType=VARCHAR},
+                #{orderRefundAmount,jdbcType=VARCHAR},
+                #{deleteType,jdbcType=VARCHAR}, #{totalTime,jdbcType=VARCHAR}, #{currentUserPhone,jdbcType=VARCHAR},
+                #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{orderGpsCoordinate,jdbcType=VARCHAR},
+                #{subStatus,jdbcType=VARCHAR}, #{deductibleAmount,jdbcType=VARCHAR}, #{subMethod,jdbcType=VARCHAR},
+                #{accountId,jdbcType=BIGINT}, #{paymentPort,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR},
+                #{distinguishType,jdbcType=VARCHAR}, #{orderRobotId,jdbcType=BIGINT},
+                #{deductibleRefundAmount,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysOrder">
+        insert into SYS_ORDER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                ORDER_ID,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="orderAmount != null">
+                ORDER_AMOUNT,
+            </if>
+            <if test="actualAmount != null">
+                ACTUAL_AMOUNT,
+            </if>
+            <if test="orderDiscount != null">
+                ORDER_DISCOUNT,
+            </if>
+            <if test="paymentMethod != null">
+                PAYMENT_METHOD,
+            </if>
+            <if test="orderStatus != null">
+                ORDER_STATUS,
+            </if>
+            <if test="orderScenicSpotId != null">
+                ORDER_SCENIC_SPOT_ID,
+            </if>
+            <if test="orderScenicSpotName != null">
+                ORDER_SCENIC_SPOT_NAME,
+            </if>
+            <if test="orderNumber != null">
+                ORDER_NUMBER,
+            </if>
+            <if test="orderStartTime != null">
+                ORDER_START_TIME,
+            </if>
+            <if test="orderEndTime != null">
+                ORDER_END_TIME,
+            </if>
+            <if test="orderRobotCode != null">
+                ORDER_ROBOT_CODE,
+            </if>
+            <if test="dispatchingFee != null">
+                DISPATCHING_FEE,
+            </if>
+            <if test="coupon != null">
+                COUPON,
+            </if>
+            <if test="reasonsRefunds != null">
+                REASONS_REFUNDS,
+            </if>
+            <if test="runningTrack != null">
+                RUNNING_TRACK,
+            </if>
+            <if test="orderRefundAmount != null">
+                ORDER_REFUND_AMOUNT,
+            </if>
+            <if test="deleteType != null">
+                DELETE_TYPE,
+            </if>
+            <if test="totalTime != null">
+                TOTAL_TIME,
+            </if>
+            <if test="currentUserPhone != null">
+                CURRENT_USER_PHONE,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+            <if test="orderGpsCoordinate != null">
+                ORDER_GPS_COORDINATE,
+            </if>
+            <if test="subStatus != null">
+                SUB_STATUS,
+            </if>
+            <if test="deductibleAmount != null">
+                DEDUCTIBLE_AMOUNT,
+            </if>
+            <if test="subMethod != null">
+                SUB_METHOD,
+            </if>
+            <if test="accountId != null">
+                ACCOUNT_ID,
+            </if>
+            <if test="paymentPort != null">
+                PAYMENT_PORT,
+            </if>
+            <if test="outTradeNo != null">
+                OUT_TRADE_NO,
+            </if>
+            <if test="distinguishType != null">
+                DISTINGUISH_TYPE,
+            </if>
+            <if test="orderRobotId != null">
+                ORDER_ROBOT_ID,
+            </if>
+            <if test="deductibleRefundAmount != null">
+                DEDUCTIBLE_REFUND_AMOUNT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="orderAmount != null">
+                #{orderAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="actualAmount != null">
+                #{actualAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDiscount != null">
+                #{orderDiscount,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentMethod != null">
+                #{paymentMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                #{orderStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="orderScenicSpotId != null">
+                #{orderScenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="orderScenicSpotName != null">
+                #{orderScenicSpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNumber != null">
+                #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStartTime != null">
+                #{orderStartTime,jdbcType=VARCHAR},
+            </if>
+            <if test="orderEndTime != null">
+                #{orderEndTime,jdbcType=VARCHAR},
+            </if>
+            <if test="orderRobotCode != null">
+                #{orderRobotCode,jdbcType=VARCHAR},
+            </if>
+            <if test="dispatchingFee != null">
+                #{dispatchingFee,jdbcType=VARCHAR},
+            </if>
+            <if test="coupon != null">
+                #{coupon,jdbcType=VARCHAR},
+            </if>
+            <if test="reasonsRefunds != null">
+                #{reasonsRefunds,jdbcType=VARCHAR},
+            </if>
+            <if test="runningTrack != null">
+                #{runningTrack,jdbcType=VARCHAR},
+            </if>
+            <if test="orderRefundAmount != null">
+                #{orderRefundAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteType != null">
+                #{deleteType,jdbcType=VARCHAR},
+            </if>
+            <if test="totalTime != null">
+                #{totalTime,jdbcType=VARCHAR},
+            </if>
+            <if test="currentUserPhone != null">
+                #{currentUserPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="orderGpsCoordinate != null">
+                #{orderGpsCoordinate,jdbcType=VARCHAR},
+            </if>
+            <if test="subStatus != null">
+                #{subStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="deductibleAmount != null">
+                #{deductibleAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="subMethod != null">
+                #{subMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="accountId != null">
+                #{accountId,jdbcType=BIGINT},
+            </if>
+            <if test="paymentPort != null">
+                #{paymentPort,jdbcType=VARCHAR},
+            </if>
+            <if test="outTradeNo != null">
+                #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="distinguishType != null">
+                #{distinguishType,jdbcType=VARCHAR},
+            </if>
+            <if test="orderRobotId != null">
+                #{orderRobotId,jdbcType=BIGINT},
+            </if>
+            <if test="deductibleRefundAmount != null">
+                #{deductibleRefundAmount,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysOrder">
+        update SYS_ORDER
+        <set>
+            <if test="userId != null">
+                USER_ID = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="orderAmount != null">
+                ORDER_AMOUNT = #{orderAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="actualAmount != null">
+                ACTUAL_AMOUNT = #{actualAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDiscount != null">
+                ORDER_DISCOUNT = #{orderDiscount,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentMethod != null">
+                PAYMENT_METHOD = #{paymentMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                ORDER_STATUS = #{orderStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="orderScenicSpotId != null">
+                ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="orderScenicSpotName != null">
+                ORDER_SCENIC_SPOT_NAME = #{orderScenicSpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNumber != null">
+                ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStartTime != null">
+                ORDER_START_TIME = #{orderStartTime,jdbcType=VARCHAR},
+            </if>
+            <if test="orderEndTime != null">
+                ORDER_END_TIME = #{orderEndTime,jdbcType=VARCHAR},
+            </if>
+            <if test="orderRobotCode != null">
+                ORDER_ROBOT_CODE = #{orderRobotCode,jdbcType=VARCHAR},
+            </if>
+            <if test="dispatchingFee != null">
+                DISPATCHING_FEE = #{dispatchingFee,jdbcType=VARCHAR},
+            </if>
+            <if test="coupon != null">
+                COUPON = #{coupon,jdbcType=VARCHAR},
+            </if>
+            <if test="reasonsRefunds != null">
+                REASONS_REFUNDS = #{reasonsRefunds,jdbcType=VARCHAR},
+            </if>
+            <if test="runningTrack != null">
+                RUNNING_TRACK = #{runningTrack,jdbcType=VARCHAR},
+            </if>
+            <if test="orderRefundAmount != null">
+                ORDER_REFUND_AMOUNT = #{orderRefundAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteType != null">
+                DELETE_TYPE = #{deleteType,jdbcType=VARCHAR},
+            </if>
+            <if test="totalTime != null">
+                TOTAL_TIME = #{totalTime,jdbcType=VARCHAR},
+            </if>
+            <if test="currentUserPhone != null">
+                CURRENT_USER_PHONE = #{currentUserPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="orderGpsCoordinate != null">
+                ORDER_GPS_COORDINATE = #{orderGpsCoordinate,jdbcType=VARCHAR},
+            </if>
+            <if test="subStatus != null">
+                SUB_STATUS = #{subStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="deductibleAmount != null">
+                DEDUCTIBLE_AMOUNT = #{deductibleAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="subMethod != null">
+                SUB_METHOD = #{subMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="accountId != null">
+                ACCOUNT_ID = #{accountId,jdbcType=BIGINT},
+            </if>
+            <if test="paymentPort != null">
+                PAYMENT_PORT = #{paymentPort,jdbcType=VARCHAR},
+            </if>
+            <if test="outTradeNo != null">
+                OUT_TRADE_NO = #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="distinguishType != null">
+                DISTINGUISH_TYPE = #{distinguishType,jdbcType=VARCHAR},
+            </if>
+            <if test="orderRobotId != null">
+                ORDER_ROBOT_ID = #{orderRobotId,jdbcType=BIGINT},
+            </if>
+            <if test="deductibleRefundAmount != null">
+                DEDUCTIBLE_REFUND_AMOUNT = #{deductibleRefundAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="faultId != null">
+                FAULT_ID = #{faultId,jdbcType=BIGINT},
+            </if>
+            <if test="isDispatchingFee != null">
+                IS_DISPATCHING_FEE = #{isDispatchingFee,jdbcType=VARCHAR},
+            </if>
+            <if test="refundStatus != null and refundStatus != ''">
+                REFUND_STATUS = #{refundStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="deductionAmount != null and deductionAmount != ''">
+                DEDUCTION_AMOUNT = #{deductionAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="giftTime != null and giftTime != ''">
+                GIFT_TIME = #{giftTime,jdbcType = VARCHAR},
+            </if>
+            <if test="parkingName != null and parkingName != ''">
+                PARKING_NAME = #{parkingName,jdbcType = VARCHAR},
+            </if>
+            <if test="orderParkingId != null">
+                ORDER_PARKING_ID = #{orderParkingId,jdbcType = BIGINT},
+            </if>
+        </set>
+        where ORDER_ID = #{orderId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysOrder">
+        update SYS_ORDER
+        set USER_ID                  = #{userId,jdbcType=BIGINT},
+            ORDER_AMOUNT             = #{orderAmount,jdbcType=VARCHAR},
+            ACTUAL_AMOUNT            = #{actualAmount,jdbcType=VARCHAR},
+            ORDER_DISCOUNT           = #{orderDiscount,jdbcType=VARCHAR},
+            PAYMENT_METHOD           = #{paymentMethod,jdbcType=VARCHAR},
+            ORDER_STATUS             = #{orderStatus,jdbcType=VARCHAR},
+            ORDER_SCENIC_SPOT_ID     = #{orderScenicSpotId,jdbcType=BIGINT},
+            ORDER_SCENIC_SPOT_NAME   = #{orderScenicSpotName,jdbcType=VARCHAR},
+            ORDER_NUMBER             = #{orderNumber,jdbcType=VARCHAR},
+            ORDER_START_TIME         = #{orderStartTime,jdbcType=VARCHAR},
+            ORDER_END_TIME           = #{orderEndTime,jdbcType=VARCHAR},
+            ORDER_ROBOT_CODE         = #{orderRobotCode,jdbcType=VARCHAR},
+            DISPATCHING_FEE          = #{dispatchingFee,jdbcType=VARCHAR},
+            COUPON                   = #{coupon,jdbcType=VARCHAR},
+            REASONS_REFUNDS          = #{reasonsRefunds,jdbcType=VARCHAR},
+            RUNNING_TRACK            = #{runningTrack,jdbcType=VARCHAR},
+            ORDER_REFUND_AMOUNT      = #{orderRefundAmount,jdbcType=VARCHAR},
+            DELETE_TYPE              = #{deleteType,jdbcType=VARCHAR},
+            TOTAL_TIME               = #{totalTime,jdbcType=VARCHAR},
+            CURRENT_USER_PHONE       = #{currentUserPhone,jdbcType=VARCHAR},
+            CREATE_DATE              = #{createDate,jdbcType=VARCHAR},
+            UPDATE_DATE              = #{updateDate,jdbcType=VARCHAR},
+            ORDER_GPS_COORDINATE     = #{orderGpsCoordinate,jdbcType=VARCHAR},
+            SUB_STATUS               = #{subStatus,jdbcType=VARCHAR},
+            DEDUCTIBLE_AMOUNT        = #{deductibleAmount,jdbcType=VARCHAR},
+            SUB_METHOD               = #{subMethod,jdbcType=VARCHAR},
+            ACCOUNT_ID               = #{accountId,jdbcType=BIGINT},
+            PAYMENT_PORT             = #{paymentPort,jdbcType=VARCHAR},
+            OUT_TRADE_NO             = #{outTradeNo,jdbcType=VARCHAR},
+            DISTINGUISH_TYPE         = #{distinguishType,jdbcType=VARCHAR},
+            ORDER_ROBOT_ID           = #{orderRobotId,jdbcType=BIGINT},
+            DEDUCTIBLE_REFUND_AMOUNT = #{deductibleRefundAmount,jdbcType=VARCHAR}
+        where ORDER_ID = #{orderId,jdbcType=BIGINT}
+    </update>
+    <select id="getOrderList" resultMap="BaseResultMap">
+        SELECT
+        A.ORDER_ID,
+        A.USER_ID,
+        A.ORDER_AMOUNT,
+        A.ACTUAL_AMOUNT,
+        A.ORDER_DISCOUNT,
+        A.PAYMENT_METHOD,
+        A.ORDER_STATUS,
+        A.ORDER_SCENIC_SPOT_ID,
+        A.ORDER_SCENIC_SPOT_NAME,
+        A.ORDER_NUMBER,
+        A.ORDER_START_TIME,
+        A.ORDER_END_TIME,
+        A.ORDER_ROBOT_CODE,
+        A.DISPATCHING_FEE,
+        A.COUPON,
+        A.REASONS_REFUNDS,
+        A.RUNNING_TRACK,
+        A.ORDER_REFUND_AMOUNT,
+        A.DELETE_TYPE,
+        A.TOTAL_TIME,
+        A.CURRENT_USER_PHONE,
+        A.CREATE_DATE,
+        A.UPDATE_DATE,
+        A.ORDER_GPS_COORDINATE,
+        A.SUB_STATUS,
+        A.DEDUCTIBLE_AMOUNT,
+        A.SUB_METHOD,
+        A.ACCOUNT_ID,
+        A.PAYMENT_PORT,
+        A.OUT_TRADE_NO,
+        A.DEDUCTIBLE_REFUND_AMOUNT,
+        A.HUNTS_STATE,
+        ROUND( A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT, 2 ) AS realIncome
+        FROM
+        SYS_ORDER A
+        LEFT JOIN SYS_USERS_ROLE_SPOT B ON B.SCENIC_SPOT_ID = A.ORDER_SCENIC_SPOT_ID
+        <where>
+            <if test="userId != null and userId != ''">
+                AND B.USER_ID = #{userId}
+            </if>
+            <if test="currentUserPhone != null and currentUserPhone != ''">
+                AND A.CURRENT_USER_PHONE LIKE CONCAT(#{currentUserPhone},'%')
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND A.CREATE_DATE <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND A.CREATE_DATE <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="time != null and time != ''">
+                AND A.CREATE_DATE <![CDATA[ >= ]]> #{time}
+            </if>
+            <if test="paymentMethod != null and paymentMethod != ''">
+                AND FIND_IN_SET(A.PAYMENT_METHOD,#{paymentMethod})
+            </if>
+            <if test="subMethod != null and subMethod != ''">
+                AND A.SUB_METHOD = #{subMethod}
+            </if>
+            <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+                AND A.ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId}
+            </if>
+            <if test="orderStatus != null and orderStatus != ''">
+                AND A.ORDER_STATUS = #{orderStatus}
+            </if>
+            <if test="orderRobotCode != null and orderRobotCode != ''">
+                AND A.ORDER_ROBOT_CODE LIKE CONCAT('%',#{orderRobotCode})
+            </if>
+            <if test="paymentPort != null and paymentPort != ''">
+                AND FIND_IN_SET(A.PAYMENT_PORT,#{paymentPort})
+            </if>
+            <if test='type == "1"'>
+                AND A.START_ORDER_PARKING_ID = #{orderParkingId}
+            </if>
+            <if test='type == "2"'>
+                AND A.ORDER_PARKING_ID = #{orderParkingId}
+            </if>
+            <if test="huntsState != null and huntsState != ''">
+                AND A.HUNTS_STATE = #{huntsState}
+            </if>
+        </where>
+        ORDER BY A.ORDER_START_TIME DESC
+    </select>
+    <select id="getOrderStateByRobotCode" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM
+        SYS_ORDER
+        <where>
+            <if test="robotCode != null and robotCode != ''">
+                AND ORDER_ROBOT_CODE = #{robotCode}
+            </if>
+            <if test="orderState != null and orderState != ''">
+                AND ORDER_STATUS = #{orderState}
+            </if>
+        </where>
+    </select>
+    <select id="getOrderByNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM
+        SYS_ORDER
+        <where>
+            <if test="orderNumber != null and orderNumber != ''">
+                AND ORDER_NUMBER = #{orderNumber}
+            </if>
+        </where>
+    </select>
+    <select id="getReconciliationOrderExcel" resultMap="orderExcelBean" parameterType="java.util.Map">
+        SELECT
+        ORDER_STATUS AS orderStatus,
+        ORDER_SCENIC_SPOT_NAME AS orderScenicSpotName,
+        ORDER_START_TIME AS orderStartTime,
+        ORDER_ROBOT_CODE AS orderRobotCode,
+        ORDER_REFUND_AMOUNT As orderRefundAmount,
+        CURRENT_USER_PHONE AS currentUserPhone,
+        CREATE_DATE AS createDate,
+        ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT, 2) AS realIncome
+        FROM
+        SYS_ORDER
+        <where>
+            <if test="data == 1">
+                AND DATE_FORMAT( CREATE_DATE, '%Y%m' ) = DATE_FORMAT( CURDATE( ), '%Y%m' )
+            </if>
+            <if test="data == 2">
+                AND PERIOD_DIFF( date_format( now( ), '%Y%m' ), date_format( CREATE_DATE, '%Y%m' ) ) =1
+            </if>
+            <!--      <if test="startDate != null">-->
+            <!--        AND DATE(SUBSTR(CREATE_DATE,1,10)) <![CDATA[ >= ]]> #{startDate}-->
+            <!--      </if>-->
+            <!--      <if test="endDate != null">-->
+            <!--        AND DATE(SUBSTR(CREATE_DATE,1,10)) <![CDATA[ <= ]]> #{endDate}-->
+            <!--      </if>-->
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="subMethod != null and subMethod != ''">
+                <if test="subMethod == 1 ">
+                    AND SUB_METHOD = 0
+                    AND PAYMENT_METHOD = 1
+                </if>
+                <if test="subMethod == 2 ">
+                    AND SUB_METHOD = 1
+                    AND PAYMENT_METHOD = 3
+                </if>
+                <if test="subMethod == 3 ">
+                    AND SUB_METHOD = 2
+                    AND PAYMENT_METHOD = 1
+                </if>
+                <if test="subMethod == 4 ">
+                    AND SUB_METHOD = 0
+                    AND PAYMENT_METHOD = 5
+                </if>
+            </if>
+        </where>
+        ORDER BY ORDER_START_TIME DESC
+    </select>
+    <select id="getReconciliationOrderList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"></include>,
+        ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT,2) AS realIncome
+        FROM
+        SYS_ORDER
+        <where>
+            <if test="startTime != null and startTime != ''">
+                AND DATE(SUBSTR(CREATE_DATE,1,10)) <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND DATE(SUBSTR(CREATE_DATE,1,10)) <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="time != null and time != ''">
+                AND DATE(SUBSTR(CREATE_DATE,1,10)) <![CDATA[ >= ]]> #{time}
+            </if>
+            <if test="subMethod != null and subMethod != ''">
+                <if test="subMethod == 1 ">
+                    AND SUB_METHOD = 0
+                    AND PAYMENT_METHOD = 1
+                </if>
+                <if test="subMethod == 2 ">
+                    AND SUB_METHOD = 1
+                    AND PAYMENT_METHOD = 3
+                </if>
+                <if test="subMethod == 3 ">
+                    AND SUB_METHOD = 2
+                    AND PAYMENT_METHOD = 1
+                </if>
+                <if test="subMethod == 4 ">
+                    AND SUB_METHOD = 0
+                    AND PAYMENT_METHOD = 5
+                </if>
+            </if>
+            <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+                AND ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId}
+            </if>
+        </where>
+        ORDER BY ORDER_START_TIME DESC
+    </select>
+    <select id="getReconciliationOrderAmountList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        SUM(ROUND((ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT) * 0.994,2)) AS paymentTotalAccount,
+        SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT,2)) AS realIncome
+        FROM
+        SYS_ORDER
+        <where>
+            <if test="startTime != null and startTime != ''">
+                AND DATE(SUBSTR(CREATE_DATE,1,10)) <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND DATE(SUBSTR(CREATE_DATE,1,10)) <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="time != null and time != ''">
+                AND DATE(SUBSTR(CREATE_DATE,1,10)) <![CDATA[ >= ]]> #{time}
+            </if>
+            <if test="subMethod != null and subMethod != ''">
+                <if test="subMethod == 1 ">
+                    AND SUB_METHOD = 0
+                    AND PAYMENT_METHOD = 1
+                </if>
+                <if test="subMethod == 2 ">
+                    AND SUB_METHOD = 1
+                    AND PAYMENT_METHOD = 3
+                </if>
+                <if test="subMethod == 3 ">
+                    AND SUB_METHOD = 2
+                    AND PAYMENT_METHOD = 1
+                </if>
+                <if test="subMethod == 4 ">
+                    AND SUB_METHOD = 0
+                    AND PAYMENT_METHOD = 5
+                </if>
+            </if>
+            <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+                AND ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId}
+            </if>
+            AND ORDER_STATUS = 30
+        </where>
+        ORDER BY ORDER_START_TIME DESC
+    </select>
+    <select id="getOrderAmount" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        concat('\t',ifnull ( SUM( ROUND( ( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT -
+        DEDUCTIBLE_REFUND_AMOUNT ) * 0.994, 2 ) ),
+        0 )) AS paymentTotalAccount,
+        concat('\t',ifnull (SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT -
+        DEDUCTIBLE_REFUND_AMOUNT, 2 ) ) ,
+        0)) AS realIncomes
+        FROM
+        SYS_ORDER
+        <where>
+            <if test="currentUserPhone != null and currentUserPhone != ''">
+                AND CURRENT_USER_PHONE LIKE CONCAT('%',#{currentUserPhone},'%')
+            </if>
+            <if test="startTime != null and  startTime != ''">
+                AND CREATE_DATE <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND CREATE_DATE <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="time != null and time != ''">
+                AND CREATE_DATE <![CDATA[ >= ]]> #{time}
+            </if>
+            <if test="paymentMethod != null and paymentMethod != ''">
+                AND FIND_IN_SET(PAYMENT_METHOD,#{paymentMethod})
+            </if>
+            <if test="subMethod != null and subMethod != ''">
+                AND SUB_METHOD = #{subMethod}
+            </if>
+            <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+                AND ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId}
+            </if>
+            <!--      <if test="orderScenicSpotId != null and orderScenicSpotId != ''">-->
+            <!--        AND  ORDER_SCENIC_SPOT_ID  in-->
+            <!--        <foreach collection="orderScenicSpotId" index="index" item="item" open="(" separator="," close=")">-->
+            <!--          #{item}-->
+            <!--        </foreach>-->
+            <!--      </if>-->
+            <if test="orderStatus != null and orderStatus != ''">
+                AND ORDER_STATUS = #{orderStatus}
+            </if>
+            <if test="orderRobotCode != null and orderRobotCode != ''">
+                AND ORDER_ROBOT_CODE LIKE CONCAT('%',#{orderRobotCode},'%')
+            </if>
+            <if test="paymentPort != null and paymentPort != ''">
+                AND FIND_IN_SET(PAYMENT_PORT,#{paymentPort})
+            </if>
+            <if test='type == "1"'>
+                AND START_ORDER_PARKING_ID = #{orderParkingId}
+            </if>
+            <if test='type == "2"'>
+                AND ORDER_PARKING_ID = #{orderParkingId}
+            </if>
+            <if test="huntsState != null and huntsState != ''">
+                AND HUNTS_STATE = #{huntsState}
+            </if>
+        </where>
+        ORDER BY ORDER_START_TIME DESC
+    </select>
+
+    <!--计算金额，不包含押金-->
+    <select id="getOrderAmountNotDeposit" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        concat('\t',ifnull ( SUM( ROUND( ( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT ) * 0.994, 2 ) ),
+        0 )) AS paymentTotalAccount,
+        concat('\t',ifnull (SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) ) ,
+        0)) AS realIncomes
+        FROM
+        SYS_ORDER
+        <where>
+            1=1
+            and PAYMENT_METHOD not in (5)
+            <if test="currentUserPhone != null and currentUserPhone != ''">
+                AND CURRENT_USER_PHONE LIKE CONCAT('%',#{currentUserPhone},'%')
+            </if>
+            <if test="startTime != null and  startTime != ''">
+                AND CREATE_DATE <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND CREATE_DATE <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="time != null and time != ''">
+                AND CREATE_DATE <![CDATA[ >= ]]> #{time}
+            </if>
+            <if test="paymentMethod != null and paymentMethod != ''">
+                AND FIND_IN_SET(PAYMENT_METHOD,#{paymentMethod})
+            </if>
+            <if test="subMethod != null and subMethod != ''">
+                AND SUB_METHOD = #{subMethod}
+            </if>
+            <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+                AND ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId}
+            </if>
+            <!--      <if test="orderScenicSpotId != null and orderScenicSpotId != ''">-->
+            <!--        AND  ORDER_SCENIC_SPOT_ID  in-->
+            <!--        <foreach collection="orderScenicSpotId" index="index" item="item" open="(" separator="," close=")">-->
+            <!--          #{item}-->
+            <!--        </foreach>-->
+            <!--      </if>-->
+            <if test="orderStatus != null and orderStatus != ''">
+                AND ORDER_STATUS = #{orderStatus}
+            </if>
+            <if test="orderRobotCode != null and orderRobotCode != ''">
+                AND ORDER_ROBOT_CODE LIKE CONCAT('%',#{orderRobotCode},'%')
+            </if>
+            <if test="paymentPort != null and paymentPort != ''">
+                AND FIND_IN_SET(PAYMENT_PORT,#{paymentPort})
+            </if>
+            <if test='type == "1"'>
+                AND START_ORDER_PARKING_ID = #{orderParkingId}
+            </if>
+            <if test='type == "2"'>
+                AND ORDER_PARKING_ID = #{orderParkingId}
+            </if>
+        </where>
+        ORDER BY ORDER_START_TIME DESC
+    </select>
+
+    <select id="getOrderById" resultMap="BaseResultMap">
+        SELECT A.ORDER_ID,
+               A.USER_ID,
+               A.ORDER_AMOUNT,
+               A.ACTUAL_AMOUNT,
+               A.ORDER_DISCOUNT,
+               A.PAYMENT_METHOD,
+               A.ORDER_STATUS,
+               A.ORDER_SCENIC_SPOT_ID,
+               A.ORDER_SCENIC_SPOT_NAME,
+               A.ORDER_NUMBER,
+               A.ORDER_START_TIME,
+               A.ORDER_END_TIME,
+               A.ORDER_ROBOT_CODE,
+               A.DISPATCHING_FEE,
+               A.COUPON,
+               A.REASONS_REFUNDS,
+               A.RUNNING_TRACK,
+               A.ORDER_REFUND_AMOUNT,
+               A.DELETE_TYPE,
+               A.TOTAL_TIME,
+               A.CURRENT_USER_PHONE,
+               A.CREATE_DATE,
+               A.UPDATE_DATE,
+               A.ORDER_GPS_COORDINATE,
+               A.SUB_STATUS,
+               A.DEDUCTIBLE_AMOUNT,
+               A.SUB_METHOD,
+               A.ACCOUNT_ID,
+               B.DEPOSIT_PAY_AMOUNT AS depositPayAmount
+        FROM SYS_ORDER A
+                 LEFT JOIN SYS_CURRENT_USER B ON A.USER_ID = B.CURRENT_USER_ID
+        WHERE A.ORDER_ID = #{orderId}
+    </select>
+    <select id="getOrderAmounts" resultMap="BaseResultMap">
+        SELECT (
+                   SELECT ifnull(SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT, 2)), 0)
+                   FROM SYS_ORDER
+                   where ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+                     and ORDER_STATUS = 30
+                     and to_days(ORDER_START_TIME) = to_days(now())) as revenueAmountToday,
+               (
+                   SELECT ifnull(SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT, 2)), 0)
+                   FROM SYS_ORDER
+                   where ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+                     and ORDER_STATUS = 30)                          as realIncome
+        FROM SYS_ORDER limit 1
+    </select>
+    <select id="getVipOrderList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"></include>,
+        ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT, 2 ) AS realIncome
+        FROM
+        SYS_ORDER
+        <where>
+            <if test="currentUserPhone != null and currentUserPhone != ''">
+                AND CURRENT_USER_PHONE LIKE CONCAT('%',#{currentUserPhone},'%')
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND DATE(CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="time != null and time != ''">
+                AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{time}
+            </if>
+            <if test="subMethod != null and subMethod != ''">
+                AND SUB_METHOD = #{subMethod}
+            </if>
+            <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+                AND ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId}
+            </if>
+            <if test="orderStatus != null and orderStatus != ''">
+                AND ORDER_STATUS = #{orderStatus}
+            </if>
+            <if test="orderRobotCode != null and orderRobotCode != ''">
+                AND ORDER_ROBOT_CODE LIKE CONCAT('%',#{orderRobotCode},'%')
+            </if>
+            AND PAYMENT_METHOD = 2
+        </where>
+        ORDER BY ORDER_START_TIME DESC
+    </select>
+    <select id="getReconciliationDeductionOrderExcel" resultMap="orderExcelVoBean" parameterType="java.util.Map">
+        SELECT
+        ORDER_STATUS AS orderStatus,
+        ORDER_SCENIC_SPOT_NAME AS orderScenicSpotName,
+        ORDER_START_TIME AS orderStartTime,
+        ORDER_ROBOT_CODE AS orderRobotCode,
+        CURRENT_USER_PHONE AS currentUserPhone,
+        CREATE_DATE AS createDate,
+        DEDUCTIBLE_AMOUNT AS deductibleAmount,
+        ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT, 2) AS realIncome
+        FROM
+        SYS_ORDER
+        <where>
+            <if test="data == 1">
+                AND DATE_FORMAT( CREATE_DATE, '%Y%m' ) = DATE_FORMAT( CURDATE( ), '%Y%m' )
+            </if>
+            <if test="data == 2">
+                AND PERIOD_DIFF( date_format( now( ), '%Y%m' ), date_format( CREATE_DATE, '%Y%m' ) ) =1
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="subMethod != null and subMethod != ''">
+                <if test="subMethod == 1 ">
+                    AND SUB_METHOD = 0
+                    AND PAYMENT_METHOD = 1
+                </if>
+                <if test="subMethod == 2 ">
+                    AND SUB_METHOD = 1
+                    AND PAYMENT_METHOD = 3
+                </if>
+                <if test="subMethod == 3 ">
+                    AND SUB_METHOD = 2
+                    AND PAYMENT_METHOD = 1
+                </if>
+            </if>
+        </where>
+        ORDER BY ORDER_START_TIME DESC
+    </select>
+
+    <select id="getRealTimeAccess" resultMap="realTimeAccess">
+        SELECT ifnull(SUM(ROUND(A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT + A.DEDUCTIBLE_AMOUNT, 2)), 0) AS timeAccess,
+               (SELECT COUNT(ORDER_ID)
+                FROM SYS_ORDER
+                WHERE ORDER_STATUS = 10
+                  AND ORDER_SCENIC_SPOT_ID = 83102483267695)                                          AS robotQuantityUsed,
+               (SELECT COUNT(ROBOT_ID)
+                FROM SYS_ROBOT
+                WHERE SCENIC_SPOT_ID = 83102483267695)                                                AS robotRemainingQuantity
+        FROM SYS_ORDER A
+        WHERE to_days(A.CREATE_DATE) = to_days(now())
+          AND A.ORDER_SCENIC_SPOT_ID = 83102483267695
+          AND A.ORDER_STATUS = 30
+          AND A.PAYMENT_METHOD != '5'
+    </select>
+    <select id="getTotalRevenue" resultMap="realTimeAccess" parameterType="java.util.Map">
+        SELECT
+        SUM( ROUND( A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT + A.DEDUCTIBLE_AMOUNT, 2 )) AS totalRevenue,
+        SUM( ROUND( (A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT + A.DEDUCTIBLE_AMOUNT)*0.994, 2 )) AS finialRevenue
+        FROM
+        SYS_ORDER A
+        <where>
+            AND A.ORDER_SCENIC_SPOT_ID = '83102483267695'
+            AND A.ORDER_STATUS = '30'
+            AND A.PAYMENT_METHOD != '5'
+            <if test="startDate != null and startDate != ''">
+                AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endDate}
+            </if>
+        </where>
+    </select>
+    <select id="getRobotUtilizationRate" resultMap="robotUtilizationRate">
+        SELECT A.ROBOT_CODE AS robotCode,
+               (
+                   SELECT COUNT(B.ORDER_ID)
+                   FROM SYS_ORDER B
+                   WHERE B.ORDER_ROBOT_CODE = A.ROBOT_CODE
+                     AND B.ORDER_SCENIC_SPOT_ID = 83102483267695
+                     AND to_days(B.CREATE_DATE) = to_days(
+                           now())
+                     AND B.PAYMENT_METHOD != '5' ) AS numberOfUsers
+        FROM
+            SYS_ROBOT A
+        WHERE
+            A.SCENIC_SPOT_ID = 83102483267695
+    </select>
+    <select id="getWenYuRiverOrderList" resultMap="wenYuRiverOrder" parameterType="java.util.Map">
+        SELECT
+        ORDER_ID as orderId,
+        insert(A.CURRENT_USER_PHONE, 4, 4, '****') AS currentUserPhone,
+        A.ORDER_ROBOT_CODE AS orderRobotCode,
+        A.ORDER_SCENIC_SPOT_NAME AS orderScenicSpotName,
+        A.ORDER_START_TIME AS orderStartTime,
+        A.ORDER_END_TIME AS orderEndTime,
+        A.TOTAL_TIME AS totalTime,
+        A.ORDER_AMOUNT AS orderAmount,
+        A.ACTUAL_AMOUNT AS actualAmount,
+        A.DISPATCHING_FEE AS dispatchingFee,
+        A.ORDER_REFUND_AMOUNT AS orderRefundAmount,
+        ROUND( A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT + A.DEDUCTIBLE_AMOUNT, 2 ) AS realIncome,
+        A.ORDER_STATUS AS orderStatus,
+        A.SUB_STATUS AS subStatus,
+        A.PAYMENT_METHOD AS paymentMethod,
+        A.SUB_METHOD AS subMethod,
+        A.ORDER_DISCOUNT AS orderDiscount,
+        A.DEDUCTIBLE_AMOUNT AS deductibleAmount
+        FROM
+        SYS_ORDER A
+        <where>
+            <if test="startDate != null and startDate != ''">
+                AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endDate}
+            </if>
+            AND A.ORDER_SCENIC_SPOT_ID = 83102483267695
+            AND A.PAYMENT_METHOD != 5
+            <if test="orderRobotCode != null and orderRobotCode != ''">
+                AND A.ORDER_ROBOT_CODE LIKE CONCAT(#{orderRobotCode},'%')
+            </if>
+        </where>
+        ORDER BY A.ORDER_START_TIME DESC
+    </select>
+    <select id="getFinanceOrderList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        A.ORDER_ID,
+        A.USER_ID,
+        A.ORDER_AMOUNT,
+        A.ACTUAL_AMOUNT,
+        A.ORDER_DISCOUNT,
+        A.PAYMENT_METHOD,
+        A.ORDER_STATUS,
+        A.ORDER_SCENIC_SPOT_ID,
+        A.ORDER_SCENIC_SPOT_NAME,
+        A.ORDER_NUMBER,
+        A.ORDER_START_TIME,
+        A.ORDER_END_TIME,
+        A.ORDER_ROBOT_CODE,
+        A.DISPATCHING_FEE,
+        A.COUPON,
+        A.REASONS_REFUNDS,
+        A.RUNNING_TRACK,
+        A.ORDER_REFUND_AMOUNT,
+        A.DELETE_TYPE,
+        A.TOTAL_TIME,
+        A.CURRENT_USER_PHONE,
+        A.CREATE_DATE,
+        A.UPDATE_DATE,
+        A.ORDER_GPS_COORDINATE,
+        A.SUB_STATUS,
+        A.DEDUCTIBLE_AMOUNT,
+        A.SUB_METHOD,
+        A.ACCOUNT_ID,
+        A.PAYMENT_PORT,
+        A.OUT_TRADE_NO,
+        A.DEDUCTIBLE_REFUND_AMOUNT,
+        ROUND( A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT, 2 ) AS realIncome
+        FROM
+        SYS_ORDER A
+        LEFT JOIN SYS_USERS_ROLE_SPOT B ON B.SCENIC_SPOT_ID = A.ORDER_SCENIC_SPOT_ID
+        LEFT JOIN SYS_SCENIC_SPOT C ON A.ORDER_SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+        <where>
+            1=1
+            and PAYMENT_METHOD not in (5)
+            <if test="userId != null and userId != ''">
+                AND B.USER_ID = #{userId}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="time != null and time != ''">
+                AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{time}
+            </if>
+            <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+                AND FIND_IN_SET(A.ORDER_SCENIC_SPOT_ID,#{orderScenicSpotId})
+            </if>
+            <if test="orderStatus != null and orderStatus != ''">
+                AND A.ORDER_STATUS = #{orderStatus}
+            </if>
+            <if test="companyId != null and companyId != ''">
+                AND C.COMPANY_ID = #{companyId}
+            </if>
+        </where>
+        ORDER BY A.ORDER_START_TIME DESC
+    </select>
+
+    <select id="getOrderInterfaceList" resultMap="wenYuRiverOrder" parameterType="java.util.Map">
+        SELECT
+        insert(A.CURRENT_USER_PHONE, 4, 4, '****') AS currentUserPhone,
+        A.ORDER_ROBOT_CODE AS orderRobotCode,
+        A.ORDER_SCENIC_SPOT_NAME AS orderScenicSpotName,
+        A.ORDER_START_TIME AS orderStartTime,
+        A.ORDER_END_TIME AS orderEndTime,
+        A.TOTAL_TIME AS totalTime,
+        A.ORDER_AMOUNT AS orderAmount,
+        A.ACTUAL_AMOUNT AS actualAmount,
+        A.DISPATCHING_FEE AS dispatchingFee,
+        A.ORDER_REFUND_AMOUNT AS orderRefundAmount,
+        ROUND( A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT, 2 ) AS realIncome,
+        A.ORDER_STATUS AS orderStatus,
+        A.SUB_STATUS AS subStatus,
+        A.PAYMENT_METHOD AS paymentMethod,
+        A.SUB_METHOD AS subMethod,
+        A.ORDER_DISCOUNT AS orderDiscount,
+        A.DEDUCTIBLE_AMOUNT AS deductibleAmount
+        FROM
+        SYS_ORDER A
+        <where>
+            AND A.SUB_METHOD = 0
+            AND A.PAYMENT_METHOD = 1
+            <!--      <if test="startDate != null and startDate != ''">-->
+            <!--        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startDate}-->
+            <!--      </if>-->
+            <if test="startDate != null and startDate != ''">
+                AND A.CREATE_DATE <![CDATA[ >= ]]> #{startDate}
+            </if>
+            <!--      <if test="endDate != null and endDate != ''">-->
+            <!--        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endDate}-->
+            <!--      </if>-->
+            <if test="endDate != null and endDate != ''">
+                AND A.CREATE_DATE <![CDATA[ <= ]]> #{endDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND A.CREATE_DATE <![CDATA[ <= ]]> #{endDate}
+            </if>
+            <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+                AND FIND_IN_SET(A.ORDER_SCENIC_SPOT_ID,#{orderScenicSpotId})
+            </if>
+            <if test="orderRobotCode != null and orderRobotCode != ''">
+                AND A.ORDER_ROBOT_CODE LIKE CONCAT('%',#{orderRobotCode},'%')
+            </if>
+        </where>
+        ORDER BY A.ORDER_START_TIME DESC
+    </select>
+    <select id="getOrderAmountLine" resultMap="orderAmountLine">
+        SELECT DATE_FORMAT(CREATE_DATE, '%Y-%m')                                        createDate,
+               SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2)) AS orderAmount
+        FROM SYS_ORDER
+        WHERE ORDER_STATUS = '30'
+        GROUP BY createDate
+        ORDER BY createDate DESC
+    </select>
+    <select id="getTradeEcharts" resultMap="tradeEcharts">
+        SELECT date_format(CREATE_DATE, '%Y-%m-%d') AS time,
+    COUNT( ORDER_ID ) AS orderTotal,
+    SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) ) AS orderAmount
+        FROM
+            SYS_ORDER
+        WHERE
+            date_sub( curdate()
+            , INTERVAL 7 DAY ) <![CDATA[ <= ]]> date ( CREATE_DATE )
+          AND ORDER_STATUS = '30'
+        GROUP BY
+            time
+    </select>
+    <select id="getTrade" resultMap="tradeEcharts">
+        SELECT SUM(ROUND(A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT + A.DEDUCTIBLE_AMOUNT, 2)) AS sevenDays,
+               (
+                   SELECT SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2))
+                   FROM SYS_ORDER
+                   WHERE to_days(CREATE_DATE) = to_days(
+                           now())
+                     AND ORDER_STATUS = '30'
+               )                                                                           AS today,
+               (
+                   SELECT SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2))
+                   FROM SYS_ORDER
+                   WHERE TO_DAYS(NOW()) - TO_DAYS(CREATE_DATE) <![CDATA[ = ]]> 1
+                     AND ORDER_STATUS = '30'
+               )                                                                           AS yesterday,
+               (
+                   SELECT SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2))
+                   FROM SYS_ORDER
+                   WHERE DATE_FORMAT(CREATE_DATE, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
+                     AND ORDER_STATUS = '30'
+               )                                                                           AS thisMonth
+        FROM SYS_ORDER A
+        WHERE date_sub(curdate(), INTERVAL 7 DAY ) <![CDATA[ < ]]> date ( A.CREATE_DATE )
+          AND A.ORDER_STATUS = '30'
+    </select>
+    <select id="getAppOrderList" resultMap="BaseResultAppOrder" parameterType="java.util.Map">
+        SELECT
+        ORDER_ID AS orderId,
+        PAYMENT_METHOD AS paymentMethod,
+        ORDER_AMOUNT AS orderAmount,
+        ACTUAL_AMOUNT AS actualAmount,
+        ORDER_NUMBER AS orderNumber,
+        ORDER_STATUS AS orderStatus,
+        TOTAL_TIME AS totalTime,
+        ORDER_SCENIC_SPOT_NAME AS scenicSpotName,
+        ORDER_START_TIME AS orderStartTime,
+        ORDER_END_TIME AS orderEndTime,
+        ORDER_ROBOT_CODE AS orderRobotCode,
+        DISPATCHING_FEE AS dispatchingFee,
+        CURRENT_USER_PHONE AS currentUserPhone,
+        SUB_STATUS AS subStatus,
+        IS_DISPATCHING_FEE AS isDispatchingFee,
+        ORDER_REFUND_AMOUNT as orderRefundAmount,
+        ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) AS realIncome
+        FROM
+        SYS_ORDER
+        <where>
+            <if test="currentUserPhone != null and currentUserPhone != ''">
+                AND CURRENT_USER_PHONE LIKE CONCAT('%',#{currentUserPhone},'%')
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND CREATE_DATE <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND CREATE_DATE <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="orderStatus != null and orderStatus != ''">
+                AND FIND_IN_SET(ORDER_STATUS,#{orderStatus})
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                AND ORDER_ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+            </if>
+            <if test="paymentMethod != null and paymentMethod != ''">
+                AND PAYMENT_METHOD = #{paymentMethod}
+            </if>
+            <!--      AND PAYMENT_METHOD = 1-->
+        </where>
+        <if test="type == 1">
+            <if test="sort == 1">
+                ORDER BY ORDER_START_TIME ASC
+            </if>
+            <if test="sort == 2">
+                ORDER BY ORDER_START_TIME DESC
+            </if>
+        </if>
+        <if test="type == 2">
+            <if test="sort == 1">
+                ORDER BY CAST(TOTAL_TIME as SIGNED) ASC
+            </if>
+            <if test="sort == 2">
+                ORDER BY CAST(TOTAL_TIME as SIGNED) DESC
+            </if>
+        </if>
+        <if test="type == 3">
+            <if test="sort == 1">
+                ORDER BY ORDER_END_TIME ASC
+            </if>
+            <if test="sort == 2">
+                ORDER BY ORDER_END_TIME DESC
+            </if>
+        </if>
+    </select>
+
+
+    <select id="getAppOrderDetails" resultMap="BaseResultAppOrder">
+        SELECT ORDER_ID                                                         AS orderId,
+               PAYMENT_METHOD                                                   AS paymentMethod,
+               ORDER_AMOUNT                                                     AS orderAmount,
+               ACTUAL_AMOUNT                                                    AS actualAmount,
+               ORDER_NUMBER                                                     AS orderNumber,
+               ORDER_STATUS                                                     AS orderStatus,
+               TOTAL_TIME                                                       AS totalTime,
+               ORDER_SCENIC_SPOT_NAME                                           AS scenicSpotName,
+               ORDER_START_TIME                                                 AS orderStartTime,
+               ORDER_END_TIME                                                   AS orderEndTime,
+               ORDER_ROBOT_CODE                                                 AS orderRobotCode,
+               DISPATCHING_FEE                                                  AS dispatchingFee,
+               CURRENT_USER_PHONE                                               AS currentUserPhone,
+               SUB_STATUS                                                       AS subStatus,
+               IS_DISPATCHING_FEE                                               AS isDispatchingFee,
+               ORDER_REFUND_AMOUNT                                              as orderRefundAmount,
+               ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2) AS realIncome
+        FROM SYS_ORDER
+        WHERE ORDER_NUMBER = #{orderNumber}
+
+    </select>
+
+
+    <select id="getScenicSpotRankingList" resultMap="ScenicSpotRanking" parameterType="java.util.Map">
+        SELECT
+        a.scenicSpotName AS scenicSpotName,/*景区名称*/
+        a.orderNumber AS orderNumber,/*订单数量*/
+        a.operationTime AS operationTime,/*订单时长*/
+        a.orderAmount AS orderAmount,/*订单金额*/
+        a.robotLaunchQuantity AS robotLaunchQuantity,/*机器人数量*/
+        a.targetAmount AS targetAmount,/*目标金额*/
+        a.operatePeople AS operatePeople,/*打卡人次*/
+        a.operatingTime AS operatingTime,/*景区运营时长*/
+        a.faultId AS faultId, /*故障条数*/
+        a.jxz,
+        a.wzf,
+        a.wzfje,
+        CASE
+
+        WHEN a.orderAmount IS NULL
+        OR a.orderAmount = 0 THEN
+        '0'
+        WHEN a.targetAmount IS NULL
+        OR a.targetAmount = 0 THEN
+        '0' ELSE IFNULL( ROUND(( a.orderAmount / (a.targetAmount * #{cycle} )), 2 ), '0' )
+        END completionRatio,/*目标完成比例*/
+        CASE
+
+        WHEN a.orderNumber IS NULL
+        OR a.orderNumber = 0 THEN
+        '0'
+        WHEN a.robotLaunchQuantity IS NULL
+        OR a.robotLaunchQuantity = 0 THEN
+        '0' ELSE IFNULL( ROUND(( a.orderNumber / a.robotLaunchQuantity ), 2 ), '0' )
+        END robotReceivingOrder,/*单台机器人接单量*/
+        CASE
+
+        WHEN a.orderAmount IS NULL
+        OR a.orderAmount = 0 THEN
+        '0'
+        WHEN a.robotLaunchQuantity IS NULL
+        OR a.robotLaunchQuantity = 0 THEN
+        '0' ELSE IFNULL( ROUND(( a.orderAmount / a.robotLaunchQuantity ), 2 ), '0' )
+        END robotOutputValue,/*单台机器人产值*/
+        CASE
+
+        WHEN a.operationTime IS NULL
+        OR a.operationTime = 0 THEN
+        '0'
+        WHEN a.robotLaunchQuantity IS NULL
+        OR a.robotLaunchQuantity = 0 THEN
+        '0' ELSE IFNULL( ROUND(( a.operationTime / a.robotLaunchQuantity ), 2 ), '0' )
+        END robotOperationTime,/*单台机器人运营时长*/
+        CASE
+
+        WHEN a.operationTime IS NULL
+        OR a.operationTime = 0 THEN
+        '0'
+        WHEN a.operatePeople IS NULL
+        OR a.operatePeople = 0 THEN
+        '0' ELSE IFNULL( ROUND(( a.orderNumber / a.operatePeople ), 2 ), '0' )
+        END operatorsReceivingOrder, /*单运营人员接单量*/
+        CASE
+
+        WHEN a.operationTime IS NULL
+        OR a.operationTime = 0 THEN
+        '0'
+        WHEN a.operationTime IS NULL
+        OR a.operatingTime = 0 THEN
+        '0' ELSE IFNULL( ROUND(( a.operationTime / (a.operatingTime * a.robotLaunchQuantity) ) * 100, 2 ), '0' )
+        END robotUtilization, /*机器人利用率*/
+        CASE
+
+        WHEN a.orderAmount IS NULL
+        OR a.orderAmount = 0 THEN
+        '0'
+        WHEN a.orderNumber IS NULL
+        OR a.orderNumber = 0 THEN
+        '0' ELSE IFNULL( ROUND(( a.orderAmount / a.orderNumber ), 2 ), '0' )
+        END unitPricePerCustomer, /*客单价*/
+        CASE
+
+        WHEN a.orderNumbers IS NULL
+        OR a.orderNumbers = 0 THEN
+        '0'
+        WHEN a.faultId IS NULL
+        OR a.faultId = 0 THEN
+        '0' ELSE IFNULL( ROUND(( a.faultId / a.orderNumbers), 2 ), '0' )
+        END failureRate /*故障率*/
+
+        FROM
+        (
+        SELECT
+        spot.SCENIC_SPOT_FNAME AS scenicSpotName,
+        (
+        SELECT
+        IFNULL( cast( SUM( A.TOTAL_TIME ) AS DECIMAL ( 15, 2 )), '0' )
+        FROM
+        SYS_ORDER A
+        WHERE
+        A.ORDER_SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID
+        AND A.ORDER_STATUS = '30'
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        ) AS operationTime,
+        (
+        SELECT
+        COUNT( A.ORDER_ID )
+        FROM
+        SYS_ORDER A
+        WHERE
+        A.ORDER_SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID
+        AND A.ORDER_STATUS = '30'
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        ) AS orderNumber,
+        (
+        SELECT
+        COUNT( A.ORDER_ID )
+        FROM
+        SYS_ORDER A
+        WHERE
+        A.ORDER_SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        ) AS orderNumbers,
+        (
+        SELECT
+        IFNULL( cast( SUM( A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT + A.DEDUCTIBLE_AMOUNT ) AS DECIMAL ( 15, 2 )), '0' )
+        FROM
+        SYS_ORDER A
+        WHERE
+        A.ORDER_SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID
+        AND A.ORDER_STATUS = '30'
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        ) AS orderAmount,
+        (
+        SELECT
+        IFNULL( cast( SUM(A.OPERATE_PEOPLE) AS DECIMAL ( 15, 2 )), '0' )
+        FROM
+        SYS_SCENIC_SPOT_OPERATION_RULES A
+        WHERE
+        A.SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        ) AS operatePeople,
+        (
+        SELECT
+        IFNULL( cast( SUM(A.OPERATING_TIME) AS DECIMAL ( 15, 2 )), '0' )
+        FROM
+        SYS_SCENIC_SPOT_OPERATION_RULES A
+        WHERE
+        A.SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        ) AS operatingTime,
+        ( SELECT COUNT( ROBOT_ID ) FROM SYS_ROBOT A WHERE A.SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID ) AS
+        robotLaunchQuantity,
+        ( SELECT TARGET_AMOUNT FROM SYS_SCENIC_SPOT_TARGET_AMOUNT A WHERE A.SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID AND
+        TARGET_STATE = #{dataType} ) AS targetAmount,
+        (
+        SELECT
+        COUNT(A.ORDER_ID)
+        FROM
+        SYS_ORDER A
+        WHERE
+        A.ORDER_SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID
+        AND A.FAULT_ID IS NOT NULL
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        ) AS faultId,
+        (
+        SELECT
+        COUNT( A.ORDER_ID )
+        FROM
+        SYS_ORDER A
+        WHERE
+        A.ORDER_SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID
+        AND A.ORDER_STATUS = '10'
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        ) AS jxz,
+        (
+        SELECT
+        COUNT( A.ORDER_ID )
+        FROM
+        SYS_ORDER A
+        WHERE
+        A.ORDER_SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID
+        AND A.ORDER_STATUS = '20'
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        ) AS wzf,
+        (
+        SELECT
+        ifnull(round(sum(A.ORDER_AMOUNT) , 2) , 0)
+        FROM
+        SYS_ORDER A
+        WHERE
+        A.ORDER_SCENIC_SPOT_ID = spot.SCENIC_SPOT_FID
+        AND A.ORDER_STATUS = '20'
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(A.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        ) AS wzfje
+        FROM
+        SYS_SCENIC_SPOT_BINDING spot
+        LEFT JOIN SYS_SCENIC_SPOT B ON spot.SCENIC_SPOT_FID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="id != null and id != ''">
+                AND spot.SCENIC_SPOT_PID = #{id}
+            </if>
+            <if test='scenicSpotId  != null and scenicSpotId != ""'>
+                and spot.SCENIC_SPOT_FID = #{scenicSpotId}
+            </if>
+            <if test='companyId  != null and companyId != ""'>
+                AND B.COMPANY_ID = #{companyId}
+            </if>
+        </where>
+        ) a
+        <if test="type != null and type != ''">
+            ORDER BY ${field}+0 ${type}
+        </if>
+    </select>
+    <select id="getMonthOperateData" resultMap="operationData" parameterType="java.util.Map">
+        SELECT
+        B.SCENIC_SPOT_FID AS scenicSpotFId,
+        B.SCENIC_SPOT_FNAME AS province,
+        COALESCE ( operationTime, '0' ) AS operationTime,
+        ROUND( COALESCE ( orderAmount, 0 ), 0 ) AS orderAmount,
+        CASE
+
+        WHEN orderAmount IS NULL
+        OR orderAmount = 0 THEN
+        '0'
+        WHEN targetAmount = 0 THEN
+        '0' ELSE IFNULL( ROUND( orderAmount / targetAmount, 2 ), '0' )
+        END completionRatio,
+        CASE
+
+        WHEN operationTime IS NULL
+        OR operationTime = 0 THEN
+        '0'
+        WHEN targetAmount = 0 THEN
+        '0' ELSE IFNULL( ROUND( operationTime / ( operatingTime * robotNumber ) * 100, 2 ), '0' )
+        END robotUtilization,
+        CASE
+
+        WHEN orderAmount IS NULL
+        OR orderAmount = 0 THEN
+        '0'
+        WHEN orderNumber = 0 THEN
+        '0' ELSE IFNULL( ROUND( orderAmount / orderNumber, 2 ), '0' )
+        END unitPrice,
+        CASE
+
+        WHEN orderAmount IS NULL
+        OR orderAmount = 0 THEN
+        '0'
+        WHEN robotNumber = 0 THEN
+        '0' ELSE IFNULL( ROUND( orderAmount / robotNumber, 2 ), '0' )
+        END robotOutputValue
+        FROM
+        (
+        SELECT
+        SUM((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        AND DATE_FORMAT( ORDER_START_TIME, '%Y%m' ) = DATE_FORMAT( CURDATE( ), '%Y%m' ))) AS operationTime,
+        /*运营时长*/
+        SUM((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        AND DATE_FORMAT( ORDER_START_TIME, '%Y%m' ) = DATE_FORMAT( CURDATE( ), '%Y%m' ))) AS orderAmount,
+        /*订单金额*/
+        A.SCENIC_SPOT_FID,
+        SUM((
+        SELECT
+        TARGET_AMOUNT
+        FROM
+        SYS_SCENIC_SPOT_TARGET_AMOUNT
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND TARGET_STATE = '2'
+        )) AS targetAmount,
+        /*目标金额*/
+        SUM((
+        SELECT
+        COUNT( ORDER_ID )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        AND DATE_FORMAT( ORDER_START_TIME, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        )) AS orderNumber,
+        /*订单数量*/
+        SUM((
+        SELECT
+        COUNT( ORDER_ID )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND DATE_FORMAT( ORDER_START_TIME, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        )) AS orderNumbers,
+        /*所有订单数*/
+        SUM((
+        SELECT
+        COUNT( ROBOT_ID )
+        FROM
+        SYS_ROBOT
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        )) AS robotNumber,
+        /*机器人数量*/
+        SUM((
+        SELECT
+        IFNULL( cast( SUM( OPERATING_TIME ) AS DECIMAL ( 15, 2 )), '0' )
+        FROM
+        SYS_SCENIC_SPOT_OPERATION_RULES
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND DATE_FORMAT( CREATE_DATE, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        )) AS operatingTime /*景区运营时长*/
+
+        FROM
+        SYS_SCENIC_SPOT A
+        GROUP BY
+        A.SCENIC_SPOT_FID
+        ) AS SYS
+        LEFT JOIN SYS_SCENIC_SPOT_BINDING B ON SYS.SCENIC_SPOT_FID = B.SCENIC_SPOT_FID
+        <if test="type != null and type != ''">
+            ORDER BY ${field}+0 ${type}
+        </if>
+    </select>
+    <select id="getOperatingTimeList" resultMap="operatingTime" parameterType="java.util.Map">
+        SELECT
+        a.SCENIC_SPOT_NAME AS scenicName,
+        b.robotNumber AS robotNumber,
+        <if test="operateTimeWay == 1">
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( (a.totalTime / b.robotNumber) - (b.totalTime / b.robotNumber)) / (b.totalTime /
+            b.robotNumber) ) * 100, 2 ), '0' )
+            END yoY,
+            IFNULL(ROUND( a.totalTime / (b.robotNumber * #{cycle}), 2 ), '0') AS avgOperateTime,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND( (a.totalTime / b.robotNumber) / (a.operatingTime / b.robotNumber * b.robotNumber), 2 ),
+            '0' )
+            END robotUseRatio
+        </if>
+        <if test="operateTimeWay == 0">
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( a.totalTime - b.totalTime) / b.totalTime) * 100, 2 ), '0' )
+            END yoY,
+            a.totalTime AS avgOperateTime,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND( a.totalTime / (a.operatingTime * b.robotNumber), 2 ), '0' )
+            END robotUseRatio
+        </if>
+        FROM
+        (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d' ), '%Y') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        IFNULL((
+        SELECT
+        SUM( OPERATING_TIME )
+        FROM
+        SYS_SCENIC_SPOT_OPERATION_RULES
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( CREATE_DATE, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE(CREATE_DATE, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE(CREATE_DATE, '%Y-%m-%d' ), '%Y') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS operatingTime
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) a
+        LEFT JOIN (
+        SELECT
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{endTime} , interval 1 year)
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        COUNT(ROBOT_ID)
+        FROM
+        SYS_ROBOT
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        ),
+        '0'
+        ) AS robotNumber
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) b ON a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                <if test="operateTimeWay == 1">
+                    AND a.totalTime / b.robotNumber &gt;= ${opeTimeInputValue}
+                </if>
+                <if test="operateTimeWay == 0">
+                    AND a.totalTime &gt;= ${opeTimeInputValue}
+                </if>
+            </if>
+        </where>
+        <if test="YoYOrderBy != null and YoYOrderBy != ''">
+            order by ${YoYOrderBy}
+        </if>
+        <if test="QoQOrderBy != null and QoQOrderBy != ''">
+            order by ${QoQOrderBy}
+        </if>
+        <if test="robotUseRatioOrderBy != null and robotUseRatioOrderBy != ''">
+            order by ${robotUseRatioOrderBy}
+        </if>
+        <if test="operatingTimeBy != null and operatingTimeBy != ''">
+            order by ${operatingTimeBy}
+        </if>
+    </select>
+    <select id="getOperatingTimeListShowQoQ" resultMap="operatingTime" parameterType="java.util.Map">
+        SELECT
+        a.SCENIC_SPOT_NAME AS scenicName,
+        b.robotNumber AS robotNumber,
+        <if test="operateTimeWay == 1">
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( (a.totalTime / b.robotNumber) - (b.totalTime / b.robotNumber)) / (b.totalTime /
+            b.robotNumber) ) * 100, 2 ), '0' )
+            END yoY,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( (a.totalTime / b.robotNumber) - (c.totalTime / b.robotNumber) ) / (c.totalTime /
+            b.robotNumber) ) * 100, 2 ), '0' )
+            END qoQ,
+            IFNULL(ROUND( a.totalTime / (b.robotNumber * #{cycle}), 2 ), '0') AS avgOperateTime,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND( (a.totalTime / b.robotNumber) / (a.operatingTime / b.robotNumber * b.robotNumber), 2 ),
+            '0' )
+            END robotUseRatio
+        </if>
+        <if test="operateTimeWay == 0">
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( a.totalTime - b.totalTime) / b.totalTime) * 100, 2 ), '0' )
+            END yoY,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( a.totalTime - c.totalTime ) / c.totalTime ) * 100, 2 ), '0' )
+            END qoQ,
+            a.totalTime AS avgOperateTime,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND( a.totalTime / (a.operatingTime * b.robotNumber), 2 ), '0' )
+            END robotUseRatio
+        </if>
+        FROM
+        (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND
+            #{startTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{startTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        IFNULL((
+        SELECT
+        SUM( OPERATING_TIME )
+        FROM
+        SYS_SCENIC_SPOT_OPERATION_RULES
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( CREATE_DATE, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND #{startTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE(CREATE_DATE, '%Y-%m-%d') BETWEEN #{startTime} AND #{startTime}
+        </if>
+        ),
+        '0'
+        ) AS operatingTime
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) a
+        LEFT JOIN (
+        SELECT
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{startTime} , interval 1 year)
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        IFNULL((
+        SELECT
+        COUNT(ROBOT_ID)
+        FROM
+        SYS_ROBOT
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        ),
+        '0'
+        ) AS robotNumber,
+        SCENIC_SPOT_ID
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) b ON a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        LEFT JOIN (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) c ON a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                <if test="operateTimeWay == 1">
+                    AND a.totalTime / b.robotNumber &gt;= ${opeTimeInputValue}
+                </if>
+                <if test="operateTimeWay == 0">
+                    AND a.totalTime &gt;= ${opeTimeInputValue}
+                </if>
+            </if>
+        </where>
+        <if test="YoYOrderBy != null and YoYOrderBy != ''">
+            order by ${YoYOrderBy}
+        </if>
+        <if test="QoQOrderBy != null and QoQOrderBy != ''">
+            order by ${QoQOrderBy}
+        </if>
+        <if test="robotUseRatioOrderBy != null and robotUseRatioOrderBy != ''">
+            order by ${robotUseRatioOrderBy}
+        </if>
+        <if test="operatingTimeBy != null and operatingTimeBy != ''">
+            order by ${operatingTimeBy}
+        </if>
+    </select>
+    <select id="getRobotOperatingTimeListShowQoQ" resultMap="operatingTime" parameterType="java.util.Map">
+        SELECT
+        a.ROBOT_CODE AS robotId,
+        a.SCENIC_SPOT_NAME AS scenicName,
+        a.ROBOT_MODEL AS robotModel,
+        CASE
+
+        WHEN a.totalTime IS NULL
+        OR a.totalTime = 0 THEN
+        '0' ELSE IFNULL( ROUND((( a.totalTime - b.totalTime ) / b.totalTime ) * 100, 2 ), '0' )
+        END yoY,
+        CASE
+
+        WHEN a.totalTime IS NULL
+        OR a.totalTime = 0 THEN
+        '0' ELSE IFNULL( ROUND((( a.totalTime - c.totalTime ) / c.totalTime ) * 100, 2 ), '0' )
+        END qoQ,
+        CASE
+        WHEN a.totalTime IS NULL
+        OR a.totalTime = 0 THEN
+        '0'
+        ELSE IFNULL( ROUND( a.totalTime / d.operatingTime, 2 ), '0' )
+        END robotUseRatio,
+        a.totalTime AS avgOperateTime,
+        b.totalTime
+        FROM
+        (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        A.ROBOT_MODEL,
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_ROBOT_CODE = A.ROBOT_CODE
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND
+            #{startTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{startTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        ROBOT_CODE
+        ) a
+        LEFT JOIN (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_ROBOT_CODE = A.ROBOT_CODE
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{startTime} , interval 1 year)
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        ROBOT_CODE
+        ) b ON a.ROBOT_CODE = b.ROBOT_CODE
+        LEFT JOIN (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        IFNULL(( SELECT SUM( TOTAL_TIME ) FROM SYS_ORDER WHERE ORDER_ROBOT_CODE = A.ROBOT_CODE AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        ), '0' ) AS totalTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        ROBOT_CODE
+        ) c ON a.ROBOT_CODE = c.ROBOT_CODE
+        LEFT JOIN (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        IFNULL(( SELECT SUM( OPERATING_TIME ) FROM SYS_SCENIC_SPOT_OPERATION_RULES WHERE SCENIC_SPOT_ID =
+        A.SCENIC_SPOT_ID
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( CREATE_DATE, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub( CONCAT(
+            #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( CREATE_DATE, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{startTime} , interval 1 year)
+        </if>
+        ), '0' ) AS operatingTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        GROUP BY
+        ROBOT_CODE
+        ) d ON a.ROBOT_CODE = d.ROBOT_CODE
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                AND a.totalTime &gt;= ${opeTimeInputValue}
+            </if>
+        </where>
+        <if test="YoYOrderBy != null and YoYOrderBy != ''">
+            order by ${YoYOrderBy}
+        </if>
+        <if test="QoQOrderBy != null and QoQOrderBy != ''">
+            order by ${QoQOrderBy}
+        </if>
+        <if test="robotUseRatioOrderBy != null and robotUseRatioOrderBy != ''">
+            order by ${robotUseRatioOrderBy}
+        </if>
+        <if test="operatingTimeBy != null and operatingTimeBy != ''">
+            order by ${operatingTimeBy}
+        </if>
+    </select>
+    <select id="getRobotOperatingTimeList" resultMap="operatingTime" parameterType="java.util.Map">
+        SELECT
+        a.ROBOT_CODE AS robotId,
+        a.SCENIC_SPOT_NAME AS scenicName,
+        CASE
+
+        WHEN a.totalTime IS NULL
+        OR a.totalTime = 0 THEN
+        '0'
+        WHEN b.totalTime = 0 THEN
+        '100' ELSE IFNULL( ROUND((( a.totalTime - b.totalTime ) / b.totalTime ) * 100, 2 ), '0' )
+        END yoY,
+        a.totalTime AS avgOperateTime,
+        b.totalTime
+        FROM
+        (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_ROBOT_CODE = A.ROBOT_CODE
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d' ), '%Y') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        ROBOT_CODE
+        ) a
+        LEFT JOIN (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_ROBOT_CODE = A.ROBOT_CODE
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{endTime} , interval 1 year)
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        ROBOT_CODE
+        ) b ON a.ROBOT_CODE = b.ROBOT_CODE
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                AND a.totalTime &gt;= #{opeTimeInputValue}
+            </if>
+        </where>
+        <if test="YoYOrderBy != null and YoYOrderBy != ''">
+            order by ${YoYOrderBy}
+        </if>
+        <if test="QoQOrderBy != null and QoQOrderBy != ''">
+            order by ${QoQOrderBy}
+        </if>
+        <if test="robotUseRatioOrderBy != null and robotUseRatioOrderBy != ''">
+            order by ${robotUseRatioOrderBy}
+        </if>
+        <if test="operatingTimeBy != null and operatingTimeBy != ''">
+            order by ${operatingTimeBy}
+        </if>
+    </select>
+    <select id="getOperateStreamListShowQoQ" resultMap="operateStream" parameterType="java.util.Map">
+        SELECT
+        a.SCENIC_SPOT_NAME AS scenicName,
+        b.robotNumber AS robotNumber,
+        a.operatingTime as targetAmount,
+        <if test="amountWay == 1">
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( (a.totalTime / b.robotNumber) - (b.totalTime / b.robotNumber)) / (b.totalTime /
+            b.robotNumber) ) * 100, 2 ), '0' )
+            END yoY,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( (a.totalTime / b.robotNumber) - (c.totalTime / b.robotNumber) ) / (c.totalTime /
+            b.robotNumber) ) * 100, 2 ), '0' )
+            END qoQ,
+            IFNULL(ROUND( a.totalTime / (b.robotNumber * #{cycle}), 2 ), '0') AS amount,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND( (a.totalTime / b.robotNumber) / ((a.operatingTime / b.robotNumber) * #{cycle}), 2 ), '0'
+            )
+            END completeRatio
+        </if>
+        <if test="amountWay == 0">
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( a.totalTime - b.totalTime) / b.totalTime) * 100, 2 ), '0' )
+            END yoY,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( a.totalTime - c.totalTime ) / c.totalTime ) * 100, 2 ), '0' )
+            END qoQ,
+            a.totalTime AS amount,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND( a.totalTime / (a.operatingTime * #{cycle}), 2 ), '0' )
+            END completeRatio
+        </if>
+        FROM
+        (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND
+            #{startTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{startTime}
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d' ), '%Y') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        IFNULL((
+        SELECT
+        TARGET_AMOUNT
+        FROM
+        SYS_SCENIC_SPOT_TARGET_AMOUNT
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        <if test="dateType == 1">
+            AND TARGET_STATE = '2'
+        </if>
+        <if test="dateType == 2">
+            AND TARGET_STATE = '1'
+        </if>
+        <if test="dateType == 3">
+            AND TARGET_STATE = '3'
+        </if>
+        ),
+        '0'
+        ) AS operatingTime
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) a
+        LEFT JOIN (
+        SELECT
+        IFNULL((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{startTime} , interval 1 year)
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        IFNULL((
+        SELECT
+        COUNT(ROBOT_ID)
+        FROM
+        SYS_ROBOT
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        ),
+        '0'
+        ) AS robotNumber,
+        SCENIC_SPOT_ID
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) b ON a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        LEFT JOIN (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) c ON a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                <if test="amountWay == 1">
+                    AND a.totalTime / b.robotNumber &gt;= ${opeTimeInputValue}
+                </if>
+                <if test="amountWay == 0">
+                    AND a.totalTime &gt;= ${opeTimeInputValue}
+                </if>
+            </if>
+            <if test="completeRInputValue != null and completeRInputValue != ''">
+                <if test="amountWay == 1">
+                    AND (a.totalTime / b.robotNumber) / (a.operatingTime / b.robotNumber) &gt;= ${completeRInputValue}
+                </if>
+                <if test="amountWay == 0">
+                    AND a.totalTime / a.operatingTime &gt;= ${completeRInputValue}
+                </if>
+            </if>
+        </where>
+        <if test="YoYOrderBy != null and YoYOrderBy != ''">
+            order by ${YoYOrderBy}
+        </if>
+        <if test="QoQOrderBy != null and QoQOrderBy != ''">
+            order by ${QoQOrderBy}
+        </if>
+        <if test="robotUseRatioOrderBy != null and robotUseRatioOrderBy != ''">
+            order by ${robotUseRatioOrderBy}
+        </if>
+        <if test="operatingTimeBy != null and operatingTimeBy != ''">
+            order by ${operatingTimeBy}
+        </if>
+    </select>
+    <select id="getRobotOperateStreamShowQoQ" resultMap="operateStream" parameterType="java.util.Map">
+        SELECT
+        a.ROBOT_CODE AS robotId,
+        a.SCENIC_SPOT_NAME AS scenicName,
+        a.ROBOT_MODEL AS robotModel,
+        a.operatingTime AS targetAmount,
+        CASE
+
+        WHEN a.totalTime IS NULL
+        OR a.totalTime = 0 THEN
+        '0'
+        ELSE IFNULL( ROUND((( a.totalTime - b.totalTime ) / b.totalTime ) * 100, 2 ), '0' )
+        END yoY,
+        CASE
+
+        WHEN a.totalTime IS NULL
+        OR a.totalTime = 0 THEN
+        '0'
+        ELSE IFNULL( ROUND((( a.totalTime - c.totalTime ) / c.totalTime ) * 100, 2 ), '0' )
+        END qoQ,
+        CASE
+
+        WHEN a.totalTime IS NULL
+        OR a.totalTime = 0 THEN
+        '0'
+        ELSE IFNULL( ROUND(a.totalTime / a.operatingTime , 2 ), '0' )
+        END completeRatio,
+        a.totalTime AS amount,
+        b.totalTime
+        FROM
+        (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        A.ROBOT_MODEL,
+        IFNULL((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_ROBOT_CODE = A.ROBOT_CODE
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND
+            #{startTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{startTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        IFNULL((
+        SELECT
+        ROBOT_TARGET_AMOUNT
+        FROM
+        SYS_SCENIC_SPOT_TARGET_AMOUNT
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        <if test="dateType == 1">
+            AND TARGET_STATE = '2'
+        </if>
+        <if test="dateType == 2">
+            AND TARGET_STATE = '1'
+        </if>
+        <if test="dateType == 3">
+            AND TARGET_STATE = '3'
+        </if>
+        ),
+        '0'
+        ) AS operatingTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        ROBOT_CODE
+        ) a
+        LEFT JOIN (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        IFNULL((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_ROBOT_CODE = A.ROBOT_CODE
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{startTime} , interval 1 year)
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        ROBOT_CODE
+        ) b ON a.ROBOT_CODE = b.ROBOT_CODE
+        LEFT JOIN (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        IFNULL((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_ROBOT_CODE = A.ROBOT_CODE
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        ROBOT_CODE
+        ) c ON a.ROBOT_CODE = c.ROBOT_CODE
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                <if test="amountWay == 1">
+                    AND a.totalTime / b.robotNumber &gt;= ${opeTimeInputValue}
+                </if>
+                <if test="amountWay == 0">
+                    AND a.totalTime &gt;= ${opeTimeInputValue}
+                </if>
+            </if>
+            <if test="completeRInputValue != null and completeRInputValue != ''">
+                <if test="amountWay == 1">
+                    AND (a.totalTime / b.robotNumber) / (a.operatingTime / b.robotNumber) &gt;= ${completeRInputValue}
+                </if>
+                <if test="amountWay == 0">
+                    AND a.totalTime / a.operatingTime &gt;= ${completeRInputValue}
+                </if>
+            </if>
+        </where>
+        <if test="YoYOrderBy != null and YoYOrderBy != ''">
+            order by ${YoYOrderBy}
+        </if>
+        <if test="QoQOrderBy != null and QoQOrderBy != ''">
+            order by ${QoQOrderBy}
+        </if>
+        <if test="robotUseRatioOrderBy != null and robotUseRatioOrderBy != ''">
+            order by ${robotUseRatioOrderBy}
+        </if>
+    </select>
+    <select id="getOperateStreamList" resultMap="operateStream" parameterType="java.util.Map">
+        SELECT
+        a.SCENIC_SPOT_NAME AS scenicName,
+        b.robotNumber AS robotNumber,
+        a.operatingTime as targetAmount,
+        <if test="amountWay == 1">
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( (a.totalTime / b.robotNumber) - (b.totalTime / b.robotNumber)) / (b.totalTime /
+            b.robotNumber) ) * 100, 2 ), '0' )
+            END yoY,
+            IFNULL(ROUND( a.totalTime / (b.robotNumber * #{cycle}), 2 ), '0') AS amount,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND( (a.totalTime / b.robotNumber) / ((a.operatingTime / b.robotNumber) * #{cycle}), 2 ), '0'
+            )
+            END completeRatio
+        </if>
+        <if test="amountWay == 0">
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND((( a.totalTime - b.totalTime) / b.totalTime) * 100, 2 ), '0' )
+            END yoY,
+            a.totalTime AS amount,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0'
+            ELSE IFNULL( ROUND( a.totalTime / (a.operatingTime * #{cycle}), 2 ), '0' )
+            END completeRatio
+        </if>
+        FROM
+        (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d' ), '%Y') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        IFNULL((
+        SELECT
+        TARGET_AMOUNT
+        FROM
+        SYS_SCENIC_SPOT_TARGET_AMOUNT
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        <if test="dateType == 1">
+            AND TARGET_STATE = '2'
+        </if>
+        <if test="dateType == 2">
+            AND TARGET_STATE = '1'
+        </if>
+        <if test="dateType == 3">
+            AND TARGET_STATE = '3'
+        </if>
+        ),
+        '0'
+        ) AS operatingTime
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) a
+        LEFT JOIN (
+        SELECT
+        IFNULL((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{endTime} , interval 1 year)
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        IFNULL((
+        SELECT
+        COUNT(ROBOT_ID)
+        FROM
+        SYS_ROBOT
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        ),
+        '0'
+        ) AS robotNumber,
+        SCENIC_SPOT_ID
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) b ON a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                <if test="amountWay == 1">
+                    AND a.totalTime / b.robotNumber &gt;= ${opeTimeInputValue}
+                </if>
+                <if test="amountWay == 0">
+                    AND a.totalTime &gt;= ${opeTimeInputValue}
+                </if>
+            </if>
+            <if test="completeRInputValue != null and completeRInputValue != ''">
+                <if test="amountWay == 1">
+                    AND (a.totalTime / b.robotNumber) / (a.operatingTime / b.robotNumber) &gt;= ${completeRInputValue}
+                </if>
+                <if test="amountWay == 0">
+                    AND a.totalTime / a.operatingTime &gt;= ${completeRInputValue}
+                </if>
+            </if>
+        </where>
+        <if test="YoYOrderBy != null and YoYOrderBy != ''">
+            order by ${YoYOrderBy}
+        </if>
+        <if test="QoQOrderBy != null and QoQOrderBy != ''">
+            order by ${QoQOrderBy}
+        </if>
+        <if test="robotUseRatioOrderBy != null and robotUseRatioOrderBy != ''">
+            order by ${robotUseRatioOrderBy}
+        </if>
+        <if test="operatingTimeBy != null and operatingTimeBy != ''">
+            order by ${operatingTimeBy}
+        </if>
+    </select>
+    <select id="getRobotOperateStreamList" resultMap="operateStream" parameterType="java.util.Map">
+        SELECT
+        a.ROBOT_CODE AS robotId,
+        a.SCENIC_SPOT_NAME AS scenicName,
+        a.ROBOT_MODEL AS robotModel,
+        a.operatingTime AS targetAmount,
+        CASE
+
+        WHEN a.totalTime IS NULL
+        OR a.totalTime = 0 THEN
+        '0'
+        ELSE IFNULL( ROUND((( a.totalTime - b.totalTime ) / b.totalTime ) * 100, 2 ), '0' )
+        END yoY,
+        CASE
+
+        WHEN a.totalTime IS NULL
+        OR a.totalTime = 0 THEN
+        '0'
+        ELSE IFNULL( ROUND(a.totalTime / (a.operatingTime * #{cycle}), 2 ), '0' )
+        END completeRatio,
+        a.totalTime AS amount,
+        b.totalTime
+        FROM
+        (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        A.ROBOT_MODEL,
+        IFNULL((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_ROBOT_CODE = A.ROBOT_CODE
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d' ), '%Y') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        IFNULL((
+        SELECT
+        ROBOT_TARGET_AMOUNT
+        FROM
+        SYS_SCENIC_SPOT_TARGET_AMOUNT
+        WHERE
+        SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        <if test="dateType == 1">
+            AND TARGET_STATE = '2'
+        </if>
+        <if test="dateType == 2">
+            AND TARGET_STATE = '1'
+        </if>
+        <if test="dateType == 3">
+            AND TARGET_STATE = '3'
+        </if>
+        ),
+        '0'
+        ) AS operatingTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        ROBOT_CODE
+        ) a
+        LEFT JOIN (
+        SELECT
+        B.SCENIC_SPOT_NAME,
+        A.ROBOT_CODE,
+        IFNULL((
+        SELECT
+        SUM( ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ) )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_ROBOT_CODE = A.ROBOT_CODE
+        AND ORDER_STATUS = '30'
+        <if test="dateType == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="dateType == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{endTime} , interval 1 year)
+        </if>
+        <if test="dateType == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_ROBOT A
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        ROBOT_CODE
+        ) b ON a.ROBOT_CODE = b.ROBOT_CODE
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                <if test="amountWay == 1">
+                    AND a.totalTime / b.robotNumber &gt;= ${opeTimeInputValue}
+                </if>
+                <if test="amountWay == 0">
+                    AND a.totalTime &gt;= ${opeTimeInputValue}
+                </if>
+            </if>
+            <if test="completeRInputValue != null and completeRInputValue != ''">
+                <if test="amountWay == 1">
+                    AND (a.totalTime / b.robotNumber) / (a.operatingTime / b.robotNumber) &gt;= ${completeRInputValue}
+                </if>
+                <if test="amountWay == 0">
+                    AND a.totalTime / a.operatingTime &gt;= ${completeRInputValue}
+                </if>
+            </if>
+        </where>
+        <if test="YoYOrderBy != null and YoYOrderBy != ''">
+            order by ${YoYOrderBy}
+        </if>
+        <if test="QoQOrderBy != null and QoQOrderBy != ''">
+            order by ${QoQOrderBy}
+        </if>
+        <if test="robotUseRatioOrderBy != null and robotUseRatioOrderBy != ''">
+            order by ${robotUseRatioOrderBy}
+        </if>
+    </select>
+    <select id="getQueryReportShowQoQ" resultMap="reportForm"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.ReportForm">
+        SELECT
+        a.SCENIC_SPOT_NAME AS scenicName,
+        a.robotNumber AS robotNum,
+        a.jxz,
+        <if test="operateTimeWay == 1">
+            ROUND(a.totalTime / (a.robotNumber * #{cycle}), 2) AS avgOperateTime,
+            a.robotNumber,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL(
+            ROUND(((
+            ( a.totalTime / a.robotNumber ) - ( b.totalTime / a.robotNumber )
+            ) / ( b.totalTime / a.robotNumber )
+            ) * 100,
+            2
+            ),
+            '0'
+            )
+            END yoY,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL( ROUND((( ( a.totalTime / a.robotNumber ) - (c.totalTime / a.robotNumber ) ) / (c.totalTime
+            / a.robotNumber )) * 100, 2 ), '0' )
+            END qoQ
+        </if>
+        <if test="operateTimeWay == 0">
+            a.totalTime AS avgOperateTime,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL(
+            ROUND((( a.totalTime - b.totalTime ) / b.totalTime ) * 100, 2 ),
+            '0'
+            )
+            END yoY,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL( ROUND((( a.totalTime - c.totalTime ) / c.totalTime ) * 100, 2 ), '0' )
+            END qoQ
+        </if>
+        FROM
+        (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="chooseDate == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND
+            #{startTime}
+        </if>
+        <if test="chooseDate == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{startTime}
+        </if>
+        <if test="chooseDate == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        ,
+        IFNULL(( SELECT COUNT( ROBOT_ID ) FROM SYS_ROBOT WHERE SCENIC_SPOT_ID = A.SCENIC_SPOT_ID ), '0' ) AS
+        robotNumber,
+
+        (SELECT COUNT(1) from SYS_ORDER so WHERE ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID AND ORDER_STATUS = '10') as jxz
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) a
+        LEFT JOIN (
+        SELECT
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="chooseDate == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="chooseDate == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{startTime} , interval 1 year)
+        </if>
+        <if test="chooseDate == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        SCENIC_SPOT_ID
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) b ON a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        LEFT JOIN (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="chooseDate == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        <if test="chooseDate == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        <if test="chooseDate == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) c ON a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                <if test="operateTimeWay == 1">
+                    AND a.totalTime / a.robotNumber &gt;= #{opeTimeInputValue}
+                </if>
+                <if test="operateTimeWay == 0">
+                    AND a.totalTime &gt;= #{opeTimeInputValue}
+                </if>
+            </if>
+        </where>
+        ORDER BY avgOperateTime + 0 DESC
+    </select>
+    <select id="getQueryReportNotShowQoQ" resultMap="reportForm"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.ReportForm">
+        SELECT
+        a.SCENIC_SPOT_NAME AS scenicName,
+        a.robotNumber AS robotNum,
+        a.jxz,
+        <if test="operateTimeWay == 1">
+            ROUND(a.totalTime / (a.robotNumber * #{cycle}), 2) AS avgOperateTime,
+            a.robotNumber,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL(
+            ROUND(((
+            ( a.totalTime / a.robotNumber ) - ( b.totalTime / a.robotNumber )
+            ) / ( b.totalTime / a.robotNumber )
+            ) * 100,
+            2
+            ),
+            '0'
+            )
+            END yoY
+        </if>
+        <if test="operateTimeWay == 0">
+            a.totalTime AS avgOperateTime,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL(
+            ROUND((( a.totalTime - b.totalTime ) / b.totalTime ) * 100, 2 ),
+            '0'
+            )
+            END yoY
+        </if>
+        FROM
+        (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="chooseDate == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="chooseDate == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="chooseDate == 3">
+            AND DATE_FORMAT( STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d' ), '%Y') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        ,
+        IFNULL(( SELECT COUNT( ROBOT_ID ) FROM SYS_ROBOT WHERE SCENIC_SPOT_ID = A.SCENIC_SPOT_ID ), '0' ) AS
+        robotNumber,
+        (SELECT COUNT(1) from SYS_ORDER so WHERE ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID AND ORDER_STATUS = '10') as jxz
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) a
+        LEFT JOIN (
+        SELECT
+        IFNULL((
+        SELECT
+        SUM( TOTAL_TIME )
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="chooseDate == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="chooseDate == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{endTime} , interval 1 year)
+        </if>
+        <if test="chooseDate == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        SCENIC_SPOT_ID
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) b ON a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                <if test="operateTimeWay == 1">
+                    AND a.totalTime / a.robotNumber &gt;= #{opeTimeInputValue}
+                </if>
+                <if test="operateTimeWay == 0">
+                    AND a.totalTime &gt;= #{opeTimeInputValue}
+                </if>
+            </if>
+        </where>
+        ORDER BY avgOperateTime + 0 DESC
+    </select>
+    <select id="getQueryReportStreamShowQoQ" resultMap="reportForm"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.ReportForm">
+        SELECT
+        a.SCENIC_SPOT_NAME AS scenicName,
+        a.robotNumber AS robotNum,
+        a.jxz,
+        <if test="amountWay == 1">
+            ROUND(a.totalTime / (a.robotNumber * #{cycle}), 2) AS amount,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL(
+            ROUND(((
+            ( a.totalTime / a.robotNumber ) - ( b.totalTime / a.robotNumber )
+            ) / ( b.totalTime / a.robotNumber )
+            ) * 100,
+            2
+            ),
+            '0'
+            )
+            END yoY,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL( ROUND((( ( a.totalTime / a.robotNumber ) - (c.totalTime / a.robotNumber ) ) / (c.totalTime
+            / a.robotNumber )) * 100, 2 ), '0' )
+            END qoQ
+        </if>
+        <if test="amountWay == 0">
+            a.totalTime AS amount,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL(
+            ROUND((( a.totalTime - b.totalTime ) / b.totalTime ) * 100, 2 ),
+            '0'
+            )
+            END yoY,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL( ROUND((( a.totalTime - c.totalTime ) / c.totalTime ) * 100, 2 ), '0' )
+            END qoQ
+        </if>
+        FROM
+        (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT,2))
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="chooseDate == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND
+            #{startTime}
+        </if>
+        <if test="chooseDate == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{startTime}
+        </if>
+        <if test="chooseDate == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        ,
+        IFNULL(( SELECT COUNT( ROBOT_ID ) FROM SYS_ROBOT WHERE SCENIC_SPOT_ID = A.SCENIC_SPOT_ID ), '0' ) AS
+        robotNumber,
+        (
+        SELECT
+        count(1)
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '10'
+        ) as jxz
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) a
+        LEFT JOIN (
+        SELECT
+        IFNULL((
+        SELECT
+        SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT,2))
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="chooseDate == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="chooseDate == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{startTime} , interval 1 year)
+        </if>
+        <if test="chooseDate == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        SCENIC_SPOT_ID
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) b ON a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        LEFT JOIN (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT,2))
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="chooseDate == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        <if test="chooseDate == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN #{endTime} AND #{endTime}
+        </if>
+        <if test="chooseDate == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) c ON a.SCENIC_SPOT_ID = c.SCENIC_SPOT_ID
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                <if test="amountWay == 1">
+                    AND a.totalTime / a.robotNumber &gt;= ${opeTimeInputValue}
+                </if>
+                <if test="amountWay == 0">
+                    AND a.totalTime &gt;= ${opeTimeInputValue}
+                </if>
+            </if>
+        </where>
+        ORDER BY amount + 0 DESC
+    </select>
+    <select id="getQueryReportStreamNotShowQoQ" resultMap="reportForm"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.ReportForm">
+        SELECT
+        a.SCENIC_SPOT_NAME AS scenicName,
+        a.robotNumber AS robotNum,
+        a.jxz,
+        <if test="amountWay == 1">
+            ROUND(a.totalTime / (a.robotNumber * #{cycle}), 2) AS amount,
+            a.robotNumber,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL(
+            ROUND(((
+            ( a.totalTime / a.robotNumber ) - ( b.totalTime / a.robotNumber )
+            ) / ( b.totalTime / a.robotNumber )
+            ) * 100,
+            2
+            ),
+            '0'
+            )
+            END yoY
+        </if>
+        <if test="amountWay == 0">
+            a.totalTime AS amount,
+            CASE
+            WHEN a.totalTime IS NULL
+            OR a.totalTime = 0 THEN
+            '0' ELSE IFNULL(
+            ROUND((( a.totalTime - b.totalTime ) / b.totalTime ) * 100, 2 ),
+            '0'
+            )
+            END yoY
+        </if>
+        FROM
+        (
+        SELECT
+        SCENIC_SPOT_NAME,
+        SCENIC_SPOT_ID,
+        IFNULL((
+        SELECT
+        SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT,2))
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="chooseDate == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="chooseDate == 2">
+            AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="chooseDate == 3">
+            AND DATE_FORMAT( STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d' ), '%Y') BETWEEN #{startTime} AND #{endTime}
+        </if>
+        ),
+        '0'
+        ) AS totalTime
+        ,
+        IFNULL(( SELECT COUNT( ROBOT_ID ) FROM SYS_ROBOT WHERE SCENIC_SPOT_ID = A.SCENIC_SPOT_ID ), '0' ) AS
+        robotNumber,
+        (
+        SELECT
+        count(1)
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '10'
+        ) as jxz
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) a
+        LEFT JOIN (
+        SELECT
+        IFNULL((
+        SELECT
+        SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT,2))
+        FROM
+        SYS_ORDER
+        WHERE
+        ORDER_SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+        AND ORDER_STATUS = '30'
+        <if test="chooseDate == 1">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01' ), INTERVAL 1 YEAR ), '%Y-%m' )
+        </if>
+        <if test="chooseDate == 2">
+            AND STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ) BETWEEN date_sub(#{startTime}, interval 1 year)
+            AND DATE_SUB(#{endTime} , interval 1 year)
+        </if>
+        <if test="chooseDate == 3">
+            AND DATE_FORMAT( STR_TO_DATE( ORDER_START_TIME, '%Y-%m-%d' ), '%Y-%m-%d' ) BETWEEN DATE_FORMAT( date_sub(
+            CONCAT( #{startTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d' )
+            AND DATE_FORMAT( date_sub( CONCAT( #{endTime}, '-', '01-01' ), INTERVAL 1 YEAR ), '%Y-%m-%d')
+        </if>
+        ),
+        '0'
+        ) AS totalTime,
+        SCENIC_SPOT_ID
+        FROM
+        SYS_SCENIC_SPOT A
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        GROUP BY
+        SCENIC_SPOT_NAME
+        ) b ON a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        <where>
+            <if test="opeTimeInputValue != null and opeTimeInputValue != ''">
+                <if test="amountWay == 1">
+                    AND a.totalTime / a.robotNumber &gt;= ${opeTimeInputValue}
+                </if>
+                <if test="amountWay == 0">
+                    AND a.totalTime &gt;= $#{opeTimeInputValue}
+                </if>
+            </if>
+        </where>
+        ORDER BY amount + 0 DESC
+    </select>
+
+
+    <select id="getBugStatusCausesList" resultMap="bugStatus" parameterType="java.util.Map">
+        SELECT a.CAUSES      AS causes,
+               a.number      AS reportNum,
+               a.robotNumber AS robotNumber,
+               CASE
+
+                   WHEN a.number IS NULL
+                       OR a.number = 0 THEN
+                       '0'
+                   ELSE IFNULL(ROUND((a.number / a.numbers), 2), '0')
+                   END          reportTotal,
+               CASE
+
+                   WHEN a.number IS NULL
+                       OR a.number = 0 THEN
+                       '0'
+                   ELSE IFNULL(ROUND((a.number / a.robotNumber), 2), '0')
+                   END          orderTotal
+        FROM (
+                 SELECT A.CAUSES,
+                        SUM((
+                            SELECT COUNT(B.ORDER_ID)
+                            FROM SYS_ORDER B
+                            WHERE B.FAULT_ID = A.ORDER_EXCEPTION_MANAGEMENT_ID
+                              AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+                        )
+                            ) AS number,
+                        (
+                            SELECT COUNT(B.ORDER_ID)
+                            FROM SYS_ORDER B
+                            WHERE B.FAULT_ID IS NOT NULL
+                              AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+                        )     AS numbers,
+                        (
+                            SELECT COUNT(C.ORDER_ID)
+                            FROM SYS_ORDER C
+                            WHERE STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+                        )     AS robotNumber
+                 FROM SYS_ORDER_EXCEPTION_MANAGEMENT A
+                 GROUP BY A.CAUSES
+             ) a
+        GROUP BY causes
+    </select>
+    <select id="getBugStatusCausesSpotList" resultMap="bugStatus" parameterType="java.util.Map">
+        SELECT a.ORDER_SCENIC_SPOT_NAME AS scenicName,
+               a.CAUSES,
+               a.reportsNumber          AS reportNum,
+               a.numbers,
+               a.number,
+               CASE
+
+                   WHEN a.reportsNumber IS NULL
+                       OR a.reportsNumber = 0 THEN
+                       '0'
+                   ELSE IFNULL(ROUND((a.reportsNumber / a.numbers), 2), '0')
+                   END                     repotTotal,
+               CASE
+
+                   WHEN a.reportsNumber IS NULL
+                       OR a.reportsNumber = 0 THEN
+                       '0'
+                   ELSE IFNULL(ROUND((a.reportsNumber / a.number), 2), '0')
+                   END                     tradeTotal
+        FROM (
+                 SELECT A.ORDER_ID,
+                        A.ORDER_SCENIC_SPOT_NAME,
+                        C.CAUSES,
+                        C.REASON,
+                        COUNT(ORDER_ID) AS reportsNumber,
+                        (
+                            SELECT COUNT(B.ORDER_ID)
+                            FROM SYS_ORDER B
+                            WHERE B.ORDER_SCENIC_SPOT_ID = A.ORDER_SCENIC_SPOT_ID
+                              AND B.FAULT_ID IS NOT NULL
+                              AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+                        )               AS numbers,
+                        (
+                            SELECT COUNT(B.ORDER_ID)
+                            FROM SYS_ORDER B
+                            WHERE B.FAULT_ID IS NOT NULL
+                              AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+                        )               AS number
+                 FROM SYS_ORDER A
+                          LEFT JOIN SYS_ORDER_EXCEPTION_MANAGEMENT C ON A.FAULT_ID = C.ORDER_EXCEPTION_MANAGEMENT_ID
+                 WHERE STR_TO_DATE(A.ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+                   AND A.FAULT_ID IS NOT NULL
+                 GROUP BY C.CAUSES,
+                          A.ORDER_SCENIC_SPOT_NAME
+             ) a
+    </select>
+
+    <select id="getBugStatusReasonsList" resultMap="bugStatus" parameterType="java.util.Map">
+        SELECT a.CAUSES      AS causes,
+               a.number      AS reportNum,
+               a.robotNumber AS robotNumber,
+               a.REASON      AS reportReason,
+               CASE
+
+                   WHEN a.number IS NULL
+                       OR a.number = 0 THEN
+                       '0'
+                   ELSE IFNULL(ROUND((a.number / a.numbers), 2), '0')
+                   END          reportTotal,
+               CASE
+
+                   WHEN a.number IS NULL
+                       OR a.number = 0 THEN
+                       '0'
+                   ELSE IFNULL(ROUND((a.number / a.robotNumber), 2), '0')
+                   END          orderTotal
+        FROM (
+                 SELECT A.CAUSES,
+                        A.REASON,
+                        COUNT(B.ORDER_ID)                                                                     AS number,
+                        (
+                            SELECT COUNT(B.ORDER_ID)
+                            FROM SYS_ORDER B
+                            WHERE B.FAULT_ID IS NOT NULL
+                              AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+                        )                                                                                     AS numbers,
+                        (SELECT COUNT(C.ORDER_ID)
+                         FROM SYS_ORDER C
+                         WHERE STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}) AS robotNumber
+                 FROM SYS_ORDER_EXCEPTION_MANAGEMENT A
+                          LEFT JOIN SYS_ORDER B ON A.ORDER_EXCEPTION_MANAGEMENT_ID = B.FAULT_ID
+                 GROUP BY A.ORDER_EXCEPTION_MANAGEMENT_ID
+             ) a
+    </select>
+    <select id="getBugStatusReasonsSpotList" resultMap="bugStatus" parameterType="java.util.Map">
+        SELECT a.ORDER_SCENIC_SPOT_NAME AS scenicName,
+               a.CAUSES,
+               a.reportsNumber          AS reportNum,
+               a.numbers,
+               a.number,
+               CASE
+
+                   WHEN a.reportsNumber IS NULL
+                       OR a.reportsNumber = 0 THEN
+                       '0'
+                   ELSE IFNULL(ROUND((a.reportsNumber / a.numbers), 2), '0')
+                   END                     repotTotal,
+               CASE
+
+                   WHEN a.reportsNumber IS NULL
+                       OR a.reportsNumber = 0 THEN
+                       '0'
+                   ELSE IFNULL(ROUND((a.reportsNumber / a.number), 2), '0')
+                   END                     tradeTotal,
+               a.REASON                 AS reportReason
+        FROM (
+                 SELECT A.ORDER_ID,
+                        A.ORDER_SCENIC_SPOT_NAME,
+                        C.CAUSES,
+                        C.REASON,
+                        COUNT(ORDER_ID) AS reportsNumber,
+                        (
+                            SELECT COUNT(B.ORDER_ID)
+                            FROM SYS_ORDER B
+                            WHERE B.ORDER_SCENIC_SPOT_ID = A.ORDER_SCENIC_SPOT_ID
+                              AND B.FAULT_ID IS NOT NULL
+                              AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+                        )               AS numbers,
+                        (
+                            SELECT COUNT(B.ORDER_ID)
+                            FROM SYS_ORDER B
+                            WHERE B.FAULT_ID IS NOT NULL
+                              AND STR_TO_DATE(ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+                        )               AS number
+                 FROM SYS_ORDER A
+                          LEFT JOIN SYS_ORDER_EXCEPTION_MANAGEMENT C ON A.FAULT_ID = C.ORDER_EXCEPTION_MANAGEMENT_ID
+                 WHERE STR_TO_DATE(A.ORDER_START_TIME, '%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+                   AND A.FAULT_ID IS NOT NULL
+                 GROUP BY C.ORDER_EXCEPTION_MANAGEMENT_ID,
+                          A.ORDER_SCENIC_SPOT_NAME
+             ) a
+    </select>
+    <select id="getWholeCountryScenicSpotRankingList" resultMap="ScenicSpotRanking" parameterType="java.util.Map">
+        SELECT
+        a.scenicSpotName,
+        /*景区名称*/
+        round(a.operationTime/60 , 2) as operationTime,
+        /*订单时长*/
+        a.orderNumber,
+        /*已付款订单数量*/
+        a.orderAmount,
+        /*已付款订单金额*/
+        b.orderNumbers,
+        /*所有订单数量*/
+        c.operatePeople,
+        /*打卡人次*/
+        c.operatingTime,
+        /*景区运营时长*/
+        d.targetAmount,
+        /*目标金额*/
+        e.robotLaunchQuantity,
+        /*机器人数量*/
+        f.faultId,
+        /*故障订单*/
+        b.jxz,
+        b.wzf,
+        b.wzfje,
+        CASE
+        WHEN a.orderAmount IS NULL
+        OR a.orderAmount = 0 THEN
+        '0'
+        WHEN d.targetAmount IS NULL
+        OR d.targetAmount = 0 THEN
+        '0' ELSE IFNULL( ROUND( ( a.orderAmount / ( d.targetAmount * 1 ) ), 2 ), '0' )
+        END completionRatio,
+        /*目标完成比例*/
+        CASE
+        WHEN a.orderNumber IS NULL
+        OR a.orderNumber = 0 THEN
+        '0'
+        WHEN e.robotLaunchQuantity IS NULL
+        OR e.robotLaunchQuantity = 0 THEN
+        '0' ELSE IFNULL( ROUND( ( a.orderNumber / e.robotLaunchQuantity ), 2 ), '0' )
+        END robotReceivingOrder,
+        /*单台机器人接单量*/
+        CASE
+
+        WHEN a.orderAmount IS NULL
+        OR a.orderAmount = 0 THEN
+        '0'
+        WHEN e.robotLaunchQuantity IS NULL
+        OR e.robotLaunchQuantity = 0 THEN
+        '0' ELSE IFNULL( ROUND( ( a.orderAmount / e.robotLaunchQuantity ), 2 ), '0' )
+        END robotOutputValue,
+        /*单台机器人产值*/
+        CASE
+
+        WHEN a.operationTime IS NULL
+        OR a.operationTime = 0 THEN
+        '0'
+        WHEN e.robotLaunchQuantity IS NULL
+        OR e.robotLaunchQuantity = 0 THEN
+        '0' ELSE IFNULL( ROUND( ( a.operationTime / e.robotLaunchQuantity/60 ), 2 ), '0' )
+        END robotOperationTime,
+        /*单台机器人运营时长*/
+        CASE
+
+        WHEN a.operationTime IS NULL
+        OR a.operationTime = 0 THEN
+        '0'
+        WHEN c.operatePeople IS NULL
+        OR c.operatePeople = 0 THEN
+        '0' ELSE IFNULL( ROUND( ( a.orderNumber / c.operatePeople ), 2 ), '0' )
+        END operatorsReceivingOrder,
+        /*单运营人员接单量*/
+        CASE
+
+        WHEN a.operationTime IS NULL
+        OR a.operationTime = 0 THEN
+        '0'
+        WHEN c.operatingTime IS NULL
+        OR c.operatingTime = 0 THEN
+        '0' ELSE IFNULL( ROUND( ( a.operationTime / ( c.operatingTime * e.robotLaunchQuantity ) ) * 100, 2 ), '0' )
+        END robotUtilization,
+        /*机器人利用率*/
+        CASE
+
+        WHEN a.orderAmount IS NULL
+        OR a.orderAmount = 0 THEN
+        '0'
+        WHEN a.orderNumber IS NULL
+        OR a.orderNumber = 0 THEN
+        '0' ELSE IFNULL( ROUND( ( a.orderAmount / a.orderNumber ), 2 ), '0' )
+        END unitPricePerCustomer,
+        /*客单价*/
+        CASE
+
+        WHEN b.orderNumbers IS NULL
+        OR b.orderNumbers = 0 THEN
+        '0'
+        WHEN f.faultId IS NULL
+        OR f.faultId = 0 THEN
+        '0' ELSE IFNULL( ROUND( ( f.faultId / b.orderNumbers ), 2 ), '0' )
+        END failureRate /*故障率*/
+
+        FROM
+        (
+        SELECT
+        spot.SCENIC_SPOT_NAME AS scenicSpotName,
+        spot.SCENIC_SPOT_ID AS scenicSpotId,
+        /*订单时长*/
+        IFNULL( cast( SUM( orders.TOTAL_TIME ) AS DECIMAL ( 15, 2 ) ), '0' ) AS operationTime,
+        /*已付款订单数量*/
+        COUNT( orders.ORDER_ID ) AS orderNumber,
+        /*已付款订单金额*/
+        IFNULL( cast( SUM( orders.ORDER_AMOUNT - orders.ORDER_REFUND_AMOUNT + orders.DEDUCTIBLE_AMOUNT ) AS DECIMAL (
+        15, 2 ) ), '0' ) AS orderAmount
+        FROM
+        SYS_SCENIC_SPOT spot,
+        SYS_ORDER orders FORCE INDEX ( IDX_SCENICSPOTID_ORDERSTATUS_CREATEDATE )
+        WHERE
+        spot.SCENIC_SPOT_ID = orders.ORDER_SCENIC_SPOT_ID
+        AND orders.ORDER_STATUS = '30'
+        <if test='scenicSpotId  != null and scenicSpotId != ""'>
+            and spot.SCENIC_SPOT_ID = #{scenicSpotId}
+        </if>
+        <if test='companyId  != null and companyId != ""'>
+            AND spot.COMPANY_ID = #{companyId}
+        </if>
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        GROUP BY
+        spot.SCENIC_SPOT_ID
+        ) a
+        LEFT JOIN (
+        SELECT
+        spot.SCENIC_SPOT_ID AS scenicSpotId,
+        COUNT(orders.ORDER_ID) AS orderNumbers,
+        SUM(CASE when orders.ORDER_STATUS = '20' THEN 1 else 0 end) as wzf,
+        SUM(CASE when orders.ORDER_STATUS = '10' THEN 1 else 0 end) as jxz,
+        round(SUM(CASE when orders.ORDER_STATUS = '20' THEN orders.ORDER_AMOUNT else 0 end) , 2) as wzfje
+        FROM
+        SYS_SCENIC_SPOT spot
+        LEFT JOIN SYS_ORDER orders ON spot.SCENIC_SPOT_ID = orders.ORDER_SCENIC_SPOT_ID
+        <where>
+            <if test='scenicSpotId  != null and scenicSpotId != ""'>
+                and spot.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test='companyId  != null and companyId != ""'>
+                AND spot.COMPANY_ID = #{companyId}
+            </if>
+            <if test='dataType == "1"'>
+                and STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+            </if>
+            <if test='dataType == "2"'>
+                and DATE_FORMAT(STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+            </if>
+            <if test='dataType == "3"'>
+                and DATE_FORMAT(STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+            </if>
+        </where>
+        GROUP BY
+        spot.SCENIC_SPOT_ID
+        ) b ON a.scenicSpotId = b.scenicSpotId
+        LEFT JOIN (
+        SELECT
+        spot.SCENIC_SPOT_ID AS scenicSpotId,
+        /*打卡人次*/
+        IFNULL( cast( SUM( rules.OPERATE_PEOPLE ) AS DECIMAL ( 15, 2 ) ), '0' ) AS operatePeople,
+        /*景区运营时长*/
+        IFNULL( cast( SUM( rules.OPERATING_TIME ) AS DECIMAL ( 15, 2 ) ), '0' ) AS operatingTime
+        FROM
+        SYS_SCENIC_SPOT spot
+        LEFT JOIN SYS_SCENIC_SPOT_OPERATION_RULES rules ON spot.SCENIC_SPOT_ID = rules.SCENIC_SPOT_ID
+        <where>
+            <if test='scenicSpotId  != null and scenicSpotId != ""'>
+                and spot.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test='companyId  != null and companyId != ""'>
+                AND spot.COMPANY_ID = #{companyId}
+            </if>
+            <if test='dataType == "1"'>
+                and STR_TO_DATE(rules.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+            </if>
+            <if test='dataType == "2"'>
+                and DATE_FORMAT(STR_TO_DATE(rules.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+            </if>
+            <if test='dataType == "3"'>
+                and DATE_FORMAT(STR_TO_DATE(rules.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+            </if>
+        </where>
+        GROUP BY
+        spot.SCENIC_SPOT_ID
+        ) c ON a.scenicSpotId = c.scenicSpotId
+        LEFT JOIN (
+        SELECT
+        spot.SCENIC_SPOT_ID AS scenicSpotId,
+        TARGET_AMOUNT AS targetAmount
+        FROM
+        SYS_SCENIC_SPOT spot
+        LEFT JOIN SYS_SCENIC_SPOT_TARGET_AMOUNT amount ON spot.SCENIC_SPOT_ID = amount.SCENIC_SPOT_ID
+        <where>
+            <if test='scenicSpotId  != null and scenicSpotId != ""'>
+                and spot.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test='companyId  != null and companyId != ""'>
+                AND spot.COMPANY_ID = #{companyId}
+            </if>
+            <if test='dataType  != null and dataType != ""'>
+                AND amount.TARGET_STATE = #{dataType}
+            </if>
+        </where>
+        GROUP BY
+        spot.SCENIC_SPOT_ID
+        ) d ON a.scenicSpotId = d.scenicSpotId
+        LEFT JOIN (
+        SELECT
+        spot.SCENIC_SPOT_ID AS scenicSpotId,
+        COUNT( robot.ROBOT_ID ) AS robotLaunchQuantity
+        FROM
+        SYS_SCENIC_SPOT spot
+        LEFT JOIN SYS_ROBOT robot ON spot.SCENIC_SPOT_ID = robot.SCENIC_SPOT_ID
+        <where>
+            <if test='scenicSpotId  != null and scenicSpotId != ""'>
+                and spot.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test='companyId  != null and companyId != ""'>
+                AND spot.COMPANY_ID = #{companyId}
+            </if>
+        </where>
+        GROUP BY
+        spot.SCENIC_SPOT_ID
+        ) e ON a.scenicSpotId = e.scenicSpotId
+        LEFT JOIN (
+        SELECT
+        spot.SCENIC_SPOT_ID AS scenicSpotId,
+        /*所有订单数量*/
+        COUNT( orders.ORDER_ID ) AS faultId
+        FROM
+        SYS_SCENIC_SPOT spot
+        LEFT JOIN SYS_ORDER orders ON spot.SCENIC_SPOT_ID = orders.ORDER_SCENIC_SPOT_ID
+        <where>
+            <if test='scenicSpotId  != null and scenicSpotId != ""'>
+                and spot.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test='companyId  != null and companyId != ""'>
+                AND spot.COMPANY_ID = #{companyId}
+            </if>
+            <if test='dataType == "1"'>
+                and STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+            </if>
+            <if test='dataType == "2"'>
+                and DATE_FORMAT(STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+            </if>
+            <if test='dataType == "3"'>
+                and DATE_FORMAT(STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+            </if>
+        </where>
+        AND orders.FAULT_ID IS NOT NULL
+        GROUP BY
+        spot.SCENIC_SPOT_ID
+        ) f ON a.scenicSpotId = f.scenicSpotId
+        <if test="type != null and type != ''">
+            ORDER BY ${field}+0 ${type}
+        </if>
+    </select>
+
+    <select id="getWholeCountryScenicSpotRankingSum"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.ScenicSpotRanking">
+        SELECT '合计' as scenicSpotName,
+        round(SUM(a.operationTime) ,2) as operationTime,
+        SUM(a.orderNumber) as orderNumber,
+        ROUND(cast(SUM(a.orderAmount)AS DECIMAL(15, 2)), 2) as orderAmount,
+        '' as orderNumbers,
+        '' as operatePeople,
+        '' as operatingTime,
+        '' as targetAmount,
+        '' as robotLaunchQuantity,
+        '' as faultId,
+        SUM(b.jxz) as jxz,
+        SUM(b.wzf) as wzf,
+        SUM(b.wzfje) as wzfje,
+        '' as completionRatio,
+        '' as robotReceivingOrder,
+        '' as robotOutputValue,
+        '' as robotOperationTime,
+        '' as operatorsReceivingOrder,
+        '' as robotUtilization,
+        '' as unitPricePerCustomer,
+        '' as failureRate
+        FROM (
+        SELECT spot.SCENIC_SPOT_NAME AS scenicSpotName,
+        spot.SCENIC_SPOT_ID AS scenicSpotId,
+        IFNULL(cast(SUM(orders.TOTAL_TIME/60) AS DECIMAL(15, 2)), '0') AS operationTime,
+        COUNT(orders.ORDER_ID) AS orderNumber,
+        IFNULL(cast(SUM(orders.ORDER_AMOUNT - orders.ORDER_REFUND_AMOUNT +
+        orders.DEDUCTIBLE_AMOUNT) AS DECIMAL(20, 2)), '0') AS orderAmount
+        FROM SYS_SCENIC_SPOT spot,
+        SYS_ORDER orders FORCE INDEX (IDX_SCENICSPOTID_ORDERSTATUS_CREATEDATE)
+        WHERE spot.SCENIC_SPOT_ID = orders.ORDER_SCENIC_SPOT_ID
+        AND orders.ORDER_STATUS = '30'
+        <if test='scenicSpotId  != null and scenicSpotId != ""'>
+            and spot.SCENIC_SPOT_ID = #{scenicSpotId}
+        </if>
+        <if test='companyId  != null and companyId != ""'>
+            AND spot.COMPANY_ID = #{companyId}
+        </if>
+        <if test='dataType == "1"'>
+            and STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "2"'>
+            and DATE_FORMAT(STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+        </if>
+        <if test='dataType == "3"'>
+            and DATE_FORMAT(STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+        </if>
+        GROUP BY spot.SCENIC_SPOT_ID) a
+        LEFT JOIN (
+        SELECT spot.SCENIC_SPOT_ID AS scenicSpotId,
+        COUNT(orders.ORDER_ID) AS orderNumbers,
+        SUM(CASE when orders.ORDER_STATUS = '20' THEN 1 else 0 end) as wzf,
+        SUM(CASE when orders.ORDER_STATUS = '10' THEN 1 else 0 end) as jxz,
+        round(SUM(CASE when orders.ORDER_STATUS = '20' THEN orders.ORDER_AMOUNT else 0 end), 2) as wzfje
+        FROM SYS_SCENIC_SPOT spot
+        LEFT JOIN SYS_ORDER orders ON
+        spot.SCENIC_SPOT_ID = orders.ORDER_SCENIC_SPOT_ID
+        <where>
+            <if test='scenicSpotId  != null and scenicSpotId != ""'>
+                and spot.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test='companyId  != null and companyId != ""'>
+                AND spot.COMPANY_ID = #{companyId}
+            </if>
+            <if test='dataType == "1"'>
+                and STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d') between #{startTime} and #{endTime}
+            </if>
+            <if test='dataType == "2"'>
+                and DATE_FORMAT(STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{startTime} and #{endTime}
+            </if>
+            <if test='dataType == "3"'>
+                and DATE_FORMAT(STR_TO_DATE(orders.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{startTime} and #{endTime}
+            </if>
+        </where>
+        GROUP BY spot.SCENIC_SPOT_ID) b ON
+        a.scenicSpotId = b.scenicSpotId
+    </select>
+
+    <select id="getOrderListPoi" resultMap="sysOrderExcel" parameterType="java.util.Map">
+        SELECT
+        A.ORDER_AMOUNT AS orderAmount,
+        A.ACTUAL_AMOUNT AS actualAmount,
+        A.ORDER_DISCOUNT AS orderDiscount,
+        A.ORDER_SCENIC_SPOT_NAME AS orderScenicSpotName,
+        A.ORDER_NUMBER AS orderNumber,
+        A.ORDER_START_TIME AS orderStartTime,
+        A.ORDER_END_TIME AS orderEndTime,
+        A.ORDER_ROBOT_CODE AS orderRobotCode,
+        A.ORDER_STATUS AS orderStatus,
+        A.DISPATCHING_FEE AS dispatchingFee,
+        A.REASONS_REFUNDS AS reasonsRefunds,
+        A.ORDER_REFUND_AMOUNT AS orderRefundAmount,
+        A.TOTAL_TIME AS totalTime,
+        A.CURRENT_USER_PHONE AS currentUserPhone,
+        A.ORDER_GPS_COORDINATE,
+        A.DEDUCTIBLE_AMOUNT AS deductibleAmount,
+        A.HUNTS_STATE AS huntsState,
+        ROUND( A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT, 2 ) AS realIncome
+        FROM
+        SYS_ORDER A
+        LEFT JOIN SYS_USERS_ROLE_SPOT B ON B.SCENIC_SPOT_ID = A.ORDER_SCENIC_SPOT_ID
+        <where>
+            <if test="userId != null and userId != ''">
+                AND B.USER_ID = #{userId}
+            </if>
+            <if test="currentUserPhone != null and currentUserPhone != ''">
+                AND A.CURRENT_USER_PHONE LIKE CONCAT(#{currentUserPhone},'%')
+            </if>
+            <if test="orderRobotCode != null and orderRobotCode != ''">
+                AND A.ORDER_ROBOT_CODE = #{orderRobotCode}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="time != null and time != ''">
+                AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{time}
+            </if>
+            <if test="paymentMethod != null and paymentMethod != ''">
+                AND FIND_IN_SET(A.PAYMENT_METHOD,#{paymentMethod})
+            </if>
+            <if test="subMethod != null and subMethod != ''">
+                AND A.SUB_METHOD = #{subMethod}
+            </if>
+            <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+                AND A.ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId}
+            </if>
+            <if test="orderStatus != null and orderStatus != ''">
+                AND A.ORDER_STATUS = #{orderStatus}
+            </if>
+            <if test="orderRobotCode != null and orderRobotCode != ''">
+                AND A.ORDER_ROBOT_CODE LIKE CONCAT(#{orderRobotCode},'%')
+            </if>
+            <if test="paymentPort != null and paymentPort != ''">
+                AND FIND_IN_SET(A.PAYMENT_PORT,#{paymentPort})
+            </if>
+            <if test="huntsState != null and huntsState != ''">
+                AND A.HUNTS_STATE = #{huntsState}
+            </if>
+            <if test='type == "1"'>
+                AND START_ORDER_PARKING_ID = #{orderParkingId}
+            </if>
+            <if test='type == "2"'>
+                AND ORDER_PARKING_ID = #{orderParkingId}
+            </if>
+        </where>
+        ORDER BY A.ORDER_START_TIME DESC
+    </select>
+
+    <select id="getRobotCodeByDayTime" resultType="java.lang.Integer">
+        SELECT SUM(timestampdiff(MINUTE,so.ORDER_START_TIME, so.ORDER_END_TIME)) AS time
+        FROM SYS_ORDER AS so
+        WHERE so.ORDER_ROBOT_CODE=#{robotCode}
+          AND ORDER_START_TIME &gt;= DATE_FORMAT(CURDATE()
+            , '%Y-%m-%d %00:%00:%00')
+    </select>
+
+    <select id="getRobotCodeByMonthTime" resultType="java.lang.Integer">
+        SELECT SUM(timestampdiff(MINUTE,so.ORDER_START_TIME, so.ORDER_END_TIME)) AS time
+        FROM SYS_ORDER AS so
+        WHERE so.ORDER_ROBOT_CODE=#{robotCode}
+          AND ORDER_START_TIME &gt;= DATE_FORMAT(DATE_ADD(curdate()
+            , interval - day (curdate())+1 day)
+            , '%Y-%m-%d %00:%00:%00')
+    </select>
+
+    <select id="getRobotCodeByYearTime" resultType="java.lang.Integer">
+        SELECT SUM(timestampdiff(MINUTE,so.ORDER_START_TIME, so.ORDER_END_TIME)) AS time
+        FROM SYS_ORDER AS so
+        WHERE so.ORDER_ROBOT_CODE=#{robotCode}
+          AND ORDER_START_TIME &gt;= DATE_FORMAT(DATE_SUB(CURDATE()
+            , INTERVAL dayofyear(now())-1 DAY)
+            , '%Y-%m-%d %00:%00:%00')
+    </select>
+
+    <select id="getRobotCodeByAccumulateTime" resultType="java.lang.Integer">
+        SELECT SUM(timestampdiff(MINUTE,so.ORDER_START_TIME, so.ORDER_END_TIME)) AS time
+        FROM SYS_ORDER AS so
+        WHERE so.ORDER_ROBOT_CODE=#{robotCode}
+    </select>
+
+    <select id="getRobotIdList" resultType="com.hna.hka.archive.management.system.model.SysOrder">
+        select * from SYS_ORDER
+        <where>
+            <if test="robotCode != null and robotCode != ''">
+                ORDER_ROBOT_CODE = #{robotCode}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getSpotIdAndTimeByIncome" resultType="java.lang.Double">
+        select SUM(ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ))
+        from SYS_ORDER
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="startTime != null and startTime != null">
+                and CREATE_DATE &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != null">
+                and CREATE_DATE &lt;= #{endTime}
+            </if>
+            and ORDER_STATUS = 30
+        </where>
+    </select>
+
+    <select id="getSpotIdAndTimeByOperationDuration" resultType="java.lang.Double">
+        select ROUND(SUM(SYS_SCENIC_OPERATIONAL_INVENTORY.TOTAL_TIME)/60, 2)
+        from SYS_SCENIC_OPERATIONAL_INVENTORY
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="startTime != null and startTime != null">
+                and DATE &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != null">
+                and DATE &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="getSpotIdAndTimeByRunningAmount" resultType="java.lang.Double">
+        select SUM(ROUND( ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 ))
+        from SYS_ORDER
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="startTime != null and startTime != null">
+                AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != null">
+                AND DATE(CREATE_DATE) <![CDATA[ >= ]]> #{endTime}
+            </if>
+            and ORDER_STATUS = 30
+        </where>
+    </select>
+
+    <select id="getSpotIdByRevenue" resultType="java.lang.Double">
+        select SUM(ORDER_AMOUNT-ORDER_REFUND_AMOUNT)
+        from SYS_ORDER
+        <where>
+            <if test="startDate != null and startDate != ''">
+                and CREATE_DATE LIKE CONCAT("%",#{startDate},"%")
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            and ORDER_STATUS = 30
+        </where>
+
+    </select>
+
+
+    <select id="getOrderRobotCountBySpotId" resultType="java.lang.Long">
+        select COUNT(DISTINCT ROBOT_CODE)
+        from SYS_ROBOT A
+                 left join SYS_ORDER B on A.ROBOT_CODE = B.ORDER_ROBOT_CODE
+        where B.ORDER_SCENIC_SPOT_ID = #{spotId}
+          AND DATE (B.CREATE_DATE) <![CDATA[ >= ]]> #{startDate}
+          AND DATE (B.CREATE_DATE) <![CDATA[ <= ]]> #{endDate}
+    </select>
+
+
+    <update id="modifyRefundStatus">
+        update SYS_ORDER
+        set REFUND_STATUS = #{type,jdbcType=VARCHAR}
+        where ORDER_ID = #{orderId,jdbcType=BIGINT}
+    </update>
+
+    <select id="getOrderRobotCount" resultType="java.lang.Integer">
+        select COUNT(DISTINCT ORDER_ROBOT_CODE)
+        from SYS_ORDER
+        <where>
+            <if test="date != null and date != ''">
+                and CREATE_DATE like CONCAT("%",#{date},"%")
+            </if>
+            <if test="spotId != null and spotId != ''">
+                and ORDER_SCENIC_SPOT_ID = #{spotId}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="getOrderSpotRobotCount" resultType="java.lang.Integer">
+        select COUNT(DISTINCT ORDER_ROBOT_CODE)
+        from SYS_ORDER
+        <where>
+            <if test="spotId != null and spotId != ''">
+                and ORDER_SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and CREATE_DATE &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and CREATE_DATE &lt;= #{endTime}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="getPaymentOrderFlowingWater" resultType="java.lang.Double">
+        select SUM(ORDER_AMOUNT-ORDER_REFUND_AMOUNT)
+        from SYS_ORDER
+        <where>
+            <if test="yearsDate != null and yearsDate != ''">
+                and CREATE_DATE LIKE CONCAT("%",#{yearsDate},"%")
+            </if>
+            <if test="spotId != null and spotId != ''">
+                and ORDER_SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="paymentMethod != null and paymentMethod != ''">
+                and PAYMENT_METHOD = #{paymentMethod}
+            </if>
+            and ORDER_STATUS = 30
+        </where>
+    </select>
+
+    <select id="isItEmpty" resultType="com.hna.hka.archive.management.appSystem.model.IsItEmpty">
+        select *
+        from IS_IT_EMPTY_APP
+    </select>
+
+    <update id="exitIsItEmpty" parameterType="java.lang.String">
+        update IS_IT_EMPTY_APP
+        set IS_IT_EMPTY = #{type}
+    </update>
+
+
+    <select id="getCurrentDateOrder" resultType="com.hna.hka.archive.management.system.model.SysOrder">
+
+        select *
+        from SYS_ORDER
+        <!--    where  STR_TO_DATE(SUBSTR(CREATE_DATE,1,10),'%Y-%m-%d')  = curdate()-->
+        where
+        DATE(CREATE_DATE) <![CDATA[ <= ]]> #{date}
+        and ORDER_ROBOT_CODE =#{robotCode}
+        order by CREATE_DATE desc
+        limit 1
+
+    </select>
+
+
+    <select id="getSpotIdByOrder" resultType="java.lang.Integer">
+
+        select COUNT(0)
+        from SYS_ORDER
+        where SUBSTR(CREATE_DATE, 1, 10) &gt;= #{startDate}
+          and SUBSTR(CREATE_DATE, 1, 10) &lt;= #{endDate}
+          and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+    </select>
+
+    <select id="getSpotIdFirstOrder" resultType="com.hna.hka.archive.management.system.model.SysOrder">
+        select *
+        from SYS_ORDER
+        where ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+        order by CREATE_DATE asc limit 1
+    </select>
+    <select id="getSpotIdLastOrder" resultType="com.hna.hka.archive.management.system.model.SysOrder">
+        select *
+        from SYS_ORDER
+        where ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+        order by CREATE_DATE desc limit 1
+    </select>
+
+    <select id="getRobotWarehouseYearCount" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where SUBSTR(CREATE_DATE, 1, 4) &gt;= #{startTime}
+                and SUBSTR(CREATE_DATE, 1, 4) &lt;= #{endTime}
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+              GROUP BY ORDER_ROBOT_CODE) a
+    </select>
+
+    <select id="getRobotWarehouseYearCountNew" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where CREATE_DATE like CONCAT('%', #{year}, '%')
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+              GROUP BY ORDER_ROBOT_CODE) a
+    </select>
+
+    <select id="getRobotWarehouseYearDateCount" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where CREATE_DATE like CONCAT('%', #{year}, '%')
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+              GROUP BY SUBSTR(CREATE_DATE, 1, 10)) a
+
+    </select>
+
+    <select id="getRobotWarehouseMonthCount" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where SUBSTR(CREATE_DATE, 1, 7) &gt;= #{startTime}
+                and SUBSTR(CREATE_DATE, 1, 7) &lt;= #{endTime}
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+              GROUP BY ORDER_ROBOT_CODE) a
+    </select>
+
+    <select id="getRobotWarehouseMonthCountNew" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where CREATE_DATE like CONCAT('%', #{month}, '%')
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+              GROUP BY ORDER_ROBOT_CODE) a
+    </select>
+
+    <select id="getRobotWarehouseMonthDateCount" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where CREATE_DATE like CONCAT('%', #{month}, '%')
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+              GROUP BY SUBSTR(CREATE_DATE, 1, 10)) a
+    </select>
+
+    <select id="getRobotWarehouseDayCount" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where SUBSTR(CREATE_DATE, 1, 10) &gt;= #{startTime}
+                and SUBSTR(CREATE_DATE, 1, 10) &lt;= #{endTime}
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+              GROUP BY ORDER_ROBOT_CODE) a
+    </select>
+
+    <select id="getRobotWarehouseDayCountNew" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where CREATE_DATE like CONCAT('%', #{day}, '%')
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+              GROUP BY ORDER_ROBOT_CODE) a
+    </select>
+
+    <select id="getRobotWarehouseDayDateCount" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where CREATE_DATE like CONCAT('%', #{day}, '%')
+                and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+              GROUP BY SUBSTR(CREATE_DATE, 1, 10)) a
+    </select>
+
+
+    <select id="getTimeSlotOperateDay" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+                and SUBSTR(DATE(CREATE_DATE),1, 10) &gt;= #{startTime}
+                and SUBSTR(DATE(CREATE_DATE),1, 10) &lt;= #{endTime}
+              GROUP BY SUBSTR(CREATE_DATE, 1, 10)) a
+    </select>
+
+
+    <select id="getTimeSlotOperateRobot" resultType="java.lang.Integer">
+        select COUNT(0)
+        from (select COUNT(ORDER_ROBOT_CODE)
+              from SYS_ORDER
+              where ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+                and SUBSTR(DATE(CREATE_DATE),1, 10) &gt;= #{startTime}
+                and SUBSTR(DATE(CREATE_DATE),1, 10) &lt;= #{endTime}
+              GROUP BY ORDER_ROBOT_CODE) a
+    </select>
+
+
+    <select id="getSysRobotOrderCount" resultType="java.lang.Integer">
+        select COUNT(*)
+        from SYS_ORDER
+        where ORDER_ROBOT_CODE = #{robotId}
+          and CREATE_DATE &gt;= #{startTime}
+          and CREATE_DATE &lt;= #{endTime}
+    </select>
+
+    <select id="getSysRobotTotalTime" resultType="java.lang.Integer">
+        select SUM(TOTAL_TIME)
+        from SYS_ORDER
+        where ORDER_ROBOT_CODE = #{robotId}
+          and CREATE_DATE &gt;= #{startTime}
+          and CREATE_DATE &lt;= #{endTime}
+    </select>
+
+
+    <select id="getMonthByMoney" resultType="java.lang.Double">
+        select SUM(ORDER_AMOUNT - ORDER_REFUND_AMOUNT)
+        from SYS_ORDER
+        where CREATE_DATE like CONCAT('%', #{data}, '%')
+          and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+          and ORDER_STATUS = 30
+    </select>
+
+    <select id="getSpotIdAndTimeLikeByFlowingWater" resultType="java.lang.Double">
+
+        select SUM( ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 )) from SYS_ORDER
+        <where>
+            <if test="spotId != null">
+                ORDER_SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="date != null">
+                and CREATE_DATE like CONCAT('%',#{date},'%')
+            </if>
+            <if test='type == "1"'>
+                and (PAYMENT_METHOD = #{type}
+                and SUB_METHOD = 0)
+            </if>
+            <if test='type == "3"'>
+                and (PAYMENT_METHOD = #{type}
+                and SUB_METHOD = 1)
+            </if>
+            <if test='type == "5"'>
+                and (PAYMENT_METHOD = #{type}
+                and SUB_METHOD = 0)
+            </if>
+            <if test='type == "4" '>
+                and (PAYMENT_METHOD = 1
+                and SUB_METHOD = 2)
+            </if>
+            and ORDER_STATUS = 30
+        </where>
+    </select>
+
+    <select id="getOrderStatementSummary" resultType="java.lang.Double">
+        select SUM( ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2 )) from SYS_ORDER
+        <where>
+            1=1
+            <if test="spotId != null">
+                and ORDER_SCENIC_SPOT_ID = #{spotId}
+            </if>
+            <if test="startTime != null">
+                and SUBSTR(CREATE_DATE,1,7) <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null">
+                and SUBSTR(CREATE_DATE,1,7) <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test='type == "1"'>
+                and (PAYMENT_METHOD = #{type}
+                and SUB_METHOD = 0)
+            </if>
+            <if test='type == "3"'>
+                and (PAYMENT_METHOD = #{type}
+                and SUB_METHOD = 1)
+            </if>
+            <if test='type == "5"'>
+                and (PAYMENT_METHOD = #{type}
+                and SUB_METHOD = 0)
+            </if>
+            <if test='type == "4" '>
+                and (PAYMENT_METHOD = 1
+                and SUB_METHOD = 2)
+            </if>
+            and ORDER_STATUS = 30
+        </where>
+    </select>
+
+    <select id="getOrderNumberBySpotIdAndParkIdAndDate" resultType="java.lang.Integer">
+        select COUNT(0)
+        from SYS_ORDER
+        where ORDER_SCENIC_SPOT_ID = #{spotId}
+          and START_ORDER_PARKING_ID = #{parkingId}
+          and CREATE_DATE like CONCAT(#{date}, '%')
+          and ORDER_STATUS = 30
+    </select>
+
+    <select id="getOrderMoneyBySpotIdAndParkIdAndDate" resultType="java.lang.Double">
+        select SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT, 2))
+        from SYS_ORDER
+        where ORDER_SCENIC_SPOT_ID = #{spotId}
+          and START_ORDER_PARKING_ID = #{parkingId}
+          and CREATE_DATE like CONCAT(#{date}, '%')
+    </select>
+
+    <select id="getRobotAndDateByOrder" resultType="com.hna.hka.archive.management.system.model.SysOrder">
+        select *
+        from SYS_ORDER
+        where ORDER_ROBOT_CODE = #{robotCode}
+        and ORDER_STATUS = 30
+        order by ORDER_START_TIME DESC
+        <choose>
+            <when test="robotCode == 2000364">
+                limit 0,1
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getRobotCodeByOneOrder" resultType="com.hna.hka.archive.management.system.model.SysOrder">
+        select *
+        from SYS_ORDER
+        where ORDER_ROBOT_CODE = #{robotCode}
+          and ORDER_STATUS not in (10, 20)
+        order by ORDER_START_TIME DESC limit 0,10
+    </select>
+
+    <select id="getJXZOrder" resultType="java.lang.Integer">
+        select COUNT(0)
+        from SYS_ORDER
+        where ORDER_STATUS = 10
+          and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+          and CREATE_DATE like CONCAT(#{date}, '%')
+    </select>
+
+    <select id="getOrderPrice" resultType="java.lang.Double">
+        select IFNULL(ROUND(SUM(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT), 2), 0)
+        from SYS_ORDER
+        where ORDER_STATUS = 30
+          and ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+          and CREATE_DATE like CONCAT(#{date}, '%')
+    </select>
+
+    <select id="getSpotIdAndStatusByList" resultType="com.hna.hka.archive.management.system.model.SysOrder">
+        SELECT so.*
+        FROM SYS_ORDER so
+        WHERE ORDER_STATUS = 10
+          and so.ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+          AND TimeStampDiff(
+                  MINUTE, ORDER_START_TIME,
+                          NOW()) <![CDATA[ >= ]]>  #{orderAbnormalTime}
+    </select>
+    <select id="getTotle" resultType="java.lang.Integer">
+        select COUNT(0)
+        from SYS_ORDER A
+        <where>
+            1=1
+            <if test="startTime != null and startTime != ''">
+                AND A.CREATE_DATE <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND A.CREATE_DATE <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="time != null and time != ''">
+                AND A.CREATE_DATE <![CDATA[ >= ]]> #{time}
+            </if>
+            <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+                AND A.ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId}
+            </if>
+            AND A.ORDER_STATUS = 30
+            AND FIND_IN_SET( A.PAYMENT_METHOD, '1,4' )
+            AND A.SUB_METHOD = 0
+            AND FIND_IN_SET( A.PAYMENT_PORT, '0,1,2' )
+        </where>
+    </select>
+
+
+</mapper>

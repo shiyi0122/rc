@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotRechargeAmountMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotRechargeAmount" >
+    <id column="RECHARGE_ID" property="rechargeId" jdbcType="BIGINT" />
+    <result column="RECHARGE_SCENIC_SPOT_ID" property="rechargeScenicSpotId" jdbcType="BIGINT" />
+    <result column="RECHARGE_SCENIC_SPOT_NAME" property="rechargeScenicSpotName" jdbcType="VARCHAR" />
+    <result column="RECHARGE_AMOUNT" property="rechargeAmount" jdbcType="VARCHAR" />
+    <result column="RECHARGE_DISCOUNT" property="rechargeDiscount" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.hna.hka.archive.management.system.model.SysScenicSpotRechargeAmount" extends="BaseResultMap" >
+    <result column="RECHARGE_RULE" property="rechargeRule" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RECHARGE_ID, RECHARGE_SCENIC_SPOT_ID, RECHARGE_SCENIC_SPOT_NAME, RECHARGE_AMOUNT, 
+    RECHARGE_DISCOUNT, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    RECHARGE_RULE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_RECHARGE_AMOUNT
+    where RECHARGE_ID = #{rechargeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_RECHARGE_AMOUNT
+    where RECHARGE_ID = #{rechargeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRechargeAmount" >
+    insert into SYS_SCENIC_SPOT_RECHARGE_AMOUNT (RECHARGE_ID, RECHARGE_SCENIC_SPOT_ID, RECHARGE_SCENIC_SPOT_NAME, 
+      RECHARGE_AMOUNT, RECHARGE_DISCOUNT, CREATE_DATE, 
+      UPDATE_DATE, RECHARGE_RULE)
+    values (#{rechargeId,jdbcType=BIGINT}, #{rechargeScenicSpotId,jdbcType=BIGINT}, #{rechargeScenicSpotName,jdbcType=VARCHAR}, 
+      #{rechargeAmount,jdbcType=VARCHAR}, #{rechargeDiscount,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR}, #{rechargeRule,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRechargeAmount" >
+    insert into SYS_SCENIC_SPOT_RECHARGE_AMOUNT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rechargeId != null" >
+        RECHARGE_ID,
+      </if>
+      <if test="rechargeScenicSpotId != null" >
+        RECHARGE_SCENIC_SPOT_ID,
+      </if>
+      <if test="rechargeScenicSpotName != null" >
+        RECHARGE_SCENIC_SPOT_NAME,
+      </if>
+      <if test="rechargeAmount != null" >
+        RECHARGE_AMOUNT,
+      </if>
+      <if test="rechargeDiscount != null" >
+        RECHARGE_DISCOUNT,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="rechargeRule != null" >
+        RECHARGE_RULE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rechargeId != null" >
+        #{rechargeId,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeScenicSpotId != null" >
+        #{rechargeScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeScenicSpotName != null" >
+        #{rechargeScenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAmount != null" >
+        #{rechargeAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeDiscount != null" >
+        #{rechargeDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeRule != null" >
+        #{rechargeRule,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRechargeAmount" >
+    update SYS_SCENIC_SPOT_RECHARGE_AMOUNT
+    <set >
+      <if test="rechargeScenicSpotId != null" >
+        RECHARGE_SCENIC_SPOT_ID = #{rechargeScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeScenicSpotName != null" >
+        RECHARGE_SCENIC_SPOT_NAME = #{rechargeScenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAmount != null" >
+        RECHARGE_AMOUNT = #{rechargeAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeDiscount != null" >
+        RECHARGE_DISCOUNT = #{rechargeDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeRule != null" >
+        RECHARGE_RULE = #{rechargeRule,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where RECHARGE_ID = #{rechargeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRechargeAmount" >
+    update SYS_SCENIC_SPOT_RECHARGE_AMOUNT
+    set RECHARGE_SCENIC_SPOT_ID = #{rechargeScenicSpotId,jdbcType=BIGINT},
+      RECHARGE_SCENIC_SPOT_NAME = #{rechargeScenicSpotName,jdbcType=VARCHAR},
+      RECHARGE_AMOUNT = #{rechargeAmount,jdbcType=VARCHAR},
+      RECHARGE_DISCOUNT = #{rechargeDiscount,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      RECHARGE_RULE = #{rechargeRule,jdbcType=LONGVARCHAR}
+    where RECHARGE_ID = #{rechargeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotRechargeAmount" >
+    update SYS_SCENIC_SPOT_RECHARGE_AMOUNT
+    set RECHARGE_SCENIC_SPOT_ID = #{rechargeScenicSpotId,jdbcType=BIGINT},
+      RECHARGE_SCENIC_SPOT_NAME = #{rechargeScenicSpotName,jdbcType=VARCHAR},
+      RECHARGE_AMOUNT = #{rechargeAmount,jdbcType=VARCHAR},
+      RECHARGE_DISCOUNT = #{rechargeDiscount,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where RECHARGE_ID = #{rechargeId,jdbcType=BIGINT}
+  </update>
+  <select id="getRechargeAmountList" resultMap="ResultMapWithBLOBs">
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_SCENIC_SPOT_RECHARGE_AMOUNT
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

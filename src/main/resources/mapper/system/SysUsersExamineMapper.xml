@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysUsersExamineMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysUsers" >
+        <id column="USER_ID" property="userId" jdbcType="BIGINT" />
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+        <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="USER_SEX" property="userSex" jdbcType="VARCHAR" />
+        <result column="USER_BIRTHDAY" property="userBirthday" jdbcType="VARCHAR" />
+        <result column="USER_UNIT_ADDRESS" property="userUnitAddress" jdbcType="VARCHAR" />
+        <result column="USER_EMAIL" property="userEmail" jdbcType="VARCHAR" />
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+        <result column="SALT_VALUE" property="saltValue" jdbcType="VARCHAR" />
+        <result column="USER_ROLE_STATE" property="userRoleState" jdbcType="VARCHAR" />
+        <result column="USER_STATE" property="userState" jdbcType="VARCHAR" />
+        <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+        <result column="LONGIN_TOKEN_ID" property="longinTokenId" jdbcType="VARCHAR" />
+        <result column="USER_CLIENT_GT_ID" property="userClientGtId" jdbcType="VARCHAR" />
+        <result column="USER_CLIENT" property="userClient" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+        <result column="EXAMINE_STATE" property="examineState" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        USER_ID, SCENIC_SPOT_ID, LOGIN_NAME, USER_NAME, USER_SEX, USER_BIRTHDAY, USER_UNIT_ADDRESS,
+        USER_EMAIL, PASSWORD, SALT_VALUE, USER_ROLE_STATE, USER_STATE, USER_PHONE, LONGIN_TOKEN_ID,
+        USER_CLIENT_GT_ID, USER_CLIENT, CREATE_DATE, UPDATE_DATE,EXAMINE_STATE
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from SYS_USERS_EXAMINE
+        where USER_ID = #{userId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from SYS_USERS_EXAMINE
+        where USER_ID = #{userId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysUsers" >
+        insert into SYS_USERS_EXAMINE (USER_ID, SCENIC_SPOT_ID, LOGIN_NAME,
+        USER_NAME, USER_SEX, USER_BIRTHDAY,
+        USER_UNIT_ADDRESS, USER_EMAIL, PASSWORD,
+        SALT_VALUE, USER_ROLE_STATE, USER_STATE,
+        USER_PHONE, LONGIN_TOKEN_ID, USER_CLIENT_GT_ID,
+        USER_CLIENT, CREATE_DATE, UPDATE_DATE
+        )
+        values (#{userId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR},
+        #{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=VARCHAR}, #{userBirthday,jdbcType=VARCHAR},
+        #{userUnitAddress,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{saltValue,jdbcType=VARCHAR}, #{userRoleState,jdbcType=VARCHAR}, #{userState,jdbcType=VARCHAR},
+        #{userPhone,jdbcType=VARCHAR}, #{longinTokenId,jdbcType=VARCHAR}, #{userClientGtId,jdbcType=VARCHAR},
+        #{userClient,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysUsers" >
+        insert into SYS_USERS_EXAMINE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                USER_ID,
+            </if>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="loginName != null" >
+                LOGIN_NAME,
+            </if>
+            <if test="userName != null" >
+                USER_NAME,
+            </if>
+            <if test="userSex != null" >
+                USER_SEX,
+            </if>
+            <if test="userBirthday != null" >
+                USER_BIRTHDAY,
+            </if>
+            <if test="userUnitAddress != null" >
+                USER_UNIT_ADDRESS,
+            </if>
+            <if test="userEmail != null" >
+                USER_EMAIL,
+            </if>
+            <if test="password != null" >
+                PASSWORD,
+            </if>
+            <if test="saltValue != null" >
+                SALT_VALUE,
+            </if>
+            <if test="userRoleState != null" >
+                USER_ROLE_STATE,
+            </if>
+            <if test="userState != null" >
+                USER_STATE,
+            </if>
+            <if test="userPhone != null" >
+                USER_PHONE,
+            </if>
+            <if test="longinTokenId != null" >
+                LONGIN_TOKEN_ID,
+            </if>
+            <if test="userClientGtId != null" >
+                USER_CLIENT_GT_ID,
+            </if>
+            <if test="userClient != null" >
+                USER_CLIENT,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null" >
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="loginName != null" >
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null" >
+                #{userSex,jdbcType=VARCHAR},
+            </if>
+            <if test="userBirthday != null" >
+                #{userBirthday,jdbcType=VARCHAR},
+            </if>
+            <if test="userUnitAddress != null" >
+                #{userUnitAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null" >
+                #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="saltValue != null" >
+                #{saltValue,jdbcType=VARCHAR},
+            </if>
+            <if test="userRoleState != null" >
+                #{userRoleState,jdbcType=VARCHAR},
+            </if>
+            <if test="userState != null" >
+                #{userState,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null" >
+                #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="longinTokenId != null" >
+                #{longinTokenId,jdbcType=VARCHAR},
+            </if>
+            <if test="userClientGtId != null" >
+                #{userClientGtId,jdbcType=VARCHAR},
+            </if>
+            <if test="userClient != null" >
+                #{userClient,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysUsers" >
+        update SYS_USERS_EXAMINE
+        <set >
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="loginName != null" >
+                LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                USER_NAME = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null" >
+                USER_SEX = #{userSex,jdbcType=VARCHAR},
+            </if>
+            <if test="userBirthday != null" >
+                USER_BIRTHDAY = #{userBirthday,jdbcType=VARCHAR},
+            </if>
+            <if test="userUnitAddress != null" >
+                USER_UNIT_ADDRESS = #{userUnitAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null" >
+                USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="saltValue != null" >
+                SALT_VALUE = #{saltValue,jdbcType=VARCHAR},
+            </if>
+            <if test="userRoleState != null" >
+                USER_ROLE_STATE = #{userRoleState,jdbcType=VARCHAR},
+            </if>
+            <if test="userState != null" >
+                USER_STATE = #{userState,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null" >
+                USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="longinTokenId != null" >
+                LONGIN_TOKEN_ID = #{longinTokenId,jdbcType=VARCHAR},
+            </if>
+            <if test="userClientGtId != null" >
+                USER_CLIENT_GT_ID = #{userClientGtId,jdbcType=VARCHAR},
+            </if>
+            <if test="userClient != null" >
+                USER_CLIENT = #{userClient,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where USER_ID = #{userId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysUsers" >
+        update SYS_USERS_EXAMINE
+        set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+        USER_SEX = #{userSex,jdbcType=VARCHAR},
+        USER_BIRTHDAY = #{userBirthday,jdbcType=VARCHAR},
+        USER_UNIT_ADDRESS = #{userUnitAddress,jdbcType=VARCHAR},
+        USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+        PASSWORD = #{password,jdbcType=VARCHAR},
+        SALT_VALUE = #{saltValue,jdbcType=VARCHAR},
+        USER_ROLE_STATE = #{userRoleState,jdbcType=VARCHAR},
+        USER_STATE = #{userState,jdbcType=VARCHAR},
+        USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+        LONGIN_TOKEN_ID = #{longinTokenId,jdbcType=VARCHAR},
+        USER_CLIENT_GT_ID = #{userClientGtId,jdbcType=VARCHAR},
+        USER_CLIENT = #{userClient,jdbcType=VARCHAR},
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+        where USER_ID = #{userId,jdbcType=BIGINT}
+    </update>
+    <select id="findByLoginName" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SYS_USERS_EXAMINE
+        <where>
+            <if test="username != null and username != ''">
+                AND LOGIN_NAME = #{username}
+            </if>
+            <if test="userState != null and userState != ''">
+                AND USER_STATE = #{userState}
+            </if>
+        </where>
+    </select>
+    <select id="getUserList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SYS_USERS_EXAMINE
+        <where>
+            <if test="sysUsers.userName != null and sysUsers.userName != ''">
+                AND USER_NAME LIKE CONCAT('%', #{sysUsers.userName },'%')
+            </if>
+            <if test="sysUsers.loginName != null and sysUsers.loginName != ''">
+                AND LOGIN_NAME LIKE CONCAT('%', #{sysUsers.loginName },'%')
+            </if>
+        </where>
+        ORDER BY UPDATE_DATE DESC
+    </select>
+    <select id="getUserByLoginName" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SYS_USERS
+        <where>
+            AND LOGIN_NAME = #{loginName}
+        </where>
+    </select>
+    <select id="getUsersVoExcel" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SYS_USERS_EXAMINE
+        <where>
+            <if test="userName != null and userName != ''">
+                AND USER_NAME LIKE CONCAT('%', #{userName },'%')
+            </if>
+            <if test="loginName != null and loginName != ''">
+                AND LOGIN_NAME LIKE CONCAT('%', #{loginName },'%')
+            </if>
+        </where>
+        ORDER BY CREATE_DATE DESC
+    </select>
+
+
+    <update id="updateExamineByUserId">
+        update SYS_USERS_EXAMINE set EXAMINE_STATE = #{userState},UPDATE_DATE = #{date} where USER_ID = #{userId}
+    </update>
+
+
+
+<!--    <select id="selectUserIdBySysUser" resultMap="BaseResultMap">-->
+
+<!--    </select>-->
+</mapper>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.SysAppRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.appSystem.model.SysAppRole" >
+    <id column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="ROLE_IDENTITY" property="roleIdentity" jdbcType="VARCHAR" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="ROLE_PARENT_ID" property="roleParentId" jdbcType="BIGINT" />
+    <result column="ROLE_DESC" property="roleDesc" jdbcType="VARCHAR" />
+    <result column="ROLE_STATUS" property="roleStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="ROLE_TYPE" property="roleType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="getRolesByLoginNameCondition">
+    <where>
+      <if test="userId!=null and userId!=''">
+        AND U.USER_ID = #{userId}
+      </if>
+      <if test="loginName!=null and loginName!=''">
+        AND U.LOGIN_NAME = #{loginName}
+      </if>
+      <if test="status!=null and status!=''">
+        AND R.ROLE_STATUS = #{status}
+      </if>
+      <if test="id!=null and id!=''">
+        AND R.ROLE_ID = #{id}
+      </if>
+      <if test="scenicSpotId!=null and scenicSpotId!=''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+    </where>
+  </sql>
+  <select id="getRolesByLoginName" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    R.ROLE_ID,
+    R.ROLE_IDENTITY,
+    R.ROLE_NAME,
+    R.ROLE_PARENT_ID,
+    R.ROLE_DESC,
+    R.ROLE_STATUS
+    FROM
+    SYS_APP_USERS U
+    INNER JOIN SYS_APP_USERS_SPOT_ROLE UR ON U.USER_ID = UR.PRIMARY_KEY_UID INNER
+    JOIN SYS_APP_ROLE R ON UR.PRIMARY_KEY_RID = R.ROLE_ID LEFT
+    JOIN SYS_SCENIC_SPOT A ON UR.PRIMARY_KEY_PID = A.SCENIC_SPOT_ID
+    <include refid="getRolesByLoginNameCondition"></include>
+  </select>
+  <select id="getAppUsersList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      ROLE_ID,
+      ROLE_IDENTITY,
+      ROLE_NAME,
+      ROLE_PARENT_ID,
+      ROLE_DESC,
+      ROLE_STATUS,
+      CREATE_DATE,
+      UPDATE_DATE,
+      ROLE_TYPE
+    FROM
+      SYS_APP_ROLE
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.appSystem.model.SysAppRole" >
+    insert into SYS_APP_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="roleIdentity != null" >
+        ROLE_IDENTITY,
+      </if>
+      <if test="roleName != null" >
+        ROLE_NAME,
+      </if>
+      <if test="roleParentId != null" >
+        ROLE_PARENT_ID,
+      </if>
+      <if test="roleDesc != null" >
+        ROLE_DESC,
+      </if>
+      <if test="roleStatus != null" >
+        ROLE_STATUS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="roleType != null" >
+        ROLE_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="roleIdentity != null" >
+        #{roleIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleParentId != null" >
+        #{roleParentId,jdbcType=BIGINT},
+      </if>
+      <if test="roleDesc != null" >
+        #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roleStatus != null" >
+        #{roleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null" >
+        #{roleType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

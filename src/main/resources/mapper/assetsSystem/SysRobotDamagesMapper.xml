@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotDamagesMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotDamages" >
+    <id column="DAMAGES_ID" property="damagesId" jdbcType="BIGINT" />
+    <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="ORDER_NUMBER" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="DAMAGES_TYPE" property="damagesType" jdbcType="VARCHAR" />
+    <result column="ROBOT_ORDER_NUMBER" property="robotOrderNumber" jdbcType="VARCHAR" />
+    <result column="DAMAGES_PHOTO" property="damagesPhoto" jdbcType="VARCHAR" />
+    <result column="AFFECT_USE_TYPE" property="affectUseType" jdbcType="VARCHAR" />
+    <result column="ADMINISTRATORS_COLLECTION" property="administratorsCollection" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="VARCHAR" />
+    <result column="LOSS_RATER" property="lossRater" jdbcType="VARCHAR" />
+    <result column="FIXED_LOSS_AMOUNT" property="fixedLossAmount" jdbcType="VARCHAR" />
+    <result column="LOSS_TIME" property="lossTime" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_NAME" property="errorRecordsName" jdbcType="VARCHAR" />
+    <result column="ERROR_RECORDS_DESCRIPTION" property="errorRecordsDescription" jdbcType="VARCHAR" />
+    <result column="PAYMENT_PLATFORM" property="paymentPlatform" jdbcType="VARCHAR" />
+    <result column="ACTUAL_AMOUNT_PAID" property="actualAmountPaid" jdbcType="VARCHAR" />
+    <result column="ACTUAL_INCOME_AMOUNT" property="actualIncomeAmount" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DAMAGES_ID, ROBOT_CODE, PHONE, ORDER_NUMBER, DAMAGES_TYPE, ROBOT_ORDER_NUMBER, DAMAGES_PHOTO,
+    AFFECT_USE_TYPE, ADMINISTRATORS_COLLECTION, SCENIC_SPOT_ID, LOSS_RATER, FIXED_LOSS_AMOUNT,
+    LOSS_TIME, ERROR_RECORDS_NAME, ERROR_RECORDS_DESCRIPTION, PAYMENT_PLATFORM, ACTUAL_AMOUNT_PAID,
+    ACTUAL_INCOME_AMOUNT, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT
+      A.DAMAGES_ID,
+      A.ROBOT_CODE,
+      A.PHONE,
+      A.ORDER_NUMBER,
+      A.DAMAGES_TYPE,
+      A.ROBOT_ORDER_NUMBER,
+      A.DAMAGES_PHOTO,
+      A.AFFECT_USE_TYPE,
+      A.ADMINISTRATORS_COLLECTION,
+      A.SCENIC_SPOT_ID,
+      A.LOSS_RATER,
+      A.FIXED_LOSS_AMOUNT,
+      A.LOSS_TIME,
+      A.ERROR_RECORDS_NAME,
+      A.ERROR_RECORDS_DESCRIPTION,
+      A.PAYMENT_PLATFORM,
+      A.ACTUAL_AMOUNT_PAID,
+      A.ACTUAL_INCOME_AMOUNT,
+      A.CREATE_DATE,
+      A.UPDATE_DATE,
+      B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+      SYS_ROBOT_DAMAGES A LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    where A.DAMAGES_ID = #{damagesId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_DAMAGES
+    where DAMAGES_ID = #{damagesId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotDamages" >
+    insert into SYS_ROBOT_DAMAGES (DAMAGES_ID, ROBOT_CODE, PHONE,
+                                   ORDER_NUMBER, DAMAGES_TYPE, ROBOT_ORDER_NUMBER,
+                                   DAMAGES_PHOTO, AFFECT_USE_TYPE, ADMINISTRATORS_COLLECTION,
+                                   SCENIC_SPOT_ID, LOSS_RATER, FIXED_LOSS_AMOUNT,
+                                   LOSS_TIME, ERROR_RECORDS_NAME, ERROR_RECORDS_DESCRIPTION,
+                                   PAYMENT_PLATFORM, ACTUAL_AMOUNT_PAID, ACTUAL_INCOME_AMOUNT,
+                                   CREATE_DATE, UPDATE_DATE)
+    values (#{damagesId,jdbcType=BIGINT}, #{robotCode,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+            #{orderNumber,jdbcType=VARCHAR}, #{damagesType,jdbcType=VARCHAR}, #{robotOrderNumber,jdbcType=VARCHAR},
+            #{damagesPhoto,jdbcType=VARCHAR}, #{affectUseType,jdbcType=VARCHAR}, #{administratorsCollection,jdbcType=VARCHAR},
+            #{scenicSpotId,jdbcType=VARCHAR}, #{lossRater,jdbcType=VARCHAR}, #{fixedLossAmount,jdbcType=VARCHAR},
+            #{lossTime,jdbcType=VARCHAR}, #{errorRecordsName,jdbcType=VARCHAR}, #{errorRecordsDescription,jdbcType=VARCHAR},
+            #{paymentPlatform,jdbcType=VARCHAR}, #{actualAmountPaid,jdbcType=VARCHAR}, #{actualIncomeAmount,jdbcType=VARCHAR},
+            #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotDamages" >
+    insert into SYS_ROBOT_DAMAGES
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="damagesId != null" >
+        DAMAGES_ID,
+      </if>
+      <if test="robotCode != null" >
+        ROBOT_CODE,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="orderNumber != null" >
+        ORDER_NUMBER,
+      </if>
+      <if test="damagesType != null" >
+        DAMAGES_TYPE,
+      </if>
+      <if test="robotOrderNumber != null" >
+        ROBOT_ORDER_NUMBER,
+      </if>
+      <if test="damagesPhoto != null" >
+        DAMAGES_PHOTO,
+      </if>
+      <if test="affectUseType != null" >
+        AFFECT_USE_TYPE,
+      </if>
+      <if test="administratorsCollection != null" >
+        ADMINISTRATORS_COLLECTION,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="lossRater != null" >
+        LOSS_RATER,
+      </if>
+      <if test="fixedLossAmount != null" >
+        FIXED_LOSS_AMOUNT,
+      </if>
+      <if test="lossTime != null" >
+        LOSS_TIME,
+      </if>
+      <if test="errorRecordsName != null" >
+        ERROR_RECORDS_NAME,
+      </if>
+      <if test="errorRecordsDescription != null" >
+        ERROR_RECORDS_DESCRIPTION,
+      </if>
+      <if test="paymentPlatform != null" >
+        PAYMENT_PLATFORM,
+      </if>
+      <if test="actualAmountPaid != null" >
+        ACTUAL_AMOUNT_PAID,
+      </if>
+      <if test="actualIncomeAmount != null" >
+        ACTUAL_INCOME_AMOUNT,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="damagesId != null" >
+        #{damagesId,jdbcType=BIGINT},
+      </if>
+      <if test="robotCode != null" >
+        #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="damagesType != null" >
+        #{damagesType,jdbcType=VARCHAR},
+      </if>
+      <if test="robotOrderNumber != null" >
+        #{robotOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="damagesPhoto != null" >
+        #{damagesPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="affectUseType != null" >
+        #{affectUseType,jdbcType=VARCHAR},
+      </if>
+      <if test="administratorsCollection != null" >
+        #{administratorsCollection,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=VARCHAR},
+      </if>
+      <if test="lossRater != null" >
+        #{lossRater,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedLossAmount != null" >
+        #{fixedLossAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="lossTime != null" >
+        #{lossTime,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsName != null" >
+        #{errorRecordsName,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsDescription != null" >
+        #{errorRecordsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentPlatform != null" >
+        #{paymentPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="actualAmountPaid != null" >
+        #{actualAmountPaid,jdbcType=VARCHAR},
+      </if>
+      <if test="actualIncomeAmount != null" >
+        #{actualIncomeAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotDamages" >
+    update SYS_ROBOT_DAMAGES
+    <set >
+      <if test="robotCode != null" >
+        ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null" >
+        ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="damagesType != null" >
+        DAMAGES_TYPE = #{damagesType,jdbcType=VARCHAR},
+      </if>
+      <if test="robotOrderNumber != null" >
+        ROBOT_ORDER_NUMBER = #{robotOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="damagesPhoto != null" >
+        DAMAGES_PHOTO = #{damagesPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="affectUseType != null" >
+        AFFECT_USE_TYPE = #{affectUseType,jdbcType=VARCHAR},
+      </if>
+      <if test="administratorsCollection != null" >
+        ADMINISTRATORS_COLLECTION = #{administratorsCollection,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=VARCHAR},
+      </if>
+      <if test="lossRater != null" >
+        LOSS_RATER = #{lossRater,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedLossAmount != null" >
+        FIXED_LOSS_AMOUNT = #{fixedLossAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="lossTime != null" >
+        LOSS_TIME = #{lossTime,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsName != null" >
+        ERROR_RECORDS_NAME = #{errorRecordsName,jdbcType=VARCHAR},
+      </if>
+      <if test="errorRecordsDescription != null" >
+        ERROR_RECORDS_DESCRIPTION = #{errorRecordsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentPlatform != null" >
+        PAYMENT_PLATFORM = #{paymentPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="actualAmountPaid != null" >
+        ACTUAL_AMOUNT_PAID = #{actualAmountPaid,jdbcType=VARCHAR},
+      </if>
+      <if test="actualIncomeAmount != null" >
+        ACTUAL_INCOME_AMOUNT = #{actualIncomeAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DAMAGES_ID = #{damagesId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotDamages" >
+    update SYS_ROBOT_DAMAGES
+    set ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+        PHONE = #{phone,jdbcType=VARCHAR},
+        ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
+        DAMAGES_TYPE = #{damagesType,jdbcType=VARCHAR},
+        ROBOT_ORDER_NUMBER = #{robotOrderNumber,jdbcType=VARCHAR},
+        DAMAGES_PHOTO = #{damagesPhoto,jdbcType=VARCHAR},
+        AFFECT_USE_TYPE = #{affectUseType,jdbcType=VARCHAR},
+        ADMINISTRATORS_COLLECTION = #{administratorsCollection,jdbcType=VARCHAR},
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=VARCHAR},
+        LOSS_RATER = #{lossRater,jdbcType=VARCHAR},
+        FIXED_LOSS_AMOUNT = #{fixedLossAmount,jdbcType=VARCHAR},
+        LOSS_TIME = #{lossTime,jdbcType=VARCHAR},
+        ERROR_RECORDS_NAME = #{errorRecordsName,jdbcType=VARCHAR},
+        ERROR_RECORDS_DESCRIPTION = #{errorRecordsDescription,jdbcType=VARCHAR},
+        PAYMENT_PLATFORM = #{paymentPlatform,jdbcType=VARCHAR},
+        ACTUAL_AMOUNT_PAID = #{actualAmountPaid,jdbcType=VARCHAR},
+        ACTUAL_INCOME_AMOUNT = #{actualIncomeAmount,jdbcType=VARCHAR},
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where DAMAGES_ID = #{damagesId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotDamagesAppList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      A.DAMAGES_ID,
+      A.ROBOT_CODE,
+      A.PHONE,
+      A.ORDER_NUMBER,
+      A.DAMAGES_TYPE,
+      A.ROBOT_ORDER_NUMBER,
+      A.DAMAGES_PHOTO,
+      A.AFFECT_USE_TYPE,
+      A.ADMINISTRATORS_COLLECTION,
+      A.SCENIC_SPOT_ID,
+      A.LOSS_RATER,
+      A.FIXED_LOSS_AMOUNT,
+      A.LOSS_TIME,
+      A.ERROR_RECORDS_NAME,
+      A.ERROR_RECORDS_DESCRIPTION,
+      A.PAYMENT_PLATFORM,
+      A.ACTUAL_AMOUNT_PAID,
+      A.ACTUAL_INCOME_AMOUNT,
+      A.CREATE_DATE,
+      A.UPDATE_DATE,
+      B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+      SYS_ROBOT_DAMAGES A LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%', #{robotCode} ,'%')
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+  <select id="getRobotDamagesList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.DAMAGES_ID,
+    A.ROBOT_CODE,
+    A.PHONE,
+    A.ORDER_NUMBER,
+    A.DAMAGES_TYPE,
+    A.ROBOT_ORDER_NUMBER,
+    A.DAMAGES_PHOTO,
+    A.AFFECT_USE_TYPE,
+    A.ADMINISTRATORS_COLLECTION,
+    A.SCENIC_SPOT_ID,
+    A.LOSS_RATER,
+    A.FIXED_LOSS_AMOUNT,
+    A.LOSS_TIME,
+    A.ERROR_RECORDS_NAME,
+    A.ERROR_RECORDS_DESCRIPTION,
+    A.PAYMENT_PLATFORM,
+    A.ACTUAL_AMOUNT_PAID,
+    A.ACTUAL_INCOME_AMOUNT,
+    A.CREATE_DATE,
+    A.UPDATE_DATE,
+    B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+    SYS_ROBOT_DAMAGES A LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%', #{robotCode} ,'%')
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="damagesType != null and damagesType != ''">
+        AND A.DAMAGES_TYPE = #{damagesType}
+      </if>
+      <if test="paymentPlatform != null and paymentPlatform != ''">
+        AND A.PAYMENT_PLATFORM = #{paymentPlatform}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

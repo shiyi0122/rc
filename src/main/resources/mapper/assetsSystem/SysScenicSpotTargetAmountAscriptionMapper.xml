@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysScenicSpotTargetAmountAscriptionMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmountAscription" >
+    <id column="TARGET_AMOUNT_ASCRIPTION_ID" property="targetAmountAscriptionId" jdbcType="BIGINT" />
+    <result column="TARGET_AMOUNT_ID" property="targetAmountId" jdbcType="BIGINT" />
+    <result column="UNDERTAKER_ID" property="undertakerId" jdbcType="VARCHAR" />
+    <result column="COMMITMENT_AMOUNT" property="commitmentAmount" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TARGET_AMOUNT_ASCRIPTION_ID, TARGET_AMOUNT_ID, UNDERTAKER_ID, COMMITMENT_AMOUNT, TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_TARGET_AMOUNT_ASCRIPTION
+    where TARGET_AMOUNT_ASCRIPTION_ID = #{targetAmountAscriptionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_TARGET_AMOUNT_ASCRIPTION
+    where TARGET_AMOUNT_ASCRIPTION_ID = #{targetAmountAscriptionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmountAscription" >
+    insert into SYS_SCENIC_SPOT_TARGET_AMOUNT_ASCRIPTION (TARGET_AMOUNT_ASCRIPTION_ID, TARGET_AMOUNT_ID, UNDERTAKER_ID,
+    TARGET_STATE, TYPE,)
+    values (#{targetAmountAscriptionId,jdbcType=BIGINT}, #{targetAmountId,jdbcType=BIGINT}, #{undertakerId,jdbcType=VARCHAR},
+            #{commitmentAmount,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmountAscription" >
+    insert into SYS_SCENIC_SPOT_TARGET_AMOUNT_ASCRIPTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="targetAmountAscriptionId != null" >
+        TARGET_AMOUNT_ASCRIPTION_ID,
+      </if>
+      <if test="targetAmountId != null" >
+        TARGET_AMOUNT_ID,
+      </if>
+      <if test="undertakerId != null" >
+        UNDERTAKER_ID,
+      </if>
+      <if test="commitmentAmount != null" >
+        COMMITMENT_AMOUNT,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="targetAmountAscriptionId != null" >
+        #{targetAmountAscriptionId,jdbcType=BIGINT},
+      </if>
+      <if test="targetAmountId != null" >
+        #{targetAmountId,jdbcType=BIGINT},
+      </if>
+      <if test="undertakerId != null" >
+        #{undertakerId,jdbcType=VARCHAR},
+      </if>
+      <if test="commitmentAmount != null" >
+        #{commitmentAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmountAscription" >
+    update SYS_SCENIC_SPOT_TARGET_AMOUNT_ASCRIPTION
+    <set >
+      <if test="targetAmountId != null" >
+        TARGET_AMOUNT_ID = #{targetAmountId,jdbcType=BIGINT},
+      </if>
+      <if test="undertakerId != null" >
+        UNDERTAKER_ID = #{undertakerId,jdbcType=VARCHAR},
+      </if>
+      <if test="commitmentAmount != null" >
+        COMMITMENT_AMOUNT = #{commitmentAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TARGET_AMOUNT_ASCRIPTION_ID = #{targetAmountAscriptionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmountAscription" >
+    update SYS_SCENIC_SPOT_TARGET_AMOUNT_ASCRIPTION
+      set TARGET_AMOUNT_ID = #{targetAmountId,jdbcType=BIGINT},
+        UNDERTAKER_ID = #{undertakerId,jdbcType=VARCHAR},
+        COMMITMENT_AMOUNT = #{commitmentAmount,jdbcType=VARCHAR},
+        TYPE = #{TYPE,jdbcType=VARCHAR}
+    where TARGET_AMOUNT_ASCRIPTION_ID = #{targetAmountAscriptionId,jdbcType=BIGINT}
+  </update>
+  <select id="getSpotTargetAmountAscriptionByType" resultType="com.hna.hka.archive.management.assetsSystem.model.SysScenicSpotTargetAmountAscription" parameterType="java.util.Map">
+    select A.*,
+    B.COMPANY_NAME as undertakerName,
+    C.COMPANY_NAME as companyNameSubject
+    from SYS_SCENIC_SPOT_TARGET_AMOUNT_ASCRIPTION A
+    LEFT JOIN SYS_SCENIC_SUBSCRIPTION_INFORMATION B on A.UNDERTAKER_ID = B.COMPANY_ID
+    LEFT JOIN SYS_SCENIC_SPOT_ASCRIPTION_COMPANY  C on A.UNDERTAKER_ID = C.COMPANY_ID
+    <where>
+      <if test="targetAmountId != null and targetAmountId != ''">
+        AND A.TARGET_AMOUNT_ID = #{targetAmountId}
+      </if>
+      <if test="type != null and type != ''">
+        AND A.TYPE = #{type}
+      </if>
+    </where>
+    GROUP BY UNDERTAKER_ID
+  </select>
+</mapper>

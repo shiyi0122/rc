@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.SysAppRobotQualityTestingMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.appSystem.model.vo.SysAppRobotQualityTesting">
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="SCAN_CODE_TOUNLOCK" jdbcType="BIGINT" property="scanCodeTounlock"/>
+        <result column="FORWARD" jdbcType="BIGINT" property="forward"/>
+        <result column="BACK_OFF" jdbcType="BIGINT" property="backOff"/>
+        <result column="BRACK" jdbcType="BIGINT" property="brack"/>
+        <result column="AUXILIARY_BRAKE" jdbcType="BIGINT" property="auxiliaryBrake"/>
+        <result column="PREULTRASOUND" jdbcType="BIGINT" property="preultrasound"/>
+        <result column="POSTULTRASOUND" jdbcType="BIGINT" property="postultrasound"/>
+        <result column="LED_LIGHT" jdbcType="BIGINT" property="ledLight"/>
+        <result column="BREATHING_LAMP" jdbcType="BIGINT" property="breathingLamp"/>
+        <result column="APPEARANCE" jdbcType="BIGINT" property="appearance"/>
+        <result column="FASTENING" jdbcType="BIGINT" property="fastening"/>
+        <result column="END_SERVICE" jdbcType="BIGINT" property="endService"/>
+        <result column="QC_OR_AT" jdbcType="VARCHAR" property="qcOrAt"/>
+        <result column="TEST_EXPLAIN" jdbcType="VARCHAR" property="testExplain"/>
+        <result column="ROLE" jdbcType="VARCHAR" property="role"/>
+        <result column="CREATE_DATE" jdbcType="VARCHAR" property="createDate"/>
+        <result column="UPDATE_DATE" jdbcType="VARCHAR" property="updateDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID
+        , SCAN_CODE_TOUNLOCK, FORWARD, BACK_OFF, BRACK, AUXILIARY_BRAKE, PREULTRASOUND,
+    POSTULTRASOUND, LED_LIGHT, BREATHING_LAMP, APPEARANCE, FASTENING, END_SERVICE, QC_OR_AT, 
+    TEST_EXPLAIN, ROLE, CREATE_DATE, UPDATE_DATE
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_APP_ROBOT_QUALITY_TESTING
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="seInspectionDetails"
+            resultType="com.hna.hka.archive.management.appSystem.model.vo.SysAppRobotQualityTesting">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        SYS_APP_ROBOT_QUALITY_TESTING
+        where
+        ID=#{id}
+    </select>
+    <select id="detailList" resultType="com.hna.hka.archive.management.assetsSystem.model.RobotQualityTesting">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        SYS_APP_ROBOT_QUALITY_TESTING
+        where
+        ID=#{id}
+ </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from SYS_APP_ROBOT_QUALITY_TESTING
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.hna.hka.archive.management.appSystem.model.vo.SysAppRobotQualityTesting">
+        insert into SYS_APP_ROBOT_QUALITY_TESTING (ID, SCAN_CODE_TOUNLOCK, FORWARD,
+                                                   BACK_OFF, BRACK, AUXILIARY_BRAKE,
+                                                   PREULTRASOUND, POSTULTRASOUND, LED_LIGHT,
+                                                   BREATHING_LAMP, APPEARANCE, FASTENING,
+                                                   END_SERVICE, QC_OR_AT, TEST_EXPLAIN,
+                                                   ROLE, CREATE_DATE, UPDATE_DATE)
+        values (#{id,jdbcType=BIGINT}, #{scanCodeTounlock,jdbcType=BIGINT}, #{forward,jdbcType=BIGINT},
+                #{backOff,jdbcType=BIGINT}, #{brack,jdbcType=BIGINT}, #{auxiliaryBrake,jdbcType=BIGINT},
+                #{preultrasound,jdbcType=BIGINT}, #{postultrasound,jdbcType=BIGINT}, #{ledLight,jdbcType=BIGINT},
+                #{breathingLamp,jdbcType=BIGINT}, #{appearance,jdbcType=BIGINT}, #{fastening,jdbcType=BIGINT},
+                #{endService,jdbcType=BIGINT}, #{qcOrAt,jdbcType=BIGINT}, #{testExplain,jdbcType=VARCHAR},
+                #{role,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective"
+            parameterType="com.hna.hka.archive.management.appSystem.model.vo.SysAppRobotQualityTesting">
+        insert into SYS_APP_ROBOT_QUALITY_TESTING
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="scanCodeTounlock != null">
+                SCAN_CODE_TOUNLOCK,
+            </if>
+            <if test="forward != null">
+                FORWARD,
+            </if>
+            <if test="backOff != null">
+                BACK_OFF,
+            </if>
+            <if test="brack != null">
+                BRACK,
+            </if>
+            <if test="auxiliaryBrake != null">
+                AUXILIARY_BRAKE,
+            </if>
+            <if test="preultrasound != null">
+                PREULTRASOUND,
+            </if>
+            <if test="postultrasound != null">
+                POSTULTRASOUND,
+            </if>
+            <if test="ledLight != null">
+                LED_LIGHT,
+            </if>
+            <if test="breathingLamp != null">
+                BREATHING_LAMP,
+            </if>
+            <if test="appearance != null">
+                APPEARANCE,
+            </if>
+            <if test="fastening != null">
+                FASTENING,
+            </if>
+            <if test="endService != null">
+                END_SERVICE,
+            </if>
+            <if test="qcOrAt != null">
+                QC_OR_AT,
+            </if>
+            <if test="testExplain != null">
+                TEST_EXPLAIN,
+            </if>
+            <if test="role != null">
+                ROLE,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="scanCodeTounlock != null">
+                #{scanCodeTounlock,jdbcType=BIGINT},
+            </if>
+            <if test="forward != null">
+                #{forward,jdbcType=BIGINT},
+            </if>
+            <if test="backOff != null">
+                #{backOff,jdbcType=BIGINT},
+            </if>
+            <if test="brack != null">
+                #{brack,jdbcType=BIGINT},
+            </if>
+            <if test="auxiliaryBrake != null">
+                #{auxiliaryBrake,jdbcType=BIGINT},
+            </if>
+            <if test="preultrasound != null">
+                #{preultrasound,jdbcType=BIGINT},
+            </if>
+            <if test="postultrasound != null">
+                #{postultrasound,jdbcType=BIGINT},
+            </if>
+            <if test="ledLight != null">
+                #{ledLight,jdbcType=BIGINT},
+            </if>
+            <if test="breathingLamp != null">
+                #{breathingLamp,jdbcType=BIGINT},
+            </if>
+            <if test="appearance != null">
+                #{appearance,jdbcType=BIGINT},
+            </if>
+            <if test="fastening != null">
+                #{fastening,jdbcType=BIGINT},
+            </if>
+            <if test="endService != null">
+                #{endService,jdbcType=BIGINT},
+            </if>
+            <if test="qcOrAt != null">
+                #{qcOrAt,jdbcType=BIGINT},
+            </if>
+            <if test="testExplain != null">
+                #{testExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.hna.hka.archive.management.appSystem.model.vo.SysAppRobotQualityTesting">
+        update SYS_APP_ROBOT_QUALITY_TESTING
+        <set>
+            <if test="scanCodeTounlock != null">
+                SCAN_CODE_TOUNLOCK = #{scanCodeTounlock,jdbcType=BIGINT},
+            </if>
+            <if test="forward != null">
+                FORWARD = #{forward,jdbcType=BIGINT},
+            </if>
+            <if test="backOff != null">
+                BACK_OFF = #{backOff,jdbcType=BIGINT},
+            </if>
+            <if test="brack != null">
+                BRACK = #{brack,jdbcType=BIGINT},
+            </if>
+            <if test="auxiliaryBrake != null">
+                AUXILIARY_BRAKE = #{auxiliaryBrake,jdbcType=BIGINT},
+            </if>
+            <if test="preultrasound != null">
+                PREULTRASOUND = #{preultrasound,jdbcType=BIGINT},
+            </if>
+            <if test="postultrasound != null">
+                POSTULTRASOUND = #{postultrasound,jdbcType=BIGINT},
+            </if>
+            <if test="ledLight != null">
+                LED_LIGHT = #{ledLight,jdbcType=BIGINT},
+            </if>
+            <if test="breathingLamp != null">
+                BREATHING_LAMP = #{breathingLamp,jdbcType=BIGINT},
+            </if>
+            <if test="appearance != null">
+                APPEARANCE = #{appearance,jdbcType=BIGINT},
+            </if>
+            <if test="fastening != null">
+                FASTENING = #{fastening,jdbcType=BIGINT},
+            </if>
+            <if test="endService != null">
+                END_SERVICE = #{endService,jdbcType=BIGINT},
+            </if>
+            <if test="qcOrAt != null">
+                QC_OR_AT = #{qcOrAt,jdbcType=BIGINT},
+            </if>
+            <if test="testExplain != null">
+                TEST_EXPLAIN = #{testExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                ROLE = #{role,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey"
+            parameterType="com.hna.hka.archive.management.appSystem.model.vo.SysAppRobotQualityTesting">
+        update SYS_APP_ROBOT_QUALITY_TESTING
+        set SCAN_CODE_TOUNLOCK = #{scanCodeTounlock,jdbcType=BIGINT},
+            FORWARD            = #{forward,jdbcType=BIGINT},
+            BACK_OFF           = #{backOff,jdbcType=BIGINT},
+            BRACK              = #{brack,jdbcType=BIGINT},
+            AUXILIARY_BRAKE    = #{auxiliaryBrake,jdbcType=BIGINT},
+            PREULTRASOUND      = #{preultrasound,jdbcType=BIGINT},
+            POSTULTRASOUND     = #{postultrasound,jdbcType=BIGINT},
+            LED_LIGHT          = #{ledLight,jdbcType=BIGINT},
+            BREATHING_LAMP     = #{breathingLamp,jdbcType=BIGINT},
+            APPEARANCE         = #{appearance,jdbcType=BIGINT},
+            FASTENING          = #{fastening,jdbcType=BIGINT},
+            END_SERVICE        = #{endService,jdbcType=BIGINT},
+            QC_OR_AT           = #{qcOrAt,jdbcType=BIGINT},
+            TEST_EXPLAIN       = #{testExplain,jdbcType=VARCHAR},
+            ROLE               = #{role,jdbcType=VARCHAR},
+            CREATE_DATE        = #{createDate,jdbcType=VARCHAR},
+            UPDATE_DATE        = #{updateDate,jdbcType=VARCHAR}
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

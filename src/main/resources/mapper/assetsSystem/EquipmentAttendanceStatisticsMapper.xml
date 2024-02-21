@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.EquipmentAttendanceStatisticsMapper">
+    <resultMap id="list" type="com.hna.hka.archive.management.assetsSystem.model.EquipmentAttendanceStatistics">
+        <id column="SCENIC_SPOT_ID" property="scenicSpotId"/>
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName"/>
+        <result column="SCENIC_SPOT_ROBOT_TOTAL" property="equipmentNum"/>
+        <result column="ATTENDANCE_ROBOT_NUMBER" property="equipmentOperatingNum"/>
+        <result column="TOTAL_NUMBER_PEOPLE" property="operationPeople"/>
+        <result column="PAUSE_STATE" property="pauseState"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="REMARKS" property="remarks"/>
+        <result column="FORMAL_OPERATION_TIME" property="formalOperationTime"/>
+        <result column="ROBOT_WAKEUP_WORDS" property="robotWakeupWords"/>
+        <result column="TODAY_DATE" property="todayDate"/>
+    </resultMap>
+
+    <select id="spotList" resultMap="list">
+        select SCENIC_SPOT_ID,SCENIC_SPOT_NAME from SYS_SCENIC_SPOT
+        <where>
+        <if test="scenicSpotId!=null and scenicSpotId!=''">
+            a.SCENIC_SPOT_ID=#{scenicSpotId}
+        </if>
+        </where>
+    </select>
+
+    <select id="list" resultMap="list">
+        select a.PAUSE_STATE,a.SCENIC_SPOT_ROBOT_TOTAL,b.TOTAL_NUMBER_PEOPLE,b.REMARKS,
+               b.ATTENDANCE_ROBOT_NUMBER,a.CREATE_DATE,a.FORMAL_OPERATION_TIME,a.ROBOT_WAKEUP_WORDS
+               from SYS_SCENIC_SPOT a
+               left join SYS_APP_EQUIPMENT_ATTENDANCE b on a.SCENIC_SPOT_ID=b.SCENIC_SPOT_ID
+               <where>
+                   <if test="scenicSpotId!=null and scenicSpotId!=''">
+                       a.SCENIC_SPOT_ID=#{scenicSpotId}
+                   </if>
+                   <if test="robotWakeupWords!=null and robotWakeupWords!=''">
+                       and a.ROBOT_WAKEUP_WORDS =#{robotWakeupWords}
+                   </if>
+                   <if test="pauseState!=null and pauseState!=''">
+                       and a.PAUSE_STATE=#{pauseState}
+                   </if>
+                   <if test="startTime!=null and startTime!=''">
+                       and b.TODAY_DATE >= #{startTime}
+                   </if>
+                   <if test="endTime!=null and endTime!=''">
+                       and b.TODAY_DATE &lt;= #{endTime}
+                   </if>
+               </where>
+    </select>
+    
+    <select id="selAttendance" resultType="java.lang.Integer">
+        select count(TODAY_DATE) from SYS_APP_EQUIPMENT_ATTENDANCE
+        where  TODAY_DATE >= #{startTime} and TODAY_DATE &lt; #{endTime} and SCENIC_SPOT_ID=#{scenicSpotId}
+        limit 1
+    </select>
+
+    <select id="selOrder" resultType="java.lang.Integer">
+        select count(CREATE_DATE) from SYS_ORDER
+        where CREATE_DATE >= #{startTime} and CREATE_DATE &lt; #{endTime} and ORDER_SCENIC_SPOT_ID=#{scenicSpotId}
+        limit 1
+    </select>
+
+
+    <select id="getSpotIdLastAttendance" resultType="com.hna.hka.archive.management.assetsSystem.model.EquipmentAttendanceStatistics">
+
+        select saea.* , sss.SCENIC_SPOT_NAME,sss.ROBOT_WAKEUP_WORDS,sss.PAUSE_STATE
+        from SYS_APP_EQUIPMENT_ATTENDANCE saea
+        left join SYS_SCENIC_SPOT sss on saea.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        where saea.SCENIC_SPOT_ID = #{scenicSpotId}
+        order by TODAY_DATE desc
+        limit 1
+
+    </select>
+
+
+
+</mapper>

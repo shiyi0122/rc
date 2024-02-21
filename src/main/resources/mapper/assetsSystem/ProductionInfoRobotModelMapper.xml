@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.ProductionInfoRobotModelMapper">
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.ProductionInfoRobotModel">
+        select * from SYS_ROBOT_PRODUCTION_INFO_MODEL
+        where ROBOT_PRODUCTION_INFO_ID = #{id}
+    </select>
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.assetsSystem.model.ProductionInfoRobotModel">
+        insert into SYS_ROBOT_PRODUCTION_INFO_MODEL(ID, APPLICABLE_MODEL,ROBOT_COUNT,CREATE_DATE,ROBOT_PRODUCTION_INFO_ID)
+        VALUES (#{id}, #{applicableModel}, #{robotCount},#{createDate},#{robotProductionInfoId})
+    </insert>
+
+    <update id="edit" parameterType="com.hna.hka.archive.management.assetsSystem.model.ProductionInfoRobotModel">
+        update SYS_ROBOT_PRODUCTION_INFO_MODEL
+        set APPLICABLE_MODEL   = #{applicableModel},
+        ROBOT_COUNT    = #{robotCount},
+        CREATE_DATE  = #{createDate},
+        ROBOT_PRODUCTION_INFO_ID = #{robotProductionInfoId}
+        where ID = #{id}
+    </update>
+
+    <delete id="delete">
+        delete
+        from SYS_ROBOT_PRODUCTION_INFO_MODEL
+        where ID = #{id}
+    </delete>
+
+    <delete id="deleteRobotProductionInfoId">
+        delete
+        from SYS_ROBOT_PRODUCTION_INFO_MODEL
+        where ROBOT_PRODUCTION_INFO_ID = #{id}
+    </delete>
+</mapper>

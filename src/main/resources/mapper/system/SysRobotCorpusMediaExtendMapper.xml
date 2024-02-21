@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotCorpusMediaExtendMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotCorpusMediaExtend" >
+    <id column="MEDIA_EXTEND_ID" property="mediaExtendId" jdbcType="BIGINT" />
+    <result column="MEDIA_ID" property="mediaId" jdbcType="BIGINT" />
+    <result column="MEDIA_EXTEND_NAME" property="mediaExtendName" jdbcType="VARCHAR" />
+    <result column="MEDIA_EXTEND_NAME_PING_YIN" property="mediaExtendNamePingYin" jdbcType="VARCHAR" />
+    <result column="MEDIA_EXTEND_AUTHOR" property="mediaExtendAuthor" jdbcType="VARCHAR" />
+    <result column="MEDIA_EXTEND_AUTHOR_PING_YIN" property="mediaExtendAuthorPingYin" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MEDIA_EXTEND_ID, MEDIA_ID, MEDIA_EXTEND_NAME, MEDIA_EXTEND_NAME_PING_YIN, MEDIA_EXTEND_AUTHOR, 
+    MEDIA_EXTEND_AUTHOR_PING_YIN, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_CORPUS_MEDIA_EXTEND
+    where MEDIA_EXTEND_ID = #{mediaExtendId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_CORPUS_MEDIA_EXTEND
+    where MEDIA_EXTEND_ID = #{mediaExtendId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotCorpusMediaExtend" >
+    insert into SYS_ROBOT_CORPUS_MEDIA_EXTEND (MEDIA_EXTEND_ID, MEDIA_ID, MEDIA_EXTEND_NAME, 
+      MEDIA_EXTEND_NAME_PING_YIN, MEDIA_EXTEND_AUTHOR, 
+      MEDIA_EXTEND_AUTHOR_PING_YIN, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{mediaExtendId,jdbcType=BIGINT}, #{mediaId,jdbcType=BIGINT}, #{mediaExtendName,jdbcType=VARCHAR}, 
+      #{mediaExtendNamePingYin,jdbcType=VARCHAR}, #{mediaExtendAuthor,jdbcType=VARCHAR}, 
+      #{mediaExtendAuthorPingYin,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotCorpusMediaExtend" >
+    insert into SYS_ROBOT_CORPUS_MEDIA_EXTEND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mediaExtendId != null" >
+        MEDIA_EXTEND_ID,
+      </if>
+      <if test="mediaId != null" >
+        MEDIA_ID,
+      </if>
+      <if test="mediaExtendName != null" >
+        MEDIA_EXTEND_NAME,
+      </if>
+      <if test="mediaExtendNamePingYin != null" >
+        MEDIA_EXTEND_NAME_PING_YIN,
+      </if>
+      <if test="mediaExtendAuthor != null" >
+        MEDIA_EXTEND_AUTHOR,
+      </if>
+      <if test="mediaExtendAuthorPingYin != null" >
+        MEDIA_EXTEND_AUTHOR_PING_YIN,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mediaExtendId != null" >
+        #{mediaExtendId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaExtendName != null" >
+        #{mediaExtendName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaExtendNamePingYin != null" >
+        #{mediaExtendNamePingYin,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaExtendAuthor != null" >
+        #{mediaExtendAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaExtendAuthorPingYin != null" >
+        #{mediaExtendAuthorPingYin,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotCorpusMediaExtend" >
+    update SYS_ROBOT_CORPUS_MEDIA_EXTEND
+    <set >
+      <if test="mediaId != null" >
+        MEDIA_ID = #{mediaId,jdbcType=BIGINT},
+      </if>
+      <if test="mediaExtendName != null" >
+        MEDIA_EXTEND_NAME = #{mediaExtendName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaExtendNamePingYin != null" >
+        MEDIA_EXTEND_NAME_PING_YIN = #{mediaExtendNamePingYin,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaExtendAuthor != null" >
+        MEDIA_EXTEND_AUTHOR = #{mediaExtendAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaExtendAuthorPingYin != null" >
+        MEDIA_EXTEND_AUTHOR_PING_YIN = #{mediaExtendAuthorPingYin,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MEDIA_EXTEND_ID = #{mediaExtendId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotCorpusMediaExtend" >
+    update SYS_ROBOT_CORPUS_MEDIA_EXTEND
+    set MEDIA_ID = #{mediaId,jdbcType=BIGINT},
+      MEDIA_EXTEND_NAME = #{mediaExtendName,jdbcType=VARCHAR},
+      MEDIA_EXTEND_NAME_PING_YIN = #{mediaExtendNamePingYin,jdbcType=VARCHAR},
+      MEDIA_EXTEND_AUTHOR = #{mediaExtendAuthor,jdbcType=VARCHAR},
+      MEDIA_EXTEND_AUTHOR_PING_YIN = #{mediaExtendAuthorPingYin,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where MEDIA_EXTEND_ID = #{mediaExtendId,jdbcType=BIGINT}
+  </update>
+  <select id="getViewDetailsList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_CORPUS_MEDIA_EXTEND
+    where MEDIA_ID = #{mediaId}
+    ORDER BY CREATE_DATE DESC
+  </select>
+</mapper>

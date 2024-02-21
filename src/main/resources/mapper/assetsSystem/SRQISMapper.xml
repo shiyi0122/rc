@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SRQISMapper">
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionStandard">
+
+
+        select * from SYS_ROBOT_QUALITY_INSPECTION_STANDARD
+
+
+        <where>
+            <if test='name != null and name != ""'>
+                name like concat('%' , #{name} , '%')
+
+
+            </if>
+            <if test='beginTime != null and beginTime != ""'>
+
+
+                and substr(CREATE_TIME , 1 , #{beginSize}) &gt;= #{beginTime}
+
+
+            </if>
+            <if test='endTime != null and endTime != ""'>
+
+
+                and substr(CREATE_TIME , 1 , #{endSize}) &lt;= #{endTime}
+            </if>
+        </where>
+
+
+        order by ID desc
+
+
+    </select>
+
+    <select id="getAll"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionStandard">
+
+
+        select ID , NAME from SYS_ROBOT_QUALITY_INSPECTION_STANDARD where INSPECTION_TYPE = #{type}
+
+
+    </select>
+
+    <insert id="add"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionStandard">
+
+
+        insert into SYS_ROBOT_QUALITY_INSPECTION_STANDARD(ID, NAME, APLICABLE_MODEL, INSPECTION_TYPE, CREATE_TIME, NOTES)
+        VALUES (#{id}, #{name}, #{aplicableModel}, #{inspectionType}, #{createTime}, #{notes})
+
+
+    </insert>
+
+    <update id="edit"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionStandard">
+
+
+        update SYS_ROBOT_QUALITY_INSPECTION_STANDARD
+        set NAME            = #{name},
+            APLICABLE_MODEL = #{aplicableModel},
+            INSPECTION_TYPE = #{inspectionType},
+            NOTES           = #{notes}
+        where ID = #{id}
+
+
+    </update>
+
+    <delete id="delete">
+
+
+        delete
+        from SYS_ROBOT_QUALITY_INSPECTION_STANDARD
+        where ID = #{id};
+        delete
+        from SYS_ROBOT_QUALITY_INSPECTION_DETAIL
+        where STANDARD_ID = #{id};
+
+
+    </delete>
+
+    <select id="showDetail"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionDetail">
+
+        select *
+        from SYS_ROBOT_QUALITY_INSPECTION_DETAIL
+        where STANDARD_ID = #{id}
+        order by SERIAL DESC;
+    </select>
+
+    <insert id="addDetail"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionDetail">
+        insert into SYS_ROBOT_QUALITY_INSPECTION_DETAIL(ID, STANDARD_ID, SERIAL, PROJECT, PARAMETER, CREATE_TIME)
+        VALUES (#{id}, #{standardId}, #{serial}, #{project}, #{parameter}, #{createTime})
+    </insert>
+
+    <update id="editDetail"
+            parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionDetail">
+        update SYS_ROBOT_QUALITY_INSPECTION_DETAIL
+        set SERIAL    = #{serial},
+            PROJECT   = #{project},
+            PARAMETER = #{parameter}
+        where ID = #{id}
+          and STANDARD_ID = #{standardId}
+    </update>
+
+    <delete id="deleteDetail">
+
+
+        delete
+        from SYS_ROBOT_QUALITY_INSPECTION_DETAIL
+        where ID = #{id}
+          and STANDARD_ID = #{standardId}
+
+    </delete>
+
+    <select id="getMsgByRobotCode" resultType="java.util.HashMap">
+        SELECT
+        sr.ROBOT_CODE robotCode,
+        srv.ROBOT_VERSION_NUMBER version
+        from
+        SYS_ROBOT sr
+        left join SYS_ROBOT_VERSION srv on
+        sr.ROBOT_ID = srv.ROBOT_ID
+        LEFT JOIN SYS_ROBOT_QUALITY_INSPECTION_STANDARD srqis
+        on srqis.APLICABLE_MODEL LIKE CONCAT('%' , srv.ROBOT_VERSION_NUMBER , '%')
+        WHERE
+        sr.ROBOT_CODE = #{robotCode}
+        <choose>
+            <when test="type == 1">
+                and srqis.INSPECTION_TYPE = '工厂质检'
+            </when>
+            <otherwise>
+                and srqis.INSPECTION_TYPE = '景区验收'
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getDetailByRobotCode" resultType="java.util.HashMap">
+        SELECT
+        srqid.*
+        from
+        SYS_ROBOT sr
+        left join SYS_ROBOT_VERSION srv on
+        sr.ROBOT_ID = srv.ROBOT_ID
+        LEFT JOIN SYS_ROBOT_QUALITY_INSPECTION_STANDARD srqis
+        on srqis.APLICABLE_MODEL LIKE CONCAT('%' , srv.ROBOT_VERSION_NUMBER , '%')
+        <choose>
+            <when test="type == 1">
+                and srqis.INSPECTION_TYPE = '工厂质检'
+            </when>
+            <otherwise>
+                and srqis.INSPECTION_TYPE = '景区验收'
+            </otherwise>
+        </choose>
+        LEFT JOIN SYS_ROBOT_QUALITY_INSPECTION_DETAIL srqid on
+        srqis.ID = srqid.STANDARD_ID
+        WHERE
+        sr.ROBOT_CODE = #{robotCode}
+    </select>
+
+
+    <select id="qualityStandard"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionStandard">
+
+
+        select * from SYS_ROBOT_QUALITY_INSPECTION_STANDARD where INSPECTION_TYPE = #{type}
+
+
+    </select>
+    <select id="selectById"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionDetail">
+
+    SELECT DISTINCT a1.ID, a1.STANDARD_ID, a1.SERIAL, a1.PROJECT, a1.PARAMETER
+    FROM SYS_ROBOT_QUALITY_INSPECTION_DETAIL a1
+    WHERE a1.STANDARD_ID =#{param1.standardId}
+    and a1.SERIAL =#{param1.serial}
+
+    </select>
+    <select id="selectByPre" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionDetail">
+    SELECT DISTINCT a1.ID, a1.STANDARD_ID, a1.SERIAL, a1.PROJECT, a1.PARAMETER
+    FROM SYS_ROBOT_QUALITY_INSPECTION_DETAIL a1
+    WHERE a1.STANDARD_ID =#{param1.standardId}
+    AND SERIAL &lt; #{param1.serial}
+    ORDER BY SERIAL
+    DESC LIMIT 1
+    </select>
+    <select id="selectByNext" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotQualityInspectionDetail">
+    SELECT DISTINCT a1.ID, a1.STANDARD_ID, a1.SERIAL, a1.PROJECT, a1.PARAMETER
+    FROM SYS_ROBOT_QUALITY_INSPECTION_DETAIL a1
+    WHERE a1.STANDARD_ID =#{param1.standardId}
+    AND SERIAL > #{param1.serial}
+    ORDER BY SERIAL
+    ASC LIMIT 1
+    </select>
+    <update id="updateSerial">
+    update SYS_ROBOT_QUALITY_INSPECTION_DETAIL
+        set SERIAL    = #{serial}
+        where ID =#{id}
+    </update>
+
+</mapper>

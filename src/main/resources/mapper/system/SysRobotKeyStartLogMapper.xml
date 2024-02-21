@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotKeyStartLogMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotKeyStartLog" >
+        <id column="ROBOT_KEY_ID" property="robotKeyId" jdbcType="BIGINT" />
+        <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+        <result column="ROBOT_KEY_TYPE" property="robotKeyType" jdbcType="VARCHAR" />
+        <result column="ROBOT_KEY_START" property="robotKeyStart" jdbcType="VARCHAR" />
+        <result column="ROBOT_KEY_STOP" property="robotKeyStop" jdbcType="VARCHAR" />
+        <result column="ROBOT_TOTAL_TIME" property="robotTotalTime" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="getRobotKeyStartList" resultType="com.hna.hka.archive.management.system.model.SysRobotKeyStartLog">
+
+        select srks.*,sss.SCENIC_SPOT_NAME
+        from SYS_ROBOT_KEY_START_LOG srks
+        left join SYS_SCENIC_SPOT sss on srks.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        <where>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and  srks.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                and srks.ROBOT_CODE = #{robotCode}
+            </if>
+        </where>
+        order by srks.CREATE_DATE DESC
+
+    </select>
+
+
+
+
+
+
+</mapper>

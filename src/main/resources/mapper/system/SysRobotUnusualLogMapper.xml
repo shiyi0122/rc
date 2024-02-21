@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotUnusualLogMapper" >
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotUnusualLog" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+        <result column="UNUSUAL_TYPE" property="unusualType" jdbcType="VARCHAR" />
+        <result column="APP_PROCESSOR_ID" property="appProcessorId" jdbcType="BIGINT" />
+        <result column="BACKSTAGE_PROCESSOR_ID" property="backstageProcessorId" jdbcType="BIGINT" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="UNUSUAL_TIME" property="unusualTime" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+        <result column="PROPELLING_CONTENT" property="propellingContent" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotUnusualLog">
+
+        insert into SYS_ROBOT_UNUSUAL_LOG
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="robotCode != null" >
+                ROBOT_CODE,
+            </if>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="unusualType != null" >
+                UNUSUAL_TYPE,
+            </if>
+            <if test="appProcessorId != null" >
+                APP_PROCESSOR_ID,
+            </if>
+            <if test="backstageProcessorId != null" >
+                BACKSTAGE_PROCESSOR_ID,
+            </if>
+            <if test="status != null" >
+                STATUS,
+            </if>
+            <if test="unusualTime != null" >
+                UNUSUAL_TIME,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE,
+            </if>
+            <if test="propellingContent != null">
+                PROPELLING_CONTENT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="robotCode != null" >
+                #{robotCode,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null" >
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="unusualType != null" >
+                #{unusualType,jdbcType=VARCHAR},
+            </if>
+            <if test="appProcessorId != null" >
+                #{appProcessorId,jdbcType=BIGINT},
+            </if>
+            <if test="backstageProcessorId != null" >
+                #{backstageProcessorId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="unusualTime != null" >
+                #{unusualTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="propellingContent != null">
+                #{propellingContent,jdbcType=VARCHAR},
+            </if>
+        </trim>
+
+    </insert>
+
+
+    <select id="list" resultType="com.hna.hka.archive.management.system.model.SysRobotUnusualLog">
+        select srul.*,sau.USER_NAME as appProcessorName,su.USER_NAME as backstageProcessorName
+        from SYS_ROBOT_UNUSUAL_LOG srul
+        left join SYS_APP_USERS_SPOT_ROLE sausr on srul.SCENIC_SPOT_ID = sausr.PRIMARY_KEY_PID
+        left join SYS_APP_USERS sau on srul.APP_PROCESSOR_ID = sau.USER_ID
+        left join SYS_USERS su on srul.BACKSTAGE_PROCESSOR_ID = su.USER_ID
+        <where>
+            1=1
+            <if test="robotCode != null">
+               and srul.ROBOT_CODE = #{robotCode}
+            </if>
+            <if test="scenicSpotId != null">
+                and srul.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="date != null">
+                and srul.CREATE_DATE like CONCAT('%',#{date},'%')
+            </if>
+            <if test="userId != null">
+                and sausr.PRIMARY_KEY_UID = #{userId}
+            </if>
+        </where>
+        order by CREATE_DATE DESC
+    </select>
+
+    <select id="listApp" resultType="com.hna.hka.archive.management.system.model.SysRobotUnusualLog">
+        select srul.*,sau.USER_NAME as appProcessorName,su.USER_NAME as backstageProcessorName
+        from SYS_ROBOT_UNUSUAL_LOG srul
+        left join SYS_APP_USERS_SPOT_ROLE sausr on srul.SCENIC_SPOT_ID = sausr.PRIMARY_KEY_PID
+        left join SYS_APP_USERS sau on srul.APP_PROCESSOR_ID = sau.USER_ID
+        left join SYS_USERS su on srul.BACKSTAGE_PROCESSOR_ID = su.USER_ID
+        <where>
+            1=1
+            <if test="robotCode != null">
+                and srul.ROBOT_CODE = #{robotCode}
+            </if>
+            <if test="scenicSpotId != null">
+                and srul.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="date != null">
+                and srul.CREATE_DATE like CONCAT('%',#{date},'%')
+            </if>
+            <if test="userId != null">
+                and sausr.PRIMARY_KEY_UID = #{userId}
+            </if>
+            and UNUSUAL_TYPE not in (7)
+            and STATUS in  (1,2,4)
+        </where>
+        order by CREATE_DATE DESC
+    </select>
+
+    <update id="update" parameterType="com.hna.hka.archive.management.system.model.SysRobotUnusualLog">
+        update  SYS_ROBOT_UNUSUAL_LOG
+        <set >
+            <if test="robotCode != null" >
+                ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotId != null" >
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="unusualType != null" >
+                UNUSUAL_TYPE = #{unusualType,jdbcType=VARCHAR},
+            </if>
+            <if test="appProcessorId != null" >
+                APP_PROCESSOR_ID = #{appProcessorId,jdbcType=BIGINT},
+            </if>
+            <if test="backstageProcessorId != null" >
+                BACKSTAGE_PROCESSOR_ID = #{backstageProcessorId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="unusualTime != null" >
+                UNUSUAL_TIME = #{unusualTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="propellingContent != null">
+                PROPELLING_CONTENT = #{propellingContent,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectById" resultType="com.hna.hka.archive.management.system.model.SysRobotUnusualLog">
+        select *
+        from SYS_ROBOT_UNUSUAL_LOG
+        where ID = #{id}
+    </select>
+
+
+    <select id="backstageUnusualList" resultType="com.hna.hka.archive.management.system.model.SysRobotUnusualLog">
+        select srul.*,sss.SCENIC_SPOT_NAME,sau.USER_NAME as appProcessorName,su.USER_NAME as backstageProcessorName
+        from SYS_ROBOT_UNUSUAL_LOG srul
+        left join SYS_SCENIC_SPOT sss on srul.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        left join SYS_APP_USERS sau on srul.APP_PROCESSOR_ID = sau.USER_ID
+        left join SYS_USERS su on  srul.BACKSTAGE_PROCESSOR_ID = su.USER_ID
+        <where>
+            1=1
+            <if test="robotCode != null and robotCode != ''">
+                and  ROBOT_CODE like CONCAT('%',#{robotCode},'%')
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and  srul.SCENIC_SPOT_ID like CONCAT('%',#{scenicSpotId},'%')
+            </if>
+            <if test="unusualType != null and unusualType != ''">
+                and  srul.UNUSUAL_TYPE = #{unusualType}
+            </if>
+            <if test="time != null and time != ''">
+                and srul.CREATE_DATE like CONCAT(#{time},'%')
+            </if>
+            <if test="stateTime != null and stateTime != ''">
+                and srul.CREATE_DATE <![CDATA[ >= ]]> #{stateTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and srul.CREATE_DATE <![CDATA[ <= ]]> #{endTime}
+            </if>
+        </where>
+        order by srul.CREATE_DATE DESC
+    </select>
+
+
+    <select id="getRobotCodeByUnusualLog" resultType="com.hna.hka.archive.management.system.model.SysRobotUnusualLog">
+        select *
+        from SYS_ROBOT_UNUSUAL_LOG
+        where ROBOT_CODE = #{robotCode}
+        and UNUSUAL_TYPE = #{type}
+        order by CREATE_DATE DESC
+        limit 0,1
+    </select>
+
+    <select id="getRobotCodeByUnusualLogN" resultType="com.hna.hka.archive.management.system.model.SysRobotUnusualLog">
+        select *
+        from SYS_ROBOT_UNUSUAL_LOG
+        where ROBOT_CODE = #{robotCode}
+        and STATUS IN (1,2,4)
+        order by UPDATE_DATE DESC
+        limit 1
+    </select>
+
+    <select id="getTotalNumber" resultType="java.lang.Long">
+        select COUNT(*)
+        from SYS_ROBOT_UNUSUAL_LOG
+    </select>
+
+    <update id="oneClickProcessing">
+        update SYS_ROBOT_UNUSUAL_LOG
+        set BACKSTAGE_PROCESSOR_ID = #{userId},
+            STATUS = 3
+        where
+            STATUS = 1
+        <if test="scenicSpotId != null and scenicSpotId != ''">
+            and  SCENIC_SPOT_ID = #{scenicSpotId}
+        </if>
+        <if test="time != null and time != ''">
+            and CREATE_DATE like CONCAT(#{time},'%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and  CREATE_DATE <![CDATA[ >= ]]> #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and  CREATE_DATE <![CDATA[ <= ]]> #{endTime}
+        </if>
+    </update>
+
+
+</mapper>

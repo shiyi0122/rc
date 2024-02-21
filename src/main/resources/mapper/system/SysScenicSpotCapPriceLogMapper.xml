@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotCapPriceLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotCapPriceLog" >
+    <id column="CAP_PRICE_ID" property="capPriceId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+    <result column="NORMAL_CAP_ONE_TIME" property="normalCapOneTime" jdbcType="VARCHAR" />
+    <result column="NORMAL_CAP_ONE_PRICE" property="normalCapOnePrice" jdbcType="VARCHAR" />
+    <result column="NORMAL_CAP_ONE_UNIT_PRICE" property="normalCapOneUnitPrice" jdbcType="VARCHAR" />
+    <result column="NORMAL_CAP_TWO_TIME" property="normalCapTwoTime" jdbcType="VARCHAR" />
+    <result column="NORMAL_CAP_TWO_PRICE" property="normalCapTwoPrice" jdbcType="VARCHAR" />
+    <result column="NORMAL_CAP_TWO_UNIT_PRICE" property="normalCapTwoUnitPrice" jdbcType="VARCHAR" />
+    <result column="WEEKEND_CAP_ONE_TIME" property="weekendCapOneTime" jdbcType="VARCHAR" />
+    <result column="WEEKEND_CAP_ONE_PRICE" property="weekendCapOnePrice" jdbcType="VARCHAR" />
+    <result column="WEEKEND_CAP_ONE_UNIT_PRICE" property="weekendCapOneUnitPrice" jdbcType="VARCHAR" />
+    <result column="WEEKEND_CAP_TWO_TIME" property="weekendCapTwoTime" jdbcType="VARCHAR" />
+    <result column="WEEKEND_CAP_TWO_PRICE" property="weekendCapTwoPrice" jdbcType="VARCHAR" />
+    <result column="WEEKEND_CAP_TWO_UNIT_PRICE" property="weekendCapTwoUnitPrice" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CAP_PRICE_ID, SCENIC_SPOT_ID, LOGIN_NAME, NORMAL_CAP_ONE_TIME, NORMAL_CAP_ONE_PRICE, 
+    NORMAL_CAP_ONE_UNIT_PRICE, NORMAL_CAP_TWO_TIME, NORMAL_CAP_TWO_PRICE, NORMAL_CAP_TWO_UNIT_PRICE, 
+    WEEKEND_CAP_ONE_TIME, WEEKEND_CAP_ONE_PRICE, WEEKEND_CAP_ONE_UNIT_PRICE, WEEKEND_CAP_TWO_TIME, 
+    WEEKEND_CAP_TWO_PRICE, WEEKEND_CAP_TWO_UNIT_PRICE, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_SCENIC_SPOT_CAP_PRICE_LOG
+    where CAP_PRICE_ID = #{capPriceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_SCENIC_SPOT_CAP_PRICE_LOG
+    where CAP_PRICE_ID = #{capPriceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCapPriceLog" >
+    insert into SYS_SCENIC_SPOT_CAP_PRICE_LOG (CAP_PRICE_ID, SCENIC_SPOT_ID, LOGIN_NAME, 
+      NORMAL_CAP_ONE_TIME, NORMAL_CAP_ONE_PRICE, NORMAL_CAP_ONE_UNIT_PRICE, 
+      NORMAL_CAP_TWO_TIME, NORMAL_CAP_TWO_PRICE, NORMAL_CAP_TWO_UNIT_PRICE, 
+      WEEKEND_CAP_ONE_TIME, WEEKEND_CAP_ONE_PRICE, 
+      WEEKEND_CAP_ONE_UNIT_PRICE, WEEKEND_CAP_TWO_TIME, 
+      WEEKEND_CAP_TWO_PRICE, WEEKEND_CAP_TWO_UNIT_PRICE, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{capPriceId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, 
+      #{normalCapOneTime,jdbcType=VARCHAR}, #{normalCapOnePrice,jdbcType=VARCHAR}, #{normalCapOneUnitPrice,jdbcType=VARCHAR}, 
+      #{normalCapTwoTime,jdbcType=VARCHAR}, #{normalCapTwoPrice,jdbcType=VARCHAR}, #{normalCapTwoUnitPrice,jdbcType=VARCHAR}, 
+      #{weekendCapOneTime,jdbcType=VARCHAR}, #{weekendCapOnePrice,jdbcType=VARCHAR}, 
+      #{weekendCapOneUnitPrice,jdbcType=VARCHAR}, #{weekendCapTwoTime,jdbcType=VARCHAR}, 
+      #{weekendCapTwoPrice,jdbcType=VARCHAR}, #{weekendCapTwoUnitPrice,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCapPriceLog" >
+    insert into SYS_SCENIC_SPOT_CAP_PRICE_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="capPriceId != null" >
+        CAP_PRICE_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME,
+      </if>
+      <if test="normalCapOneTime != null" >
+        NORMAL_CAP_ONE_TIME,
+      </if>
+      <if test="normalCapOnePrice != null" >
+        NORMAL_CAP_ONE_PRICE,
+      </if>
+      <if test="normalCapOneUnitPrice != null" >
+        NORMAL_CAP_ONE_UNIT_PRICE,
+      </if>
+      <if test="normalCapTwoTime != null" >
+        NORMAL_CAP_TWO_TIME,
+      </if>
+      <if test="normalCapTwoPrice != null" >
+        NORMAL_CAP_TWO_PRICE,
+      </if>
+      <if test="normalCapTwoUnitPrice != null" >
+        NORMAL_CAP_TWO_UNIT_PRICE,
+      </if>
+      <if test="weekendCapOneTime != null" >
+        WEEKEND_CAP_ONE_TIME,
+      </if>
+      <if test="weekendCapOnePrice != null" >
+        WEEKEND_CAP_ONE_PRICE,
+      </if>
+      <if test="weekendCapOneUnitPrice != null" >
+        WEEKEND_CAP_ONE_UNIT_PRICE,
+      </if>
+      <if test="weekendCapTwoTime != null" >
+        WEEKEND_CAP_TWO_TIME,
+      </if>
+      <if test="weekendCapTwoPrice != null" >
+        WEEKEND_CAP_TWO_PRICE,
+      </if>
+      <if test="weekendCapTwoUnitPrice != null" >
+        WEEKEND_CAP_TWO_UNIT_PRICE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="capPriceId != null" >
+        #{capPriceId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapOneTime != null" >
+        #{normalCapOneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapOnePrice != null" >
+        #{normalCapOnePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapOneUnitPrice != null" >
+        #{normalCapOneUnitPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapTwoTime != null" >
+        #{normalCapTwoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapTwoPrice != null" >
+        #{normalCapTwoPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapTwoUnitPrice != null" >
+        #{normalCapTwoUnitPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapOneTime != null" >
+        #{weekendCapOneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapOnePrice != null" >
+        #{weekendCapOnePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapOneUnitPrice != null" >
+        #{weekendCapOneUnitPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapTwoTime != null" >
+        #{weekendCapTwoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapTwoPrice != null" >
+        #{weekendCapTwoPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapTwoUnitPrice != null" >
+        #{weekendCapTwoUnitPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCapPriceLog" >
+    update SYS_SCENIC_SPOT_CAP_PRICE_LOG
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapOneTime != null" >
+        NORMAL_CAP_ONE_TIME = #{normalCapOneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapOnePrice != null" >
+        NORMAL_CAP_ONE_PRICE = #{normalCapOnePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapOneUnitPrice != null" >
+        NORMAL_CAP_ONE_UNIT_PRICE = #{normalCapOneUnitPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapTwoTime != null" >
+        NORMAL_CAP_TWO_TIME = #{normalCapTwoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapTwoPrice != null" >
+        NORMAL_CAP_TWO_PRICE = #{normalCapTwoPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="normalCapTwoUnitPrice != null" >
+        NORMAL_CAP_TWO_UNIT_PRICE = #{normalCapTwoUnitPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapOneTime != null" >
+        WEEKEND_CAP_ONE_TIME = #{weekendCapOneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapOnePrice != null" >
+        WEEKEND_CAP_ONE_PRICE = #{weekendCapOnePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapOneUnitPrice != null" >
+        WEEKEND_CAP_ONE_UNIT_PRICE = #{weekendCapOneUnitPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapTwoTime != null" >
+        WEEKEND_CAP_TWO_TIME = #{weekendCapTwoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapTwoPrice != null" >
+        WEEKEND_CAP_TWO_PRICE = #{weekendCapTwoPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendCapTwoUnitPrice != null" >
+        WEEKEND_CAP_TWO_UNIT_PRICE = #{weekendCapTwoUnitPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CAP_PRICE_ID = #{capPriceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCapPriceLog" >
+    update SYS_SCENIC_SPOT_CAP_PRICE_LOG
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      NORMAL_CAP_ONE_TIME = #{normalCapOneTime,jdbcType=VARCHAR},
+      NORMAL_CAP_ONE_PRICE = #{normalCapOnePrice,jdbcType=VARCHAR},
+      NORMAL_CAP_ONE_UNIT_PRICE = #{normalCapOneUnitPrice,jdbcType=VARCHAR},
+      NORMAL_CAP_TWO_TIME = #{normalCapTwoTime,jdbcType=VARCHAR},
+      NORMAL_CAP_TWO_PRICE = #{normalCapTwoPrice,jdbcType=VARCHAR},
+      NORMAL_CAP_TWO_UNIT_PRICE = #{normalCapTwoUnitPrice,jdbcType=VARCHAR},
+      WEEKEND_CAP_ONE_TIME = #{weekendCapOneTime,jdbcType=VARCHAR},
+      WEEKEND_CAP_ONE_PRICE = #{weekendCapOnePrice,jdbcType=VARCHAR},
+      WEEKEND_CAP_ONE_UNIT_PRICE = #{weekendCapOneUnitPrice,jdbcType=VARCHAR},
+      WEEKEND_CAP_TWO_TIME = #{weekendCapTwoTime,jdbcType=VARCHAR},
+      WEEKEND_CAP_TWO_PRICE = #{weekendCapTwoPrice,jdbcType=VARCHAR},
+      WEEKEND_CAP_TWO_UNIT_PRICE = #{weekendCapTwoUnitPrice,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where CAP_PRICE_ID = #{capPriceId,jdbcType=BIGINT}
+  </update>
+  <select id="getScenicSpotCapPriceLogList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.CAP_PRICE_ID,
+    A.SCENIC_SPOT_ID,
+    A.LOGIN_NAME,
+    A.NORMAL_CAP_ONE_TIME,
+    A.NORMAL_CAP_ONE_PRICE,
+    A.NORMAL_CAP_ONE_UNIT_PRICE,
+    A.NORMAL_CAP_TWO_TIME,
+    A.NORMAL_CAP_TWO_PRICE,
+    A.NORMAL_CAP_TWO_UNIT_PRICE,
+    A.WEEKEND_CAP_ONE_TIME,
+    A.WEEKEND_CAP_ONE_PRICE,
+    A.WEEKEND_CAP_ONE_UNIT_PRICE,
+    A.WEEKEND_CAP_TWO_TIME,
+    A.WEEKEND_CAP_TWO_PRICE,
+    A.WEEKEND_CAP_TWO_UNIT_PRICE,
+    A.CREATE_DATE,
+    A.UPDATE_DATE,
+    B.SCENIC_SPOT_NAME AS scenicSpotName
+    FROM
+    SYS_SCENIC_SPOT_CAP_PRICE_LOG A
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+
+
+</mapper>

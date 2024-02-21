@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotPadNewSpotMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotPadNewSpot" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="PAD_ID" property="padId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PAD_ID, SCENIC_SPOT_ID, CREATE_DATE, UPDATE_DATE,TYPE
+  </sql>
+
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotPadNewSpot" >
+    insert into SYS_ROBOT_PAD_NEW_SPOT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="padId != null" >
+        PAD_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="padId != null" >
+        #{padId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotPad" >
+    update SYS_ROBOT_PAD_NEW_SPOT
+    <set >
+      <if test="padId != null" >
+        PAD_ID = #{padId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType = VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByPrimaryKey">
+    delete from  SYS_ROBOT_PAD_NEW_SPOT
+    where PAD_ID = #{padId,jdbcType=BIGINT}
+  </delete>
+
+  <select id="selectBySpotIdType" resultType="com.hna.hka.archive.management.system.model.SysRobotPadNewSpot">
+    select *
+    from SYS_ROBOT_PAD_NEW_SPOT
+    where SCENIC_SPOT_ID = #{spotId}
+    and TYPE = #{packageType}
+  </select>
+
+  <select id="selectPadIdBySpotId" resultType="com.hna.hka.archive.management.system.model.SysRobotPadNew">
+    select srpns.*,srpn.PAD_NUMBER,sss.SCENIC_SPOT_NAME
+    from SYS_ROBOT_PAD_NEW_SPOT srpns
+    left join SYS_ROBOT_PAD_NEW srpn on srpns.PAD_ID = srpn.PAD_ID
+    left join SYS_SCENIC_SPOT sss on srpns.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+    where srpns.PAD_ID = #{padId}
+  </select>
+
+  <delete id="deleteById">
+    delete from  SYS_ROBOT_PAD_NEW_SPOT
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+</mapper>

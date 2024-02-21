@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.AttendanceTimeMapper">
+    <resultMap id="AttendanceTime" type="com.hna.hka.archive.management.assetsSystem.model.AttendanceTime">
+        <result column="ID" property="id" jdbcType="BIGINT"/>
+        <result column="START_DATE" property="startDate" jdbcType="VARCHAR"/>
+        <result column="END_DATE" property="endDate" jdbcType="VARCHAR"/>
+        <result column="CREATOR_NAME" property="creatorName" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Attendance">
+        ID,
+            START_DATE,
+            END_DATE,
+            CREATOR_NAME,
+            STATUS,
+            CREATE_DATE,
+            UPDATE_DATE
+    </sql>
+    <insert id="addAttendanceTime">
+        insert into SYS_SCENIC_ATTENDANCE_TIME
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="startDate != null">
+                START_DATE,
+            </if>
+            <if test="endDate != null">
+                END_DATE,
+            </if>
+            <if test="creatorName != null">
+                CREATOR_NAME,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="startDate != null">
+                #{startDate,jdbcType=VARCHAR},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorName != null">
+                #{creatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="upAttendanceTime">
+        update
+            SYS_SCENIC_ATTENDANCE_TIME
+        <set>
+            <if test="startDate != null and startDate != ''">
+                START_DATE = #{startDate,jdbcType = VARCHAR},
+            </if>
+            <if test="endDate != null and endDate != ''">
+                END_DATE = #{endDate,jdbcType = VARCHAR},
+            </if>
+            <if test="creatorName != null and creatorName != ''">
+                CREATOR_NAME = #{creatorName,jdbcType = VARCHAR},
+            </if>
+            <if test="status != null and status != ''">
+                STATUS = #{status,jdbcType = VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CREATE_DATE = #{createDate,jdbcType = VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE = #{updateDate,jdbcType = VARCHAR}
+            </if>
+        </set>
+        where
+            ID = #{id}
+    </update>
+
+    <delete id="deAttendanceTime">
+        delete from SYS_SCENIC_ATTENDANCE_TIME
+        where ID = #{id}
+    </delete>
+
+    <select id="selectAttendanceTime" resultType="com.hna.hka.archive.management.assetsSystem.model.AttendanceTime">
+        SELECT
+           <include refid="Attendance"/>
+        FROM
+           SYS_SCENIC_ATTENDANCE_TIME
+--         WHERE
+--            STATUS != 1
+        ORDER BY
+           START_DATE
+        ASC
+    </select>
+    <select id="selectAttendanceTimes"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.AttendanceTime">
+        SELECT
+        <include refid="Attendance"/>
+        FROM
+        SYS_SCENIC_ATTENDANCE_TIME
+        WHERE
+        STATUS != 1
+        ORDER BY
+        START_DATE
+        ASC,
+        END_DATE
+        ASC
+    </select>
+</mapper>

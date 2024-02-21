@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.SysCurrentUserExchangeMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.appSystem.model.SysCurrentUserExchange">
+        <id column="EXCHANGE_ID" property="exchangeId" jdbcType="BIGINT"/>
+        <result column="USER_ID" property="userId" jdbcType="BIGINT"/>
+        <result column="EXCHANGE_NUMBER" property="exchangeNumber" jdbcType="VARCHAR"/>
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT"/>
+        <result column="EXCHANGE_STATE" property="exchangeState" jdbcType="VARCHAR"/>
+        <result column="EXCHANGE_NAME" property="exchangeName" jdbcType="VARCHAR"/>
+        <result column="START_VALIDITY" property="startValidity" jdbcType="VARCHAR"/>
+        <result column="END_VALIDITY" property="endValidity" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    EXCHANGE_ID, USER_ID, EXCHANGE_NUMBER, SCENIC_SPOT_ID, EXCHANGE_STATE, EXCHANGE_NAME, ADDRESS_ID,
+    START_VALIDITY, END_VALIDITY, CREATE_DATE, UPDATE_DATE,SHIPMENT_STATUS
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_CURRENT_USER_EXCHANGE
+        where EXCHANGE_ID = #{exchangeId,jdbcType=BIGINT}
+    </select>
+    <!--查询兑奖信息-->
+    <select id="exchangePrize" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_CURRENT_USER_EXCHANGE
+        where EXCHANGE_NUMBER = #{exchangeNumber,jdbcType=VARCHAR}
+    </select>
+    <!--查询奖品列表-->
+    <select id="queryExchangePrizeList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_CURRENT_USER_EXCHANGE
+        <where>
+            SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT}
+            <if test="exchangeState != null and exchangeState != ''">
+                AND EXCHANGE_STATE = #{exchangeState,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="getExchangePrizeList"
+            resultType="com.hna.hka.archive.management.appSystem.model.SysCurrentUserExchange">
+        select
+        EXCHANGE_ID,
+        USER_ID,
+        USER_PHONE,
+        EXCHANGE_STATE,
+        EXCHANGE_NAME,
+        START_VALIDITY,
+        END_VALIDITY,
+        SHIPMENT_STATUS
+        from SYS_CURRENT_USER_EXCHANGE
+        where
+        SHIPMENT_STATUS = 0
+        order by CREATE_DATE DESC
+    </select>
+    <select id="getExchangePrize"
+            resultType="com.hna.hka.archive.management.appSystem.model.SysCurrentUserExchange">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_CURRENT_USER_EXCHANGE
+        where
+        EXCHANGE_NUMBER =#{exchangeNumber}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SYS_CURRENT_USER_EXCHANGE
+    where EXCHANGE_ID = #{exchangeId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.hna.hka.archive.management.appSystem.model.SysCurrentUserExchange">
+    insert into SYS_CURRENT_USER_EXCHANGE (EXCHANGE_ID, USER_ID, EXCHANGE_NUMBER, 
+      SCENIC_SPOT_ID, EXCHANGE_STATE, EXCHANGE_NAME, 
+      START_VALIDITY, END_VALIDITY, CREATE_DATE, 
+      UPDATE_DATE)
+    values (#{exchangeId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{exchangeNumber,jdbcType=VARCHAR}, 
+      #{scenicSpotId,jdbcType=BIGINT}, #{exchangeState,jdbcType=VARCHAR}, #{exchangeName,jdbcType=VARCHAR}, 
+      #{startValidity,jdbcType=VARCHAR}, #{endValidity,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.hna.hka.archive.management.appSystem.model.SysCurrentUserExchange">
+        insert into SYS_CURRENT_USER_EXCHANGE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="exchangeId != null">
+                EXCHANGE_ID,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="exchangeNumber != null">
+                EXCHANGE_NUMBER,
+            </if>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="exchangeState != null">
+                EXCHANGE_STATE,
+            </if>
+            <if test="exchangeName != null">
+                EXCHANGE_NAME,
+            </if>
+            <if test="startValidity != null">
+                START_VALIDITY,
+            </if>
+            <if test="endValidity != null">
+                END_VALIDITY,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="exchangeId != null">
+                #{exchangeId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="exchangeNumber != null">
+                #{exchangeNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotId != null">
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="exchangeState != null">
+                #{exchangeState,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeName != null">
+                #{exchangeName,jdbcType=VARCHAR},
+            </if>
+            <if test="startValidity != null">
+                #{startValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="endValidity != null">
+                #{endValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="addExchangeLog">
+        insert into SYS_CURRENT_USER_EXCHANGE_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="exchangeLogId != null and exchangeLogId != ''">
+                EXCHANGE_LOG_ID,
+            </if>
+            <if test="userId != null and userId != ''">
+                USER_ID,
+            </if>
+            <if test="prizeId != null and prizeId != ''">
+                PRIZE_ID,
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="exchangePort != null and exchangePort != ''">
+                EXCHANGE_PORT,
+            </if>
+            <if test="operationalState != null and operationalState != ''">
+                OPERATIONAL_STATE,
+            </if>
+            <if test="accountName != null and accountName != ''">
+                ACCOUNT_NAME,
+            </if>
+            <if test="mailingAddress != null and mailingAddress != ''">
+                MAILING_ADDRESS,
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                USER_PHONE,
+            </if>
+            <if test="fullName != null and fullName != ''">
+                FALL_NAME,
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CRATE_DATE,
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="exchangeLogId != null and exchangeLogId != ''">
+                #{exchangeLogId},
+            </if>
+            <if test="userId != null and userId != ''">
+                #{userId},
+            </if>
+            <if test="prizeId != null and prizeId != ''">
+                #{prizeId},
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                #{scenicSpotId},
+            </if>
+            <if test="exchangePort != null and exchangePort != ''">
+                #{exchangePort},
+            </if>
+            <if test="operationalState != null and operationalState != ''">
+                #{operationalState},
+            </if>
+            <if test="accountName != null and accountName != ''">
+                #{accountName},
+            </if>
+            <if test="mailingAddress != null and mailingAddress != ''">
+                #{mailingAddress},
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                #{userPhone},
+            </if>
+            <if test="fullName != null and fullName != ''">
+                #{fallName},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                #{createDate},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                #{updateDate}
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.hna.hka.archive.management.appSystem.model.SysCurrentUserExchange">
+        update SYS_CURRENT_USER_EXCHANGE
+        <set>
+            <if test="userId != null">
+                USER_ID = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="exchangeNumber != null">
+                EXCHANGE_NUMBER = #{exchangeNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="exchangeState != null">
+                EXCHANGE_STATE = #{exchangeState,jdbcType=VARCHAR},
+            </if>
+            <if test="shipmentStatus != null and shipmentStatus != ''">
+                SHIPMENT_STATUS =#{shipmentStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeName != null">
+                EXCHANGE_NAME = #{exchangeName,jdbcType=VARCHAR},
+            </if>
+            <if test="startValidity != null">
+                START_VALIDITY = #{startValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="endValidity != null">
+                END_VALIDITY = #{endValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where EXCHANGE_ID = #{exchangeId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey"
+            parameterType="com.hna.hka.archive.management.appSystem.model.SysCurrentUserExchange">
+    update SYS_CURRENT_USER_EXCHANGE
+    set USER_ID = #{userId,jdbcType=BIGINT},
+      EXCHANGE_NUMBER = #{exchangeNumber,jdbcType=VARCHAR},
+      SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      EXCHANGE_STATE = #{exchangeState,jdbcType=VARCHAR},
+      EXCHANGE_NAME = #{exchangeName,jdbcType=VARCHAR},
+      START_VALIDITY = #{startValidity,jdbcType=VARCHAR},
+      END_VALIDITY = #{endValidity,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where EXCHANGE_ID = #{exchangeId,jdbcType=BIGINT}
+  </update>
+</mapper>

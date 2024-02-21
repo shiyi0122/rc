@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessChartDataRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.business.model.BusinessChartDataRecord" >
+    <id column="RECORD_ID" property="recordId" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="RECORD_RECEPTION_DESK" property="recordReceptionDesk" jdbcType="VARCHAR" />
+    <result column="RECORD_ROBOT_ONLINE_ORDER" property="recordRobotOnlineOrder" jdbcType="VARCHAR" />
+    <result column="RECORD_TYPE" property="recordType" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RECORD_ID, SCENIC_SPOT_ID, RECORD_RECEPTION_DESK, RECORD_ROBOT_ONLINE_ORDER, RECORD_TYPE, 
+    CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BUSINESS_CHART_DATA_RECORD
+    where RECORD_ID = #{recordId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BUSINESS_CHART_DATA_RECORD
+    where RECORD_ID = #{recordId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.business.model.BusinessChartDataRecord" >
+    insert into BUSINESS_CHART_DATA_RECORD (RECORD_ID, SCENIC_SPOT_ID, RECORD_RECEPTION_DESK, 
+      RECORD_ROBOT_ONLINE_ORDER, RECORD_TYPE, CREATE_DATE, 
+      UPDATE_DATE)
+    values (#{recordId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{recordReceptionDesk,jdbcType=VARCHAR}, 
+      #{recordRobotOnlineOrder,jdbcType=VARCHAR}, #{recordType,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessChartDataRecord" >
+    insert into BUSINESS_CHART_DATA_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        RECORD_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="recordReceptionDesk != null" >
+        RECORD_RECEPTION_DESK,
+      </if>
+      <if test="recordRobotOnlineOrder != null" >
+        RECORD_ROBOT_ONLINE_ORDER,
+      </if>
+      <if test="recordType != null" >
+        RECORD_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="recordReceptionDesk != null" >
+        #{recordReceptionDesk,jdbcType=VARCHAR},
+      </if>
+      <if test="recordRobotOnlineOrder != null" >
+        #{recordRobotOnlineOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+        #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--新数据向新表中添加数据，旧表数据量太多了-->
+  <insert id="insertSelectiveNew" parameterType="com.hna.hka.archive.management.business.model.BusinessChartDataRecord" >
+    insert into BUSINESS_CHART_DATA_RECORD_NEW
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        RECORD_ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="recordReceptionDesk != null" >
+        RECORD_RECEPTION_DESK,
+      </if>
+      <if test="recordRobotOnlineOrder != null" >
+        RECORD_ROBOT_ONLINE_ORDER,
+      </if>
+      <if test="recordType != null" >
+        RECORD_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="recordReceptionDesk != null" >
+        #{recordReceptionDesk,jdbcType=VARCHAR},
+      </if>
+      <if test="recordRobotOnlineOrder != null" >
+        #{recordRobotOnlineOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+        #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessChartDataRecord" >
+    update BUSINESS_CHART_DATA_RECORD
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="recordReceptionDesk != null" >
+        RECORD_RECEPTION_DESK = #{recordReceptionDesk,jdbcType=VARCHAR},
+      </if>
+      <if test="recordRobotOnlineOrder != null" >
+        RECORD_ROBOT_ONLINE_ORDER = #{recordRobotOnlineOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+        RECORD_TYPE = #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_ID = #{recordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.business.model.BusinessChartDataRecord" >
+    update BUSINESS_CHART_DATA_RECORD
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      RECORD_RECEPTION_DESK = #{recordReceptionDesk,jdbcType=VARCHAR},
+      RECORD_ROBOT_ONLINE_ORDER = #{recordRobotOnlineOrder,jdbcType=VARCHAR},
+      RECORD_TYPE = #{recordType,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where RECORD_ID = #{recordId,jdbcType=BIGINT}
+  </update>
+  <select id="getOnlineOrder" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    distinct DATE_FORMAT(A.CREATE_DATE,'%H:%i') AS timeName,
+    SUM(CAST(A.RECORD_ROBOT_ONLINE_ORDER as decimal(18,0))) AS RECORD_ROBOT_ONLINE_ORDER,
+    convert(SUM( CAST( A.RECORD_RECEPTION_DESK AS DECIMAL ( 18, 0 ) ) ) / #{days},decimal(10,2)) AS RECORD_RECEPTION_DESK
+    FROM
+    BUSINESS_CHART_DATA_RECORD A
+    <if test="userId != null and userId != ''">
+      LEFT JOIN BUSINESS_USERS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    </if>
+    WHERE 1=1
+    <if test="userId != null and userId != ''">
+      AND B.USER_ID = #{userId}
+    </if>
+    AND A.RECORD_TYPE = #{recordType}
+    AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+    AND DATE( CREATE_DATE ) <![CDATA[ >= ]]> #{stime}
+    AND DATE( CREATE_DATE ) <![CDATA[ <= ]]> #{etime}
+    GROUP BY
+    timeName
+  </select>
+
+  <select id="getOnlineOrderNew" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    distinct DATE_FORMAT(A.CREATE_DATE,'%H:%i') AS timeName,
+    SUM(CAST(A.RECORD_ROBOT_ONLINE_ORDER as decimal(18,0))) AS RECORD_ROBOT_ONLINE_ORDER,
+    convert(SUM( CAST( A.RECORD_RECEPTION_DESK AS DECIMAL ( 18, 0 ) ) ) / #{days},decimal(10,2)) AS RECORD_RECEPTION_DESK
+    FROM
+    BUSINESS_CHART_DATA_RECORD_NEW A
+    <if test="userId != null and userId != ''">
+      LEFT JOIN BUSINESS_USERS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    </if>
+    WHERE 1=1
+    <if test="userId != null and userId != ''">
+      AND B.USER_ID = #{userId}
+    </if>
+    AND A.RECORD_TYPE = #{recordType}
+    AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+    AND DATE( CREATE_DATE ) <![CDATA[ >= ]]> #{stime}
+    AND DATE( CREATE_DATE ) <![CDATA[ <= ]]> #{etime}
+    GROUP BY
+    timeName
+  </select>
+
+  <select id="getOnlineOrderByUserId" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    distinct DATE_FORMAT(A.CREATE_DATE,'%H:%i') AS timeName,
+	SUM(CAST(A.RECORD_ROBOT_ONLINE_ORDER as decimal(18,0))) AS RECORD_ROBOT_ONLINE_ORDER,
+	SUM(CAST(A.RECORD_RECEPTION_DESK as decimal(18,0))) AS RECORD_RECEPTION_DESK
+    FROM
+	BUSINESS_CHART_DATA_RECORD A
+    <if test="userId != null and userId != ''">
+      LEFT JOIN BUSINESS_USERS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    </if>
+    WHERE 1=1
+    <if test="userId != null and userId != ''">
+      AND B.USER_ID = #{userId}
+    </if>
+	AND A.RECORD_TYPE = #{recordType}
+    AND DATE( CREATE_DATE ) <![CDATA[ >= ]]> #{stime}
+    AND DATE( CREATE_DATE ) <![CDATA[ <= ]]> #{etime}
+	GROUP BY timeName
+  </select>
+
+  <select id="getOnlineOrderByUserIdNew" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    distinct DATE_FORMAT(A.CREATE_DATE,'%H:%i') AS timeName,
+    SUM(CAST(A.RECORD_ROBOT_ONLINE_ORDER as decimal(18,0))) AS RECORD_ROBOT_ONLINE_ORDER,
+    SUM(CAST(A.RECORD_RECEPTION_DESK as decimal(18,0))) AS RECORD_RECEPTION_DESK
+    FROM
+    BUSINESS_CHART_DATA_RECORD_NEW A
+    <if test="userId != null and userId != ''">
+      LEFT JOIN BUSINESS_USERS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    </if>
+    WHERE 1=1
+    <if test="userId != null and userId != ''">
+      AND B.USER_ID = #{userId}
+    </if>
+    AND A.RECORD_TYPE = #{recordType}
+    AND DATE( CREATE_DATE ) <![CDATA[ >= ]]> #{stime}
+    AND DATE( CREATE_DATE ) <![CDATA[ <= ]]> #{etime}
+    GROUP BY timeName
+  </select>
+
+  <select id="getTimeByRecords" resultType="com.hna.hka.archive.management.business.model.BusinessChartDataRecord">
+    select
+    <include refid="Base_Column_List" />
+    from BUSINESS_CHART_DATA_RECORD_NEW
+    <where>
+      1=1
+      <if test="scenicSpotId != null">
+        and  SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      and RECORD_TYPE = 2
+      <if test="crutDate != null">
+        and CREATE_DATE like CONCAT(#{crutDate},'%')
+      </if>
+      <if test="saturationTime != null">
+        and CREATE_DATE >= DATE_SUB(SYSDATE(),INTERVAL #{saturationTime} MINUTE)
+      </if>
+    </where>
+
+  </select>
+
+  <select id="getSpotIdByRecordList" resultType="com.hna.hka.archive.management.business.model.BusinessChartDataRecord">
+    select
+    <include refid="Base_Column_List" />
+    from BUSINESS_CHART_DATA_RECORD_NEW
+    where
+    SCENIC_SPOT_ID = #{scenicSpotFid}
+    and RECORD_TYPE = 2
+    order by CREATE_DATE DESC
+    limit 1
+  </select>
+
+
+</mapper>

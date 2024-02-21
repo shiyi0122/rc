@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.appSystem.dao.SubstituteApplyMapper">
+
+    <select id="list" resultType="com.hna.hka.archive.management.appSystem.model.SubstituteApply">
+        SELECT
+                sgsa.* ,
+                sss.SCENIC_SPOT_NAME ,
+                sau.USER_NAME
+            from
+                SYS_GOODS_SUBSTITUTE_APPLY sgsa
+            left join SYS_SCENIC_SPOT sss on
+                sgsa.SPOT_ID = sss.SCENIC_SPOT_ID
+            LEFT join SYS_APP_USERS sau on
+                sgsa.APPLY_USER_ID = sau.USER_ID
+        <where>
+            <if test="spotId != null and spotId != ''">
+                and SPOT_ID = #{spotId}
+            </if>
+            <if test="stat != null and stat != ''">
+                and APPLY_STAT = #{stat}
+            </if>
+            <if test="userId != null and userId != ''">
+                and USER_ID = #{userId}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and DATE_FORMAT(sgsa.APPLY_TIME , '%Y-%m-%d') &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and DATE_FORMAT(sgsa.APPLY_TIME , '%Y-%m-%d') &lt;= #{endDate}
+            </if>
+        </where>
+        order by
+            APPLY_TIME DESC
+    </select>
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.appSystem.model.SubstituteApply">
+        insert into SYS_GOODS_SUBSTITUTE_APPLY(apply_number, spot_id, apply_user_id, apply_time, apply_reasion,
+        picture_path, total_amount, apply_stat, examine_aggestion, receiving_name, receiving_phone, inventory_number,
+        note, create_time, update_time, type, fault_number, apply_user_phone, assessor_id, assessment_report, approver_id, final_id, processing_results, sale_amount, robot_number,examine_result,application_report,robot_code)
+        value (#{applyNumber} , #{spotId} ,
+        #{applyUserId} , now() , #{applyReasion} , #{picturePath} , #{totalAmount} ,
+        #{applyStat} , #{examineAggestion} , #{receivingName} , #{receivingPhone} ,
+        #{inventoryNumber} , #{note} ,now() , now(), #{type} , #{faultNumber}  , #{applyUserPhone}, #{assessorId},#{assessmentReport},#{approverId},#{finalId},#{processingResults},#{saleAmount},#{robotNumber},#{examineResult},#{applicationReport},#{robotCode});
+        <foreach collection='details' item='detail' separator=";">
+            insert into SYS_GOODS_SUBSTITUTE_APPLY_DETAIL(apply_number, goods_id, quantity, amount, inventory_number)
+            VALUE (#{detail.applyNumber} , #{detail.goodsId} , #{detail.quantity} , #{detail.amount} ,
+            #{detail.inventoryNumber})
+        </foreach>
+    </insert>
+
+    <update id="edit" parameterType="com.hna.hka.archive.management.appSystem.model.SubstituteApply">
+        update SYS_GOODS_SUBSTITUTE_APPLY
+        set 
+            <if test="spotId != null">
+                SPOT_ID          = #{spotId},
+            </if>
+            <if test="applyUserId != null">
+                APPLY_USER_ID     = #{applyUserId},
+            </if>
+            <if test="applyReasion != null">
+                APPLY_REASION     = #{applyReasion},
+            </if>
+            <if test="picturePath != null and picturePath != ''">
+                PICTURE_PATH      = #{picturePath},
+            </if>
+            <if test="totalAmount != null">
+                TOTAL_AMOUNT      = #{totalAmount},
+            </if>
+            <if test="applyStat != null">
+                APPLY_STAT        = #{applyStat},
+            </if>
+            <if test="examineAggestion != null and examineAggestion != ''">
+                EXAMINE_AGGESTION = #{examineAggestion},
+            </if>
+            <if test="receivingName != null and receivingName != ''">
+                RECEIVING_NAME    = #{receivingName},
+            </if>
+            <if test="receivingPhone != null and receivingPhone != ''">
+                RECEIVING_PHONE   = #{receivingPhone},
+            </if>
+            <if test="note != null and note != ''">
+                NOTE              = #{note},
+            </if>
+            <if test="faultNumber != null and faultNumber != ''">
+                FAULT_NUMBER      = #{faultNumber},
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                ROBOT_CODE      =#{robotCode},
+            </if>
+            <if test="applyUserPhone != null and applyUserPhone != ''">
+                APPLY_USER_PHONE = #{applyUserPhone},
+            </if>
+            <if test="assessorId != null and assessorId != ''">
+                ASSESSOR_ID = #{assessorId},
+            </if>
+            <if test="assessmentReport != null and assessmentReport != ''">
+                ASSESSMENT_REPORT = #{assessmentReport},
+            </if>
+            <if test="approverId != null and approverId != ''">
+                APPROVER_ID = #{approverId},
+            </if>
+            <if test="finalId != null and finalId != ''">
+                FINAL_ID = #{finalId},
+            </if>
+            <if test="processingResults != null and processingResults != ''">
+                PROCESSING_RESULTS = #{processingResults},
+            </if>
+            <if test="saleAmount != null and saleAmount != ''">
+                SALE_AMOUNT = #{saleAmount},
+            </if>
+            <if test="examineResult != null and examineResult != ''" >
+                EXAMINE_RESULT = #{examineResult},
+            </if>
+            <if test="applicationReport != null and applicationReport != ''">
+                APPLICATION_REPORT = #{applicationReport},
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                ROBOT_CODE = #{robotCode},
+            </if>
+            UPDATE_TIME           = now()
+        where APPLY_NUMBER = #{applyNumber};
+        <foreach collection="details" item="detail" separator=";">
+            update SYS_GOODS_SUBSTITUTE_APPLY_DETAIL
+            <set>
+                <if test="goodsId != null">
+                    GOODS_ID         = #{goodsId},
+                </if>
+                <if test="quantity != null">
+                    QUANTITY         = #{quantity},
+                </if>
+                <if test="amount != null">
+                    AMOUNT           = #{amount},
+                </if>
+                <if test="inventoryNumber != null and inventoryNumber != ''">
+                    INVENTORY_NUMBER = #{inventoryNumber},
+                </if>
+            </set>
+            where APPLY_NUMBER = #{applyNumber}
+        </foreach>
+    </update>
+
+
+    <select id="getGTIdBySpotId" resultType="java.lang.String">
+        SELECT
+            sau.USER_CLIENT_GT_ID
+        from
+            SYS_SCENIC_SPOT sss
+                left join SYS_APP_USERS_SPOT_ROLE sausr on
+                sss.SCENIC_SPOT_ID = sausr.PRIMARY_KEY_PID
+                LEFT join SYS_APP_USERS sau on
+                sausr.PRIMARY_KEY_UID = sau.USER_ID
+        where sss.SCENIC_SPOT_ID = #{_parameter}
+          and sau.USER_TYPE = 3
+    </select>
+
+    <select id="getByKey" resultType="com.hna.hka.archive.management.appSystem.model.SubstituteApply">
+        select * from SYS_GOODS_SUBSTITUTE_APPLY where APPLY_NUMBER = #{_parameter}
+    </select>
+
+    <select id="getUserNameById" resultType="java.lang.String">
+        select USER_NAME as userName from SYS_APP_USERS where USER_ID = #{_parameter}
+    </select>
+
+
+    <select id="sysList" resultType="com.hna.hka.archive.management.appSystem.model.SubstituteApply" >
+        SELECT
+        sgsa.* ,
+        sss.SCENIC_SPOT_NAME ,
+        sau.USER_NAME
+        from
+        SYS_GOODS_SUBSTITUTE_APPLY sgsa
+        left join SYS_SCENIC_SPOT sss on
+        sgsa.SPOT_ID = sss.SCENIC_SPOT_ID
+        LEFT join SYS_APP_USERS sau on
+        sgsa.APPLY_USER_ID = sau.USER_ID
+        <where>
+            <if test="spotId != null and spotId != ''">
+                and SPOT_ID = #{spotId}
+            </if>
+            <if test="stat != null and stat != ''">
+                and APPLY_STAT = #{stat}
+            </if>
+            <if test="userId != null and userId != ''">
+                and USER_ID = #{userId}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and DATE_FORMAT(sgsa.APPLY_TIME , '%Y-%m-%d') &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and DATE_FORMAT(sgsa.APPLY_TIME , '%Y-%m-%d') &lt;= #{endDate}
+            </if>
+            <if test="robotId != null and robotId != ''">
+                and ROBOT_CODE like concat('%',#{robotId},'%')
+            </if>
+            <if test="faultNumber != null and faultNumber != ''">
+                and APPLY_NUMBER LIKE CONCAT('%',#{faultNumber},'%')
+            </if>
+        </where>
+        order by
+        APPLY_TIME DESC
+    </select>
+
+
+    <select id="getSubstituteApplySystemExcel" resultType="com.hna.hka.archive.management.appSystem.model.SubstituteApply" parameterType="java.util.Map">
+        SELECT
+        sgsa.* ,
+        sss.SCENIC_SPOT_NAME as spotName,
+        sau.USER_NAME as applyUserName
+        from
+        SYS_GOODS_SUBSTITUTE_APPLY sgsa
+        left join SYS_SCENIC_SPOT sss on
+        sgsa.SPOT_ID = sss.SCENIC_SPOT_ID
+        LEFT join SYS_APP_USERS sau on
+        sgsa.APPLY_USER_ID = sau.USER_ID
+        <where>
+            <if test="spotId != null and spotId != ''">
+                and SPOT_ID = #{spotId}
+            </if>
+            <if test="stat != null and stat != ''">
+                and APPLY_STAT = #{stat}
+            </if>
+            <if test="userId != null and userId != ''">
+                and USER_ID = #{userId}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and DATE_FORMAT(sgsa.APPLY_TIME , '%Y-%m-%d') &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and DATE_FORMAT(sgsa.APPLY_TIME , '%Y-%m-%d') &lt;= #{endDate}
+            </if>
+            <if test="robotCode != null and robotCode != ''">
+                and ROBOT_CODE like concat('%',#{robotCode},'%')
+            </if>
+            <if test="faultNumber != null and faultNumber != ''">
+                and APPLY_NUMBER LIKE CONCAT('%',#{faultNumber},'%')
+            </if>
+        </where>
+        order by
+        sgsa.APPLY_TIME DESC
+    </select>
+</mapper>

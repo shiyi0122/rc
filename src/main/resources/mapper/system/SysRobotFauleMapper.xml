@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotFauleMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotFaule" >
+    <id column="ROBOT_ALARM_ID" property="robotAlarmId" jdbcType="BIGINT" />
+    <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="ROBOT_ALARM_INFO" property="robotAlarmInfo" jdbcType="VARCHAR" />
+    <result column="ROBOT_FAULT_CODE" property="robotFaultCode" jdbcType="VARCHAR" />
+    <result column="ROBOT_VERSION" property="robotVersion" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="SOURCE_TYPE" property="sourceType" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROBOT_ALARM_ID, ROBOT_CODE, SCENIC_SPOT_ID, ROBOT_ALARM_INFO, ROBOT_FAULT_CODE, ROBOT_VERSION, CREATE_DATE,
+    UPDATE_DATE,SOURCE_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_FAULE
+    where ROBOT_ALARM_ID = #{robotAlarmId,jdbcType=BIGINT}
+  </select>
+  <select id="getOperationLogRobotAlarmList" resultMap="BaseResultMap">
+    select
+    A.*,
+    B.SCENIC_SPOT_NAME AS scenicSpotName
+    from SYS_ROBOT_FAULE A
+    LEFT JOIN SYS_SCENIC_SPOT B
+    ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+  <select id="getRobotFauleList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    A.*,
+    B.SCENIC_SPOT_NAME AS scenicSpotName
+    from SYS_ROBOT_FAULE A
+    LEFT JOIN SYS_SCENIC_SPOT B
+    ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+      <if test="time != null and time != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{time}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND DATE(A.CREATE_DATE) <![CDATA[ <= ]]> #{endTime}
+      </if>
+    </where>
+    ORDER BY A.CREATE_DATE DESC
+  </select>
+</mapper>

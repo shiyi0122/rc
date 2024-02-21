@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.StatementOfAccessoriesMapper">
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.StatementOfAccessories">
+        select srer.ERROR_RECORDS_ID,sgsa.TYPE, srer.SCENIC_SPOT_ID, sss.SCENIC_SPOT_NAME, sgsa.APPLY_USER_ID,sau.USER_NAME, sgsa.APPLY_TIME,srsr.SERVICE_RECORDS_SERVICE_DATE,srpm.ACCESSORY_NAME,srer.ERROR_RECORDS_NUMBER,srer.ERROR_RECORDS_PART_PRICE,srer.ERROR_RECORDS_NUMBER * srer.ERROR_RECORDS_PART_PRICE  as accessoryPrice,srer.IMPROPER_OPERATION,srer.ERROR_RECORDS_RECEIVE,srer.ERROR_RECORDS_REPLACE,srer.ERROR_RECORDS_UPKEEP_COST,srsr.SERVICE_RECORDS_RESULT,srer.SPOT_PARTS_COST,srer.SPOT_REPAIR_COST
+        from  SYS_ROBOT_ERROR_RECORDS srer
+        left join SYS_GOODS_SUBSTITUTE_APPLY sgsa on sgsa.FAULT_NUMBER = srer.ERROR_RECORDS_NO
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on srer.SCENIC_SPOT_ID = sssi.SPOT_ID
+        left join SYS_SCENIC_SPOT sss on srer.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        left join SYS_ROBOT_PARTS_MANAGEMENT srpm on srer.ERROR_RECORDS_NEW_ID = srpm.PARTS_MANAGEMENT_ID
+        left join SYS_ROBOT_ERROR_REPAIR_USER sreru on srer.ERROR_RECORDS_ID = sreru.ERROR_ID
+        left join SYS_ROBOT_SERVICE_RECORDS srsr on sreru.REPAIR_ID = srsr.SERVICE_RECORDS_ID
+        left join  SYS_APP_USERS sau on sgsa.APPLY_USER_ID = sau.USER_ID
+        <where>
+            <if test="spot != null">
+                srer.SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="company != null">
+                 and sssi.COMPANY_ID = #{company}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and substr(srer.CREATE_TIME , 1 , #{beginSize , jdbcType=INTEGER}) &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(srer.CREATE_TIME , 1 , #{endSize , jdbcType=INTEGER}) &lt;= #{endDate}
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                and sgsa.TYPE = #{paymentType}
+            </if>
+            <if test="errorRecordsUpkeepCost != null and errorRecordsUpkeepCost != ''">
+                and srer.ERROR_RECORDS_UPKEEP_COST = #{errorRecordsUpkeepCost}
+            </if>
+        </where>
+        group by srer.ERROR_RECORDS_ID
+        order by srer.CREATE_TIME
+<!--        <if test="pageNum != null and pageSize != null">-->
+<!--            limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}-->
+<!--        </if>-->
+    </select>
+
+    <select id="listNew" resultType="com.hna.hka.archive.management.assetsSystem.model.StatementOfAccessories">
+        select srer.ERROR_RECORDS_ID,sgsa.TYPE, srer.SCENIC_SPOT_ID, sss.SCENIC_SPOT_NAME, sgsa.APPLY_USER_ID,sau.USER_NAME, sgsa.APPLY_TIME,srsr.SERVICE_RECORDS_SERVICE_DATE,srpm.ACCESSORY_NAME,srer.ERROR_RECORDS_NUMBER,srer.ERROR_RECORDS_PART_PRICE,srer.ERROR_RECORDS_NUMBER * srer.ERROR_RECORDS_PART_PRICE  as accessoryPrice,srer.IMPROPER_OPERATION,srer.ERROR_RECORDS_RECEIVE,srer.ERROR_RECORDS_REPLACE,srer.ERROR_RECORDS_UPKEEP_COST,srsr.SERVICE_RECORDS_RESULT,srer.SPOT_PARTS_COST,srer.SPOT_REPAIR_COST
+        from  SYS_ROBOT_ERROR_RECORDS srer
+        left join SYS_GOODS_SUBSTITUTE_APPLY sgsa on sgsa.FAULT_NUMBER = srer.ERROR_RECORDS_NO
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on srer.SCENIC_SPOT_ID = sssi.SPOT_ID
+        left join SYS_SCENIC_SPOT sss on srer.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        left join SYS_ROBOT_PARTS_MANAGEMENT srpm on srer.ERROR_RECORDS_NEW_ID = srpm.PARTS_MANAGEMENT_ID
+        left join SYS_ROBOT_ERROR_REPAIR_USER sreru on srer.ERROR_RECORDS_ID = sreru.ERROR_ID
+        left join SYS_ROBOT_SERVICE_RECORDS srsr on sreru.REPAIR_ID = srsr.SERVICE_RECORDS_ID
+        left join  SYS_APP_USERS sau on sgsa.APPLY_USER_ID = sau.USER_ID
+        <where>
+            <if test="spot != null">
+                srer.SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="company != null">
+                and sssi.COMPANY_ID = #{company}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and srer.CREATE_TIME like CONCAT('%',#{beginDate},'%')
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                and sgsa.TYPE = #{paymentType}
+            </if>
+            <if test="errorRecordsUpkeepCost != null and errorRecordsUpkeepCost != ''">
+                and srer.ERROR_RECORDS_UPKEEP_COST = #{errorRecordsUpkeepCost}
+            </if>
+            <if test="errorRecordsQuality != null and errorRecordsQuality != ''">
+                and srer.ERROR_RECORDS_QUALITY = #{errorRecordsQuality}
+            </if>
+        </where>
+        group by srer.ERROR_RECORDS_ID
+        order by srer.CREATE_TIME
+<!--        <if test="pageNum != null and pageSize != null">-->
+<!--            limit #{pageNum , jdbcType=INTEGER} , #{pageSize , jdbcType=INTEGER}-->
+<!--        </if>-->
+    </select>
+
+    <select id="getCount" resultType="java.util.HashMap">
+        select count(0) as count from (
+        select  srer.ERROR_RECORDS_ID,sgsa.TYPE, srer.SCENIC_SPOT_ID, sss.SCENIC_SPOT_NAME, sgsa.APPLY_USER_ID,sau.USER_NAME, sgsa.APPLY_TIME,srpm.ACCESSORY_NAME,srer.ERROR_RECORDS_NUMBER,srer.ERROR_RECORDS_PART_PRICE,srer.IMPROPER_OPERATION,srer.ERROR_RECORDS_RECEIVE,srer.ERROR_RECORDS_REPLACE,srer.ERROR_RECORDS_UPKEEP_COST,srsr.SERVICE_RECORDS_RESULT
+        from  SYS_ROBOT_ERROR_RECORDS srer
+        left join SYS_GOODS_SUBSTITUTE_APPLY sgsa on sgsa.FAULT_NUMBER = srer.ERROR_RECORDS_NO
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on srer.SCENIC_SPOT_ID = sssi.SPOT_ID
+        left join SYS_SCENIC_SPOT sss on srer.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        left join SYS_ROBOT_PARTS_MANAGEMENT srpm on srer.ERROR_RECORDS_NEW_ID = srpm.PARTS_MANAGEMENT_ID
+        left join SYS_ROBOT_ERROR_REPAIR_USER sreru on srer.ERROR_RECORDS_ID = sreru.ERROR_ID
+        left join SYS_ROBOT_SERVICE_RECORDS srsr on sreru.REPAIR_ID = srsr.SERVICE_RECORDS_ID
+        left join  SYS_APP_USERS sau on sgsa.APPLY_USER_ID = sau.USER_ID
+        <where>
+            <if test="spot != null">
+                srer.SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="company != null">
+                and sssi.COMPANY_ID = #{company}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and substr(srer.CREATE_TIME , 1 , #{beginSize , jdbcType=INTEGER}) &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(srer.CREATE_TIME , 1 , #{endSize , jdbcType=INTEGER}) &lt;= #{endDate}
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                and sgsa.TYPE = #{paymentType}
+            </if>
+        </where>
+        group by srer.ERROR_RECORDS_ID
+        ) as  a
+    </select>
+
+
+    <select id="getCountNew" resultType="java.util.HashMap">
+        select count(0) as count from (
+        select  srer.ERROR_RECORDS_ID,sgsa.TYPE, srer.SCENIC_SPOT_ID, sss.SCENIC_SPOT_NAME, sgsa.APPLY_USER_ID,sau.USER_NAME, sgsa.APPLY_TIME,srpm.ACCESSORY_NAME,srer.ERROR_RECORDS_NUMBER,srer.ERROR_RECORDS_PART_PRICE,srer.IMPROPER_OPERATION,srer.ERROR_RECORDS_RECEIVE,srer.ERROR_RECORDS_REPLACE,srer.ERROR_RECORDS_UPKEEP_COST,srsr.SERVICE_RECORDS_RESULT
+        from  SYS_ROBOT_ERROR_RECORDS srer
+        left join SYS_GOODS_SUBSTITUTE_APPLY sgsa on sgsa.FAULT_NUMBER = srer.ERROR_RECORDS_NO
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on srer.SCENIC_SPOT_ID = sssi.SPOT_ID
+        left join SYS_SCENIC_SPOT sss on srer.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        left join SYS_ROBOT_PARTS_MANAGEMENT srpm on srer.ERROR_RECORDS_NEW_ID = srpm.PARTS_MANAGEMENT_ID
+        left join SYS_ROBOT_ERROR_REPAIR_USER sreru on srer.ERROR_RECORDS_ID = sreru.ERROR_ID
+        left join SYS_ROBOT_SERVICE_RECORDS srsr on sreru.REPAIR_ID = srsr.SERVICE_RECORDS_ID
+        left join  SYS_APP_USERS sau on sgsa.APPLY_USER_ID = sau.USER_ID
+        <where>
+            <if test="spot != null">
+                srer.SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="company != null">
+                and sssi.COMPANY_ID = #{company}
+            </if>
+<!--            <if test="beginDate != null and beginDate != ''">-->
+<!--                and substr(srer.CREATE_TIME , 1 , #{beginSize , jdbcType=INTEGER}) &gt;= #{beginDate}-->
+<!--            </if>-->
+<!--            <if test="endDate != null and endDate != ''">-->
+<!--                and substr(srer.CREATE_TIME , 1 , #{endSize , jdbcType=INTEGER}) &lt;= #{endDate}-->
+<!--            </if>-->
+            <if test="beginDate != null and beginDate != ''">
+                and srer.CREATE_TIME like CONCAT('%',#{beginDate},'%')
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                and sgsa.TYPE = #{paymentType}
+            </if>
+            <if test="errorRecordsQuality != null and errorRecordsQuality != ''">
+                and sere.ERROR_RECORDS_QUALITY = #{errorRecordsQuality}
+            </if>
+        </where>
+        group by srer.ERROR_RECORDS_ID
+        ) as  a
+    </select>
+
+    <select id="preview" resultType="java.util.HashMap">
+        select SCENIC_SPOT_NAME as 景区名称,sum(SPOT_PARTS_COST) as 配件费用,sum(SPOT_REPAIR_COST) as 维修费用,sum(sumPrice) as 合计,COMPANY_NAME as 公司名称, COLLECTION_ACCOUNT as 收款账户,COLLECTION_ACCOUNT_NUMBER as 收款账号,BANK as 开户行,SUBSTRING(CREATE_TIME,1,7) as 月份
+        from
+        (select srer.SCENIC_SPOT_ID,srer.SPOT_PARTS_COST,srer.CREATE_TIME,srer.SPOT_REPAIR_COST,srer.SPOT_PARTS_COST + srer.SPOT_REPAIR_COST as sumPrice ,sss.SCENIC_SPOT_NAME,sssi.COMPANY_NAME,sscc.COLLECTION_ACCOUNT,sscc.COLLECTION_ACCOUNT_NUMBER,sscc.BANK,sssi.SPOT_REPAIR_RATIO,sssi.SPOT_ACCESSORY_RATIO
+        from SYS_ROBOT_ERROR_RECORDS srer
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on srer.SCENIC_SPOT_ID = sssi.SPOT_ID
+        left join SYS_SCENIC_SPOT sss on srer.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        LEFT JOIN SYS_SCENIC_COOPERATIVE_COMPANY sscc ON sscc.COMPANY_ID = sssi.COMPANY_ID
+        <where>
+            <if test="spot != null">
+                srer.SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="company != null">
+                and sssi.COMPANY_ID = #{company}
+            </if>
+<!--            <if test="beginDate != null and beginDate != ''">-->
+<!--                and substr(srer.CREATE_TIME , 1 , #{beginSize , jdbcType=INTEGER}) &gt;= #{beginDate}-->
+<!--            </if>-->
+<!--            <if test="endDate != null and endDate != ''">-->
+<!--                and substr(srer.CREATE_TIME , 1 , #{endSize , jdbcType=INTEGER}) &lt;= #{endDate}-->
+<!--            </if>-->
+            <if test="beginDate != null and beginDate != ''">
+                and srer.CREATE_TIME like CONCAT('%',#{beginDate},'%')
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                and sgsa.TYPE = #{paymentType}
+            </if>
+            <if test="errorRecordsUpkeepCost != null and errorRecordsUpkeepCost != ''">
+                and srer.ERROR_RECORDS_UPKEEP_COST = #{errorRecordsUpkeepCost}
+            </if>
+        </where>
+
+        group by srer.ERROR_RECORDS_ID
+        ) as aa
+        group by SUBSTRING(CREATE_TIME,1,7)
+    </select>
+
+
+    <select id="calculateTotal" resultType="java.util.HashMap">
+
+        select sum(accessoryPrice) as  totalCostOfAccessories,sum(ERROR_RECORDS_UPKEEP_COST) as totalMaintenanceCost,sum(SPOT_PARTS_COST) as spotBearPartsCost ,sum(SPOT_REPAIR_COST) as spotBearrepairCost
+        from
+        (select srer.ERROR_RECORDS_ID,sgsa.TYPE, srer.SCENIC_SPOT_ID, sss.SCENIC_SPOT_NAME, sgsa.APPLY_USER_ID,sau.USER_NAME, sgsa.APPLY_TIME,srpm.ACCESSORY_NAME,srer.ERROR_RECORDS_NUMBER,srer.ERROR_RECORDS_PART_PRICE,srer.ERROR_RECORDS_NUMBER * srer.ERROR_RECORDS_PART_PRICE  as accessoryPrice,srer.IMPROPER_OPERATION,srer.ERROR_RECORDS_RECEIVE,srer.ERROR_RECORDS_REPLACE,srer.ERROR_RECORDS_UPKEEP_COST,srsr.SERVICE_RECORDS_RESULT,srer.SPOT_PARTS_COST,srer.SPOT_REPAIR_COST
+        from  SYS_ROBOT_ERROR_RECORDS srer
+        left join SYS_GOODS_SUBSTITUTE_APPLY sgsa on sgsa.FAULT_NUMBER = srer.ERROR_RECORDS_NO
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on srer.SCENIC_SPOT_ID = sssi.SPOT_ID
+        left join SYS_SCENIC_SPOT sss on srer.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        left join SYS_ROBOT_PARTS_MANAGEMENT srpm on srer.ERROR_RECORDS_NEW_ID = srpm.PARTS_MANAGEMENT_ID
+        left join SYS_ROBOT_ERROR_REPAIR_USER sreru on srer.ERROR_RECORDS_ID = sreru.ERROR_ID
+        left join SYS_ROBOT_SERVICE_RECORDS srsr on sreru.REPAIR_ID = srsr.SERVICE_RECORDS_ID
+        left join  SYS_APP_USERS sau on sgsa.APPLY_USER_ID = sau.USER_ID
+        <where>
+            <if test="spot != null">
+                srer.SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="company != null">
+                and sssi.COMPANY_ID = #{company}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and substr(srer.CREATE_TIME , 1 , #{beginSize , jdbcType=INTEGER}) &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and substr(srer.CREATE_TIME , 1 , #{endSize , jdbcType=INTEGER}) &lt;= #{endDate}
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                and sgsa.TYPE = #{paymentType}
+            </if>
+        </where>
+        group by srer.ERROR_RECORDS_ID
+        ) aa
+    </select>
+
+
+    <select id="selectById" resultType="com.hna.hka.archive.management.assetsSystem.model.StatementOfAccessories">
+        select * from SYS_ROBOT_ERROR_RECORDS
+        where ERROR_RECORDS_ID = #{errorRecordsId}
+    </select>
+
+    <update id="exitSettlementState">
+        update SYS_ROBOT_ERROR_RECORDS
+        set IS_SETTLEMENT = "1",
+        SYS_USER_ID = #{sysUserId},
+        VERIFICATION_TIME = now()
+        where ERROR_RECORDS_ID = #{errorRecordsId}
+    </update>
+
+    <select id="listNewNoPage" resultType="com.hna.hka.archive.management.assetsSystem.model.StatementOfAccessories">
+        select srer.ERROR_RECORDS_ID,srer.IS_SETTLEMENT,sgsa.TYPE, srer.SCENIC_SPOT_ID, sss.SCENIC_SPOT_NAME, sgsa.APPLY_USER_ID,sau.USER_NAME, sgsa.APPLY_TIME,srsr.SERVICE_RECORDS_SERVICE_DATE,srpm.ACCESSORY_NAME,srer.ERROR_RECORDS_NUMBER,srer.ERROR_RECORDS_PART_PRICE,srer.ERROR_RECORDS_NUMBER * srer.ERROR_RECORDS_PART_PRICE  as accessoryPrice,srer.IMPROPER_OPERATION,srer.ERROR_RECORDS_RECEIVE,srer.ERROR_RECORDS_REPLACE,srer.ERROR_RECORDS_UPKEEP_COST,srsr.SERVICE_RECORDS_RESULT,srer.SPOT_PARTS_COST,srer.SPOT_REPAIR_COST
+        from  SYS_ROBOT_ERROR_RECORDS srer
+        left join SYS_GOODS_SUBSTITUTE_APPLY sgsa on sgsa.FAULT_NUMBER = srer.ERROR_RECORDS_NO
+        left join SYS_SCENIC_SUBSCRIPTION_INFORMATION sssi on srer.SCENIC_SPOT_ID = sssi.SPOT_ID
+        left join SYS_SCENIC_SPOT sss on srer.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        left join SYS_ROBOT_PARTS_MANAGEMENT srpm on srer.ERROR_RECORDS_NEW_ID = srpm.PARTS_MANAGEMENT_ID
+        left join SYS_ROBOT_ERROR_REPAIR_USER sreru on srer.ERROR_RECORDS_ID = sreru.ERROR_ID
+        left join SYS_ROBOT_SERVICE_RECORDS srsr on sreru.REPAIR_ID = srsr.SERVICE_RECORDS_ID
+        left join  SYS_APP_USERS sau on sgsa.APPLY_USER_ID = sau.USER_ID
+        <where>
+            <if test="spot != null">
+                srer.SCENIC_SPOT_ID = #{spot}
+            </if>
+            <if test="company != null">
+                and sssi.COMPANY_ID = #{company}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                and srer.CREATE_TIME like CONCAT('%',#{beginDate},'%')
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                and sgsa.TYPE = #{paymentType}
+            </if>
+            <if test="errorRecordsUpkeepCost != null and errorRecordsUpkeepCost != ''">
+                and srer.ERROR_RECORDS_UPKEEP_COST = #{errorRecordsUpkeepCost}
+            </if>
+        </where>
+        group by srer.ERROR_RECORDS_ID
+        order by srer.CREATE_TIME
+    </select>
+
+    <select id="getDateLikeByRobotErrorRecordList" resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRecords">
+        select *
+        from SYS_ROBOT_ERROR_RECORDS
+        where CREATE_TIME like CONCAT('%',#{date},'%')
+        and ERROR_RECORDS_DELETE = 1
+        and ERROR_RECORDS_APPROVE = 1
+    </select>
+
+
+</mapper>

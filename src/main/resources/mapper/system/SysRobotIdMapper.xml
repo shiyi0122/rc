@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotIdMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotId" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR" />
+    <result column="TWO_DIGIT_NUMBER" property="twoDigitNumber" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ROBOT_CODE, TWO_DIGIT_NUMBER, STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_ID
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_ID
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotId" >
+    insert into SYS_ROBOT_ID (ID, ROBOT_CODE, TWO_DIGIT_NUMBER,
+      STATUS)
+    values (#{id,jdbcType=BIGINT}, #{robotCode,jdbcType=VARCHAR}, #{twoDigitNumber,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotId" >
+    insert into SYS_ROBOT_ID
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="robotCode != null" >
+        ROBOT_CODE,
+      </if>
+      <if test="twoDigitNumber != null" >
+        TWO_DIGIT_NUMBER,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="robotCode != null" >
+        #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="twoDigitNumber != null" >
+        #{twoDigitNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotId" >
+    update SYS_ROBOT_ID
+    <set >
+      <if test="robotCode != null" >
+        ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="twoDigitNumber != null" >
+        TWO_DIGIT_NUMBER = #{twoDigitNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.SysRobotId" >
+    update SYS_ROBOT_ID
+    set ROBOT_CODE = #{robotCode,jdbcType=VARCHAR},
+      TWO_DIGIT_NUMBER = #{twoDigitNumber,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getNewSysRobotId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM SYS_ROBOT_ID where `STATUS` ='0' ORDER BY ROBOT_CODE asc LIMIT 1
+  </select>
+  <select id="getByCode" resultType="com.hna.hka.archive.management.system.model.SysRobot">
+  select
+  ERROR_RECORDS_AFFECT,
+  CREATE_TIME
+  from
+  SYS_ROBOT_ERROR_RECORDS
+  where
+  ROBOT_CODE = #{robotCode}
+  ORDER BY CREATE_TIME DESC
+  LIMIT 1
+</select>
+</mapper>

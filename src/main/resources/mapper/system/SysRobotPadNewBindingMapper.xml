@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysRobotPadNewBindingMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysRobotPadNewBinding" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="PAD_COMPLETE_ID" property="padCompleteId" jdbcType="BIGINT" />
+    <result column="PAD_NATURAL_ID" property="padNaturalId" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+      ID, PAD_COMPLETE_ID, PAD_NATURAL_ID, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_PAD_NEW_BINDING
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from  SYS_ROBOT_PAD_NEW_BINDING
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimaryKeyNatural" parameterType="java.lang.Long" >
+    delete from  SYS_ROBOT_PAD_NEW_BINDING
+    where PAD_NATURAL_ID = #{padNaturalId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysRobotPadNewBinding" >
+    insert into  SYS_ROBOT_PAD_NEW_BINDING ( ID, PAD_COMPLETE_ID, PAD_NATURAL_ID,
+     CREATE_DATE, UPDATE_DATE
+      )
+    values (#{id,jdbcType=BIGINT}, #{padCompleteId,jdbcType=BIGINT}, #{padNaturalId,jdbcType=BIGINT},
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotPadNewBinding" >
+    insert into SYS_ROBOT_PAD_NEW_BINDING
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="padCompleteId != null" >
+        PAD_COMPLETE_ID,
+      </if>
+      <if test="padNaturalId != null" >
+        PAD_NATURAL_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="padCompleteId != null" >
+        #{padCompleteId,jdbcType=BIGINT},
+      </if>
+      <if test="padNaturalId != null" >
+        #{padNaturalId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.SysRobotPadNewBinding" >
+    update  SYS_ROBOT_PAD_NEW_BINDING
+    <set >
+      <if test="id != null" >
+        ID = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="padCompleteId != null" >
+        PAD_COMPLETE_ID = #{padCompleteId,jdbcType=BIGINT},
+      </if>
+      <if test="padNaturalId != null" >
+        PAD_NATURAL_ID = #{padNaturalId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PAD_ID = #{padId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

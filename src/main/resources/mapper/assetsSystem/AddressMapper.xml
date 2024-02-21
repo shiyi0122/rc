@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.AddressMapper">
+
+    <select id="list" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        SELECT distinct sa.*,
+               sss.SCENIC_SPOT_NAME                      as SPOT_NAME,
+               su.LOGIN_NAME                             as USER_NAME,
+               sar.ROLE_NAME,
+               sscc.COMPANY_NAME
+        from SYS_ADDRESS sa
+                 left join SYS_SCENIC_SPOT sss on
+            sa.SPOT_ID = sss.SCENIC_SPOT_ID
+                 LEFT JOIN SYS_APP_USERS su on
+            sa.USER_ID = su.USER_ID
+                 LEFT JOIN SYS_SCENIC_COOPERATIVE_COMPANY sscc on
+            sa.COMPANY_ID = sscc.COMPANY_ID
+        left join SYS_APP_USERS_SPOT_ROLE sausr on
+        su.USER_ID = sausr.PRIMARY_KEY_UID
+        AND sss.SCENIC_SPOT_ID = sausr.PRIMARY_KEY_PID
+        left join SYS_APP_ROLE sar on
+        sausr.PRIMARY_KEY_RID = sar.ROLE_ID
+
+        <where>
+            <if test="spotId != null and spotId != ''">
+                sa.SPOT_ID = #{spotId}
+            </if>
+            <if test="name != null and name != ''">
+                and sa.USER_ID like concat('%' , #{name} , '%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and sa.PHONE like concat('%' , #{phone} , '%')
+            </if>
+            <if test="type != null">
+                and sa.TYPE = #{type}
+            </if>
+        </where>
+    </select>
+
+
+    <insert id="add" parameterType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        insert into SYS_ADDRESS(ID, TYPE, SPOT_ID, USER_ID, ROLE_ID, ADDRESS, NAME, PHONE, MAIL_ADDRESS, MANAGER_NAME,
+                                MANAGER_PHONE, LEVEL , COMPANY_ID)
+        values (#{id}, #{type}, #{spotId}, #{userId}, #{roleId}, #{address}, #{name}, #{phone}, #{mailAddress},
+                #{managerName}, #{managerPhone}, #{level} , #{companyId})
+    </insert>
+
+    <update id="edit" parameterType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        update SYS_ADDRESS
+        set TYPE         = #{type},
+            SPOT_ID      = #{spotId},
+            ADDRESS      = #{address},
+            NAME         = #{name},
+            PHONE        = #{phone},
+            MAIL_ADDRESS = #{mailAddress},
+            MANAGER_NAME = #{managerName},
+            MANAGER_PHONE= #{managerPhone},
+            LEVEL        = #{level},
+            COMPANY_ID   = #{companyId}
+        where ID = #{id}
+    </update>
+
+    <delete id="delete">
+        delete
+        from SYS_ADDRESS
+        where ID = #{id}
+    </delete>
+
+    <select id="getRoleId" resultType="java.util.HashMap">
+        select ROLE_ID
+        from SYS_USERS_ROLE_SPOT
+        where USER_ID = #{id}
+          and SCENIC_SPOT_ID = #{spotId}
+    </select>
+
+    <select id="getByKey" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select sa.*,sss.SCENIC_SPOT_NAME as spotName
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_SPOT sss on  sa.SPOT_ID = sss.SCENIC_SPOT_ID
+        where SPOT_ID = #{spotId}
+        <if test="type != null and type != ''">
+            and TYPE = #{type}
+        </if>
+
+    </select>
+
+    <select id="getAll" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select sa.* , sss.SCENIC_SPOT_NAME as SPOT_NAME
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_SPOT sss on sa.SPOT_ID = sss.SCENIC_SPOT_ID
+    </select>
+
+
+    <select id="getAppUserBySpot" resultType="com.hna.hka.archive.management.managerApp.model.SysAppUsers">
+        SELECT distinct sau.USER_ID,
+               sau.LOGIN_NAME,
+               sau.USER_NAME,
+               sauba.BANK_USER_PHONE
+        from SYS_APP_USERS sau
+                 left join SYS_APP_USERS_SPOT_ROLE sausr on
+            sau.USER_ID = sausr.PRIMARY_KEY_UID
+                 left join SYS_APP_USERS_BANK_ACCOUNT sauba on
+            sau.USER_ID = sauba.BANK_APP_USER_ID
+        <if test="_parameter != null">WHERE sausr.PRIMARY_KEY_PID = #{_parameter}</if>
+    </select>
+
+    <select id="getSpotIdByName" resultType="java.lang.Long">
+        select SCENIC_SPOT_ID from SYS_SCENIC_SPOT where SCENIC_SPOT_NAME = #{_parameter}
+    </select>
+
+    <select id="getUserIdByName" resultType="java.util.HashMap">
+        SELECT sau.USER_ID    as userId,
+               sau.LOGIN_NAME as loginName,
+               sar.ROLE_ID    as roleId,
+               sar.ROLE_NAME  as roleName
+        from SYS_APP_USERS sau
+                 left join SYS_APP_USERS_SPOT_ROLE sausr on
+            sau.USER_ID = sausr.PRIMARY_KEY_UID
+                 left join SYS_APP_ROLE sar on
+            sausr.PRIMARY_KEY_RID = sar.ROLE_ID
+        WHERE sau.USER_NAME = #{userName}
+          and sausr.PRIMARY_KEY_PID = #{spotId}
+          and sau.USER_ID =#{userId}
+    </select>
+
+    <select id="getCompanyIdByName" resultType="java.lang.Long">
+        select COMPANY_ID from SYS_SCENIC_COOPERATIVE_COMPANY where COMPANY_NAME = #{_parameter}
+    </select>
+
+    <select id="getFactoryAll" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select sa.* , sss.SCENIC_SPOT_NAME as SPOT_NAME
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_SPOT sss on sa.SPOT_ID = sss.SCENIC_SPOT_ID
+        <where>
+            <if test="type != null and type != ''">
+                sa.TYPE = #{type}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getFactoryType" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select ID,TYPE
+        from SYS_ADDRESS
+        group by ID,TYPE
+    </select>
+
+    <select id="getFactoryTypeByCompanyList" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select sa.COMPANY_ID as id ,sscc.COMPANY_NAME as label
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_COOPERATIVE_COMPANY sscc on  sa.COMPANY_ID =sscc.COMPANY_ID
+        where TYPE = #{type}
+        group by sa.COMPANY_ID
+    </select>
+
+    <select id="getFactoryCompanyBySpotList" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select sss.SCENIC_SPOT_NAME as label , sa.SPOT_ID as id
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_SPOT sss on sa.SPOT_ID = sss.SCENIC_SPOT_ID
+        where sa.TYPE = #{type}
+        and sa.COMPANY_ID = #{companyId}
+    </select>
+
+    <select id="getFactoryCompanyAndSpotAndTypeByAddressList" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select ID , ADDRESS as label , NAME , PHONE
+        from SYS_ADDRESS
+        where TYPE = #{type}
+        and  COMPANY_ID = #{companyId}
+        and  SPOT_ID = #{spotId}
+
+    </select>
+
+    <select id="selectById" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select sa.*,sss.SCENIC_SPOT_NAME as spotName
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_SPOT sss on sa.SPOT_ID = sss.SCENIC_SPOT_ID
+        where sa.SPOT_ID = #{spotId}
+    </select>
+
+    <select id="lists" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select sa.* , sss.SCENIC_SPOT_NAME as SPOT_NAME
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_SPOT sss on sa.SPOT_ID = sss.SCENIC_SPOT_ID
+        <where>
+            <if test="type != null and type != ''">
+                sa.TYPE = #{type}
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserIdByAddress" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select *
+        from SYS_ADDRESS
+        where USER_ID = #{userId}
+        and TYPE = 1
+    </select>
+    <select id="selectByIds" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select sa.*,sss.SCENIC_SPOT_NAME as spotName
+            from SYS_ADDRESS sa
+            left join SYS_SCENIC_SPOT sss on sa.SPOT_ID = sss.SCENIC_SPOT_ID
+            where SPOT_ID = #{id}
+            and type = 2
+</select>
+    <select id="getByKeyList" resultType="com.hna.hka.archive.management.assetsSystem.model.Address">
+        select sa.*,sss.SCENIC_SPOT_NAME as spotName
+        from SYS_ADDRESS sa
+        left join SYS_SCENIC_SPOT sss on  sa.SPOT_ID = sss.SCENIC_SPOT_ID
+        where SPOT_ID = #{spotId}
+    </select>
+    <select id="selectByOut"
+            resultType="com.hna.hka.archive.management.assetsSystem.model.SysRobotAccessoriesApplication">
+        select
+        sraa.SCENIC_SPOT_ID,sss.SCENIC_SPOT_NAME as spotName
+        from SYS_ROBOT_ACCESSORIES_APPLICATION sraa
+        left join SYS_SCENIC_SPOT sss on  sraa.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+        where sraa.ACCESSORIES_APPLICATION_ID =#{accessoriesApplicationId}
+    </select>
+
+</mapper>

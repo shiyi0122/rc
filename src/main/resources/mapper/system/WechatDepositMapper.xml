@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.WechatDepositMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.WechatDeposit" >
+    <id column="DEPOSIT_ID" property="depositId" jdbcType="BIGINT" />
+    <id column="OUT_TRADE_NO" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="DEPOSIT_USER_ID" property="depositUserId" jdbcType="BIGINT" />
+    <result column="DEPOSIT_MONEY" property="depositMoney" jdbcType="VARCHAR" />
+    <result column="DEPOSIT_SCENIC_SPOT_ID" property="depositScenicSpotId" jdbcType="BIGINT" />
+    <result column="DEPOSIT_STATE" property="depositState" jdbcType="VARCHAR" />
+    <result column="TRADE_NO" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="SPBILL_CREATE_IP" property="spbillCreateIp" jdbcType="VARCHAR" />
+    <result column="RETURN_RESULT_CODE" property="returnResultCode" jdbcType="VARCHAR" />
+    <result column="REQUEST_NONCE_STR" property="requestNonceStr" jdbcType="VARCHAR" />
+    <result column="RETURN_NONCE_STR" property="returnNonceStr" jdbcType="VARCHAR" />
+    <result column="REQUEST_SIGN" property="requestSign" jdbcType="VARCHAR" />
+    <result column="RETURN_SIGN" property="returnSign" jdbcType="VARCHAR" />
+    <result column="RETURN_PREPAY_ID" property="returnPrepayId" jdbcType="VARCHAR" />
+    <result column="COUPON_FEE" property="couponFee" jdbcType="VARCHAR" />
+    <result column="PAYMENT_CLIENT" property="paymentClient" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DEPOSIT_ID, OUT_TRADE_NO, DEPOSIT_USER_ID, DEPOSIT_MONEY, DEPOSIT_SCENIC_SPOT_ID, 
+    DEPOSIT_STATE, TRADE_NO, SPBILL_CREATE_IP, RETURN_RESULT_CODE, REQUEST_NONCE_STR, 
+    RETURN_NONCE_STR, REQUEST_SIGN, RETURN_SIGN, RETURN_PREPAY_ID, COUPON_FEE, PAYMENT_CLIENT, 
+    CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hna.hka.archive.management.system.model.WechatDepositKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from WECHAT_DEPOSIT
+    where DEPOSIT_ID = #{depositId,jdbcType=BIGINT}
+      and OUT_TRADE_NO = #{outTradeNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.WechatDepositKey" >
+    delete from WECHAT_DEPOSIT
+    where DEPOSIT_ID = #{depositId,jdbcType=BIGINT}
+      and OUT_TRADE_NO = #{outTradeNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.WechatDeposit" >
+    insert into WECHAT_DEPOSIT (DEPOSIT_ID, OUT_TRADE_NO, DEPOSIT_USER_ID, 
+      DEPOSIT_MONEY, DEPOSIT_SCENIC_SPOT_ID, DEPOSIT_STATE, 
+      TRADE_NO, SPBILL_CREATE_IP, RETURN_RESULT_CODE, 
+      REQUEST_NONCE_STR, RETURN_NONCE_STR, REQUEST_SIGN, 
+      RETURN_SIGN, RETURN_PREPAY_ID, COUPON_FEE, 
+      PAYMENT_CLIENT, CREATE_DATE, UPDATE_DATE
+      )
+    values (#{depositId,jdbcType=BIGINT}, #{outTradeNo,jdbcType=VARCHAR}, #{depositUserId,jdbcType=BIGINT}, 
+      #{depositMoney,jdbcType=VARCHAR}, #{depositScenicSpotId,jdbcType=BIGINT}, #{depositState,jdbcType=VARCHAR}, 
+      #{tradeNo,jdbcType=VARCHAR}, #{spbillCreateIp,jdbcType=VARCHAR}, #{returnResultCode,jdbcType=VARCHAR}, 
+      #{requestNonceStr,jdbcType=VARCHAR}, #{returnNonceStr,jdbcType=VARCHAR}, #{requestSign,jdbcType=VARCHAR}, 
+      #{returnSign,jdbcType=VARCHAR}, #{returnPrepayId,jdbcType=VARCHAR}, #{couponFee,jdbcType=VARCHAR}, 
+      #{paymentClient,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.system.model.WechatDeposit" >
+    insert into WECHAT_DEPOSIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="depositId != null" >
+        DEPOSIT_ID,
+      </if>
+      <if test="outTradeNo != null" >
+        OUT_TRADE_NO,
+      </if>
+      <if test="depositUserId != null" >
+        DEPOSIT_USER_ID,
+      </if>
+      <if test="depositMoney != null" >
+        DEPOSIT_MONEY,
+      </if>
+      <if test="depositScenicSpotId != null" >
+        DEPOSIT_SCENIC_SPOT_ID,
+      </if>
+      <if test="depositState != null" >
+        DEPOSIT_STATE,
+      </if>
+      <if test="tradeNo != null" >
+        TRADE_NO,
+      </if>
+      <if test="spbillCreateIp != null" >
+        SPBILL_CREATE_IP,
+      </if>
+      <if test="returnResultCode != null" >
+        RETURN_RESULT_CODE,
+      </if>
+      <if test="requestNonceStr != null" >
+        REQUEST_NONCE_STR,
+      </if>
+      <if test="returnNonceStr != null" >
+        RETURN_NONCE_STR,
+      </if>
+      <if test="requestSign != null" >
+        REQUEST_SIGN,
+      </if>
+      <if test="returnSign != null" >
+        RETURN_SIGN,
+      </if>
+      <if test="returnPrepayId != null" >
+        RETURN_PREPAY_ID,
+      </if>
+      <if test="couponFee != null" >
+        COUPON_FEE,
+      </if>
+      <if test="paymentClient != null" >
+        PAYMENT_CLIENT,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="depositId != null" >
+        #{depositId,jdbcType=BIGINT},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="depositUserId != null" >
+        #{depositUserId,jdbcType=BIGINT},
+      </if>
+      <if test="depositMoney != null" >
+        #{depositMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="depositScenicSpotId != null" >
+        #{depositScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="depositState != null" >
+        #{depositState,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="spbillCreateIp != null" >
+        #{spbillCreateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="returnResultCode != null" >
+        #{returnResultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="requestNonceStr != null" >
+        #{requestNonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="returnNonceStr != null" >
+        #{returnNonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="requestSign != null" >
+        #{requestSign,jdbcType=VARCHAR},
+      </if>
+      <if test="returnSign != null" >
+        #{returnSign,jdbcType=VARCHAR},
+      </if>
+      <if test="returnPrepayId != null" >
+        #{returnPrepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponFee != null" >
+        #{couponFee,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentClient != null" >
+        #{paymentClient,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.system.model.WechatDeposit" >
+    update WECHAT_DEPOSIT
+    <set >
+      <if test="depositUserId != null" >
+        DEPOSIT_USER_ID = #{depositUserId,jdbcType=BIGINT},
+      </if>
+      <if test="depositMoney != null" >
+        DEPOSIT_MONEY = #{depositMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="depositScenicSpotId != null" >
+        DEPOSIT_SCENIC_SPOT_ID = #{depositScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="depositState != null" >
+        DEPOSIT_STATE = #{depositState,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null" >
+        TRADE_NO = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="spbillCreateIp != null" >
+        SPBILL_CREATE_IP = #{spbillCreateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="returnResultCode != null" >
+        RETURN_RESULT_CODE = #{returnResultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="requestNonceStr != null" >
+        REQUEST_NONCE_STR = #{requestNonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="returnNonceStr != null" >
+        RETURN_NONCE_STR = #{returnNonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="requestSign != null" >
+        REQUEST_SIGN = #{requestSign,jdbcType=VARCHAR},
+      </if>
+      <if test="returnSign != null" >
+        RETURN_SIGN = #{returnSign,jdbcType=VARCHAR},
+      </if>
+      <if test="returnPrepayId != null" >
+        RETURN_PREPAY_ID = #{returnPrepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponFee != null" >
+        COUPON_FEE = #{couponFee,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentClient != null" >
+        PAYMENT_CLIENT = #{paymentClient,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DEPOSIT_ID = #{depositId,jdbcType=BIGINT}
+      and OUT_TRADE_NO = #{outTradeNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.system.model.WechatDeposit" >
+    update WECHAT_DEPOSIT
+    set DEPOSIT_USER_ID = #{depositUserId,jdbcType=BIGINT},
+      DEPOSIT_MONEY = #{depositMoney,jdbcType=VARCHAR},
+      DEPOSIT_SCENIC_SPOT_ID = #{depositScenicSpotId,jdbcType=BIGINT},
+      DEPOSIT_STATE = #{depositState,jdbcType=VARCHAR},
+      TRADE_NO = #{tradeNo,jdbcType=VARCHAR},
+      SPBILL_CREATE_IP = #{spbillCreateIp,jdbcType=VARCHAR},
+      RETURN_RESULT_CODE = #{returnResultCode,jdbcType=VARCHAR},
+      REQUEST_NONCE_STR = #{requestNonceStr,jdbcType=VARCHAR},
+      RETURN_NONCE_STR = #{returnNonceStr,jdbcType=VARCHAR},
+      REQUEST_SIGN = #{requestSign,jdbcType=VARCHAR},
+      RETURN_SIGN = #{returnSign,jdbcType=VARCHAR},
+      RETURN_PREPAY_ID = #{returnPrepayId,jdbcType=VARCHAR},
+      COUPON_FEE = #{couponFee,jdbcType=VARCHAR},
+      PAYMENT_CLIENT = #{paymentClient,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where DEPOSIT_ID = #{depositId,jdbcType=BIGINT}
+      and OUT_TRADE_NO = #{outTradeNo,jdbcType=VARCHAR}
+  </update>
+  <select id="getSysDepositByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from WECHAT_DEPOSIT
+    where DEPOSIT_USER_ID = #{currentUserId}
+    and DEPOSIT_STATE = #{depositState}
+    ORDER BY CREATE_DATE DESC LIMIT 1
+  </select>
+  <select id="getWechatSysDepositLogByUserId" resultMap="BaseResultMap">
+  	select
+    <include refid="Base_Column_List" />
+    from WECHAT_DEPOSIT
+    where DEPOSIT_USER_ID = #{currentUserId}
+    and DEPOSIT_STATE = 30
+    ORDER BY CREATE_DATE DESC
+  </select>
+  <select id="getDepositLogByUserId" resultMap="BaseResultMap">
+  	select
+    <include refid="Base_Column_List" />
+    from WECHAT_DEPOSIT
+    where DEPOSIT_USER_ID = #{currentUserId}
+    ORDER BY CREATE_DATE DESC LIMIT 1
+  </select>
+  <select id="getWechatDepositByOutTradeNo" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from WECHAT_DEPOSIT
+    where OUT_TRADE_NO = #{outTradeNo}
+  </select>
+</mapper>

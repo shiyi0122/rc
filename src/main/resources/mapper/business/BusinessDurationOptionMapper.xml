@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.business.dao.BusinessDurationOptionMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.business.model.BusinessDurationOption" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="AMOUNT_OF_MONEY" property="amountOfMoney" jdbcType="VARCHAR" />
+    <result column="VIEWING_DURATION" property="viewingDuration" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SCENIC_SPOT_ID, AMOUNT_OF_MONEY, VIEWING_DURATION, TYPE, CREATE_TIME,
+    UPDATE_TIME
+  </sql>
+
+  <select id="selectByPrimaryKey" resultType="com.hna.hka.archive.management.business.model.BusinessDurationOption" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+
+    from BUSINESS_DURATION_OPTION
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BUSINESS_DURATION_OPTION
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.business.model.BusinessDurationOption" >
+    insert into BUSINESS_DURATION_OPTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID,
+      </if>
+      <if test="amountOfMoney != null" >
+        AMOUNT_OF_MONEY,
+      </if>
+      <if test="viewingDuration != null" >
+        VIEWING_DURATION,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="amountOfMoney != null" >
+        #{amountOfMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="viewingDuration != null" >
+        #{viewingDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.business.model.BusinessDurationOption" >
+    update BUSINESS_DURATION_OPTION
+    <set >
+      <if test="scenicSpotId != null" >
+        SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="amountOfMoney != null" >
+        AMOUNT_OF_MONEY = #{amountOfMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="viewingDuration != null" >
+        VIEWING_DURATION = #{viewingDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getDurationOptionList" resultType="com.hna.hka.archive.management.business.model.BusinessDurationOption">
+    select
+    bdo.*
+    ,sss.SCENIC_SPOT_NAME
+    from BUSINESS_DURATION_OPTION bdo
+    left join SYS_SCENIC_SPOT sss on bdo.SCENIC_SPOT_ID = sss.SCENIC_SPOT_ID
+    <where>
+      1=1
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+         and bdo.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+    </where>
+  </select>
+
+  <delete id="delDurationOption">
+    delete from BUSINESS_DURATION_OPTION
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+
+</mapper>

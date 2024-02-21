@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.assetsSystem.dao.SysRobotBelarcAdvisorMapper" >
+  <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor" >
+    <id column="ROBOT_BELARC_ADVISOR_ID" property="robotBelarcAdvisorId" jdbcType="BIGINT" />
+    <result column="ROBOT_ID" property="robotId" jdbcType="BIGINT" />
+    <result column="MASTER_CONTROL_MODEL" property="masterControlModel" jdbcType="VARCHAR" />
+    <result column="MASTER_CONTROL_FIRMWARE_VERSION" property="masterControlFirmwareVersion" jdbcType="VARCHAR" />
+    <result column="MASTER_CONTROL_ID" property="masterControlId" jdbcType="VARCHAR" />
+    <result column="PAD_VERSION" property="padVersion" jdbcType="VARCHAR" />
+    <result column="PAD_FIRMWARE_VERSION" property="padFirmwareVersion" jdbcType="VARCHAR" />
+    <result column="PAD_MANUFACTOR" property="padManufactor" jdbcType="VARCHAR" />
+    <result column="MEID" property="meid" jdbcType="VARCHAR" />
+    <result column="DRIVE_MODEL" property="driveModel" jdbcType="VARCHAR" />
+    <result column="DRIVE_FIRMWARE_VERSION" property="driveFirmwareVersion" jdbcType="VARCHAR" />
+    <result column="DRIVER_MANUFACTURER" property="driverManufacturer" jdbcType="VARCHAR" />
+    <result column="DRIVE_ID" property="driveId" jdbcType="VARCHAR" />
+    <result column="MOTOR_MODEL" property="motorModel" jdbcType="VARCHAR" />
+    <result column="MOTOR_ID" property="motorId" jdbcType="VARCHAR" />
+    <result column="MOTOR_MANUFACTURER" property="motorManufacturer" jdbcType="VARCHAR" />
+    <result column="BATTERY_MODEL" property="batteryModel" jdbcType="VARCHAR" />
+    <result column="BATTERY_MANUFACTURER" property="batteryManufacturer" jdbcType="VARCHAR" />
+    <result column="BATTERY_ID" property="batteryId" jdbcType="VARCHAR" />
+    <result column="ROBOT_POWER" property="robotPower" jdbcType="VARCHAR" />
+    <result column="CHARGER_MODEL" property="chargerModel" jdbcType="VARCHAR" />
+    <result column="CHARGER_MANUFACTURER" property="chargerManufacturer" jdbcType="VARCHAR" />
+    <result column="CHARGER_ID" property="chargerId" jdbcType="VARCHAR" />
+    <result column="RANGING_MODULAR_MODEL" property="rangingModularModel" jdbcType="VARCHAR" />
+    <result column="RANGING_MODULAR_VERSION" property="rangingModularVersion" jdbcType="VARCHAR" />
+    <result column="RANGING_MODULAR_MANUFACTURER" property="rangingModularManufacturer" jdbcType="VARCHAR" />
+    <result column="RANGING_MODULAR_ID" property="rangingModularId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="ROBOT_MODEL" property="robotModel" jdbcType="VARCHAR" />
+    <result column="UPGRADED_VERSION" property="upgradedVersion" jdbcType="VARCHAR"/>
+    <result column="ROBOT_CODE" property="robotCode" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROBOT_BELARC_ADVISOR_ID, ROBOT_ID, MASTER_CONTROL_MODEL, MASTER_CONTROL_FIRMWARE_VERSION, 
+    MASTER_CONTROL_ID, PAD_VERSION, PAD_FIRMWARE_VERSION, PAD_MANUFACTOR, MEID, DRIVE_MODEL, 
+    DRIVE_FIRMWARE_VERSION, DRIVER_MANUFACTURER, DRIVE_ID, MOTOR_MODEL, MOTOR_ID, MOTOR_MANUFACTURER, 
+    BATTERY_MODEL, BATTERY_MANUFACTURER, BATTERY_ID, ROBOT_POWER, CHARGER_MODEL, CHARGER_MANUFACTURER, 
+    CHARGER_ID, RANGING_MODULAR_MODEL, RANGING_MODULAR_VERSION, RANGING_MODULAR_MANUFACTURER, 
+    RANGING_MODULAR_ID, CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_BELARC_ADVISOR
+    where ROBOT_BELARC_ADVISOR_ID = #{robotBelarcAdvisorId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROBOT_BELARC_ADVISOR
+    where ROBOT_BELARC_ADVISOR_ID = #{robotBelarcAdvisorId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor" >
+    insert into SYS_ROBOT_BELARC_ADVISOR (ROBOT_BELARC_ADVISOR_ID, ROBOT_ID, MASTER_CONTROL_MODEL, 
+      MASTER_CONTROL_FIRMWARE_VERSION, MASTER_CONTROL_ID, 
+      PAD_VERSION, PAD_FIRMWARE_VERSION, PAD_MANUFACTOR, 
+      MEID, DRIVE_MODEL, DRIVE_FIRMWARE_VERSION, 
+      DRIVER_MANUFACTURER, DRIVE_ID, MOTOR_MODEL, 
+      MOTOR_ID, MOTOR_MANUFACTURER, BATTERY_MODEL, 
+      BATTERY_MANUFACTURER, BATTERY_ID, ROBOT_POWER, 
+      CHARGER_MODEL, CHARGER_MANUFACTURER, CHARGER_ID, 
+      RANGING_MODULAR_MODEL, RANGING_MODULAR_VERSION, 
+      RANGING_MODULAR_MANUFACTURER, RANGING_MODULAR_ID, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{robotBelarcAdvisorId,jdbcType=BIGINT}, #{robotId,jdbcType=BIGINT}, #{masterControlModel,jdbcType=VARCHAR}, 
+      #{masterControlFirmwareVersion,jdbcType=VARCHAR}, #{masterControlId,jdbcType=VARCHAR}, 
+      #{padVersion,jdbcType=VARCHAR}, #{padFirmwareVersion,jdbcType=VARCHAR}, #{padManufactor,jdbcType=VARCHAR}, 
+      #{meid,jdbcType=VARCHAR}, #{driveModel,jdbcType=VARCHAR}, #{driveFirmwareVersion,jdbcType=VARCHAR}, 
+      #{driverManufacturer,jdbcType=VARCHAR}, #{driveId,jdbcType=VARCHAR}, #{motorModel,jdbcType=VARCHAR}, 
+      #{motorId,jdbcType=VARCHAR}, #{motorManufacturer,jdbcType=VARCHAR}, #{batteryModel,jdbcType=VARCHAR}, 
+      #{batteryManufacturer,jdbcType=VARCHAR}, #{batteryId,jdbcType=VARCHAR}, #{robotPower,jdbcType=VARCHAR}, 
+      #{chargerModel,jdbcType=VARCHAR}, #{chargerManufacturer,jdbcType=VARCHAR}, #{chargerId,jdbcType=VARCHAR}, 
+      #{rangingModularModel,jdbcType=VARCHAR}, #{rangingModularVersion,jdbcType=VARCHAR}, 
+      #{rangingModularManufacturer,jdbcType=VARCHAR}, #{rangingModularId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor" >
+    insert into SYS_ROBOT_BELARC_ADVISOR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="robotBelarcAdvisorId != null" >
+        ROBOT_BELARC_ADVISOR_ID,
+      </if>
+      <if test="robotId != null" >
+        ROBOT_ID,
+      </if>
+      <if test="masterControlModel != null" >
+        MASTER_CONTROL_MODEL,
+      </if>
+      <if test="masterControlFirmwareVersion != null" >
+        MASTER_CONTROL_FIRMWARE_VERSION,
+      </if>
+      <if test="masterControlId != null" >
+        MASTER_CONTROL_ID,
+      </if>
+      <if test="padVersion != null" >
+        PAD_VERSION,
+      </if>
+      <if test="padFirmwareVersion != null" >
+        PAD_FIRMWARE_VERSION,
+      </if>
+      <if test="padManufactor != null" >
+        PAD_MANUFACTOR,
+      </if>
+      <if test="meid != null" >
+        MEID,
+      </if>
+      <if test="driveModel != null" >
+        DRIVE_MODEL,
+      </if>
+      <if test="driveFirmwareVersion != null" >
+        DRIVE_FIRMWARE_VERSION,
+      </if>
+      <if test="driverManufacturer != null" >
+        DRIVER_MANUFACTURER,
+      </if>
+      <if test="driveId != null" >
+        DRIVE_ID,
+      </if>
+      <if test="motorModel != null" >
+        MOTOR_MODEL,
+      </if>
+      <if test="motorId != null" >
+        MOTOR_ID,
+      </if>
+      <if test="motorManufacturer != null" >
+        MOTOR_MANUFACTURER,
+      </if>
+      <if test="batteryModel != null" >
+        BATTERY_MODEL,
+      </if>
+      <if test="batteryManufacturer != null" >
+        BATTERY_MANUFACTURER,
+      </if>
+      <if test="batteryId != null" >
+        BATTERY_ID,
+      </if>
+      <if test="robotPower != null" >
+        ROBOT_POWER,
+      </if>
+      <if test="chargerModel != null" >
+        CHARGER_MODEL,
+      </if>
+      <if test="chargerManufacturer != null" >
+        CHARGER_MANUFACTURER,
+      </if>
+      <if test="chargerId != null" >
+        CHARGER_ID,
+      </if>
+      <if test="rangingModularModel != null" >
+        RANGING_MODULAR_MODEL,
+      </if>
+      <if test="rangingModularVersion != null" >
+        RANGING_MODULAR_VERSION,
+      </if>
+      <if test="rangingModularManufacturer != null" >
+        RANGING_MODULAR_MANUFACTURER,
+      </if>
+      <if test="rangingModularId != null" >
+        RANGING_MODULAR_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="robotBelarcAdvisorId != null" >
+        #{robotBelarcAdvisorId,jdbcType=BIGINT},
+      </if>
+      <if test="robotId != null" >
+        #{robotId,jdbcType=BIGINT},
+      </if>
+      <if test="masterControlModel != null" >
+        #{masterControlModel,jdbcType=VARCHAR},
+      </if>
+      <if test="masterControlFirmwareVersion != null" >
+        #{masterControlFirmwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="masterControlId != null" >
+        #{masterControlId,jdbcType=VARCHAR},
+      </if>
+      <if test="padVersion != null" >
+        #{padVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="padFirmwareVersion != null" >
+        #{padFirmwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="padManufactor != null" >
+        #{padManufactor,jdbcType=VARCHAR},
+      </if>
+      <if test="meid != null" >
+        #{meid,jdbcType=VARCHAR},
+      </if>
+      <if test="driveModel != null" >
+        #{driveModel,jdbcType=VARCHAR},
+      </if>
+      <if test="driveFirmwareVersion != null" >
+        #{driveFirmwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="driverManufacturer != null" >
+        #{driverManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="driveId != null" >
+        #{driveId,jdbcType=VARCHAR},
+      </if>
+      <if test="motorModel != null" >
+        #{motorModel,jdbcType=VARCHAR},
+      </if>
+      <if test="motorId != null" >
+        #{motorId,jdbcType=VARCHAR},
+      </if>
+      <if test="motorManufacturer != null" >
+        #{motorManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="batteryModel != null" >
+        #{batteryModel,jdbcType=VARCHAR},
+      </if>
+      <if test="batteryManufacturer != null" >
+        #{batteryManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="batteryId != null" >
+        #{batteryId,jdbcType=VARCHAR},
+      </if>
+      <if test="robotPower != null" >
+        #{robotPower,jdbcType=VARCHAR},
+      </if>
+      <if test="chargerModel != null" >
+        #{chargerModel,jdbcType=VARCHAR},
+      </if>
+      <if test="chargerManufacturer != null" >
+        #{chargerManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="chargerId != null" >
+        #{chargerId,jdbcType=VARCHAR},
+      </if>
+      <if test="rangingModularModel != null" >
+        #{rangingModularModel,jdbcType=VARCHAR},
+      </if>
+      <if test="rangingModularVersion != null" >
+        #{rangingModularVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="rangingModularManufacturer != null" >
+        #{rangingModularManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="rangingModularId != null" >
+        #{rangingModularId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor" >
+    update SYS_ROBOT_BELARC_ADVISOR
+    <set>
+      <if test="robotId != null" >
+        ROBOT_ID = #{robotId,jdbcType=BIGINT},
+      </if>
+      <if test="masterControlModel != null" >
+        MASTER_CONTROL_MODEL = #{masterControlModel,jdbcType=VARCHAR},
+      </if>
+      <if test="masterControlFirmwareVersion != null" >
+        MASTER_CONTROL_FIRMWARE_VERSION = #{masterControlFirmwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="masterControlId != null" >
+        MASTER_CONTROL_ID = #{masterControlId,jdbcType=VARCHAR},
+      </if>
+      <if test="padVersion != null" >
+        PAD_VERSION = #{padVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="padFirmwareVersion != null" >
+        PAD_FIRMWARE_VERSION = #{padFirmwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="padManufactor != null" >
+        PAD_MANUFACTOR = #{padManufactor,jdbcType=VARCHAR},
+      </if>
+      <if test="meid != null" >
+        MEID = #{meid,jdbcType=VARCHAR},
+      </if>
+      <if test="driveModel != null" >
+        DRIVE_MODEL = #{driveModel,jdbcType=VARCHAR},
+      </if>
+      <if test="driveFirmwareVersion != null" >
+        DRIVE_FIRMWARE_VERSION = #{driveFirmwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="driverManufacturer != null" >
+        DRIVER_MANUFACTURER = #{driverManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="driveId != null" >
+        DRIVE_ID = #{driveId,jdbcType=VARCHAR},
+      </if>
+      <if test="motorModel != null" >
+        MOTOR_MODEL = #{motorModel,jdbcType=VARCHAR},
+      </if>
+      <if test="motorId != null" >
+        MOTOR_ID = #{motorId,jdbcType=VARCHAR},
+      </if>
+      <if test="motorManufacturer != null" >
+        MOTOR_MANUFACTURER = #{motorManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="batteryModel != null" >
+        BATTERY_MODEL = #{batteryModel,jdbcType=VARCHAR},
+      </if>
+      <if test="batteryManufacturer != null" >
+        BATTERY_MANUFACTURER = #{batteryManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="batteryId != null" >
+        BATTERY_ID = #{batteryId,jdbcType=VARCHAR},
+      </if>
+      <if test="robotPower != null" >
+        ROBOT_POWER = #{robotPower,jdbcType=VARCHAR},
+      </if>
+      <if test="chargerModel != null" >
+        CHARGER_MODEL = #{chargerModel,jdbcType=VARCHAR},
+      </if>
+      <if test="chargerManufacturer != null" >
+        CHARGER_MANUFACTURER = #{chargerManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="chargerId != null" >
+        CHARGER_ID = #{chargerId,jdbcType=VARCHAR},
+      </if>
+      <if test="rangingModularModel != null" >
+        RANGING_MODULAR_MODEL = #{rangingModularModel,jdbcType=VARCHAR},
+      </if>
+      <if test="rangingModularVersion != null" >
+        RANGING_MODULAR_VERSION = #{rangingModularVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="rangingModularManufacturer != null" >
+        RANGING_MODULAR_MANUFACTURER = #{rangingModularManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="rangingModularId != null" >
+        RANGING_MODULAR_ID = #{rangingModularId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROBOT_BELARC_ADVISOR_ID = #{robotBelarcAdvisorId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor" >
+    update SYS_ROBOT_BELARC_ADVISOR
+    set ROBOT_ID = #{robotId,jdbcType=BIGINT},
+      MASTER_CONTROL_MODEL = #{masterControlModel,jdbcType=VARCHAR},
+      MASTER_CONTROL_FIRMWARE_VERSION = #{masterControlFirmwareVersion,jdbcType=VARCHAR},
+      MASTER_CONTROL_ID = #{masterControlId,jdbcType=VARCHAR},
+      PAD_VERSION = #{padVersion,jdbcType=VARCHAR},
+      PAD_FIRMWARE_VERSION = #{padFirmwareVersion,jdbcType=VARCHAR},
+      PAD_MANUFACTOR = #{padManufactor,jdbcType=VARCHAR},
+      MEID = #{meid,jdbcType=VARCHAR},
+      DRIVE_MODEL = #{driveModel,jdbcType=VARCHAR},
+      DRIVE_FIRMWARE_VERSION = #{driveFirmwareVersion,jdbcType=VARCHAR},
+      DRIVER_MANUFACTURER = #{driverManufacturer,jdbcType=VARCHAR},
+      DRIVE_ID = #{driveId,jdbcType=VARCHAR},
+      MOTOR_MODEL = #{motorModel,jdbcType=VARCHAR},
+      MOTOR_ID = #{motorId,jdbcType=VARCHAR},
+      MOTOR_MANUFACTURER = #{motorManufacturer,jdbcType=VARCHAR},
+      BATTERY_MODEL = #{batteryModel,jdbcType=VARCHAR},
+      BATTERY_MANUFACTURER = #{batteryManufacturer,jdbcType=VARCHAR},
+      BATTERY_ID = #{batteryId,jdbcType=VARCHAR},
+      ROBOT_POWER = #{robotPower,jdbcType=VARCHAR},
+      CHARGER_MODEL = #{chargerModel,jdbcType=VARCHAR},
+      CHARGER_MANUFACTURER = #{chargerManufacturer,jdbcType=VARCHAR},
+      CHARGER_ID = #{chargerId,jdbcType=VARCHAR},
+      RANGING_MODULAR_MODEL = #{rangingModularModel,jdbcType=VARCHAR},
+      RANGING_MODULAR_VERSION = #{rangingModularVersion,jdbcType=VARCHAR},
+      RANGING_MODULAR_MANUFACTURER = #{rangingModularManufacturer,jdbcType=VARCHAR},
+      RANGING_MODULAR_ID = #{rangingModularId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where ROBOT_BELARC_ADVISOR_ID = #{robotBelarcAdvisorId,jdbcType=BIGINT}
+  </update>
+  <select id="getRobotBelarcAdvisorList" resultMap="BaseResultMap" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor">
+    SELECT
+    A.ROBOT_CODE ,
+    A.ROBOT_ID,
+    B.SCENIC_SPOT_NAME ,
+    A.CLIENT_VERSION ,
+    A.ROBOT_CODE_SIM,
+    A.ROBOT_MODEL
+    FROM
+    SYS_ROBOT A
+    LEFT JOIN SYS_USERS_ROLE_SPOT D ON D.SCENIC_SPOT_ID = A.SCENIC_SPOT_ID
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="userId != null and userId != ''">
+        AND D.USER_ID = #{userId}
+      </if>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+      <if test="robotCodeSim != null and robotCodeSim != ''">
+        AND A.ROBOT_CODE_SIM LIKE CONCAT('%',#{robotCodeSim},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="getRobotVersion" resultMap="BaseResultMap" parameterType="com.hna.hka.archive.management.assetsSystem.model.SysRobotBelarcAdvisor">
+    select UPGRADED_VERSION,UPDATE_DATE
+				from SYS_ROBOT_SOFTWARE_VERSION
+				where ROBOT_CODE = #{robotCode} and UPGRADE_MODULE=#{upgradeModule}
+				ORDER BY UPDATE_DATE desc
+				limit 1
+  </select>
+  <select id="getRobotBelarcAdvisorByRobotId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from SYS_ROBOT_BELARC_ADVISOR
+    where ROBOT_ID = #{robotId,jdbcType=BIGINT}
+  </select>
+  <select id="getRobotBelarcAdvisorByRobotCode" resultMap="BaseResultMap">
+    SELECT
+      A.ROBOT_BELARC_ADVISOR_ID,
+      B.ROBOT_ID,
+      A.MASTER_CONTROL_MODEL,
+      A.MASTER_CONTROL_FIRMWARE_VERSION,
+      A.MASTER_CONTROL_ID,
+      A.PAD_VERSION,
+      A.PAD_FIRMWARE_VERSION,
+      A.PAD_MANUFACTOR,
+      A.MEID,
+      A.DRIVE_MODEL,
+      A.DRIVE_FIRMWARE_VERSION,
+      A.DRIVER_MANUFACTURER,
+      A.DRIVE_ID,
+      A.MOTOR_MODEL,
+      A.MOTOR_ID,
+      A.MOTOR_MANUFACTURER,
+      A.BATTERY_MODEL,
+      A.BATTERY_MANUFACTURER,
+      A.BATTERY_ID,
+      A.ROBOT_POWER,
+      A.CHARGER_MODEL,
+      A.CHARGER_MANUFACTURER,
+      A.CHARGER_ID,
+      A.RANGING_MODULAR_MODEL,
+      A.RANGING_MODULAR_VERSION,
+      A.RANGING_MODULAR_MANUFACTURER,
+      A.RANGING_MODULAR_ID,
+      A.CREATE_DATE,
+      A.UPDATE_DATE
+    FROM
+      SYS_ROBOT_BELARC_ADVISOR A
+        RIGHT JOIN SYS_ROBOT B ON A.ROBOT_ID = B.ROBOT_ID
+    WHERE B.ROBOT_CODE = #{robotCode}
+  </select>
+  <select id="getRobotSoftwareAndHardwareInformation" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.ROBOT_CODE AS robotCode,
+    A.ROBOT_MODEL,
+    A.ROBOT_ID,
+    B.SCENIC_SPOT_NAME AS scenicSpotName,
+    A.CLIENT_VERSION AS clientVersion,
+    A.ROBOT_CODE_SIM AS robotCodeSim,
+    C.ROBOT_BELARC_ADVISOR_ID,
+    C.MASTER_CONTROL_MODEL,
+    C.MASTER_CONTROL_FIRMWARE_VERSION,
+    C.MASTER_CONTROL_ID,
+    C.PAD_VERSION,
+    C.PAD_FIRMWARE_VERSION,
+    C.PAD_MANUFACTOR,
+    C.MEID,
+    C.DRIVE_MODEL,
+    C.DRIVE_FIRMWARE_VERSION,
+    C.DRIVER_MANUFACTURER,
+    C.DRIVE_ID,
+    C.MOTOR_MODEL,
+    C.MOTOR_ID,
+    C.MOTOR_MANUFACTURER,
+    C.BATTERY_MODEL,
+    C.BATTERY_MANUFACTURER,
+    C.BATTERY_ID,
+    C.ROBOT_POWER,
+    C.CHARGER_MODEL,
+    C.CHARGER_MANUFACTURER,
+    C.CHARGER_ID,
+    C.RANGING_MODULAR_MODEL,
+    C.RANGING_MODULAR_VERSION,
+    C.RANGING_MODULAR_MANUFACTURER,
+    C.RANGING_MODULAR_ID,
+    C.UPDATE_DATE
+    FROM
+    SYS_ROBOT_BELARC_ADVISOR C
+    LEFT JOIN SYS_ROBOT A ON A.ROBOT_ID = C.ROBOT_ID
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+    </where>
+    ORDER BY A.ROBOT_CODE DESC
+  </select>
+
+
+  <select id="selectBySearch" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    A.ROBOT_CODE AS robotCode,
+    A.ROBOT_MODEL,
+    A.ROBOT_ID,
+    A.ROBOT_CODE,
+    B.SCENIC_SPOT_NAME AS scenicSpotName,
+    A.CLIENT_VERSION AS clientVersion,
+    A.ROBOT_CODE_SIM AS robotCodeSim,
+    C.ROBOT_BELARC_ADVISOR_ID,
+    C.MASTER_CONTROL_MODEL,
+    C.MASTER_CONTROL_FIRMWARE_VERSION,
+    C.MASTER_CONTROL_ID,
+    C.PAD_VERSION,
+    C.PAD_FIRMWARE_VERSION,
+    C.PAD_MANUFACTOR,
+    C.MEID,
+    C.DRIVE_MODEL,
+    C.DRIVE_FIRMWARE_VERSION,
+    C.DRIVER_MANUFACTURER,
+    C.DRIVE_ID,
+    C.MOTOR_MODEL,
+    C.MOTOR_ID,
+    C.MOTOR_MANUFACTURER,
+    C.BATTERY_MODEL,
+    C.BATTERY_MANUFACTURER,
+    C.BATTERY_ID,
+    C.ROBOT_POWER,
+    C.CHARGER_MODEL,
+    C.CHARGER_MANUFACTURER,
+    C.CHARGER_ID,
+    C.RANGING_MODULAR_MODEL,
+    C.RANGING_MODULAR_VERSION,
+    C.RANGING_MODULAR_MANUFACTURER,
+    C.RANGING_MODULAR_ID,
+    C.CREATE_DATE,
+    C.UPDATE_DATE
+    FROM
+    SYS_ROBOT_BELARC_ADVISOR C
+    LEFT JOIN SYS_ROBOT A ON A.ROBOT_ID = C.ROBOT_ID
+    LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      1=1
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+      <if test="robotCodeSim != null and robotCodeSim != ''">
+        AND A.ROBOT_CODE_SIM = #{robotCodeSim}
+      </if>
+      <if test="scenicSpotId != null and scenicSpotId != ''">
+        AND B.SCENIC_SPOT_ID = #{scenicSpotId}
+      </if>
+    </where>
+    ORDER BY A.ROBOT_CODE DESC
+  </select>
+
+  <select id="getRobotSoftwareAndHardwareByCode" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+      A.ROBOT_CODE AS robotCode,
+      A.ROBOT_MODEL,
+      A.ROBOT_ID,
+      B.SCENIC_SPOT_NAME AS scenicSpotName,
+      A.CLIENT_VERSION AS clientVersion,
+      A.ROBOT_CODE_SIM AS robotCodeSim,
+      C.ROBOT_BELARC_ADVISOR_ID,
+      C.MASTER_CONTROL_MODEL,
+      C.MASTER_CONTROL_FIRMWARE_VERSION,
+      C.MASTER_CONTROL_ID,
+      C.PAD_VERSION,
+      C.PAD_FIRMWARE_VERSION,
+      C.PAD_MANUFACTOR,
+      C.MEID,
+      C.DRIVE_MODEL,
+      C.DRIVE_FIRMWARE_VERSION,
+      C.DRIVER_MANUFACTURER,
+      C.DRIVE_ID,
+      C.MOTOR_MODEL,
+      C.MOTOR_ID,
+      C.MOTOR_MANUFACTURER,
+      C.BATTERY_MODEL,
+      C.BATTERY_MANUFACTURER,
+      C.BATTERY_ID,
+      C.ROBOT_POWER,
+      C.CHARGER_MODEL,
+      C.CHARGER_MANUFACTURER,
+      C.CHARGER_ID,
+      C.RANGING_MODULAR_MODEL,
+      C.RANGING_MODULAR_VERSION,
+      C.RANGING_MODULAR_MANUFACTURER,
+      C.RANGING_MODULAR_ID,
+      C.UPDATE_DATE
+    FROM
+      SYS_ROBOT A
+        LEFT JOIN SYS_ROBOT_BELARC_ADVISOR C ON A.ROBOT_ID = C.ROBOT_ID
+        LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+    <where>
+      <if test="robotCode != null and robotCode != ''">
+        AND A.ROBOT_CODE LIKE CONCAT('%',#{robotCode},'%')
+      </if>
+    </where>
+  </select>
+</mapper>

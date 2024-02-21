@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.system.dao.SysScenicSpotCertificateSpotMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.system.model.SysScenicSpotCertificateSpot">
+        <id column="CERTIFICATE_SPOT_ID" property="certificateSpotId" jdbcType="BIGINT"/>
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT"/>
+        <result column="CERTIFICATE_ID" property="certificateId" jdbcType="BIGINT"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    CERTIFICATE_SPOT_ID, SCENIC_SPOT_ID, CERTIFICATE_ID, CREATE_DATE, UPDATE_DATE
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_SCENIC_SPOT_CERTIFICATE_SPOT
+        where CERTIFICATE_SPOT_ID = #{certificateSpotId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SYS_SCENIC_SPOT_CERTIFICATE_SPOT
+    where CERTIFICATE_SPOT_ID = #{certificateSpotId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCertificateSpot">
+    insert into SYS_SCENIC_SPOT_CERTIFICATE_SPOT (CERTIFICATE_SPOT_ID, SCENIC_SPOT_ID, CERTIFICATE_ID, 
+      CREATE_DATE, UPDATE_DATE)
+    values (#{certificateSpotId,jdbcType=BIGINT}, #{scenicSpotId,jdbcType=BIGINT}, #{certificateId,jdbcType=BIGINT}, 
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective"
+            parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCertificateSpot">
+        insert into SYS_SCENIC_SPOT_CERTIFICATE_SPOT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="certificateSpotId != null">
+                CERTIFICATE_SPOT_ID,
+            </if>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="certificateId != null">
+                CERTIFICATE_ID,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="certificateSpotId != null">
+                #{certificateSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotId != null">
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="certificateId != null">
+                #{certificateId,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCertificateSpot">
+        update SYS_SCENIC_SPOT_CERTIFICATE_SPOT
+        <set>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="certificateId != null">
+                CERTIFICATE_ID = #{certificateId,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where CERTIFICATE_SPOT_ID = #{certificateSpotId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey"
+            parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotCertificateSpot">
+    update SYS_SCENIC_SPOT_CERTIFICATE_SPOT
+    set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+      CERTIFICATE_ID = #{certificateId,jdbcType=BIGINT},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+    where CERTIFICATE_SPOT_ID = #{certificateSpotId,jdbcType=BIGINT}
+  </update>
+    <select id="getCertificateSpotList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        C.SCENIC_SPOT_NAME AS scenicSpotName,
+        D.MERCHANT_NAME AS merchantName,
+        A.CREATE_DATE,
+        A.SCENIC_SPOT_ID,
+        A.CERTIFICATE_ID,
+        A.CERTIFICATE_SPOT_ID,
+        D.CERT_FILE_NAME,
+        D.MERCHANT_SECRET,
+        D.MERCHANT_NUMBER
+        FROM
+        SYS_SCENIC_SPOT_CERTIFICATE_SPOT A
+        LEFT JOIN SYS_USERS_ROLE_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
+        LEFT JOIN SYS_SCENIC_SPOT C ON A.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+        LEFT JOIN WECHAT_BUSINESS_MANAGEMENT D ON A.CERTIFICATE_ID = D.MERCHANT_ID
+        <where>
+            <if test="userId != null and userId != ''">
+                AND B.USER_ID = #{userId}
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                AND A.SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+        </where>
+        ORDER BY A.CREATE_DATE DESC
+    </select>
+    <select id="selectByScenicSpotId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_SCENIC_SPOT_CERTIFICATE_SPOT
+        where SCENIC_SPOT_ID = #{scenicSpotId}
+    </select>
+    <select id="selectById" resultType="com.hna.hka.archive.management.system.model.WechatBusinessManagement">
+    SELECT
+        D.CERT_FILE_NAME,
+        D.MERCHANT_SECRET,
+        D.MERCHANT_NUMBER
+    FROM
+        SYS_SCENIC_SPOT_CERTIFICATE_SPOT A
+        LEFT JOIN WECHAT_BUSINESS_MANAGEMENT D ON A.CERTIFICATE_ID = D.MERCHANT_ID
+        where
+        A.SCENIC_SPOT_ID =#{scenicSpotId}
+    </select>
+
+
+    <delete id="deleteBySpotId" parameterType="java.lang.Long">
+    delete from SYS_SCENIC_SPOT_CERTIFICATE_SPOT
+    where SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT}
+  </delete>
+
+</mapper>
