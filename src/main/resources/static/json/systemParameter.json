@@ -1,0 +1,14 @@
+{
+	"cmsName": "后台管理系统",
+	"version": "v2.0",
+	"author": "郭凯",
+	"homePage": "home.html",
+	"server": "windows",
+	"dataBase": "8.00.2039",
+	"maxUpload": "2M",
+	"userRights": "超级管理员",
+	"description": "",
+	"powerby": "copyright @2017 郭凯",
+	"record": "京ICP备15066235号-5",
+	"keywords": ""
+}

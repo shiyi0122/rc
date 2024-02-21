@@ -1,0 +1,36 @@
+.province_robot_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 5px;
+}
+
+.pri_head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.xiangqing {
+    font-weight: 700;
+}
+
+.icon-xiangqing {
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: 3px;
+}
+
+.data_dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.left_top_map_text {
+    position: absolute;
+    z-index: 9;
+    left: 6px;
+    top: 24%;
+}

@@ -1,0 +1,9 @@
+.equ_stats {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr; */
+  grid-template-columns: 2fr 1fr;
+}
+
+.font_weight {
+  font-weight: 700;
+}

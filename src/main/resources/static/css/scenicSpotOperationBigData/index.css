@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: auto;
+}
+
+.all_echarts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.left_top_map,
+.right_operate_data,
+.right_middle_trade_stats {
+    margin-bottom: 10px;
+}
+
+.right_echarts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 下边的交易金额趋势 */
+/* .left_bottom_line {
+    height: 25vh;
+    overflow: hidden;
+} */
+
+/* @media all and (max-width: 1336px) {
+    .left_bottom_line {
+        height: 24vh;
+    }
+} */

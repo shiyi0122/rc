@@ -1,0 +1,78 @@
+.operate_time_content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.operate_header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.scenic_name_input {
+  width: 200px;
+}
+
+#scenic_name {
+  width: 200px;
+}
+
+#more_btn {
+  width: 200px;
+  margin: 20px;
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+#stats_way,
+#date_way {
+  width: 200px;
+}
+
+.start_end_time {
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+.more_text,
+.set_text {
+  background: #fff;
+  color: #999999;
+  height: 30px;
+  line-height: 32px;
+  cursor: pointer;
+  user-select: none;
+  pointer-events: none;
+  display: block;
+}
+
+.more_text {
+  position: absolute;
+  top: 3px;
+  left: 10px;
+  width: 50px;
+}
+
+.set_text {
+  position: absolute;
+  top: 24px;
+  margin-left: 10px;
+  width: 100px;
+}
+
+#avg_operate_time {
+  width: 200px;
+}
+
+.flex_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconfont {
+  margin-right: 5px;
+}
