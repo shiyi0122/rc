@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>机器人编辑--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="userForm" lay-filter="userForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="robotId" type="hidden" class="robotId"/>
+                    <input name="scenicspotNames" type="hidden" class="scenicspotNames"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">机器人编号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="robotCode" placeholder="请输入机器人编号" type="text" class="layui-input robotCode" autocomplete="off" lay-verify="required" lay-reqtext="机器人编号是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">手机卡ICCID<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="robotCodeSim" placeholder="请输入手机卡ICCID" type="text" class="layui-input robotCodeSim" autocomplete="off" lay-verify="required"  lay-reqtext="手机卡ICCID是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">蓝牙编号</label>
+                        <div class="layui-input-block">
+                            <input name="robotBluetooth" placeholder="请输入蓝牙编号" type="text" class="layui-input robotBluetooth" autocomplete="off" lay-reqtext="请输入蓝牙编号"  />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">机器人版本号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="robotVersionNumber" placeholder="请输入机器人版本号" type="text" class="layui-input robotVersionNumber" autocomplete="off" onkeyup="value=value.replace(/[^\d\.]/g,'')" onchange="value=value.replace(/[^\d\.]/g,'')" lay-verify="required" lay-reqtext="机器人版本号是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">机器人批次号</label>
+                        <div class="layui-input-block">
+                            <input name="robotBatchNumber" placeholder="请输入机器人批次号" type="text" class="layui-input robotBatchNumber" autocomplete="off"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <input name="robotRemarks" placeholder="请输入备注" type="text" class="layui-input robotRemarks" autocomplete="off"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">选择景区<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="scenicSpotId" lay-verify="required" lay-search="" lay-filter="group" class="scenicSpotId" lay-reqtext="景区是必选项，不能为空" id="sele">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button class="layui-btn" lay-filter="btnSubmitRobot" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/page/system/robot/js/robotEdit.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl'],function(){
+        var form = layui.form;
+        var items = [];
+        $.ajax({
+            type : "post",
+            url : "/homePage",
+            async : false,
+            success : function(data){
+                if(data.code == 1){
+                    items = data.data;
+                    var scenicSpotId = $(".scenicspotNames").val();
+                    $("#sele").html("<option value=''>请选择景区</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                        // 如果是之前的parentId则设置选中
+                        if(item.scenicSpotId == scenicSpotId) {
+                            option.setAttribute("selected",'true');
+                        }
+                        $('#sele').append(option);//往下拉菜单里添加元素
+                        form.render('select'); //这个很重要
+                    });
+                }else{
+                }
+            }
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>证书管理--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <button id="btnAddManagement" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加证书</button>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="managementList" class="layui-table" lay-filter="managementList"></table>
+</div>
+<!--操作-->
+<script type="text/html" id="managementListBar">
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除证书</a>
+</script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/system/management/js/managementList.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+</html>

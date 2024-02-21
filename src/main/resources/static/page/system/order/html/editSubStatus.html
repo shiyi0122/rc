@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>提交--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="Form" lay-filter="Form">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="orderId" type="hidden" class="orderId"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">订单编号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="orderNumber" disabled placeholder="请输入订单编号" type="text" class="layui-input layui-disabled orderNumber" autocomplete="off" lay-verify="required" lay-reqtext="订单编号是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">用户手机号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="currentUserPhone" disabled placeholder="请输入用户手机号" type="text" class="layui-input layui-disabled currentUserPhone" autocomplete="off" lay-verify="required" lay-reqtext="用户手机号是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">机器人ID<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="orderRobotCode" disabled placeholder="请输入机器人ID" type="text" class="layui-input layui-disabled orderRobotCode" autocomplete="off" lay-verify="required" lay-reqtext="机器人ID是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="orderScenicSpotName" disabled placeholder="请输入景区名称" type="text" class="layui-input layui-disabled orderScenicSpotName" autocomplete="off" lay-verify="required" lay-reqtext="景区名称是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">开始时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="orderStartTime" disabled placeholder="请输入开始时间" type="text" class="layui-input layui-disabled orderStartTime" autocomplete="off" lay-verify="required" lay-reqtext="开始时间是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">使用分钟<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="totalTime" disabled placeholder="请输入使用分钟" type="text" class="layui-input layui-disabled totalTime" autocomplete="off" lay-verify="required" lay-reqtext="使用分钟是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">订单计费<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="orderAmount" disabled placeholder="请输入订单计费" type="text" class="layui-input layui-disabled orderAmount" autocomplete="off" lay-verify="required" lay-reqtext="订单计费是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">调度费<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="dispatchingFee" disabled placeholder="请输入调度费" type="text" class="layui-input layui-disabled dispatchingFee" autocomplete="off" lay-verify="required" lay-reqtext="调度费是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">支付方式<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="subMethod" lay-verify="required" lay-search="" lay-filter="group" class="subMethod" lay-reqtext="支付方式是必选项，不能为空" id="subMethod">
+                                <option value="0">微信支付</option>
+                                <option value="1">储值支付</option>
+                                <option value="2">储值抵扣</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12" id="coupon">
+                        <label class="layui-form-label">优惠卷<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="coupon" disabled placeholder="请输入优惠卷" type="text" class="layui-input layui-disabled coupon" autocomplete="off" lay-verify="required" lay-reqtext="优惠卷是必填项，不能为空" value="无"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12" id="orderDiscount">
+                        <label class="layui-form-label">折扣<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="orderDiscount" disabled placeholder="请输入折扣" type="text" class="layui-input layui-disabled orderDiscount" autocomplete="off"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12" id="deductibleAmount">
+                        <label class="layui-form-label">抵扣金额<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="deductibleAmount" disabled placeholder="请输入抵扣金额" type="text" class="layui-input layui-disabled deductibleAmount" autocomplete="off"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">应付金额<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="orderAmounts" disabled placeholder="请输入应付金额" type="text" class="layui-input layui-disabled orderAmounts" autocomplete="off" lay-verify="required" lay-reqtext="应付金额是必填项，不能为空"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button class="layui-btn" lay-filter="btnSubmitSubStatus" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/page/system/order/js/editSubStatus.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+</body>
+</html>

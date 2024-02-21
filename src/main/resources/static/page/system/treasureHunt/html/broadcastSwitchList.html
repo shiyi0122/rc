@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>景区选择--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/css/public.css" media="all"/>
+    <link rel="stylesheet" href="/css/common.css" media="all"/>
+    <link rel="stylesheet" href="/zTree_v3/css/zTreeStyle/zTreeStyle.css" media="all">
+</head>
+
+<body>
+<div id="deptForm" class="layui-fluid">
+    <div class="zTreeDemoBackground left">
+        <ul id="treeDemo" class="ztree"></ul>
+        <input name="userId" type="hidden" class="userId"/>
+    </div>
+    <br>
+    <div class="home-search">
+        <div class="search-box">
+            <form class="layui-form" action="">
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <!--<select name="roleId" class="roleId" lay-verify="required" lay-filter="group" lay-search="" id="sele">-->
+                        <!--</select>-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="layui-row" style="background: #CFD4D5;padding: 10px;">
+        <div style="text-align: center;">
+            <button class="layui-btn layui-btn-sm" id="updateScenicSpot">保存</button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" type="button" onclick="cancels()">取消</button>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript">
+
+    var dataSpotList = null;
+    layui.use(['layer', 'tree'], function () {
+        var setting = {
+            view: {
+                addHoverDom: false,
+                removeHoverDom: false,
+                selectedMulti: false
+            },
+            data: {
+                key: {
+                    name: "scenicSpotName"
+                },
+                simpleData: {
+                    enable: true,
+                    idKey: "scenicSpotId",
+                    switch: "huntSwitch",
+                    rootPId: -1
+                }
+            },
+            check: {
+                enable: true,
+                chkStyle: "checkbox",
+                chkboxType: {"Y": "s", "N": "ps"}
+            },
+            callback: {
+                beforeCheck: function (treeId, treeNode) {
+                    if (treeNode.children) {
+                        layer.msg('父节点不可选择');
+                        return false;
+                    }
+                }
+            }
+        };
+        $.ajax({
+            url: "/system/scenicSpot/getScenicSpots",
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                dataSpotList = data;
+                zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, data.data);//初始化操作
+                zTreeObj.expandAll(true);
+                for (var i = 0; i < data.data.length; i++) {
+                    var node = zTreeObj.getNodeByParam("scenicSpotId", data.data[i].scenicSpotId);
+                    if (node != null && data.data[i].huntSwitch == 1) {
+                        zTreeObj.checkNode(node, true)
+                    }
+                }
+            }
+        });
+
+    });
+
+    // 保存
+    $("#updateScenicSpot").click(function () {
+        console.log("updateScenicSpot");
+        var spotList = "";
+        var switchList = "";
+        for (var i = 0; i < dataSpotList.data.length; i++) {
+            var node = zTreeObj.getNodeByParam("scenicSpotId", dataSpotList.data[i].scenicSpotId);
+            spotList = (spotList + node.scenicSpotId + (i < (dataSpotList.data.length - 1) ? "," : ""));
+            switchList = (switchList + (node.checked ? "1" : "0") + (i < (dataSpotList.data.length - 1) ? "," : ""));
+        }
+        updateScenicSpot({
+            scenicSpotIds: spotList,
+            switchs: switchList
+        });
+    })
+
+
+    function updateScenicSpot(edit) {
+        var index = top.layer.msg('提交中，请稍候', {icon: 16, time: false, shade: 0.8});
+        $.ajax({
+            type: 'POST',
+            url: '/system/scenicSpot/updateScenicSpots',
+            dataType: 'form-data',
+            data: edit, // 将传入的参数添加到请求中
+            success: function (data) {
+                data=JSON.parse(data);
+                if (data.state == "200") {
+                    top.layer.close(index);
+                    top.layer.msg(data.msg, {icon: 6});
+                    parent.layer.closeAll("iframe");
+                } else if (data.state == "400") {
+                    top.layer.msg(data.msg, {icon: 5, time: 1000, shift: 6});
+                }
+            }
+        });
+    };
+
+
+</script>
+
+</body>
+
+</html>

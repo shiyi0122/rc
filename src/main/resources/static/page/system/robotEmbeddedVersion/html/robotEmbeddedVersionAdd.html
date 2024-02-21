@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>上传PAD客户端--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="robotEmbeddedVersionForm" lay-filter="robotEmbeddedVersionForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                	<div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">文件类型<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="embeddedType" lay-verify="required" lay-search="" lay-filter="group" class="select" lay-reqtext="文件类型是必选项，不能为空">
+                                <option value="" selected>--请选择--</option>
+                                <option value="1">主控</option>
+                                <option value="2">超声</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">文件选择<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <button type="button" class="layui-btn" name="file" id="file" lay-type="images"><i class="layui-icon"></i>上传文件</button>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">版本描述<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="embeddedDescribe" placeholder="请输入版本描述" type="text" class="layui-input embeddedDescribe" autocomplete="off" lay-verify="required" lay-reqtext="版本描述是必填项，不能为空"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button class="layui-btn" lay-filter="btnSubmitRobotEmbeddedVersion" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/page/system/robotEmbeddedVersion/js/robotEmbeddedVersionAdd.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+</body>
+</html>

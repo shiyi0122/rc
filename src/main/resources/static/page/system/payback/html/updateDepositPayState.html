@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>修改押金缴纳状态--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+    <link rel="stylesheet" href="/css/common.css" media="all" />
+    <link rel="stylesheet" href="/zTree_v3/css/zTreeStyle/zTreeStyle.css" media="all">
+</head>
+
+<body>
+<div id="deptForm" class="layui-fluid">
+    <div class="zTreeDemoBackground left">
+        <ul id="treeDemo" class="ztree"></ul>
+        <input name="currentUserId" type="hidden" class="currentUserId"/>
+    </div>
+    <div class="layui-row" style="background: #CFD4D5;padding: 10px;">
+        <div style="text-align: center;">
+            <button class="layui-btn layui-btn-sm" id="saveButton">保存</button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" type="button" onclick="cancels()">取消</button>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var setting = {
+            view : {
+                addHoverDom : false,
+                removeHoverDom : false,
+                selectedMulti : false
+            },
+            data : {
+                key : {
+                    name : "depositPayStateName"
+                },
+                simpleData : {
+                    enable : true,
+                    idKey : "depositPayState",
+                    rootPId : -1
+                }
+            },
+            check : {
+                enable : true,
+                chkStyle : "radio",
+                radioType : "all"
+            },
+            callback:{
+                onCheck:onCheck
+            }
+        };
+        $.ajax({
+            url:"/system/payback/getDepositPayStateName",
+            type:"GET",
+            dataType:"json",
+            success:function(data){
+                zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, data.data);//初始化操作
+                zTreeObj.expandAll(true);
+                echoZtree();
+            }
+        });
+    });
+    //回显树节点
+    function echoZtree(){
+        $.ajax({
+            url:"/system/payback/getDepositPayState",
+            type:"GET",
+            data:{
+                currentUserId : $(".currentUserId").val()
+            },
+            dataType:"json",
+            success:function(data){
+                if (data.state == "200"){
+                    var node = zTreeObj.getNodeByParam("depositPayState", data.data.depositPayState);
+                    if(node != null) {
+                        zTreeObj.checkNode(node, true)
+                    }
+                }else if (data.state == "400"){
+                    top.layer.msg(data.msg, {icon: 5,time: 1000,shift: 6});
+                }
+            }
+        });
+    }
+    var resIds;
+    //树节点点击事件
+    function onCheck(e, treeId, zNodes) {
+        var resId = "";
+        var nodes = zTreeObj.getCheckedNodes(true);
+        for (var i = 0; i < nodes.length; i++) {
+            resId += nodes[i].depositPayState;
+        }
+        resIds = resId
+    }
+
+    /**
+     * 提交
+     */
+    $("#saveButton").click(function () {
+        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        $.ajax({
+            url:"/system/payback/updateDepositPayState",
+            type:"POST",
+            data:{
+                currentUserId : $(".currentUserId").val(),
+                depositPayState : resIds
+            },
+            dataType:"json",
+            success:function(data){
+                if (data.state == "200"){
+                    top.layer.close(index);
+                    top.layer.msg(data.msg, {icon: 6});
+                    parent.layer.closeAll("iframe");
+                    parent.layui.table.reload("currentUserListTable");
+                }else if (data.state == "400"){
+                    top.layer.msg(data.msg, {icon: 5,time: 1000,shift: 6});
+                }
+            }
+        });
+    })
+</script>
+
+</body>
+
+</html>

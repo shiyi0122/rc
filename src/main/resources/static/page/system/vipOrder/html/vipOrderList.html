@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>VIP订单管理--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" class="layui-input orderRobotCodeVal" autocomplete="off" placeholder="机器人编号"/>
+                </div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" class="layui-input startTime" autocomplete="off" placeholder="开始时间" id="startTime"/>
+                </div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" class="layui-input endTime" autocomplete="off" placeholder="结束时间" id="endTime"/>
+                </div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <select class="layui-select scenicSpotId" lay-search="" lay-verify="required" autocomplete="off" id="scenicSpotId" lay-filter="cartype"></select>
+                </div>
+
+                <div class="layui-input-inline" style="width: 120px;display: none;" id="pid" hidden="hidden">
+                    <select class="layui-select orderParkingId" lay-search="" lay-verify="required" autocomplete="off" id="orderParkingId"></select>
+                </div>
+
+                <div class="layui-input-inline" style="width: 120px;display: none;" id="typed" >
+                    <select class="layui-select typee" lay-search="" lay-verify="required" autocomplete="off" id="typee" >
+                        <option value="">请选择查询类型</option>
+                        <option value="1">出发点</option>
+                        <option value="2">停放点</option>
+                    </select>
+                </div>
+
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="vipOrderList" class="layui-table" lay-filter="vipOrderList"></table>
+</div>
+
+<!--操作-->
+<script type="text/html" id="orderListBar">
+    {{#  if(d.orderStatus  ==30 ){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">免单</a>
+    {{# }if(d.orderStatus ==10) { }}
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="settlement">结算</a>
+    {{# } }}
+</script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/system/vipOrder/js/vipOrderList.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl'],function(){
+        var form = layui.form;
+        var items = [];
+        $.ajax({
+            type : "post",
+            url : "/homePage",
+            async : false,
+            success : function(data){
+                if(data.code == 1){
+                    items = data.data;
+                    $("#scenicSpotId").html("<option value=''>请选择景区</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                        $('#scenicSpotId').append(option);//往下拉菜单里添加元素
+                        form.render('select');
+                    });
+                }else{
+                }
+            }
+        });
+
+        form.on('select(cartype)', function (data) {
+            // console.log(data.value); //得到被选中的值
+            // console.log("111")
+            // layer.msg(data.value);
+            if (data.value == '') {
+                $("#pid").hide();
+                $("#typed").hide();
+
+            }else{
+                $.ajax({
+                    type : "post",
+                    url : "/system/parking/parkingDropDown",
+                    data : "scenicSpotId="+$(".scenicSpotId").val(),
+                    async : false,
+                    success : function(data){
+                        if(data.state == "200"){
+                            items = data.data;
+                            $("#orderParkingId").html("<option value=''>请选择停靠点</option>");
+                            $.each(items, function (index, item) {
+                                var option = new Option(item.parkingName,item.parkingId);
+                                $('#orderParkingId').append(option);//往下拉菜单里添加元素
+                                form.render('select');
+                            });
+                        }else{
+                        }
+                    }
+                });
+                $("#pid").show();
+                $("#typed").show();
+            }
+        });
+
+    })
+</script>
+</html>

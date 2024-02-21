@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>储值记录管理--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" class="layui-input userPhoneVal" autocomplete="off" placeholder="客户手机号"/>
+                </div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" class="layui-input startTime" autocomplete="off" placeholder="开始时间" id="startTime"/>
+                </div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" class="layui-input endTime" autocomplete="off" placeholder="结束时间" id="endTime"/>
+                </div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <select class="layui-select scenicSpotId" lay-search="" lay-verify="required" autocomplete="off" id="scenicSpotId"></select>
+                </div>
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>
+                    <button id="downloadExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出EXCEL</button>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="currentUserAccountOrderList" class="layui-table" lay-filter="currentUserAccountOrderList"></table>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/system/currentUserAccountOrder/js/currentUserAccountOrderlist.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl'],function(){
+        var form = layui.form;
+        var items = [];
+        $.ajax({
+            type : "post",
+            url : "/homePage",
+            async : false,
+            success : function(data){
+                if(data.code == 1){
+                    items = data.data;
+                    $("#scenicSpotId").html("<option value=''>请选择景区</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                        $('#scenicSpotId').append(option);//往下拉菜单里添加元素
+                        form.render('select');
+                    });
+                }else{
+                }
+            }
+        });
+    })
+</script>
+</html>

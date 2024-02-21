@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>地图服务--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <style>
+        *{margin: 0; padding: 0}
+        html,body{height: 97%;box-sizing: border-box;}
+        .map-box{height: 97%;margin-top: 20px;margin-left: 20px;margin-right: 20px}
+        #allmap{width:100%;height:99%; margin-top: 15px;box-sizing: border-box;}
+        .search{display: flex;flex-direction: row;align-items: center;margin-right: 10px;}
+        .box{width: 90%;display: flex;flex-direction: row;align-items: center;margin-bottom: 20px;}
+    </style>
+</head>
+
+
+<div class="map-box">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md4">
+            <div class="grid-demo grid-demo-bg1 search">
+                <input type="text" id="address1" class="layui-input" style="width: 200px;margin-right: 10px">
+                <button id="btn1" class="layui-btn" style="margin-right: 10px">搜索机器人</button>
+                <button id="btn2" class="layui-btn layui-btn-primary">清空</button>
+                <button class="layui-btn polyline">电子围栏显示/隐藏</button>
+
+            </div>
+        </div>
+        <div class="layui-col-md8">
+            <div class="grid-demo">
+                <button class="layui-btn parkingPolylines">停车点显示/隐藏</button>
+                <button class="layui-btn zonaPolyLines">禁区显示/隐藏</button>
+                <button class="layui-btn scenicSpot">景点显示/隐藏</button>
+                <button class="layui-btn isShow">机器人显示/隐藏</button>
+                <button class="layui-btn storagePoints">库房显示/隐藏</button>
+                <button class="layui-btn locations  ">定位</button>
+            </div>
+        </div>
+    </div>
+
+    <div id='allmap'></div>
+
+</div>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=XevYdTYfrI39kcrY6exG91ZrGnt1jLgf"></script>
+    <script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>
+        $(function () {
+            showScenicSpot();
+            //刷新
+            $(".refresh").click(function(){
+                showScenicSpot()
+                $("#address1").val('')
+            })
+        })
+        //景区电子围栏
+        function electronicFence(map) {
+            //电子围栏
+            $.ajax({
+                type: 'get',
+                url: "/system/map/GpsCoordinate",
+                dataType: "json",
+                async: true, //使用同步的方式,true为异步方式
+                success: function (res) {
+                    if (res.state == '200') {
+                        var coordinate = res.data.coordinateOuterringBaiDu
+                        var polyLinePoints = [];
+                        str = coordinate.split("!"); // 坐标点通过叹号分割
+                        for (var j = 0; j < str.length; j++) { // 循环数组
+                            var po = new BMap.Point(str[j].split(",")[0], str[j].split(",")[1]);
+                            map.centerAndZoom(po, 16); // 分割后的坐标作为起始坐标
+                            polyLinePoints.push(po);
+                            $(".locations").click(function () {
+                                map.panTo(po); //转到该点位置
+                            })
+                        }
+                        var polyLine = new BMap.Polygon(
+                            polyLinePoints, {
+                                strokeColor: "blue",
+                                //边线颜色。  
+                                fillColor: "transparent",
+                                //填充颜色。当参数为空时，圆形将没有填充效果。  
+                                strokeWeight: 3,
+                                //边线的宽度，以像素为单位。  
+                                strokeOpacity: 0.8,
+                                //边线透明度，取值范围0 - 1。  
+                                fillOpacity: 0,
+                                //填充的透明度，取值范围0 - 1。  
+                                strokeStyle: 'solid'     //边线的样式，solid或dashed。
+                            }); // 展示围栏
+                        map.addOverlay(polyLine);
+                        var flag = true;
+                        //点击电子围栏按钮显示与隐藏
+                        $(".polyline").click(function () {
+                            if (flag == true) {
+                                flag = false
+                                polyLine.hide();
+                            } else {
+                                flag = true
+                                polyLine.show();
+                            }
+
+                        })
+                    } else {
+                        console.log('电子围栏接口查询异常');
+                    }
+
+
+
+                }
+            })
+        }
+
+
+        //禁区
+        function zona(map) {
+            //禁区
+            $.ajax({
+                type: 'get',
+                url: "/system/map/coordinateGroup",
+                dataType: "json",
+                async: true, //使用同步的方式,true为异步方式
+                success: function (res) {
+                    if (res.state == '200') {
+                        for (var i = 0; i < res.data.length; i++) {
+                            var zonaCoordinate = res.data[i].coordinateInnercircleBaiDu
+                            var zonaPolyLinePoints = [];
+                            zonaStr = zonaCoordinate.split("!"); // 坐标点通过叹号分割
+                            for (var j = 0; j < zonaStr.length; j++) { // 循环数组
+                                var zonaPo = new BMap.Point(zonaStr[j].split(",")[0], zonaStr[j].split(",")[1]);
+                                //map.centerAndZoom(zonaPo, 16); // 分割后的坐标作为起始坐标
+                                zonaPolyLinePoints.push(zonaPo);
+                            }
+                            var zonaPpolyLine = new BMap.Polygon(
+                                zonaPolyLinePoints, {
+                                    strokeColor: "red",
+                                    //边线颜色。  
+                                    fillColor: "transparent",
+                                    //填充颜色。当参数为空时，圆形将没有填充效果。  
+                                    strokeWeight: 3,
+                                    //边线的宽度，以像素为单位。  
+                                    strokeOpacity: 0.8,
+                                    //边线透明度，取值范围0 - 1。  
+                                    fillOpacity: 0.5,
+                                    //填充的透明度，取值范围0 - 1。  
+                                    strokeStyle: 'solid'     //边线的样式，solid或dashed。
+                                }); // 展示围栏
+                            addZonaPpolyLine(map, zonaPpolyLine);
+                        }
+                    } else {
+                        console.log('禁区接口查询异常');
+                    }
+                }
+            })
+        }
+
+        //添加禁区点
+        function addZonaPpolyLine(map, zonaPpolyLine) {
+            map.addOverlay(zonaPpolyLine);
+            var flag = true;
+            $(".zonaPolyLines").click(function () {
+                if (flag == true) {
+                    flag = false
+                    zonaPpolyLine.hide();
+                } else {
+                    flag = true
+                    zonaPpolyLine.show();
+                }
+
+            })
+
+        }
+
+        //停车点
+        function parkingPoint(map) {
+            //停车点
+            $.ajax({
+                type: 'get',
+                url: "/system/map/parking",
+                dataType: "json",
+                async: true, //使用同步的方式,true为异步方式
+                success: function (res) {
+                    if (res.state == '200') {
+                        for (var i = 0; i < res.data.length; i++) {
+                            var parkingPoint = res.data[i].parkingCoordinateGroupBaidu
+                            var parkingPolyLinePoints = [];
+                            parkingPointStr = parkingPoint.split("!"); // 坐标点通过叹号分割
+                            for (var j = 0; j < parkingPointStr.length; j++) { // 循环数组
+                                var zonaPo = new BMap.Point(parkingPointStr[j].split(",")[0], parkingPointStr[j].split(",")[1]);
+                                // map.centerAndZoom(zonaPo, 14); // 分割后的坐标作为起始坐标
+                                parkingPolyLinePoints.push(zonaPo);
+                            }
+                            var parkingPpolyLine = new BMap.Polygon(
+                                parkingPolyLinePoints, {
+                                    strokeColor: "green",
+                                    //边线颜色。  
+                                    fillColor: "transparent",
+                                    //填充颜色。当参数为空时，圆形将没有填充效果。  
+                                    strokeWeight: 3,
+                                    //边线的宽度，以像素为单位。  
+                                    strokeOpacity: 0.8,
+                                    //边线透明度，取值范围0 - 1。  
+                                    fillOpacity: 0.5,
+                                    //填充的透明度，取值范围0 - 1。  
+                                    strokeStyle: 'solid'     //边线的样式，solid或dashed。
+                                }); // 展示围栏
+                            addParkingPpolyLine(map, parkingPpolyLine);
+                        }
+
+                    } else {
+                        console.log('禁区接口查询异常');
+                    }
+                }
+            })
+        }
+
+        //添加停车点
+        function addParkingPpolyLine(map, parkingPpolyLine) {
+            map.addOverlay(parkingPpolyLine);
+            var flag = true;
+            $(".parkingPolylines").click(function () {
+                if (flag == true) {
+                    flag = false
+                    parkingPpolyLine.hide();
+                } else {
+                    flag = true
+                    parkingPpolyLine.show();
+                }
+            })
+
+        }
+
+
+        //库房
+        function storagePoint(map) {
+            //库房
+            $.ajax({
+                type: 'get',
+                url: "/system/map/storageRoom",
+                dataType: "json",
+                async: true, //使用同步的方式,true为异步方式
+                success: function (res) {
+                    if (res.state == '200') {
+                        for (var i = 0; i < res.data.length; i++) {
+                            var storagePoint = res.data[i].parkingCoordinateGroupBaidu
+                            var parkingsPolyLinePoints = [];
+                            parkingPointStr = storagePoint.split("!"); // 坐标点通过叹号分割
+                            for (var j = 0; j < parkingPointStr.length; j++) { // 循环数组
+                                var zonaPo = new BMap.Point(parkingPointStr[j].split(",")[0], parkingPointStr[j].split(",")[1]);
+                                // map.centerAndZoom(zonaPo, 14); // 分割后的坐标作为起始坐标
+                                parkingsPolyLinePoints.push(zonaPo);
+                            }
+                            var parkingPpolyLine1 = new BMap.Polygon(
+                                parkingsPolyLinePoints, {
+                                    strokeColor: "black",
+                                    //边线颜色。  
+                                    fillColor: "transparent",
+                                    //填充颜色。当参数为空时，圆形将没有填充效果。  
+                                    strokeWeight: 3,
+                                    //边线的宽度，以像素为单位。  
+                                    strokeOpacity: 0.8,
+                                    //边线透明度，取值范围0 - 1。  
+                                    fillOpacity: 0.5,
+                                    //填充的透明度，取值范围0 - 1。  
+                                    strokeStyle: 'solid'     //边线的样式，solid或dashed。
+                                }); // 展示围栏
+                            addStoragePoints(map, parkingPpolyLine1);
+                        }
+
+                    } else {
+                        console.log('库房接口查询异常');
+                    }
+                }
+            })
+        }
+
+        //添加库房点
+        function addStoragePoints(map, parkingPpolyLine1) {
+            map.addOverlay(parkingPpolyLine1);
+            var flag = true;
+            $(".storagePoints").click(function () {
+                if (flag == true) {
+                    flag = false
+                    parkingPpolyLine1.hide();
+                } else {
+                    flag = true
+                    parkingPpolyLine1.show();
+                }
+            })
+
+        }
+
+
+
+        //景区坐标
+        function showScenicSpot() {
+            var map = new BMap.Map("allmap");
+            map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+            //电子围栏
+            electronicFence(map)
+            //禁区
+            zona(map)
+            //停车点
+            parkingPoint(map)
+            //机器人坐标
+            showRobot(map)
+            //库房坐标
+            storagePoint(map)
+            //景点坐标
+            $.ajax({
+                type: "get",
+                url: "/system/map/Broadcast",
+                dataType: "json",
+                async: true, //使用同步的方式,true为异步方式
+                success: function (res) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        //景点经纬度
+                        var coordinate = res.data[i].broadcastGpsBaiDu
+                        //景区名称
+                        var broadcastName = res.data[i].broadcastName
+                        var coordinateArr = [];
+                        coordinateArr = coordinate.split("!")
+                        for (var j = 0; j < coordinateArr.length; j++) { // 循环数组
+                            var lng = coordinateArr[j].split(",")[0]//经度
+                            var lat = coordinateArr[j].split(",")[1]//维度
+                            var points = new BMap.Point(coordinateArr[j].split(",")[0], coordinateArr[j].split(",")[1]);
+                            var icon = '';
+                            var myIcon = '';
+                            var opts = '';
+                            var showInfo = "景点名称:" + broadcastName + "<br/> " + " 经度：" + lng + "<br/>" + "纬度:" + lat + "<br/>";
+                            addMarker1(map, icon, myIcon, points, showInfo, opts);
+                        }
+                    }
+                }
+            });
+        }
+
+        //机器人坐标
+        function showRobot(map) {
+            $.ajax({
+                type: "get",
+                url: "/system/map/Robot",
+                dataType: "json",
+                async: true, //使用同步的方式,true为异步方式
+                success: function (res) {
+                    if (res.state == '200') {
+                        var i = 0;
+                        for (var i = 0; i < res.data.length; i++) {
+                            var coordinate = res.data[i].robotGpsBaiDu
+                            var robotCode = res.data[i].robotCode
+                            $.cookie('robotCodes', res.data[i].robotCode);
+                            robotCodes = $.cookie('robotCodes');
+                            var stateArr = res.data[i].robotRunState
+                            var scenic = res.data[i].scenicSpotName
+                            var coordinateArr = [];
+                            if (coordinate == null || coordinate == "" || coordinate == undefined){
+                            }else{
+                                coordinateArr = coordinate.split(',')
+                                var lng = coordinateArr[0] //经度
+                                var lat = coordinateArr[1] //维度
+                                var points = new BMap.Point(coordinateArr[0], coordinateArr[1]);
+                                var icon = '';
+                                var myIcon = '';
+                                var opts = '';
+                                if (stateArr == '10') { // 闲置
+                                    icon = '/mapimage/img/robot_green.png';
+                                } else if (stateArr == '20') { //用户解锁 
+                                    icon = '/mapimage/img/robot_blue.png';
+                                } else if (stateArr == '30') { //用户临时锁定
+                                    icon = '/mapimage/img/robot_blue.png';
+                                } else if (stateArr == '40') { //管理员解锁
+                                    icon = '/mapimage/img/robot_violet.png';
+                                } else if (stateArr == '50') { //管理员锁定
+                                    icon = '/mapimage/img/robot_violet.png';
+                                } else if (stateArr == '60') { //自检故障报警
+                                    icon = '/mapimage/img/robot_red.png';
+                                } else if (stateArr == '70') { //用户解锁中自检故障报警
+                                    icon = '/mapimage/img/robot_green.png';
+                                }else if (stateArr == '80') { //运营人员钥匙解锁
+                                    icon = '/mapimage/img/robot_yellow.png';
+                                } else { //运营人员维护
+                                    icon = '/mapimage/img/robot_grey.png';
+                                }
+                                var stateArrs;
+                                if (stateArr == 10) {
+                                    stateArrs = "闲置";
+                                }else if (stateArr == 20) {
+                                    stateArrs = "用户解锁";
+                                }else if (stateArr == 30) {
+                                    stateArrs = "用户临时锁定";
+                                }else if (stateArr == 40) {
+                                    stateArrs = "管理员解锁";
+                                }else if (stateArr == 50) {
+                                    stateArrs = "管理员锁定";
+                                }else if (stateArr == 60) {
+                                    stateArrs = "自检故障报警";
+                                }else if (stateArr == 70) {
+                                    stateArrs = "用户解锁中";
+                                }else if (stateArr == 80) {
+                                    stateArrs = "运营人员钥匙解锁";
+                                }else{
+                                    stateArrs = "运营人员维护";
+                                }
+                                var showInfo ="景区名称："+ scenic + "<br/>" + "机器人状态：" + stateArrs + "<br/>" + "机器人id：" + robotCode + "<br/>" + "经度："+ lng +"<br/>" + "维度："+ lat +"<br/>";
+                                addMarker(map, icon, myIcon, points, showInfo, opts);
+                            }
+                        }
+                    } else {
+                        console.log('接口异常');
+                    }
+                }
+            });
+
+        }
+        //添加图标
+        function addMarker1(map, icon, myIcon, points, showInfo, marker, opts) {
+            var icon = '';
+            var myIcon = new BMap.Icon('/mapimage/img/paisaje.png', new BMap.Size(60, 60), {
+                imageSize: new BMap.Size(60, 60), // 设置图标大小
+            });
+            var marker = new BMap.Marker(points, { // 创建标注
+                icon: myIcon
+            });
+            var opts = {
+                width: 250, // 信息窗口宽度
+                height: 80, // 信息窗口高度
+                title: "", // 信息窗口标题
+                enableMessage: true //设置允许信息窗发送短息
+            };
+            //   var marker = new BMap.Marker(points);
+            map.addOverlay(marker);
+            addClickHandler1(showInfo, marker, map, opts);
+            var flag = true;
+            $(".scenicSpot").click(function () {
+                if (flag == true) {
+                    flag = false
+                    marker.hide();
+                } else {
+                    flag = true
+                    marker.show();
+                }
+            })
+        }
+
+        //点击图标
+        function addClickHandler1(showInfo, marker, map, opts) {
+            marker.addEventListener("click", function (e) {
+                openInfo1(showInfo, e, map, opts)
+            });
+        }
+        //打开信息窗口
+        function openInfo1(showInfo, e, map, opts) {
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(showInfo, opts); // 创建信息窗口对象
+            map.openInfoWindow(infoWindow, point); //开启信息窗口
+        }
+
+        //添加图标
+        function addMarker(map, icon, myIcon, points, showInfo, marker, opts) {
+            var myIcon = new BMap.Icon(icon, new BMap.Size(30, 30), {
+                imageSize: new BMap.Size(30, 30), // 设置图标大小
+            });
+            var marker = new BMap.Marker(points, { // 创建标注
+                icon: myIcon
+            });
+            var opts = {
+                width: 250, // 信息窗口宽度
+                height:100, // 信息窗口高度
+                title: "", // 信息窗口标题
+                enableMessage: true //设置允许信息窗发送短息
+            };
+            //   var marker = new BMap.Marker(points);
+            map.addOverlay(marker);
+            addClickHandler(showInfo, marker, map, opts);
+            marker.setZIndex(999);
+            var flag = true;
+            $(".isShow").click(function () {
+                if (flag == true) {
+                    flag = false
+                    marker.hide();
+                } else {
+                    flag = true
+                    marker.show();
+                }
+            })
+        }
+
+        //点击图标
+        function addClickHandler(showInfo, marker, map, opts) {
+            marker.addEventListener("click", function (e) {
+                openInfo(showInfo, e, map, opts)
+            });
+        }
+        //打开信息窗口
+        function openInfo(showInfo, e, map, opts) {
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(showInfo, opts); // 创建信息窗口对象
+            map.openInfoWindow(infoWindow, point); //开启信息窗口
+        }
+
+        //按键盘搜索
+        $('#address1').bind('keypress', function (event) {
+            if (event.keyCode == "13") {
+                $("#btn1").click();
+            }
+        })
+
+        //点击搜索框
+        $("#btn1").click(function (map) {
+            var cc = $(".title")
+            var aa = $("#address1").val()
+            robotCodes = $.cookie('robotCodes');
+            var map = new BMap.Map("allmap");
+            //电子围栏
+            electronicFence(map)
+            //禁区
+            zona(map)
+            //停车点
+            parkingPoint(map)
+            $.ajax({
+                type: 'get',
+                url: "/system/map/Robot",
+                data: {
+                    'robotCode': $("#address1").val()
+                },
+                dataType: "json",
+                async: false, //使用同步的方式,true为异步方式
+                success: function (res) {
+                    if (res.state == '200') {
+                        for (var i = 0; i < res.data.length; i++) {
+                            var jwd = res.data[i].robotGpsBaiDu
+                            if (jwd == null || jwd == "" || jwd == undefined){
+                                alert("机器人经纬度为空")
+                                showScenicSpot(map)
+                            }else{
+                                var states = res.data[i].robotRunState
+                                var scenics = res.data[i].scenicSpotName
+                                var arr1 = '',
+                                    arr1 = jwd.split(',')
+                                var lng1 = arr1[0] //经度
+                                var lat1 = arr1[1] //维度
+                                map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+                                var points = new BMap.Point(lng1, lat1);
+                                map.centerAndZoom(points, 16);
+                                var icon = '';
+                                if (states == '10') { // 闲置
+                                    icon = '/mapimage/img/robot_green.png';
+                                } else if (states == '20') { //用户解锁 
+                                    icon = '/mapimage/img/robot_blue.png';
+                                } else if (states == '30') { //用户临时锁定
+                                    icon = '/mapimage/img/robot_blue.png';
+                                } else if (states == '40') { //管理员解锁
+                                    icon = '/mapimage/img/robot_violet.png';
+                                } else if (states == '50') { //管理员锁定
+                                    icon = '/mapimage/img/robot_violet.png';
+                                } else if (states == '60') { //自检故障报警
+                                    icon = '/mapimage/img/robot_red.png';
+                                }else if (states == '70') { //用户解锁中
+                                    icon = '/mapimage/img/robot_green.png';
+                                }else if (states == '80') { //运营人员钥匙解锁
+                                    icon = '/mapimage/img/robot_yellow.png';
+                                } else { //运营人员维护
+                                    icon = '/mapimage/img/robot_grey.png';
+                                }
+                                var myIcon = new BMap.Icon(icon, new BMap.Size(40, 65), {
+                                    imageSize: new BMap.Size(40, 40), // 设置图标大小
+
+                                });
+                                var marker1 = new BMap.Marker(points, { // 创建标注
+                                    icon: myIcon
+                                });
+                                map.addOverlay(marker1);
+
+                                var opts1 = {
+                                    width: 250, // 信息窗口宽度
+                                    height: 150, // 信息窗口高度
+                                    title: "", // 信息窗口标题
+                                    enableMessage: true //设置允许信息窗发送短息
+                                };
+                                var statess;
+                                if (states == 10) {
+                                    statess = "闲置";
+                                }else if (states == 20) {
+                                    statess = "用户解锁";
+                                }else if (states == 30) {
+                                    statess = "用户临时锁定";
+                                }else if (states == 40) {
+                                    statess = "管理员解锁";
+                                }else if (states == 50) {
+                                    statess = "管理员锁定";
+                                }else if (states == 60) {
+                                    statess = "自检故障报警";
+                                }else if (states == 70) {
+                                    statess = "用户解锁中";
+                                }else if (states == 80) {
+                                    statess = "运营人员钥匙解锁";
+                                }else{
+                                    statess = "运营人员维护";
+                                }
+                                var showInfo1 ="景区名称：" + scenics + "<br/>" + "机器人状态：" + statess + "<br/>" + "机器人id：" + aa + "<br/>" + "经度：" + lng1 + "<br/>" + "纬度:" + lat1 + "<br/>";
+                                addClickHandler1(showInfo1, marker1, map, opts1);
+                            }
+
+                        }
+                        if($("#address1").val() == '' || $("#address1").val() == null){
+                            // alert("搜索框不能为空");
+                            showScenicSpot()
+                            return;
+                        }
+                    } else {
+                        alert("未查询到机器人")
+                    }
+
+
+                }
+            })
+        })
+
+        //清空搜索框
+        $("#btn2").click(function () {
+            $("#address1").val('')
+        })
+
+        //点击图标
+        function addClickHandler1(showInfo1, marker1, map, opts1) {
+            marker1.addEventListener("click", function (e) {
+                openInfo(showInfo1, e, map, opts1)
+            });
+        }
+        //打开信息窗口
+        function openInfo(showInfo1, e, map, opts1) {
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(showInfo1, opts1); // 创建信息窗口对象
+            map.openInfoWindow(infoWindow, point); //开启信息窗口
+        }
+
+</script>
+</html>

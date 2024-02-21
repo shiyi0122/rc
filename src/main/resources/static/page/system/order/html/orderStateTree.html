@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>修改订单状态--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+    <link rel="stylesheet" href="/css/common.css" media="all" />
+    <link rel="stylesheet" href="/zTree_v3/css/zTreeStyle/zTreeStyle.css" media="all">
+    <style>
+        .checkbox-jx{
+            margin: 0;
+        }
+        .checkbox-jx1{
+            margin-left: 0px;
+        }
+        .checkbox-jx1{
+            display: flex;
+            flex-direction: column
+        }
+    </style>
+</head>
+
+<body>
+<div id="deptForm" class="layui-fluid">
+    <div class="zTreeDemoBackground left">
+        <ul id="treeDemo" class="ztree"></ul>
+        <input name="orderId" type="hidden" class="orderId"/>
+    </div>
+    <br>
+    <form class="layui-form  checkbox-jx" action="" lay-filter="example">
+        <div class="layui-inline layui-col-md12  layui-form-item " pane="">
+            <div class="layui-input-block checkbox-jx1">
+                <input type="checkbox" name="like" lay-skin="primary" title="定位不准" value="定位不准" lay-filter="switchTest" >
+                <input type="checkbox" name="like" lay-skin="primary" title="客户无赖" value="客户无赖" lay-filter="switchTest" >
+                <input type="checkbox" name="like" lay-skin="primary" title="领导体验" value="领导体验" lay-filter="switchTest" >
+                <input id="other" type="checkbox" name="like" lay-skin="primary" title="其他" value="其他" lay-filter="switchTest" >
+            </div>
+            <br>
+            <div class="layui-input-block checkbox-jx1 inp-box" style="display: none;" >
+                <input name="reasonsRefunds" type="text" class="layui-input reasonsRefunds" autocomplete="off" lay-verify="required" lay-reqtext="原因是必填项，不能为空"/>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div class="layui-row" style="background: #CFD4D5;padding: 10px;">
+        <div style="text-align: center;">
+            <button class="layui-btn layui-btn-sm" id="saveButton">保存</button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" type="button" onclick="cancels()">取消</button>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form,
+            layer = layui.layer,
+            layedit = layui.layedit,
+            laydate = layui.laydate;
+
+        //监听提交
+        form.on('checkbox(switchTest)', function(data){
+            var vals = data.value
+            var other=$("#other")
+            if($("#other").attr("checked")==true){
+                $(".inp-box").show()
+            }else{
+                $(".inp-box").hide()
+            }
+
+        });
+    $(function () {
+        $("#reasonsRefunds").hide();
+        var setting = {
+            view : {
+                addHoverDom : false,
+                removeHoverDom : false,
+                selectedMulti : false
+            },
+            data : {
+                key : {
+                    name : "orderStatusName"
+                },
+                simpleData : {
+                    enable : true,
+                    idKey : "orderStatus",
+                    rootPId : -1
+                }
+            },
+            check : {
+                enable : true,
+                chkStyle : "radio",
+                radioType : "all"
+            },
+            callback:{
+                onCheck:onCheck
+            }
+        };
+        $.ajax({
+            url:"/system/order/getOrderStateName",
+            type:"GET",
+            dataType:"json",
+            success:function(data){
+                zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, data.data);//初始化操作
+                zTreeObj.expandAll(true);
+                echoZtree();
+            }
+        });
+    });
+    //回显树节点
+    function echoZtree(){
+        var id = $(".orderId").val();
+        $.ajax({
+            url:"/system/order/getOrderState",
+            type:"GET",
+            data:{
+                orderId : $(".orderId").val()
+            },
+            dataType:"json",
+            success:function(data){
+                if (data.state == "200"){
+                    var node = zTreeObj.getNodeByParam("orderStatus", data.data.orderStatus);
+                    if(node != null) {
+                        zTreeObj.checkNode(node, true)
+                    }
+                }else if (data.state == "400"){
+                    top.layer.msg(data.msg, {icon: 5,time: 1000,shift: 6});
+                }
+            }
+        });
+    }
+    var resIds;
+    //树节点点击事件
+    function onCheck(e, treeId, zNodes) {
+        var resId = "";
+        var nodes = zTreeObj.getCheckedNodes(true);
+        for (var i = 0; i < nodes.length; i++) {
+            resId += nodes[i].orderStatus;
+        }
+        resIds = resId
+        if (resIds == 40 || resIds == 30){
+            $("#reasonsRefunds").show();
+        }else{
+            $("#reasonsRefunds").hide();
+        }
+    }
+
+    /**
+     * 提交
+     */
+    $("#saveButton").click(function () {
+        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        $.ajax({
+            url:"/system/order/updateOrderState",
+            type:"POST",
+            data:{
+                orderId : $(".orderId").val(),
+                orderStatus : resIds,
+                reasonsRefunds : $(".reasonsRefunds").val()
+            },
+            dataType:"json",
+            success:function(data){
+                if (data.state == "200"){
+                    top.layer.close(index);
+                    top.layer.msg(data.msg, {icon: 6});
+                    parent.layer.closeAll("iframe");
+                    parent.layui.table.reload("orderListTable");
+                }else if (data.state == "400"){
+                    top.layer.msg(data.msg, {icon: 5,time: 1000,shift: 6});
+                }
+            }
+        });
+    })
+
+    });
+
+</script>
+
+</body>
+
+</html>

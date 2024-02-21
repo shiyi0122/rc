@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>寻宝活动景点规则管理--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+
+                    <!--                    <div class="layui-input-inline" style="width: 120px;">-->
+                    <!--                        <input type="text" class="layui-input scenicSpotName" autocomplete="off" placeholder="景区名称"/>-->
+                    <!--                    </div>-->
+                    <div class="layui-inline">
+
+                        <button id="btnAddTreasure" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="treasureList" class="layui-table" lay-filter="treasureList"></table>
+</div>
+<!--操作-->
+<script type="text/html" id="treasureListBar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+    <!--    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="details">资源详情</a>-->
+    <!--    {{# if(d.switchs == 0){ }}-->
+    <!--    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="forbidden">已禁用</a>-->
+    <!--    {{# } }}-->
+    <!--    {{# if(d.switchs == 1){ }}-->
+    <!--    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="open">已启用</a>-->
+    <!--    {{# } }}-->
+</script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/system/scenicSpotRuleHunt/js/scenicSpotRuleHuntList.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl'],function(){
+        var form = layui.form;
+        var items = [];
+        $.ajax({
+            type : "post",
+            url : "/homePage",
+            async : false,
+            success : function(data){
+                if(data.code == 1){
+                    items = data.data;
+                    $("#scenicSpotId").html("<option value=''>请选择景区</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                        $('#scenicSpotId').append(option);//往下拉菜单里添加元素
+                        form.render('select');
+                    });
+                }else{
+                }
+            }
+        });
+    })
+</script>
+
+</html>

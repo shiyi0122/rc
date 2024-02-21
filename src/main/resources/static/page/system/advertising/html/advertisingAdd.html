@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>轮播图新增--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="Form" lay-filter="Form">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="advertisingScenicSpotId" type="hidden" class="advertisingScenicSpotId"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotName" disabled placeholder="请输入景区名称" type="text" class="layui-input layui-disabled scenicSpotName" autocomplete="off" lay-verify="required" lay-reqtext="景区名称是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">请选择图片<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <button type="button" class="layui-btn" name="file" id="file"><i class="layui-icon"></i>上传图片</button>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">轮播图名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="advertisingName" placeholder="请输入轮播图名称" type="text" class="layui-input advertisingName" autocomplete="off" lay-verify="required" lay-reqtext="轮播图名称是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">显示顺序<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="advertisingOrder" placeholder="请输入显示顺序" type="text" class="layui-input advertisingOrder" autocomplete="off" lay-verify="required" lay-reqtext="显示顺序是必填项，不能为空"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button class="layui-btn" lay-filter="btnSubmitAdvertising" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/page/system/advertising/js/advertisingAdd.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+</body>
+</html>

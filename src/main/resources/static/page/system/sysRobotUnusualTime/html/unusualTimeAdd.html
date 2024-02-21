@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>异常监控时间新增--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+    <style>
+    </style>
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="Form" lay-filter="Form">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+<!--                    <input name="sysScenicSpotId" type="hidden" class="sysScenicSpotId"/>-->
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">景区名称<span style="color: red;">*</span></label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <input name="scenicSpotName" disabled placeholder="请输入景区名称" type="text" class="layui-input layui-disabled scenicSpotName" autocomplete="off" lay-verify="required" lay-reqtext="景区名称是必填项，不能为空"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">选择景区<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="sysScenicSpotId" lay-verify="required" lay-search="" lay-filter="group" class="sysScenicSpotId" lay-reqtext="景区是必选项，不能为空" id="sele">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">禁区异常时长<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="forbiddenTime" placeholder="请输入禁区异常时长(分钟)" type="text" class="layui-input forbiddenTime" autocomplete="off" lay-verify="required" lay-reqtext="禁区异常监控时长(分钟)，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">临时锁定时长<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="temporaryLacking" placeholder="请输入临时锁定时长(分钟)" type="text" class="layui-input temporaryLacking" autocomplete="off" lay-verify="required" lay-reqtext="临时锁定监控时长(分钟)，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">长时间未接单时长<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="receivingOrders" placeholder="请输入长时间未接单时长(分钟)" type="text" class="layui-input receivingOrders" autocomplete="off" lay-verify="required" lay-reqtext="长时间未接单监控时长(分钟)，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">PadApp未启动时长<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="padAppUsee" placeholder="请输入PadApp未启动时长(分钟)" type="text" class="layui-input padAppUsee" autocomplete="off" lay-verify="required" lay-reqtext="PadApp未启动时长(分钟)，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">订单超长时间时长<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="orderAbnormalTime" placeholder="请输入超长时间警告时长(分钟)" type="text" class="layui-input orderAbnormalTime" autocomplete="off" lay-verify="required" lay-reqtext="超长时间警告时长(分钟)，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">机器人开关机时长<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="switchOnOff" placeholder="请输入机器人开关机时长(分钟)" type="text" class="layui-input switchOnOff" autocomplete="off" lay-verify="required" lay-reqtext="机器人开关机监控时长(分钟)，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">充电状态时长<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="chargeStatus" placeholder="请输入充电状态时长(分钟)" type="text" class="layui-input chargeStatus" autocomplete="off" lay-verify="required" lay-reqtext="充电状态时长(分钟)，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">饱和度范围(低)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="saturationLow" placeholder="请输入饱和度范围(低)" type="text" class="layui-input saturationLow" autocomplete="off" lay-verify="required" lay-reqtext="饱和度范围(低)，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">饱和度范围(高)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="saturationHigh" placeholder="请输入饱和度范围(高)" type="text" class="layui-input saturationHigh" autocomplete="off" lay-verify="required" lay-reqtext="饱和度范围(高)，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">饱和度持续时间(分钟)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="saturationTime" placeholder="请输入饱和度持续时间(分钟)" type="text" class="layui-input saturationTime" autocomplete="off" lay-verify="required" lay-reqtext="饱和度持续时间(分钟)，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">最低电量界限<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="batteryReminder" placeholder="请输入最低电量界限" type="text" class="layui-input batteryReminder" autocomplete="off" lay-verify="required" lay-reqtext="最低电量界限，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">机器人开关机判断时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="onOffStatus" placeholder="请输入机器人开关机判断时间" type="text" class="layui-input onOffStatus" autocomplete="off" lay-verify="required" lay-reqtext="机器人开关机判断时间，不能为空"/>
+                        </div>
+                    </div>
+
+                    <!--                    <div class="layui-inline layui-col-md12">-->
+                    <!--                        <label class="layui-form-label">超长订单轮询状态<span style="color: #ff0000;">*</span></label>-->
+                    <!--                        <div class="layui-input-block">-->
+                    <!--                            <select name="orderState" lay-verify="required" lay-search="" lay-filter="group" class="orderState" lay-reqtext="超长订单轮询开启状态是必选项，不能为空" id="orderState">-->
+                    <!--                                <option value="1">开启</option>-->
+                    <!--                                <option value="2">未开启<option>-->
+                    <!--                            </select>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button class="layui-btn" lay-filter="btnSubmitParking" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/page/system/sysRobotUnusualTime/js/unusualTimeAdd.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl'],function(){
+        var form = layui.form;
+        var items = [];
+        $.ajax({
+            type : "get",
+            url : "/system/appPadRobotUnusual/getUnusualSpotList",
+            // url : "/homePage",
+            async : false,
+            success : function(data){
+                if(data.state == 200){
+                    items = data.data;
+                    var sysScenicSpotId = $(".sysScenicSpotId").val();
+                    $("#sele").html("<option value=''>请选择景区</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                        // 如果是之前的parentId则设置选中
+                        if(item.scenicSpotId == sysScenicSpotId) {
+                            option.setAttribute("selected",'true');
+                        }
+                        $('#sele').append(option);//往下拉菜单里添加元素
+                        form.render('select'); //这个很重要
+                    });
+                }else{
+                }
+            }
+        });
+    })
+</script>
+</body>
+</html>

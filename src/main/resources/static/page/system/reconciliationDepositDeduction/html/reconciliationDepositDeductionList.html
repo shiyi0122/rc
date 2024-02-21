@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>押金扣款对账管理--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .contents {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            z-index: 200;
+        }
+
+        .content-box {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content-box1 {
+            width: 80%;
+            height: 80%;
+            background: #fff;
+            padding: 50px 50px 0;
+            box-sizing: border-box;
+            border-radius:5px;
+        }
+
+        .title {
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .title-line {
+            line-height: 30px;
+        }
+
+        .indent {
+            text-indent: 28px;
+        }
+        .bottoms{
+            position: absolute;
+            bottom: 15%;
+            right: 11%;
+        }
+        .content-right {
+            text-align: right;
+        }
+        .layui-table-box{
+            height: 600px!important;
+        }
+        .layui-table-body.layui-table-main{
+            height: 627px!important;
+        }
+        .layui-form.layui-border-box.layui-table-view{
+            height: 650px!important;
+        }
+
+    </style>
+
+</head>
+
+<div class="layui-card-body" oncontextmenu="return false;" onselectstart="return false">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input startTime" autocomplete="off" placeholder="开始时间" id="startTime"/>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input endTime" autocomplete="off" placeholder="结束时间" id="endTime"/>
+                </div>
+                <div class="layui-input-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>
+                </div>
+                <label class="layui-form-label" style="width: 92px">下载Excel选项</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="data" value="1" title="本月" checked="">
+                    <input type="radio" name="data" value="2" title="上月">
+                </div>
+                <button id="downloadExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出EXCEL</button>
+                <button type="button" class="layui-btn layui-btn-danger notice">通知</button>
+                <br>
+                <br>
+                <label class="layui-form-label" style="width: 100px">实际收入总金额</label>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" class="layui-input realIncome" autocomplete="off" placeholder="实际订单金额"/>
+                </div>
+                <label class="layui-form-label" style="width: 100px">最终入账总金额</label>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" class="layui-input paymentTotalAccount" autocomplete="off" placeholder="最终入账金额"/>
+                </div>
+            </div> 
+            <!--通知内容-->
+            <div class="contents">
+                <div class="content-box">
+                    <div class="content-box1">
+                        <div class="title">通知</div>
+                        <div class="title-line">尊敬的用户您好，</div>
+                        <div class="title-line indent">近日接到有关部门关于客户隐私信息整改的通知，我司紧急进行了系统内涉及客户隐私信息的相关整改。整改内容如下：</div>
+                        <div class="title-line indent">1、涉敏信息数据加密处理</div>
+                        <div class="title-line indent">2、“储值抵扣”：指储值用户账户内的金额不足以支付本次消费的金额时，扣除账户内的余额后，再通过微信支付的形式补齐本次消费金额。出现“储值抵扣”时，系统后台分别会在“储值收入”中显示储值消费的金额和“储值抵扣”显示微信支付的差额两个订单，两者相加为本次消费的金额。（实际收入等于微信支付，抵扣金额等于储值抵扣金额，实际收入总金额等于实际收入“加”抵扣金额）</div>
+                        <div class="title-line bottoms">
+                            <div class="title-line content-right">北京九星智元科技有限公司</div>
+                            <div class="title-line content-right">2020年11月24日</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="reconciliationDepositDeductionList" class="layui-table" lay-filter="reconciliationDepositDeductionList"></table>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/system/reconciliationDepositDeduction/js/reconciliationDepositDeductionList.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+</html>

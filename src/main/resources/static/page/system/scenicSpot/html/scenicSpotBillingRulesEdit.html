@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>景区计费规则编辑--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+<!--    <link rel="stylesheet" href="/css/buttonColor.css" media="all">-->
+
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="scenicSpotForm" lay-filter="scenicSpotForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="scenicSpotId" type="hidden" class="scenicSpotId"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotName" placeholder="请输入景区名称" type="text" class="layui-input scenicSpotName layui-disabled" autocomplete="off" lay-verify="required" lay-reqtext="景区名称是必填项，不能为空" disabled/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区押金金额<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotDeposit" placeholder="请输入景区押金金额" type="text" class="layui-input scenicSpotDeposit" autocomplete="off" lay-verify="required"  lay-reqtext="景区押金金额是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">工作日起租价格<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotNormalRentPrice" placeholder="请输入工作日起租价格" type="text" class="layui-input scenicSpotNormalRentPrice" autocomplete="off" lay-verify="required"  lay-reqtext="工作日起租价格是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">工作日单价(元/分钟)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotNormalPrice" placeholder="请输入工作日单价(元/分钟)" type="text" class="layui-input scenicSpotNormalPrice" autocomplete="off" lay-verify="required"  lay-reqtext="工作日单价是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">工作日计费时间设置<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotNormalTime" placeholder="请输入工作日计费时间设置" type="text" class="layui-input scenicSpotNormalTime" autocomplete="off" lay-verify="integer"  lay-reqtext="工作日计费时间设置是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">周六日起租价格<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotWeekendRentPrice" placeholder="请输入周六日起租价格" type="text" class="layui-input scenicSpotWeekendRentPrice" autocomplete="off" lay-verify="required"  lay-reqtext="周六日起租价格是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">周六日单价(元/分钟)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotWeekendPrice" placeholder="请输入周六日单价(元/分钟)" type="text" class="layui-input scenicSpotWeekendPrice" autocomplete="off" lay-verify="required"  lay-reqtext="周六日单价是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">周六日计费时间设置<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotWeekendTime" placeholder="请输入周六日计费时间设置" type="text" class="layui-input scenicSpotWeekendTime" autocomplete="off" lay-verify="integer"  lay-reqtext="周六日计费时间设置是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">起租时间(单位分钟)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotRentTime" placeholder="请输入起租时间(单位分钟)" type="text" class="layui-input scenicSpotRentTime" autocomplete="off" lay-verify="integer"  lay-reqtext="起租时间是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">机器人调度费<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotBeyondPrice" placeholder="请输入机器人调度费" type="text" class="layui-input scenicSpotBeyondPrice" autocomplete="off" lay-verify="required"  lay-reqtext="机器人调度费是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">随机播报时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="randomBroadcastTime" placeholder="请输入随机播报时间" type="text" class="layui-input randomBroadcastTime" autocomplete="off" lay-verify="integer"  lay-reqtext="随机播报时间是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">锁定次数<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotFrequency" placeholder="请输入锁定次数" type="text" class="layui-input scenicSpotFrequency" autocomplete="off" lay-verify="integer"  lay-reqtext="锁定次数是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">电子围栏锁定时间(秒)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotFenceTime" placeholder="请输入电子围栏锁定时间(秒)" type="text" class="layui-input scenicSpotFenceTime" autocomplete="off" lay-verify="integer"  lay-reqtext="电子围栏锁定时间是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">禁区锁定时间(秒)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotForbiddenZoneTime" placeholder="请输入禁区锁定时间(秒)" type="text" class="layui-input scenicSpotForbiddenZoneTime" autocomplete="off" lay-verify="integer"  lay-reqtext="禁区锁定时间是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">上班时间</label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <input name="workTime" id="workTime" placeholder="请输入上班时间" type="text" class="layui-input workTime" autocomplete="off" id="workTime"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">下班时间</label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <input name="closingTime" id="closingTime" placeholder="请输入下班时间" type="text" class="layui-input closingTime" autocomplete="off" id="closingTime"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">上班播报内容<span style="color: red;">*</span></label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <input name="workBroadcast" placeholder="请输入上班播报内容" type="text" class="layui-input workBroadcast" autocomplete="off" lay-verify="required"  lay-reqtext="上班播报内容是必填项，不能为空"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">下班播报内容<span style="color: red;">*</span></label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <input name="closingBroadcast" placeholder="请输入下班播报内容" type="text" class="layui-input closingBroadcast" autocomplete="off" lay-verify="required"  lay-reqtext="下班播报内容是必填项，不能为空"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">积攒宝箱数量</label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <input name="huntQuantity" placeholder="宝箱数量" type="text" class="layui-input huntQuantity" autocomplete="off"  lay-reqtext="积攒宝箱数量"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">喇叭开启状态<span style="color: #ff0000;">*</span></label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <select name="hornSwitch" lay-verify="required" lay-search="" lay-filter="group" class="hornSwitch" lay-reqtext="喇叭开启状态是必选项，不能为空" id="hornSwitchCompany">-->
+<!--                                <option value="0">关闭</option>-->
+<!--                                <option value="1">开启</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">照明开启时间</label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <input name="lampClosingTime" id="lampClosingTime" placeholder="请输入开启时间" type="text" class="layui-input lampClosingTime" autocomplete="off" id="lampClosingTime"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">照明关闭时间</label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <input name="lampOpeningTime" id="lampOpeningTime" placeholder="请输入关闭时间" type="text" class="layui-input lampOpeningTime" autocomplete="off" id="lampOpeningTime"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">重复景区</label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <input name="repeatStatus" placeholder="是否重复景区，第几个重复景区" type="text" class="layui-input repeatStatus" autocomplete="off"  lay-reqtext="是否重复景区，第几个重复景区"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">免单时间（分钟）</label>
+                        <div class="layui-input-block">
+                            <input name="freeTimeSetting" placeholder="免单时间（分钟）" type="text" class="layui-input freeTimeSetting" autocomplete="off"  lay-reqtext="免单时间（分钟）"/>
+                        </div>
+                    </div>
+<!--                    -->
+
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">节假日日期<span style="color: #ff0000;">*</span></label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <div class="layui-inline" id="date-list"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">已选择的日期</label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <textarea name="holidayString" placeholder="请选择日期" id="holidayString" type="text" class="layui-textarea holidayString"></textarea>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+<!--                    -->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">结算方式</label>
+                        <div class="layui-input-block">
+                            <select name="settlementMethod"  lay-search="" lay-filter="group" class="settlementMethod" id="settlementMethod" >
+                                <option value="0">默认结算方式</option>
+                                <option value="1">唐山结算方式</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <input name="type" type="hidden" class="type" value="2"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button class="layui-btn" lay-filter="btnSubmitScenicSpotBillingRules" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/system/scenicSpot/js/scenicSpotBillingRulesEdit.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl','laydate'],function(){
+        var form = layui.form;
+        var $ = layui.jquery;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#workTime',
+            type: 'time',
+            format: 'HH:mm'
+        });
+        laydate.render({
+            elem: '#closingTime',
+            type: 'time',
+            format: 'HH:mm'
+        });
+        laydate.render({
+            elem: '#lampClosingTime',
+            type: 'time',
+            format: 'HH:mm'
+        });
+        laydate.render({
+            elem: '#lampOpeningTime',
+            type: 'time',
+            format: 'HH:mm'
+        });
+
+
+    });
+
+</script>
+
+
+<script type="text/javascript">
+        layui.use(['layer', 'form', 'jquery', 'laydate'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                laydate = layui.laydate,
+                form = layui.form;
+
+            function getNowFormatDate() {
+                var date = new Date();
+                var seperator1 = "-";
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                var currentdate = year + seperator1 + month + seperator1 + strDate;
+                return currentdate;
+            }
+
+
+            //定义json
+
+            var data = {};
+            var new_date = new Date();
+            loding_date(new_date, data);
+
+
+            //日历插件调用方法
+            function loding_date(new_date, data,dataN) {
+
+                    laydate.render({
+                    elem: '#date-list'
+                    , type: 'date'
+                    , theme: 'grid'
+                    , max: '2099-06-16 23:59:59'
+                    , position: 'static'
+                    , range: false
+                    , value: new_date
+                    , min:getNowFormatDate()
+                    , isInitValue: false
+                    , calendar: true
+                    , btns: false
+                    , mark: data//重要json！
+                    , ready: function (value) {
+                        // disabled_date(value,$("#appointmentDate").val());
+                        // hide_mr(data);
+                        ready_hide_rest(data);
+                        console.log("点击后回调");
+
+                    }
+                    , done: function (value, date) {
+                        dateset(value,data);
+                        console.log("完毕后回调")
+
+                    }
+                    , change: function (value, date) {
+                        // disabled_date(date,$("#appointmentDate").val());
+                        // dateset(value,data);
+                        // hide_mr(data);
+                        console.log("修改后回调")
+
+                    }
+                });
+            }
+
+            // /**
+            //  *设置不可选择的星期
+            //  *
+            //  */
+            // function disabled_date(value,appointmentDate) {
+            //     var mm = value.year + '-' + value.month + '-' + value.date;
+            //     $('.laydate-theme-grid table tbody').find('[lay-ymd="' + mm + '"]').removeClass('layui-this');
+            //
+            //     if(appointmentDate!=null && appointmentDate!=''){
+            //         var dates = appointmentDate.split(",");
+            //         for(var i=0;i<dates.length;i++){
+            //             if(dates[i]=="7"){
+            //                 dates[i] = 0;
+            //             }
+            //             $("table>tbody>tr").find("td:eq("+dates[i]+")").addClass('ng-laydate-disabled');
+            //         }
+            //     }
+            //
+            // }
+
+            /**
+             *设置选中工作日
+             *
+             */
+            function hide_mr(markJson) {
+                keys = [];
+                if(markJson!=null){
+                    for(var key in markJson){
+
+                        var dates = key.split("-");
+                        dates[1] = dates[1] * 1;
+                        var mm = dates[0] + '-' + dates[1] + '-' + dates[2] ;
+                        // console.log("3333"+mm)
+                        $('.laydate-theme-grid table tbody').find('[lay-ymd="' + mm + '"]').addClass('layui-this');
+
+                        keys.push(key);
+                        console.log("工作日设置方法----"+keys);
+                    }
+                }
+                if(keys.length>=0){
+
+                  $("#holidayString").val(keys);
+                }
+            }
+
+            //准备回调方法
+            function ready_hide_rest(markJson) {
+                keys = [];
+                if(markJson!=null){
+                    console.log("ready_hide_rest方法--"+markJson)
+                    for(var key in markJson){
+                        var dates = key.split("-");
+
+                        dates[1] = dates[1] * 1;
+                        var mm = dates[0] + '-' + dates[1] + '-' + dates[2] ;
+                        $('.laydate-theme-grid table tbody').find('[lay-ymd="' + mm + '"]').addClass('layui-this');
+
+
+                        keys.push(key);
+                        console.log("ready_hide_rest方法----"+keys);
+                    }
+                }
+                if(keys.length>=0){
+
+                    $("#holidayString").val(keys);
+                }
+            }
+
+
+            /**
+             *设置选中休息日
+             *
+             */
+            function hide_mr_rest(markJson) {
+
+                keys = [];
+                if(markJson!=null){
+                    for(var key in markJson){
+                        var dates = key.split("-");
+
+                        dates[1] = dates[1] * 1;
+                        var mm = dates[0] + '-' + dates[1] + '-' + dates[2] ;
+                        $('.laydate-theme-grid table tbody').find('[lay-ymd="' + mm + '"]').addClass('layui-this');
+
+                        keys.push(key);
+                        console.log("休息日设置方法----"+key);
+                    }
+                }
+                if(keys.length>=0){
+
+                    $("#holidayString").val(keys);
+
+                }
+            }
+
+
+            //定义添加/编辑标注方法
+            function chose_moban(obj_date, markJson) {
+                 $('#date-list').html('');//重要！由于插件是嵌套指定容器，再次调用前需要清空原日历控件
+                if (markJson.hasOwnProperty(obj_date + '!' + 1)) {
+
+                    delete markJson[obj_date + '!' + 1]
+
+                } else if (markJson.hasOwnProperty(obj_date + '!' + 2)){
+
+                    delete markJson[obj_date + '!' + 2]
+                    markJson[obj_date + '!' + 1] = ''
+
+                }else {
+
+                    //添加属性
+                    markJson[obj_date + '!' + 1] = ''
+                }
+                loding_date(obj_date, markJson);//重要！，再标注一个日期后会刷新当前日期变为初始值，所以必须调用当前选定日期。
+
+            }
+
+            //定义添加/编辑标注方法
+            function chose_moban_rest(obj_date, markJson) {
+                $('#date-list').html('');//重要！由于插件是嵌套指定容器，再次调用前需要清空原日历控件
+                if (markJson.hasOwnProperty(obj_date + '!' + 2)) {
+
+                    delete markJson[obj_date + '!' + 2]
+                } else if (markJson.hasOwnProperty(obj_date + '!' + 1)) {
+
+                    delete markJson[obj_date + '!' + 1]
+                    markJson[obj_date + '!' + 2] = ''
+
+                }else{
+                    //添加属性
+                    markJson[obj_date + '!' + 2] = ''
+                }
+                loding_date(obj_date, markJson);//重要！，再标注一个日期后会刷新当前日期变为初始值，所以必须调用当前选定日期。
+
+            }
+
+            //~ 点击保存到后台
+            function dateset(value,data){
+                // layer.confirm('是否要设置该日期['+value+']？', {
+                layer.confirm('['+value+']该日期设置为工作日还是休息日', {
+                    btn: ['工作日','休息日','取消']
+                    // btn: ['是', '否']
+                },function(index, layero){
+                    //你的后台ajax ：xxx
+                    layer.msg("工作日设置成功！");
+                    hide_mr(data);
+                    chose_moban(value, data);
+
+                },function(index, layero){
+                    //你的后台ajax ：xxx
+                    layer.msg("休息日设置成功！");
+                    hide_mr_rest(data);
+                    chose_moban_rest(value, data);
+
+                }, function(index){
+                    layer.close(index);
+                });
+            }
+        });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>客户管理--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 135px;">
+                    <input type="text" class="layui-input currentUserPhoneVal" placeholder="客户手机号"/>
+                </div>
+                <div class="layui-input-inline" style="width: 135px;">
+                    <select class="layui-select depositPayState" lay-search="" lay-verify="required" autocomplete="off">
+                        <option value="">押金缴纳状态</option>
+                        <option value="10">已缴纳</option>
+                        <option value="20">未缴纳</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline" style="width: 135px;">
+                    <select class="layui-select creditArrearsState" lay-search="" lay-verify="required" autocomplete="off">
+                        <option value="">信用欠费状态</option>
+                        <option value="10">无欠款</option>
+                        <option value="20">欠款</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline" style="width: 135px;">
+                    <input type="text" class="layui-input startTime" autocomplete="off" placeholder="开始时间" id="startTime"/>
+                </div>
+                <div class="layui-input-inline" style="width: 135px;"   >
+                    <input type="text" class="layui-input endTime" autocomplete="off" placeholder="结束时间" id="endTime"/>
+                </div>
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>
+                    <button id="downloadExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出EXCEL</button>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="currentUserList" class="layui-table" lay-filter="currentUserList"></table>
+</div>
+<!--操作-->
+<script type="text/html" id="currentUserListBar">
+    {{#  if(d.depositPayState ==10){ }}
+        <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="retreatDeposit">退押金</a>
+        <a class="layui-btn layui-btn-xs" lay-event="updateDepositPayState">修改押金状态</a>
+    {{# }if(d.depositPayState ==20) { }}
+        <a class="layui-btn layui-btn-xs layui-btn-primary layui-btn-disabled">押金已退</a>
+    {{# } }}
+    {{#  if(d.blackListType ==1){ }}
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="whitelist">白名单</a>
+    {{# }if(d.blackListType ==0) { }}
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="blacklist">黑名单</a>
+    {{# } }}
+</script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/system/payback/js/paybackList.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+</html>

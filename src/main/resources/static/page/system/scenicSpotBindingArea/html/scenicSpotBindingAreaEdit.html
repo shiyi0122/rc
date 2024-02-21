@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>景区归属区编辑--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="userForm" lay-filter="userForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="scenicSpotPidN" type="hidden" class="scenicSpotPidN"/>
+                    <input name="scenicSpotSidN" type="hidden" class="scenicSpotSidN"/>
+
+                    <input name="scenicSpotFid" type="hidden" class="scenicSpotFid"/>
+<!--                    <input name="scenicSpotPid" type="hidden" class="scenicSpotPid"/>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">归属地名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="scenicSpotPid" id="scenicSpotPid" class="scenicSpotPid-selector" lay-filter="scenicSpotPid" lay-search=""   lay-reqtext="省份是必选项，不能为空"></select>
+                            <!--                            <select class="layui-select scenicSpotFname" lay-search="" lay-verify="required" autocomplete="off" id="scenicSpotFname"></select>-->
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">归属市名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="scenicSpotSid" id="scenicSpotSid" class="scenicSpotSid-selector"  lay-filter="scenicSpotSid" lay-search=""   lay-reqtext="市名称是必选项，不能为空"></select>
+                            <!--                            <select class="layui-select scenicSpotFname" lay-search="" lay-verify="required" autocomplete="off" id="scenicSpotFname"></select>-->
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">市/区名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotFname" placeholder="请输入市/区名称" type="text" class="layui-input scenicSpotFname" autocomplete="off" lay-verify="required" lay-reqtext="市/区名称是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">市/区标签<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="cityLabel" placeholder="请输入市/区标签" type="text" class="layui-input cityLabel" autocomplete="off"  lay-reqtext="市/区标签是必填项，不能为空"/>
+                        </div>
+                    </div>
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">归属地类型<span style="color: red;">*</span></label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <select name="scenicSpotType"class="layui-input scenicSpotType" lay-verify="required">-->
+<!--                                <option value="1">正式</option>-->
+<!--                                <option value="2">测试</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">请选择图片<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <button type="button" class="layui-btn" name="file" id="file"><i class="layui-icon"></i>上传图片</button>
+                            <span style="color: red;" >图片大小小于3M</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button class="layui-btn" lay-filter="btnSubmitScenicSpotBinding" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/page/system/scenicSpotBindingArea/js/scenicSpotBindingAreaEdit.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl','jquery'],function(){
+        var form = layui.form;
+        var items = [];
+        var scenicSpotPid = $(".scenicSpotPidN").val();
+        var scenicSpotSid = $(".scenicSpotSidN").val();
+        $ = layui.jquery;
+        $.ajax({
+            type : "post",
+            url : "/system/scenicSpotBinding/getSpotBindingProvince",
+            async : false,
+            success : function(data){
+                if(data.state == 200){
+                    // var t = $('#scenicSpotPid').get(0).getAttribute("data-value");
+                    items = data.data;
+                    $("#scenicSpotPid").html("<option value=''>请选择归属省</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotFname,item.scenicSpotFid);
+
+                        // console.log(scenicSpotPid)
+                        // console.log(item.scenicSpotFid)
+                        if (scenicSpotPid == item.scenicSpotFid) {
+                            option.setAttribute("selected",true);
+                        }
+                        $('#scenicSpotPid').append(option);//往下拉菜单里添加元素
+                        form.render('select');
+                    });
+                }else{
+                }
+            }
+        });
+
+
+        $.ajax({
+            type : "post",
+            url : "/system/scenicSpotBinding/getSpotBindingCity",
+            async : false,
+            success : function(data){
+                if(data.state == 200){
+                    // var t = $('#scenicSpotSid').get(0).getAttribute("data-value");
+                    items = data.data;
+                    $("#scenicSpotSid").html("<option value=''>请选择归属省</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotFname,item.scenicSpotFid);
+
+                        if (scenicSpotSid == item.scenicSpotFid) {
+                            option.setAttribute("selected",true);
+                        }
+                        $('#scenicSpotSid').append(option);//往下拉菜单里添加元素
+                        form.render('select');
+                    });
+                }else{
+                }
+            }
+        });
+
+
+    })
+</script>
+</body>
+</html>

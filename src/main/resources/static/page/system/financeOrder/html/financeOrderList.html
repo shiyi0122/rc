@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>财务订单管理--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<style>
+    .layui-table-cell.laytable-cell-1-0-12{overflow: visible;}
+    td .layui-form-select{margin-top: -10px;margin-left: -15px;margin-right: -15px;}
+    .layui-form-select dl{z-index:9999;}
+    /*.layui-table-box{overflow:visible;}*/
+
+</style>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input startTime" autocomplete="off" placeholder="开始时间" id="startTime"/>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input endTime" autocomplete="off" placeholder="结束时间" id="endTime"/>
+                </div>
+                <div class="layui-input-inline" id="scenicSpotId">
+                </div>
+                <div class="layui-input-inline">
+                    <select class="layui-select companyId" lay-search="" lay-verify="required" autocomplete="off" id="companyId"></select>
+                </div>
+                <div class="layui-input-inline">
+                    <select class="layui-select orderStatus" lay-search="" lay-verify="required" autocomplete="off" id="orderStatus">
+                        <option value="">支付状态</option>
+                        <option value="10">进行中</option>
+                        <option value="20">未付款</option>
+                        <option value="30">已付款</option>
+                        <option value="40">交易关闭</option>
+                        <option value="50">免单</option>
+                        <option value="60">全额退款</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" disabled class="layui-input realIncome" autocomplete="off" placeholder="金额" id="realIncome"/>
+                </div>
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>
+                    <button id="downloadExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出EXCEL</button>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="financeOrderList" class="layui-table" lay-filter="financeOrderList"></table>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/system/financeOrder/js/financeOrderList.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    //加载组件
+    layui.config({
+        base: '/layui/'
+    }).extend({
+        xmSelect: 'xm-select'
+    }).use(['xmSelect','form','layer','table'], function(){
+        var xmSelect = layui.xmSelect;
+        var form = layui.form;
+        var layer = layui.layer;
+        var table = layui.table;
+        $ = layui.jquery;
+        autoRow : true;
+        var items = [];
+        var scenicSpot = [];
+        $.ajax({
+            type : "post",
+            url : "/homePage",
+            async : false,
+            success : function(data){
+                if(data.code == 1){
+                    items = data.data;
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                        var Person = {
+                            name : item.scenicSpotName,
+                            value : item.scenicSpotId
+                        }
+                        scenicSpot.push(Person)
+                    });
+                }else{
+                }
+            }
+        });
+        //渲染多选
+        var demo1 = xmSelect.render({
+            el: '#scenicSpotId',
+            filterable: true,
+            autoRow: true,
+            data: scenicSpot
+        })
+
+        /**
+         * 根据用户手机号模糊查询
+         */
+        $("#btnSearch").on("click",function(){
+            var selectArr = demo1.getValue("value");
+            table.reload("financeOrderListTable",{
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                },
+                where: {
+                    startTime: $(".startTime").val(),
+                    endTime: $(".endTime").val(),
+                    scenicSpotId:selectArr.toString(),
+                    orderStatus: $(".orderStatus").val(),
+                    companyId: $(".companyId").val()
+                }
+            })
+        });
+
+        /**
+         * 重置
+         */
+        $("#reset").click(function () {
+            location.reload();
+        })
+
+        $.ajax({
+            type : "POST",
+            url : "/system/ascriptionCompany/getAscriptionCompany",
+            async : false,
+            success : function(data){
+                if(data.state == 200){
+                    items = data.data;
+                    $("#companyId").html("<option value=''>请选择公司</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.companyName,item.companyId);
+                        $('#companyId').append(option);//往下拉菜单里添加元素
+                        form.render('select'); //这个很重要
+                    });
+                }else{
+                }
+            }
+        });
+
+        //点击导出EXCEL表
+        $('#downloadExcel').click(function(){
+            window.resources("FINANCE_ORDER_DOWNLOADEXCEL", function (e) {
+                if (e.state == "200") {
+                    downloadExcel();
+                } else {
+                    layer.msg(e.msg, {icon: 5,time: 1000,shift: 6});
+                }
+            }, false,"POST");
+        })
+
+        /**
+         * 导出EXCEL表
+         */
+        function downloadExcel(){
+            // var currentUserPhone = $(".currentUserPhoneVal").val();//客户手机号
+            var startTime = $(".startTime").val();//开始时间
+            var endTime = $(".endTime").val();//结束时间
+
+            var selectArr = demo1.getValue("value");
+            console.log(selectArr)
+            var orderScenicSpotId = selectArr;
+            var orderStatus = $(".orderStatus").val();
+            // var companyId = $(".companyId").val();
+            var paymentMethod = 1;
+            var subMethod = 0;
+            console.log(startTime);
+            console.log(endTime);
+            console.log(orderScenicSpotId);
+            console.log(orderStatus);
+            window.location.href = "/system/order/uploadExcelOrder?"+"startTime="+startTime+"&endTime="+endTime+"&orderScenicSpotId="+orderScenicSpotId+"&orderStatus="+orderStatus+"&paymentMethod="+paymentMethod+"&subMethod="+subMethod;
+        }
+
+    })
+</script>
+</html>

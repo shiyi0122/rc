@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>景区档案编辑--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="Form" lay-filter="Form">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input class="SpotAscriptionId" type="hidden"/>
+                    <input class="spotFId" type="hidden"/>
+                    <input class="spotSId" type="hidden"/>
+                    <input class="spotQId" type="hidden"/>
+                    <input name="scenicSpotId" type="hidden" class="scenicSpotId"/>
+                    <input type="hidden" class="companyIds"/>
+<!--                    <input type="hidden" class="huntQuantity"/>-->
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotName" placeholder="请输入景区名称" type="text" class="layui-input scenicSpotName" autocomplete="off" lay-verify="required" lay-reqtext="景区名称是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">联系人名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotContact" placeholder="请输入联系人名称" type="text" class="layui-input scenicSpotContact" autocomplete="off" lay-verify="required"  lay-reqtext="联系人名称是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">联系人电话<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotPhone" placeholder="请输入联系人电话" type="text" class="layui-input scenicSpotPhone" autocomplete="off" lay-verify="required"  lay-reqtext="联系人电话是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">联系人邮箱<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotEmail" placeholder="请输入联系人邮箱" type="text" class="layui-input scenicSpotEmail" autocomplete="off" lay-verify="required"  lay-reqtext="联系人邮箱是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区地址<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotAddres" placeholder="请输入景区地址" type="text" class="layui-input scenicSpotAddres" autocomplete="off" lay-verify="required"  lay-reqtext="景区地址是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区邮编<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotPostalCode" placeholder="请输入景区邮编" type="text" class="layui-input scenicSpotPostalCode" autocomplete="off" lay-verify="required"  lay-reqtext="景区邮编是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区归属地<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="scenicSpotFid" lay-verify="required" lay-search="" lay-filter="group" class="scenicSpotFid" lay-reqtext="景区归属地是必选项，不能为空" id="sele">
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">是否走网络<span style="color: #ff0000;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="smallNetwork" lay-verify="required" lay-search="" lay-filter="group" class="smallNetwork" lay-reqtext="是否走网络是必选项，不能为空" id="smallNetwork">
+                                <option value="1">只走网络,不走蓝牙和验证码</option>
+                                <option value="2">先走网络,不通走蓝牙，再不通走验证码<option>
+                                <option value="3">先走网络,不通直接走验证码<option>
+                                <option value="4">先走网络,不通蓝牙和验证码一起走<option>
+                                <option value="5">网络、蓝牙、验证码同时走,那个可以走通就走哪个,不走网络<option>
+                                <option value="6">直接走蓝牙,不走网络和验证码<option>
+                                <option value="7">直接走验证码,不走网络和蓝牙<option>
+                                <option value="8">不走网络,直接走蓝牙,不通再走验证码<option>
+                                <option value="9">不走网络,蓝牙、验证码同时走<option>
+                            </select>
+                        </div>
+                    </div>
+
+<!--                    <div class="layui-inline layui-col-md12">-->
+<!--                        <label class="layui-form-label">景区所属区<span style="color: red;">*</span></label>-->
+<!--                        <div class="layui-input-block">-->
+<!--                            <select name="scenicSpotQid" lay-verify="required" lay-search="" lay-filter="scenicSpotQid" class="scenicSpotQid" lay-reqtext="景区所属区是必选项，不能为空" id="scenicSpotQid">-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区归属公司<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="companyId" lay-verify="required" lay-search="" lay-filter="group" class="companyId" lay-reqtext="景区归属公司是必选项，不能为空" id="ascriptionCompany">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区坐标<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="coordinateRange" placeholder="请输入景区坐标" type="text" class="layui-input coordinateRange" autocomplete="off" lay-verify="required"  lay-reqtext="景区坐标是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">是否重复景区<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="repeatStatus" placeholder="请输入重复景区数量" type="text" class="layui-input repeatStatus" autocomplete="off"  lay-reqtext="景区热度"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区热度</label>
+                        <div class="layui-input-block">
+                            <input name="heat" placeholder="请输入景区热度" type="text" class="layui-input heat" autocomplete="off"  lay-reqtext="景区热度"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">宝箱冷却时间(分)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="treasureCooldownTime" placeholder="请输入宝箱冷却时间(分)" type="text" class="layui-input treasureCooldownTime" autocomplete="off"  lay-reqtext="宝箱冷却时间"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">扫码启动后所有宝箱的冷却时间(秒)<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="cooldownTime" placeholder="请输入扫码启动后所有宝箱的冷却时间(秒)" type="text" class="layui-input cooldownTime" autocomplete="off"  lay-reqtext="扫码启动后所有宝箱的冷却时间"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">上班时间</label>
+                        <div class="layui-input-block">
+                            <input name="workTime" id="workTime" placeholder="请输入上班时间" type="text" class="layui-input workTime" autocomplete="off" id="workTime"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">下班时间</label>
+                        <div class="layui-input-block">
+                            <input name="closingTime" id="closingTime" placeholder="请输入下班时间" type="text" class="layui-input closingTime" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">上班播报内容</label>
+                        <div class="layui-input-block">
+                            <input name="workBroadcast" placeholder="请输入上班播报内容" type="text" class="layui-input workBroadcast" autocomplete="off"  lay-reqtext="上班播报内容是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">下班播报内容</label>
+                        <div class="layui-input-block">
+                            <input name="closingBroadcast" placeholder="请输入下班播报内容" type="text" class="layui-input closingBroadcast" autocomplete="off" l  lay-reqtext="下班播报内容是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">积攒宝箱数量</label>
+                        <div class="layui-input-block">
+                            <input name="huntQuantity" placeholder="宝箱数量" type="text" class="layui-input huntQuantity" autocomplete="off"  lay-reqtext="积攒宝箱数量"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">喇叭开启状态<span style="color: #ff0000;">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="hornSwitch" lay-verify="required" lay-search="" lay-filter="group" class="hornSwitch" lay-reqtext="喇叭开启状态是必选项，不能为空" id="hornSwitchCompany">
+                                <option value="0">关闭</option>
+                                <option value="1">开启</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">照明开启时间</label>
+                        <div class="layui-input-block">
+                            <input name="lampClosingTime" id="lampClosingTime" placeholder="请输入开启时间" type="text" class="layui-input lampClosingTime" autocomplete="off" id="lampClosingTime"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">照明关闭时间</label>
+                        <div class="layui-input-block">
+                            <input name="lampOpeningTime" id="lampOpeningTime" placeholder="请输入关闭时间" type="text" class="layui-input lampOpeningTime" autocomplete="off" id="lampOpeningTime"/>
+                        </div>
+                    </div>
+
+                    <input name="type" type="hidden" class="type" value="1"/>
+                </div>
+            </div>
+<!--            -->
+            <div class="layui-card-header">扩展景区</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row" id="area-picker">
+                    <input type="hidden" name="id" class="id">
+<!--                    <input type="hidden" name="spotId" class="spotId">-->
+                    <input type="hidden" class="provinceId">
+                    <input type="hidden" class="cityId">
+                    <input type="hidden" class="regionId">
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">选择景区</label>
+                        <div class="layui-input-block">
+                            <select name="scenicSpotId"  lay-search="" lay-filter="group" class="scenicSpotId" lay-reqtext="景区是必选项，不能为空" id="seleNew" disabled>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区照片</label>
+                        <div class="layui-input-block">
+                            <button type="button" class="layui-btn" name="file" id="file"><i class="layui-icon"></i>上传图片</button>
+                            <input name="imageId" placeholder="请选择景区照片" type="hidden"  class="layui-input imageId" autocomplete="off"  lay-reqtext="景区照片是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区面积</label>
+                        <div class="layui-input-block">
+                            <input name="scenicSpotArea" placeholder="请输入景区面积" type="text" class="layui-input scenicSpotArea" autocomplete="off"  lay-reqtext="景区面积是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">年收入</label>
+                        <div class="layui-input-block">
+                            <input name="revenueYear" placeholder="请输入年收入" type="text" class="layui-input revenueYear" autocomplete="off"  lay-reqtext="年收入是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">回报率</label>
+                        <div class="layui-input-block">
+                            <input name="rewardRate" placeholder="请输入回报率" type="text" class="layui-input rewardRate" autocomplete="off"  lay-reqtext="回报率是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">请选择省</label>
+                        <div class="layui-input-block">
+                            <select name="province" id="province" lay-search="" class="province-selector" lay-filter="province" lay-reqtext="省份是必选项，不能为空">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">请选择市</label>
+                        <div class="layui-input-block">
+                            <select name="city" id="city" lay-search="" class="city-selector" lay-filter="city" lay-reqtext="市是必选项，不能为空">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">请选择县/区</label>
+                        <div class="layui-input-block">
+                            <select name="county" id="county" lay-search="" class="county-selector" lay-filter="county" lay-reqtext="县/区是必选项，不能为空">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区介绍</label>
+                        <div class="layui-input-block">
+                            <textarea style="display: none;" name="scenicSpotIntroduce" id="scenicSpotIntroduce" lay-verify="content" class="field-content scenicSpotIntroduce"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="form-group-bottom text-center" style="z-index: 200">
+            <button class="layui-btn" lay-filter="btnSubmitScenicSpotBasicArchives" lay-submit>&emsp;提交&emsp;</button>
+            <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/page/system/scenicSpot/js/scenicSpotBasicArchivesEdit.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl','laydate'],function(){
+        var form = layui.form;
+        var $ = layui.jquery;
+        var laydate = layui.laydate;
+
+        var spotSId = $(".spotSId").val();
+        var spotQId = $(".spotQId").val();
+
+        var spotId = $(".scenicSpotId").val();
+        var provinceId = $(".provinceId").val();
+        var cityId = $(".cityId").val();
+        var regionId = $(".regionId").val();
+	    laydate.render({
+	        elem: '#testStartTime',
+	        type: 'date'
+	    });
+	    laydate.render({
+	        elem: '#trialOperationsTime'
+	        ,type: 'date'
+	    });
+	    laydate.render({
+	        elem: '#formalOperationTime'
+	        ,type: 'date'
+	    });
+	    laydate.render({
+	        elem: '#stopOperationTime'
+	        ,type: 'date'
+	    });
+        laydate.render({
+            elem: '#workTime',
+            type: 'time',
+            format: 'HH:mm'
+        });
+        laydate.render({
+            elem: '#closingTime',
+            type: 'time',
+            format: 'HH:mm'
+        });
+        laydate.render({
+            elem: '#lampClosingTime',
+            type: 'time',
+            format: 'HH:mm'
+        });
+        laydate.render({
+            elem: '#lampOpeningTime',
+            type: 'time',
+            format: 'HH:mm'
+        });
+
+
+
+	    var scenicSpotAscriptionId = $(".SpotAscriptionId").val();
+        var scenicSpotFid = $(".spotFId").val();
+        var companyId = $(".companyIds").val();
+        var items = [];
+
+        $.ajax({
+            type : "POST",
+            url : "/system/scenicSpot/getScenicSpotBindingList",
+            async : false,
+            success : function(data){
+                if(data.state == 200){
+                    items = data.data;
+                    $("#sele").html("<option value=''>请选择区域</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotFname,item.scenicSpotFid);
+                        if (scenicSpotFid == item.scenicSpotFid){
+                            option.setAttribute("selected",'true');
+                        }
+                        $('#sele').append(option);//往下拉菜单里添加元素
+                        form.render('select');
+                    });
+                }else{
+                }
+            }
+        });
+
+        //回显市
+        $.ajax({
+            type:"POST",
+            url:"/system/scenicSpotBinding/getSpotBindingCity",
+            data:{"pid":scenicSpotFid},
+            async : false,
+            success:function(data){
+                var item = data.data;
+                $("#scenicSpotSid").html("<option value=''>选择市</option>");
+                $.each(item, function (k, v) {
+                    var option = new Option(v.scenicSpotFname,v.scenicSpotFid);
+                    if(v.scenicSpotFid == spotSId) {
+                        option.setAttribute("selected",'true');
+                    }
+                    $('#scenicSpotSid').append(option);//往下拉菜单里添加元素
+                    form.render('select'); //这个很重要
+                });
+            }
+        });
+
+        //回显区/县
+        $.ajax({
+            type:"POST",
+            url:"/system/scenicSpotBinding/getSpotBindingArea",
+            data:{"pid":spotSId},
+            async : false,
+            success:function(data){
+                console.log(data);
+                var item = data.data;
+                $("#scenicSpotQid").html("<option value=''>选择区/县</option>");
+                $.each(item, function (k, v) {
+                    var option = new Option(v.scenicSpotFname,v.scenicSpotFid);
+                    if(v.scenicSpotFid == spotQId) {
+                        option.setAttribute("selected",'true');
+                    }
+                    $('#scenicSpotQid').append(option);//往下拉菜单里添加元素
+                    form.render('select'); //这个很重要
+                });
+            }
+        });
+
+
+
+
+
+        $.ajax({
+            type : "POST",
+            url : "/system/ascriptionCompany/getAscriptionCompany",
+            async : false,
+            success : function(data){
+                if(data.state == 200){
+                    items = data.data;
+                    $("#ascriptionCompany").html("<option value=''>请选择公司</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.companyName,item.companyId);
+                        if (companyId == item.companyId){
+                            option.setAttribute("selected",'true');
+                        }
+                        $('#ascriptionCompany').append(option);//往下拉菜单里添加元素
+                        form.render('select'); //这个很重要
+                    });
+                }else{
+                }
+            }
+        });
+
+        //
+        $.ajax({
+            type : "post",
+            url : "/homePage",
+            async : false,
+            success : function(data){
+               // console.log(data);
+                if(data.code == 1){
+                    items = data.data;
+                    $("#seleNew").html("<option value=''>请选择景区</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                        // 如果是之前的parentId则设置选中
+                        if(item.scenicSpotId == spotId) {
+                            option.setAttribute("selected",'true');
+                        }
+                        $('#seleNew').append(option);//往下拉菜单里添加元素
+                        form.render('select'); //这个很重要
+                    });
+                }else{
+                }
+            }
+        });
+
+        //回显省份
+        $.ajax({
+            type:"POST",
+            url:"/business/scenicSpotExpand/getProvince",
+            data:{"pid":99999999},
+            dataType:"json",
+            success:function(data){
+                var item = data.data;
+                $("#province").html("<option value=''>选择省份</option>");
+                $.each(item, function (k, v) {
+                    var option = new Option(v.name,v.id);
+                    if(v.id == provinceId) {
+                        option.setAttribute("selected",'true');
+                    }
+                    $('#province').append(option);//往下拉菜单里添加元素
+                    form.render('select'); //这个很重要
+                });
+            }
+        });
+
+        //回显市
+        $.ajax({
+            type:"POST",
+            url:"/business/scenicSpotExpand/getProvince",
+            data:{"pid":provinceId},
+            dataType:"json",
+            success:function(data){
+                var item = data.data;
+                $("#city").html("<option value=''>选择市</option>");
+                $.each(item, function (k, v) {
+                    var option = new Option(v.name,v.id);
+                    if(v.id == cityId) {
+                        option.setAttribute("selected",'true');
+                    }
+                    $('#city').append(option);//往下拉菜单里添加元素
+                    form.render('select'); //这个很重要
+                });
+            }
+        });
+
+        //回显区/县
+        $.ajax({
+            type:"POST",
+            url:"/business/scenicSpotExpand/getProvince",
+            data:{"pid":cityId},
+            dataType:"json",
+            success:function(data){
+                console.log(data);
+                var item = data.data;
+                $("#county").html("<option value=''>选择区/县</option>");
+                $.each(item, function (k, v) {
+                    var option = new Option(v.name,v.id);
+                    if(v.id == regionId) {
+                        option.setAttribute("selected",'true');
+                    }
+                    $('#county').append(option);//往下拉菜单里添加元素
+                    form.render('select'); //这个很重要
+                });
+            }
+        });
+
+
+
+
+    })
+</script>
+</body>
+</html>

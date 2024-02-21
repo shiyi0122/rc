@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SIM卡号管理--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input robotCodeVal" placeholder="机器人编号" />
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input robotCodeSimVal" placeholder="机器人ICCID" />
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input supplierNameVal" placeholder="供应商" />
+                </div>
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>
+                    <button id="btnAddRole" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                    <button id="downloadExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出EXCEL</button>
+                    <button type="button" class="layui-btn" id="importExcel"><i class="layui-icon"></i>导入EXCEL</button>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="sysRobotSimSupplierList" class="layui-table" lay-filter="sysRobotSimSupplierList"></table>
+</div>
+<!--操作-->
+<script type="text/html" id="sysRobotSimSupplierListBar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/system/sysRobotSimSupplier/js/sysRobotSimSupplierList.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>景点管理--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <button id="btnAddBroadcast" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                    <button id="downloadExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出EXCEL</button>
+                    <button type="button" class="layui-btn" id="importExcel"><i class="layui-icon"></i>导入EXCEL</button>
+                    <button type="button" class="layui-btn" id="kqhd">随机寻宝活动开启/关闭</button>
+                    <div class="layui-input-inline" style="width: 140px;">
+                        <select class="layui-select activeState" lay-search="activeState"   autocomplete="off" id="activeState">
+                            <!--                            <option value="0">寻宝活动关闭中</option>-->
+                            <!--                            <option value="1">寻宝活动开启中</option>-->
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="broadcastList" class="layui-table" lay-filter="broadcastList"></table>
+</div>
+<!--操作-->
+<script type="text/html" id="broadcastListBar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="details">资源详情</a>
+    {{# if(d.switchs == 0){ }}
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="forbidden">已禁用</a>
+    {{# } }}
+    {{# if(d.switchs == 1){ }}
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="open">已启用</a>
+    {{# } }}
+</script>
+
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/system/scenicSpotHunt/js/scenicSpotHuntList.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl'],function(){
+        $ = layui.jquery;
+        var form = layui.form;
+        var items = [];
+
+        $.ajax({
+            type : "post",
+            url : "/system/scenicSpot/getScenicSpotSwitchs",
+            async : false,
+            success : function(data){
+                // if(data.code == 1){
+                //     items = data.data;
+                //     $("#Status").html("<option value=''>请选择景区</option>");
+                //     $.each(items, function (index, item) {
+                //         var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                //         $('#scenicSpotId').append(option);//往下拉菜单里添加元素
+                //         form.render('select');
+                //     });
+                // }else{
+                // }
+                if (data.state == "200"){
+
+                    if (data.data == 2){
+
+                        // $("#activeState").val("1");
+                        $("#activeState").append(new Option("随机寻宝活动开启中", "2"));
+                        //更新全部
+                        layui.form.render();
+
+                    }else{
+
+                        $("#activeState").append(new Option("随机寻宝活动关闭中", "0"));
+                        // $("#activeState").val('0');
+                        layui.form.render();
+
+                    }
+                }
+
+            }
+        });
+    })
+</script>
+
+</html>
