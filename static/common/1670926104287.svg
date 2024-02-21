@@ -1,0 +1,13 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="svg_5_blur">
+   <feGaussianBlur stdDeviation="0" in="SourceGraphic"/>
+  </filter>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <path stroke-width="0" stroke="#000" id="svg_1" d="m270.38442,194.79479l98.59009,0l0,34.17967l-98.59009,0l0,-34.17967z" opacity="undefined" stroke-linecap="undefined" stroke-linejoin="undefined" fill="#f45f4b"/>
+  <text stroke-width="0" filter="url(#svg_5_blur)" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_5" y="222.40153" x="288.80202" stroke="#000" fill="#fbe1b4">520.00</text>
+  <text stroke-width="0" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="16" id="svg_7" y="216.92221" x="272.30659" stroke="#000" fill="#fbe1b4">￥</text>
+ </g>
+</svg>
