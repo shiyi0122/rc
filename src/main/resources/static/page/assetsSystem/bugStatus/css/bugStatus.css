@@ -1,0 +1,174 @@
+body {
+  /* background: #000; */
+  overflow: hidden;
+}
+
+@media all and (max-width: 1200px) {
+  body {
+    overflow: auto;
+  }
+}
+
+
+.robot_ope_time {
+  padding: 12px;
+}
+
+.operate_time_content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* transition: all .5s; */
+}
+
+#myLineAndBarEcharts,
+#opeBugEcharts {
+  height: 600px;
+  position: relative;
+  /* left: 50vw; */
+  transition: all .5s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.operate_header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#ope_time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#scenic_name {
+  width: 200px;
+}
+
+#more_btn {
+  width: 200px;
+  margin: 20px;
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+#check_scenic,
+#date_way {
+  width: 200px;
+}
+
+.start_end_time {
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+.more_text,
+.set_text {
+  background: #fff;
+  color: #999999;
+  height: 30px;
+  line-height: 32px;
+  cursor: pointer;
+  user-select: none;
+  pointer-events: none;
+  display: block;
+}
+
+.more_text {
+  position: absolute;
+  top: 3px;
+  left: 10px;
+  width: 50px;
+}
+
+.set_text {
+  position: absolute;
+  top: 24px;
+  margin-left: 10px;
+  width: 100px;
+}
+
+#avg_operate_time {
+  width: 200px;
+}
+
+.flex_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconfont {
+  margin-right: 5px;
+}
+
+.export_report {
+  color: #fff;
+}
+
+.start_end_time_month,
+.start_end_time_day,
+.start_end_time_year {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+/* .start_end_time_day,
+.start_end_time_year {
+  display: none;
+} */
+.gapline {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.layui-table-box .layui-table-cell  {
+  line-height: 20px;
+  padding: 5px 5px ;
+  position: relative;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: visible;
+  height: auto;
+  overflow: visible;
+  text-overflow: inherit;
+  white-space: normal;
+}
+
+/*去除a标签下划线*/
+a {
+  text-decoration: none;
+}
+
+/*去除未被访问的a标签的下划线*/
+a:link {
+  text-decoration: none;
+}
+
+/*去除已经被访问过的a标签的下划线*/
+a:visited {
+  text-decoration: none;
+}
+
+/*去除鼠标悬停时的a标签的下划线*/
+a:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+/*去除正在点击的a标签的下划线（鼠标按下，尚未松开）*/
+a:active {
+  text-decoration: none;
+}
+
+/*去除获得焦点的a标签的下划线（被鼠标点击过）*/
+a:focus {
+  text-decoration: none;
+}

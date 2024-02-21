@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>机器人故障统计</title>
+  <link
+          rel="stylesheet"
+          href="//at.alicdn.com/t/font_2572350_nrz27shi5c.css"
+  />
+  <link rel="stylesheet" href="/page/assetsSystem/bugStatus/layui/css/layui.css" media="all" />
+  <link rel="stylesheet" href="/page/assetsSystem/bugStatus/css/bugStatus.css" />
+</head>
+
+<body>
+<!-- 机器人运营时长 -->
+<div class="robot_ope_time">
+  <!-- 运营时长的头部区 -->
+  <div class="operate_header">
+    <!-- 起止时间（日） -->
+    <div class="start_end_time_day">
+      <!-- 起始时间（日） -->
+      <!-- <div id="start_time" style="width: 200px"></div> -->
+      <div class="layui-input-inline">
+        <input
+                type="text"
+                class="layui-input"
+                id="start_time_day"
+                placeholder=""
+        />
+      </div>
+      <div class="gapline">—</div>
+      <!-- 终止时间（日） -->
+      <!-- <div id="end_time" style="width: 200px"></div> -->
+      <div class="layui-input-inline">
+        <input
+                type="text"
+                class="layui-input"
+                id="end_time_day"
+                placeholder=""
+        />
+      </div>
+    </div>
+
+    <!-- 请选择景区 -->
+    <div id="check_scenic" class="xm-select-demo"></div>
+
+    <!-- 统计项 -->
+    <div id="stats_option" class="xm-select-demo"></div>
+
+    <!-- 月统计方式 - 默认 -->
+    <div id="date_way" class="xm-select-demo"></div>
+
+    <!-- 重置 -->
+    <button
+            type="button"
+            class="layui-btn layui-btn-sm layui-btn-primary"
+            id="reset"
+    >
+      <i class="layui-icon layui-icon-refresh-3"></i> 重置
+    </button>
+
+    <!-- 统计报表 -->
+    <button
+            type="button"
+            class="layui-btn layui-btn-sm flex_center"
+            id="stats_table"
+    >
+      <i class="iconfont icon-sousuo"></i>
+      <span>统计报表</span>
+    </button>
+
+    <!-- 导出报表 -->
+    <a
+            href=""
+            download="导出报表"
+            class="layui-btn layui-btn-sm flex_center export_report"
+    >
+      <i class="iconfont icon-shuju"></i>
+      <span>导出报表</span>
+    </a>
+
+    <!-- 查询数据 -->
+    <button
+            type="button"
+            class="layui-btn layui-btn-sm flex_center"
+            id="query_data"
+            data-type="reload"
+    >
+      <i class="iconfont icon-sousuo"></i>
+      <span>查询数据</span>
+    </button>
+
+    <!-- 导出数据 -->
+    <button
+            type="button"
+            class="layui-btn layui-btn-sm flex_center"
+            id="export_data"
+    >
+      <i class="iconfont icon-shuju"></i>
+      <span>导出数据</span>
+    </button>
+  </div>
+  <!-- 运营时长的内容区 -->
+  <div class="operate_time_content" style="width: 100%">
+    <div class="operate_table_container" style="width: 50%">
+      <table
+              class="layui-hide"
+              id="operate_table"
+              lay-filter="operate_table"
+      ></table>
+      <div id="page"></div>
+    </div>
+    <!-- 折线图、柱状图混合 -->
+    <div id="opeBugEcharts" style="width: 50%"></div>
+  </div>
+</div>
+
+<script src="/page/assetsSystem/bugStatus/layui/layui.js" charset="utf-8"></script>
+<script src="/page/assetsSystem/bugStatus/js/xm-select.js"></script>
+<script src="/page/assetsSystem/bugStatus/js/layui-excel.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.1/echarts.min.js"></script>
+<script src="/page/assetsSystem/bugStatus/js/axios.js"></script>
+<script src="/page/assetsSystem/bugStatus/js/opeBugEcharts.js"></script>
+<script src="/page/assetsSystem/bugStatus/js/bugStatus.js"></script>
+</body>
+</html>
