@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>景区选择页面--北京九星智元科技有限公司</title>
+        <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+        <link rel="stylesheet" href="css/index.css" media="all" />
+        <style>
+            * {margin: 0;padding: 0;}
+            html,body {width: 100%;background: #F9F9F9;box-sizing: border-box;}
+            .home {width: 1180px;margin: 85px auto;background: #ffffff;box-sizing: border-box;}
+            .home-search {height: 75px;border-bottom: 1px dashed #e0e0e0;display: flex;flex-direction: row-reverse;align-items: center;margin-top: 60px;}
+            .search-box {width: 200px;height: 40px;line-height: 40px;margin-right: 30px;}
+            .list1{background: #fff;}
+            #home-ul {display: flex;flex-direction: row;flex-wrap: wrap;list-style: none;justify-content: flex-start;padding: 30px;}
+            #home-ul li {margin: 0 0 30px;padding: 10px;box-sizing: border-box;}
+            #home-ul li .shopImg img {width: 100%;height: 157px;min-height: 157px;background-size: 100% 100%;}
+            .shopListName {padding: 20px 0;}
+            li:hover {box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.1);transition: all 0.1s;cursor: pointer;border-radius: 3px;}
+            .layui-header {position: fixed;width: 100%;background: #393D49;top: 0;left: 0;}
+            .layui-main.mag0{width: 100%;}
+            .layui-nav.top_menu{width: 100%;display: flex;flex-direction: row-reverse;}
+            @media screen and (max-width:768px) {  .logo {font-size: 17px;} }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="layui-header header">
+            <div class="layui-main mag0">
+                <a href="#" class="logo" style="width: 250px">北京九星智元-后台管理系统</a>
+                <!-- 顶部右侧菜单 -->
+                <ul class="layui-nav top_menu">
+                    <li class="layui-nav-item" id="userInfo">
+                        <a href="javascript:;"><img src="images/jxzy.jpg" class="layui-nav-img userAvatar" width="35" height="35"><cite class="adminName" th:text="${userName}"></cite></a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/logout" class="signOut"><i class="seraph icon-tuichu"></i><cite>退出</cite></a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-container list1">
+            <div class="home-search">
+                <div class="search-box">
+                    <form class="layui-form" action="">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <select name="modules" lay-verify="required" lay-filter="group" lay-search="" id="sele"></select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <ul class="layui-row layui-col-space1" id="home-ul"></ul>
+        </div>
+        <script src="/layui/layui.js"></script>
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script>
+            var scenicSpotId= '';
+            var $,tab,dataStr,layer;
+            layui.config({
+                base : "js/"
+            }).extend({
+                "bodyTab" : "bodyTab"
+            })
+            layui.use(['form','bodyTab','element','layer','jquery'],function(){
+                var form = layui.form;
+                var element = layui.element;
+                var $ = layui.$;
+                var layer = parent.layer === undefined ? layui.layer : top.layer;
+                form.on('select(group)',function(data){
+                    var scenicSpotId =data.value
+                    var items = [];
+                    $.ajax({
+                        type : "post",
+                        url : "/homePage",
+                        data : {scenicSpotId : scenicSpotId},
+                        async : false,
+                        success : function(data){
+                            if(data.code == 1){
+                                items = data.data;
+                                var html = '';
+                                $("#home-ul").find("li").remove();
+                                var htt = '<option value="">全部</option>';
+                                $.each(items, function (k, v) {//这里的函数参数是键值对的形式，k代表键名，v代表值
+                                    html += '<li class="shopBox layui-col-md3" onclick=jump("'+items[k].scenicSpotId+'","'+items[k].scenicSpotName+'")>' +
+                                        '<div class="shopImg"><img src=' + items[k].scneicSpotImgUrl + '></div>' +
+                                        '<div class="shopListName" style="font-weight:bold;font-size: 16px">' + items[k].scenicSpotName + '</div>' +
+                                        '</li>'
+                                    htt += '<option value="'+ items[k].scenicSpotId +'">'+items[k].scenicSpotName+'</option>'
+                                });
+                                $("#home-ul").append(html);
+                                $("#sele").html(htt);
+                                form.render('select','group');
+                            }else{
+                                layer.alert(data.message,function(){
+                                    layer.closeAll();//关闭所有弹框
+                                });
+                            }
+                        }
+                    });
+                })
+                form.render('select','group');
+            });
+
+
+            $(function () {
+                getScenicspot(scenicSpotId);
+
+            })
+            //跳转景区列表详情
+            function jump(scenicSpotId,scenicSpotName) {
+                var temp = document.createElement("form");
+                temp.action = "/home";
+                temp.method = "post";
+                temp.style.display = "none";
+                var params = {"scenicSpotId": scenicSpotId,"scenicSpotName":scenicSpotName};
+                for (var x in params) {
+                    var opt = document.createElement("textarea");
+                    opt.name = x;
+                    opt.value = params[x];
+                    temp.appendChild(opt);
+                }
+
+                document.body.appendChild(temp);
+                temp.submit();
+                return temp;
+            }
+            function getScenicspot(scenicSpotId){
+                var items = [];
+                $.ajax({
+                    type : "post",
+                    url : "/homePage",
+                    data : {scenicSpotId : scenicSpotId},
+                    async : false,
+                    success : function(data){
+                        if(data.code == 1){
+                            items = data.data;
+                            var html = '';
+                            $("#home-ul").find("li").remove();
+                            var htt = '<option value="">全部</option>';
+                            $.each(items, function (k, v) {//这里的函数参数是键值对的形式，k代表键名，v代表值
+                                html += '<li class="shopBox layui-col-md3" onclick=jump("'+items[k].scenicSpotId+'","'+items[k].scenicSpotName+'")>' +
+                                    '<div class="shopImg"><img src=' + items[k].scneicSpotImgUrl + '></div>' +
+                                    '<div class="shopListName" style="font-weight:bold;font-size: 16px">' + items[k].scenicSpotName + '</div>' +
+                                    '</li>'
+                                htt += '<option value="'+ items[k].scenicSpotId +'">'+items[k].scenicSpotName+'</option>'
+                            });
+                            $("#home-ul").append(html);
+                            $("#sele").html(htt);
+                        }else{
+                            layer.alert(data.message,function(){
+                                layer.closeAll();//关闭所有弹框
+                            });
+                        }
+                    }
+                });
+            }
+        </script>
+    </body>
+
+</html>

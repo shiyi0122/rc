@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>北京九星智元科技有限公司</title>
+        <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+        <link rel="stylesheet" href="/css/login.css">
+        <link rel="stylesheet" href="/css/tooltips.css">
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.pure.tooltips.js"></script><style type="text/css"></style>
+        <script type="text/javascript" src="/layui/layui.js"></script>
+        <style>
+            html,body{width: 100%;height: 100%;}
+            body {
+                margin:0;
+                padding:0;
+                overflow:hidden;
+                background:#2d9b95;
+                background:-moz-radial-gradient(center,ellipse cover,#0195F5 0%,#0e1329 100%);
+                background:-webkit-radial-gradient(center,ellipse cover,#0195F5 0%,#0e1329 100%);
+                background:-o-radial-gradient(center,ellipse cover,#0195F5 0%,#0e1329 100%);
+                background:-ms-radial-gradient(center,ellipse cover,#0195F5 0%,#0e1329 100%);
+                background:radial-gradient(ellipse at center,#0195F5 0%,#0e1329 100%);
+                filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#0195F5',endColorstr='#0e1329',GradientType=1 );
+                background:-webkit-gradient(radial,center center,0px,center center,100%,color-stop(0%,#0195F5),color-stop(100%,#0e1329));
+                position: relative;
+                box-sizing: border-box;
+            }
+            .login-container{width: 100%;height:100%;padding-left:10px;padding-right:10px;position: absolute;top: 0;left: 0;box-sizing: border-box;}
+            #login{height:290px;margin: 235px auto 0px;background:#000000;opacity: 0.6;box-sizing: border-box;}
+            .footer{width: 100%;position:fixed;bottom:50px;left:0;}
+            .footer-box{width: 100%;text-align: center;}
+            .footer .footer-box a.footer-a{cursor:pointer;text-decoration:none;margin-top: 10px;display: block;}
+            @media screen and (max-width:768px) {
+                #login {width: 300px}
+                .beg-login-box .beg-login-main{ padding: 30px 16px 0;}
+                #login h1{font-size: 18px}
+
+            }
+        </style>
+        <link id="layuicss-skinlayercss" rel="stylesheet" href="/layui/css/modules/layer/default/layer.css" media="all"></head>
+        <body >
+            <canvas width="100%" height="800"></canvas>
+            <div class="login-container">
+                <div class="beg-login-box box box-login layui-anim-up" id="login">
+                    <header>
+<!--                        <h1 style="color:#FFFFFF">欢迎登录（测试）</h1>-->
+                        <h1 style="color:#FFFFFF">欢迎登录（阿里）</h1>
+                    </header>
+                    <div class="beg-login-main">
+                        <form action="" class="layui-form" method="post" id="useLogin">
+                            <div class="layui-form-item">
+                                <label class="beg-login-icon">
+                                    <i class="layui-icon"></i>
+                                </label>
+                                <input id="username" type="text" name="username" lay-verify="userName" autocomplete="off" placeholder="请输入登录名" class="layui-input">
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="beg-login-icon">
+                                    <i class="layui-icon"></i>
+                                </label>
+                                <input id="password" type="password" name="password" lay-verify="password" autocomplete="off" placeholder="请输入密码" class="layui-input">
+                            </div>
+                            <div class="layui-form-item">
+                                <div style="display: flex; flex-direction: row;justify-content: center;align-items: center;">
+                                    <button class="layui-btn layui-btn-radius" onclick="login();return false;">
+                                        <i class="layui-icon"></i> 登录
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="footer">
+                        <div class="footer-box">
+                            <p style="color:#fff;">北京九星智元科技有限公司</p>
+<!--                            正式服务器结尾是-2-->
+                            <a class="footer-a" style="color: #fff" href="http://beian.miit.gov.cn">京ICP备15066235号-2</a>
+<!--                            测试服务器结尾是-5-->
+<!--                                <a class="footer-a" style="color: #fff" href="http://beian.miit.gov.cn">京ICP备15066235号-5</a>-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+
+                if (!!window.ActiveXObject || "ActiveXObject" in window){
+                    alert("IE浏览器无法登陆，请使用其他浏览器！")
+                }
+
+                window.requestAnimFrame = (function(){
+                    return  window.requestAnimationFrame ||
+                        window.webkitRequestAnimationFrame ||
+                        window.mozRequestAnimationFrame    ||
+                        window.oRequestAnimationFrame      ||
+                        window.msRequestAnimationFrame     ||
+                        function( callback ){
+                            window.setTimeout(callback, 1000 / 60);
+                        };
+                })();
+
+                var canvas = document.getElementsByTagName("canvas")[0];
+                var ctx = canvas.getContext("2d");
+                var w = $(document).width();
+                var h = $(document).height();
+                canvas.width = w;
+                canvas.height = h;
+
+                var mols = [];
+
+                function init(){
+                    for(var i=0;i<18;i++){
+                        var mol = new generate_mol("C8H10N4O2");
+                        mols.push(mol);
+                        var mol = new generate_mol("C6H6O");
+                        mols.push(mol);
+                        var mol = new generate_mol("C6H6");
+                        mols.push(mol);
+                    }
+                }
+
+                function draw(){
+                    canvas.width = canvas.width;
+                    for(var i=0;i<mols.length;i++){
+                        var m = mols[i];
+                        m.x += m.vx;
+                        if(m.x >= w-100 || m.x <= 0){
+                            m.vx = -m.vx;
+                        }
+                        m.y += m.vy;
+                        if(m.y >= h-100 || m.y <= 0){
+                            m.vy = -m.vy;
+                        }
+
+                        m.r += 0.005;
+                        m.draw();
+                    }
+                }
+
+                function generate_mol(mol){
+                    this.x = Math.random()*w;
+                    this.y = Math.random()*h;
+                    this.vx = Math.random()*-2;
+                    this.vy = Math.random()*2;
+                    this.vr = 0.1;
+                    this.r = Math.random()*Math.PI;
+                    this.draw = function(){
+                        if(mol == "C6H6O"){
+                            //Phenol
+                            ctx.save();
+                            ctx.translate(this.x+20,this.y+80);
+                            ctx.rotate(this.r);
+                            ctx.translate(-this.x+20,-this.y-80);
+                            ctx.beginPath();
+                            ctx.moveTo(this.x,this.y + 5);
+                            ctx.lineTo(this.x,this.y + 30);
+                            ctx.lineTo(this.x - 26,this.y + 45);
+                            ctx.lineTo(this.x - 26,this.y + 75);
+                            ctx.lineTo(this.x,this.y + 90);
+                            ctx.lineTo(this.x + 26,this.y + 75);
+                            ctx.lineTo(this.x + 26,this.y + 45);
+                            ctx.lineTo(this.x,this.y + 30);
+                            ctx.moveTo(this.x - 20,this.y + 47);
+                            ctx.lineTo(this.x - 20,this.y + 73);
+                            ctx.moveTo(this.x,this.y + 83);
+                            ctx.lineTo(this.x + 22,this.y + 70);
+                            ctx.moveTo(this.x,this.y + 36);
+                            ctx.lineTo(this.x + 22,this.y + 49);
+                            ctx.strokeStyle = "rgba(255,255,255,0.2)";
+                            ctx.lineWidth = 3;
+                            ctx.stroke();
+                            ctx.fillStyle = "rgba(255,255,255,0.2)";
+                            ctx.font = "15px Arial";
+                            ctx.fillText("OH", this.x - 5, this.y);
+                            ctx.closePath();
+                            ctx.restore();
+                        }
+                        else if(mol == "C8H10N4O2"){
+                            //Caffeine
+                            ctx.save();
+                            ctx.translate(this.x+20,this.y+80);
+                            ctx.rotate(this.r);
+                            ctx.translate(-this.x+20,-this.y-80);
+                            ctx.beginPath();
+                            ctx.moveTo(this.x,this.y + 5);
+                            ctx.lineTo(this.x,this.y + 22);
+                            ctx.moveTo(this.x-9,this.y + 35);
+                            ctx.lineTo(this.x - 26,this.y + 45);
+                            ctx.lineTo(this.x - 26,this.y + 75);
+                            ctx.lineTo(this.x,this.y + 90);
+                            ctx.lineTo(this.x + 18,this.y + 80);
+                            ctx.moveTo(this.x + 26,this.y + 68);
+                            ctx.lineTo(this.x + 26,this.y + 45);
+                            ctx.lineTo(this.x + 9,this.y + 35);
+                            ctx.moveTo(this.x - 20,this.y + 47);
+                            ctx.lineTo(this.x - 20,this.y + 73);
+                            ctx.moveTo(this.x + 23,this.y + 42);
+                            ctx.lineTo(this.x + 36,this.y + 32);
+                            ctx.moveTo(this.x + 26,this.y + 46);
+                            ctx.lineTo(this.x + 39,this.y + 36);
+                            ctx.moveTo(this.x + 34,this.y + 81);
+                            ctx.lineTo(this.x + 48,this.y + 90);
+                            ctx.moveTo(this.x - 2,this.y + 88);
+                            ctx.lineTo(this.x - 2,this.y + 110);
+                            ctx.moveTo(this.x + 3,this.y + 88);
+                            ctx.lineTo(this.x + 3,this.y + 110);
+                            ctx.moveTo(this.x - 26,this.y + 45);
+                            ctx.lineTo(this.x - 46,this.y + 38);
+                            ctx.moveTo(this.x - 60,this.y + 44);
+                            ctx.lineTo(this.x - 74,this.y + 58);
+                            ctx.lineTo(this.x - 61,this.y + 77);
+                            ctx.moveTo(this.x - 58,this.y + 49);
+                            ctx.lineTo(this.x - 68,this.y + 59);
+                            ctx.moveTo(this.x - 46,this.y + 82);
+                            ctx.lineTo(this.x - 26,this.y + 73);
+                            ctx.moveTo(this.x - 60,this.y + 86);
+                            ctx.lineTo(this.x - 70,this.y + 100);
+                            ctx.strokeStyle = "rgba(255,255,255,0.2)";
+                            ctx.lineWidth = 3;
+                            ctx.stroke();
+                            ctx.fillStyle = "rgba(255,255,255,0.2)";
+                            ctx.font = "15px Arial";
+                            ctx.fillText("CH", this.x - 5, this.y);
+                            ctx.fillText("3", this.x + 18, this.y+6);
+                            ctx.fillText("N", this.x - 5, this.y+37);
+                            ctx.fillText("O", this.x + 38, this.y+35);
+                            ctx.fillText("N", this.x + 21, this.y+81);
+                            ctx.fillText("CH", this.x + 50, this.y+99);
+                            ctx.fillText("3", this.x + 72, this.y+105);
+                            ctx.fillText("O", this.x - 5, this.y+124);
+                            ctx.fillText("N", this.x - 59, this.y+42);
+                            ctx.fillText("N", this.x - 59, this.y+84);
+                            ctx.fillText("H  C", this.x - 98, this.y+114);
+                            ctx.fillText("3", this.x - 87, this.y+119);
+                            ctx.closePath();
+                            ctx.restore();
+                        }
+                        else if(mol == "C6H6"){
+                            //Benzene
+                            ctx.save();
+                            ctx.translate(this.x+20,this.y+80);
+                            ctx.rotate(this.r);
+                            ctx.translate(-this.x+20,-this.y-80);
+                            ctx.beginPath();
+                            ctx.moveTo(this.x,this.y + 30);
+                            ctx.lineTo(this.x - 26,this.y + 45);
+                            ctx.lineTo(this.x - 26,this.y + 75);
+                            ctx.lineTo(this.x,this.y + 90);
+                            ctx.lineTo(this.x + 26,this.y + 75);
+                            ctx.lineTo(this.x + 26,this.y + 45);
+                            ctx.lineTo(this.x,this.y + 30);
+                            ctx.moveTo(this.x - 20,this.y + 47);
+                            ctx.lineTo(this.x - 20,this.y + 73);
+                            ctx.moveTo(this.x,this.y + 83);
+                            ctx.lineTo(this.x + 22,this.y + 70);
+                            ctx.moveTo(this.x,this.y + 36);
+                            ctx.lineTo(this.x + 22,this.y + 49);
+                            ctx.strokeStyle = "rgba(255,255,255,0.2)";
+                            ctx.lineWidth = 3;
+                            ctx.stroke();
+                            ctx.closePath();
+                            ctx.restore();
+                        }
+                    }
+                }
+
+                init();
+
+                function animloop() {
+                    draw();
+                    requestAnimFrame(animloop);
+                }
+
+                $(function(){
+                    layui.use(['layer', 'form'], function() {
+                        var layer = layui.layer,
+                            $ = layui.jquery,
+                            form = layui.form;
+                    });
+                })
+
+                function login(){
+
+                    if (!!window.ActiveXObject || "ActiveXObject" in window){
+                        alert("IE浏览器无法登陆，请使用其他浏览器！");
+                        return;
+                    }
+
+                    var username = $("#username").val();
+                    var password = $("#password").val();
+                    if(username.trim().length < 5){
+                        $.pt({
+                            target: $("#username"),
+                            position: 'r',
+                            align: 't',
+                            width: 'auto',
+                            height: 'auto',
+                            content:"用户名不能少于5位"
+                        });
+                        return false;
+                    }
+                    //密码只能是5-15位
+                    var regExp = new RegExp("^.{5,15}$");
+                    if(!regExp.test(password)){
+                        $.pt({
+                            target: $("#password"),
+                            position: 'r',
+                            align: 't',
+                            width: 'auto',
+                            height: 'auto',
+                            content:"密码只能是5-15位"
+                        });
+                        return false;
+                    }
+                    var index = top.layer.msg('正在登陆',{icon: 16,time:false,shade:0.8});
+                    $.post("/loginSystem",$("#useLogin").serialize(),function(data){
+                        if(data.code == 1){
+                            setTimeout(function(){
+                                window.location.href=data.url;
+                                top.layer.close(index);
+                            },500);
+                        }else{
+                            layer.alert(data.message,function(){
+                                layer.closeAll();//关闭所有弹框
+                            });
+                        }
+                    });
+                }
+                animloop();
+            </script>
+    </body>
+</html>

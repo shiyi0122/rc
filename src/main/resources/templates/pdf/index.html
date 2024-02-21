@@ -1,0 +1,87 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+    <style type="text/css">
+        table.gridtable {
+            /*font-family: verdana, arial, sans-serif;*/
+            margin: auto;
+            font-size: 20px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+        }
+
+        table.gridtable th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #dedede;
+        }
+
+        table.gridtable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body style="font-family: SimSun;text-align: center">
+<h1 th:if="${template.record.type == 1}">园区伴游机器人质检报告</h1>
+<h1 th:if="${template.record.type == 2}">园区办有机器人验收单</h1>
+<table class="gridtable">
+    <tr>
+        <td>公司名称</td>
+        <td th:if="${template.record.type == 1}" th:text="${template.record.companyName}"></td>
+        <td th:if="${template.record.type == 2}" th:text="${template.record.scenicSpotName}"></td>
+        <td>设备编号</td>
+        <td th:text="${template.record.robotCode}">2000001</td>
+    </tr>
+    <tr>
+        <td>设备型号</td>
+        <td th:text="${template.record.robotModel}">3.3</td>
+        <td>生产批次</td>
+        <td th:text="${template.record.productionInfo}">202108-JH-001</td>
+    </tr>
+    <tr>
+        <td>质检标准</td>
+        <td th:text="${template.record.inspectionName}">质检标准-2021002</td>
+        <td>质检结果</td>
+        <td th:if="${template.record.result == 0}">不合格</td>
+        <td th:if="${template.record.result == 1}">合格</td>
+    </tr>
+    <tr>
+        <td>质检员</td>
+        <td th:text="${template.record.inspectorName}">张三</td>
+        <td>质检日期</td>
+        <td th:text="${template.record.inspectonTime}">2021-08-10</td>
+    </tr>
+    <tr>
+        <td colspan="4">&nbsp;</td>
+    </tr>
+    <tr>
+        <th>序号</th>
+        <th>检验项</th>
+        <th>技术参数</th>
+        <th>检验结果</th>
+    </tr>
+    <tbody th:if="${template.details}">
+    <tr th:each="var : ${template.details}">
+        <td th:text="${var.serial}">序号</td>
+        <td th:text="${var.project}">检验项</td>
+        <td th:text="${var.parameter}">技术参数</td>
+        <td th:if="${var.qualified == 0}">不合格</td>
+        <td th:if="${var.qualified == 1}">合格</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
