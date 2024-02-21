@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>机器人运营大数据</title>
+    <link rel="stylesheet" href="/css/scenicSpotOperationBigData/index.css" media="all" />
+    <link
+            rel="stylesheet"
+            href="//at.alicdn.com/t/font_2572350_nrz27shi5c.css"
+    />
+    <link rel="stylesheet" href="/css/scenicSpotOperationBigData/chinaMap.css" media="all" />
+    <link rel="stylesheet" href="/css/scenicSpotOperationBigData/tradeStats.css" media="all" />
+    <link rel="stylesheet" href="/css/scenicSpotOperationBigData/equStats.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/scenicSpotOperationBigData/operateData.css" media="all" />
+</head>
+
+<body>
+<!-- 机器人运营大数据 -->
+<div class="all_echarts">
+    <!-- 左边 -->
+    <div class="left_echarts">
+        <!-- 上边的地图 -->
+        <div class="left_top_map">
+            <div class="left_top_map_text">按小时统计</div>
+            <div id="myEchartsContent" style="width: 100%; height: 68vh"></div>
+        </div>
+        <!-- 下边的大数据折线图 -->
+        <div class="left_bottom_line">
+            <div id="OrderAmountEcharts" style="width: 100%; height: 30vh"></div>
+        </div>
+    </div>
+    <!-- 右边 -->
+    <div class="right_echarts">
+        <!-- 上边的本月运营数据 -->
+        <div class="right_operate_data">
+            <div class="operate_data" style="width: 100%">
+                <div class="operate_title">本月运营数据</div>
+                <table class="layui-hide" id="test" lay-filter = "test"></table>
+            </div>
+        </div>
+        <!-- 中间的交易统计 -->
+        <div class="right_middle_trade_stats" style="visibility: hidden">
+            <div class="trade_stats">
+                <div id="tradeEcharts" style="width: 100%; height: 34vh"></div>
+
+                <!-- 右侧 - 四个周期的已结算累计收入 -->
+                <ul class="four_cycle_income">
+                    <li>今日 <span class="money" id="today"></span> 元</li>
+                    <li>昨日 <span class="money" id="yesterday"></span> 元</li>
+                    <li>七天 <span class="money" id="sevenDays"></span> 元</li>
+                    <li>本月 <span class="money" id="thisMonth"></span> 元</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 下边的设备统计 -->
+        <div class="right_edu_stats">
+            <div class="equ_stats">
+                <!-- 柱状图 -->
+                <div id="equBarEcharts" style="width: 100%; height: 30vh"></div>
+                <!-- 饼图 -->
+                <div id="equPieEcharts" style="width: 100%; height: 30vh"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 专门为chinaMap提供的echarts版本（此版本为修改版，需要与china.js修改版配合使用） -->
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.4.1/jquery.js"></script>
+<script src="/page/assetsSystem/scenicSpotOperationBigData/js/echarts4.3.0-rc.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.1/echarts.min.js"></script>
+<script src="/page/assetsSystem/scenicSpotOperationBigData/js/china.js"></script>
+<script src="/page/assetsSystem/scenicSpotOperationBigData/js/chinaMap.js"></script>
+<script src="/page/assetsSystem/scenicSpotOperationBigData/js/orderAmountLine.js"></script>
+<script src="/page/assetsSystem/scenicSpotOperationBigData/js/tradeStats.js"></script>
+<script src="/page/assetsSystem/scenicSpotOperationBigData/js/equStats.js"></script>
+<script src="/page/assetsSystem/scenicSpotOperationBigData/js/operateData.js"></script>
+</body>
+</html>

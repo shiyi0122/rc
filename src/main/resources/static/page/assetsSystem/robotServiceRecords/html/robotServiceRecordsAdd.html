@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>机器人维修记录添加--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/adamins.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/form.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="Form" lay-filter="Form">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">机器人编号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="serviceRecordsCode" placeholder="请输入机器人编号" type="text" class="layui-input serviceRecordsCode" autocomplete="off" lay-verify="required" lay-reqtext="机器人编号是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">机器人型号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="serviceRecordsModel" placeholder="请输入机器人型号" type="text" class="layui-input serviceRecordsModel" autocomplete="off" lay-verify="required" lay-reqtext="机器人型号是必填项，不能为空"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">景区<span style="color: red;">*</span></label>
+                        <div class="layui-input-block scenicSpotId">
+                            <select name="scenicSpotId" lay-verify="required" lay-search="" lay-filter="spotId" class="scenicSpotId" id="scenicSpotId" lay-reqtext="景区是必选项，不能为空">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">故障名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block errorRecordsName">
+                            <select name="errorRecordsName" lay-verify="required" lay-search="" lay-filter="errorRecordsName" class="errorRecordsName" lay-reqtext="故障名称是必选项，不能为空">
+                                <option value="">故障类型</option>
+                                <option value="电气类">电气类</option>
+                                <option value="机械类">机械类</option>
+                                <option value="易损易耗">易损易耗</option>
+                                <option value="工具类">工具类</option>
+                                <option value="仪器类">仪器类</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">故障单号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="errorRecordsModel" placeholder="请输入故障描述" type="text" class="layui-input errorRecordsModel" autocomplete="off" lay-verify="required" lay-reqtext="故障单号是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">维修结果<span style="color: red;">*</span></label>
+                        <div class="layui-input-block serviceRecordsResult">
+                            <select name="serviceRecordsResult" lay-verify="required" lay-search="" lay-filter="serviceRecordsResult" class="serviceRecordsResult" lay-reqtext="是否需要发配件是必选项，不能为空">
+                                <option value="1">未维修已派单</option>
+                                <option value="2">已修好，远超协助</option>
+                                <option value="3">已判断问题，需要配件</option>
+                                <option value="4">未修好，需要售后现场解决</option>
+                                <option value="5">已修好，售后现场解决</option>
+                                <option value="5">已确认修好</option>
+                                <option value="7">已关闭</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">维修详情<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="serviceRecordsDetails" placeholder="维修详情" type="text" class="layui-input serviceRecordsDetails" autocomplete="off" lay-verify="required" lay-reqtext="维修详情是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">维修人员<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="serviceRecordsPersonnel" placeholder="维修人员" type="text" class="layui-input serviceRecordsPersonnel" autocomplete="off" lay-verify="required" lay-reqtext="维修人员是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">维修人员电话<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="serviceRecordsTel" placeholder="维修人员电话" type="text" class="layui-input   serviceRecordsTel" autocomplete="off" lay-verify="required" lay-reqtext="维修人员电话是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">星级<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input name="serviceRecordsLevel" placeholder="星级" type="text" class="layui-input   serviceRecordsLevel" autocomplete="off" lay-verify="required" lay-reqtext="星级是必填项，不能为空"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <input name="serviceRecordsRemark" placeholder="请输入备注" type="text" class="layui-input serviceRecordsRemark" autocomplete="off"/>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center" style="z-index: 200">
+        <button class="layui-btn" lay-filter="btnSubmitPartsManagement" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="cancels()">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/assetsSystem/robotServiceRecords/js/robotServiceRecordsAdd.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+<script type="text/javascript">
+    layui.use(['form','layer','table','laytpl','jquery'],function(){
+        var form = layui.form;
+        var items = [];
+        $ = layui.jquery;
+        $.ajax({
+            type : "post",
+            url : "/homePage",
+            async : false,
+            success : function(data){
+                if(data.code == 1){
+                    items = data.data;
+                    $("#scenicSpotId").html("<option value=''>请选择景区</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                        $('#scenicSpotId').append(option);//往下拉菜单里添加元素
+                        form.render('select');
+                    });
+                }else{
+                }
+            }
+        });
+    })
+</script>
+
+<!--<script type="text/javascript">-->
+<!--    layui.use(['form','layer','table','laytpl','jquery'],function(){-->
+<!--        var form = layui.form;-->
+<!--        var items = [];-->
+<!--        $ = layui.jquery;-->
+<!--        $.ajax({-->
+<!--            type : "post",-->
+<!--            url : "/system/partsManagementType/getPartsManagementTypeList",-->
+<!--            async : false,-->
+<!--            success : function(data){-->
+<!--                if(data.code == 1){-->
+<!--                    items = data.data;-->
+<!--                    $("#accessoriesType").html("<option value=''>请选择配件类型</option>");-->
+<!--                    $.each(items, function (index, item) {-->
+<!--                        var option = new Option(item.partsManagementType,item.id);-->
+<!--                        $('#accessoriesType').append(option);//往下拉菜单里添加元素-->
+<!--                        form.render('select');-->
+<!--                    });-->
+<!--                }else{-->
+
+<!--                }-->
+<!--            }-->
+<!--        });-->
+<!--    })-->
+<!--</script>-->
+
+</body>
+</html>

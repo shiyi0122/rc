@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>全国景区排名--后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/css/public.css" media="all" />
+    <style>
+        .start_end_time_month,
+        .start_end_time_day,
+        .start_end_time_year {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .start_end_time_day,
+        .start_end_time_year {
+            display: none;
+        }
+        .gapline {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .layui-table-box .layui-table-cell  {
+            line-height: 20px;
+            padding: 5px 5px ;
+            position: relative;
+            box-sizing: border-box;
+            text-align: center;
+            overflow: visible;
+            height: auto;
+            overflow: visible;
+            text-overflow: inherit;
+            white-space: normal;
+        }
+
+    </style>
+</head>
+<div class="layui-card-body">
+    <blockquote class="layui-elem-quote quoteBox">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <input type="hidden" class="id" name="id">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <select class="layui-select companyId" lay-search="" lay-verify="required" autocomplete="off" id="companyId"></select>
+                </div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <select class="layui-select scenicSpotId" lay-search="" lay-verify="required" autocomplete="off" id="scenicSpotId"></select>
+                </div>
+                <div class="layui-input-inline"style="width: 120px;">
+                    <select class="layui-select dataType" lay-search="" lay-verify="required" autocomplete="off" id="dataType">
+                        <option value="1">日</option>
+                        <option value="2" selected = "selected">月</option>
+                        <option value="3">年</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" class="layui-input startTime" autocomplete="off" placeholder="开始时间" id="startTime"/>
+                </div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" class="layui-input endTime" autocomplete="off" placeholder="结束时间" id="endTime"/>
+                </div>
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>
+                    <button id="downloadExcel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <table id="wholeCountryScenicSpotRankingList" class="layui-table" lay-filter="wholeCountryScenicSpotRankingList"></table>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/page/assetsSystem/scenicSpotOperationBigData/js/wholeCountryScenicSpotRankingList.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript">
+    //加载组件
+    layui.config({
+        base: '/layui/'
+    }).extend({
+        xmSelect: 'xm-select'
+    }).use(['xmSelect','form','layer','table'], function(){
+        var xmSelect = layui.xmSelect;
+        var form = layui.form;
+        var layer = layui.layer;
+        var table = layui.table;
+        $ = layui.jquery;
+        autoRow : true;
+        var items = [];
+
+        $.ajax({
+            type : "POST",
+            url : "/system/ascriptionCompany/getAscriptionCompany",
+            async : false,
+            success : function(data){
+                if(data.state == 200){
+                    items = data.data;
+                    $("#companyId").html("<option value=''>请选择公司</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.companyName,item.companyId);
+                        $('#companyId').append(option);//往下拉菜单里添加元素
+                        form.render('select'); //这个很重要
+                    });
+                }else{
+                }
+            }
+        });
+
+        $.ajax({
+            type : "post",
+            url : "/homePage",
+            async : false,
+            success : function(data){
+                if(data.code == 1){
+                    items = data.data;
+                    $("#scenicSpotId").html("<option value=''>请选择景区</option>");
+                    $.each(items, function (index, item) {
+                        var option = new Option(item.scenicSpotName,item.scenicSpotId);
+                        $('#scenicSpotId').append(option);//往下拉菜单里添加元素
+                        form.render('select');
+                    });
+                }else{
+                }
+            }
+        });
+
+    })
+</script>
+</html>
