@@ -656,23 +656,20 @@
         SELECT
         o.ORDER_SCENIC_SPOT_ID,
         s.SCENIC_SPOT_NAME AS scenicSpotName,
-        s.COMPANY_ID,
-        <!--总订单数-->
         COALESCE(COUNT(o.ORDER_ID), 0) AS allOrder,
-        <!--寻宝订单数-->
         COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '0' THEN 1 ELSE 0 END), 0) AS huntOrder,
-        <!--抽奖订单数-->
         COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0) AS lotteryOrder,
-        <!--寻宝订单占比-->
         ROUND((COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '0' THEN 1 ELSE 0 END), 0) / COALESCE(COUNT(o.ORDER_ID), 0)) * 100, 2) AS huntProportion,
-        <!--抽奖订单占比-->
         ROUND((COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0) / COALESCE(COUNT(o.ORDER_ID), 0)) * 100, 2) AS lotteryProportion,
-        <!--客单价-->
         ROUND(COALESCE(SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2)), 0) / COALESCE(COUNT(o.ORDER_ID), 0), 2) AS perCustomerTransaction,
-        <!--寻宝客单价-->
-        ROUND(COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0),2) AS huntPerCustomerTransaction,
-        <!--抽奖客单价-->
-        ROUND(COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '0' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '0' THEN 1 ELSE 0 END), 0),2) AS lotteryPerCustomerTransaction
+        ROUND(
+        COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0),
+        2
+        ) AS huntPerCustomerTransaction,
+        ROUND(
+        COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '0' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '0' THEN 1 ELSE 0 END), 0),
+        2
+        ) AS lotteryPerCustomerTransaction
         FROM
         SYS_ORDER o
         JOIN SYS_SCENIC_SPOT s ON o.ORDER_SCENIC_SPOT_ID = s.SCENIC_SPOT_ID
@@ -692,9 +689,6 @@
         </if>
           <if test="huntsState != null and huntsState != ''">
             AND s.HUNTS_STATE = #{huntsState}
-        </if>
-        <if test='companyId  != null and companyId != ""'>
-            AND s.COMPANY_ID = #{companyId}
         </if>
         AND o.ORDER_STATUS = 30
         GROUP BY o.ORDER_SCENIC_SPOT_ID
