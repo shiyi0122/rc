@@ -163,4 +163,7 @@ public class SysOrder extends BaseRowModel {
 
     public String dateType;
     public String cycle;
+
+    //所属公司ID
+    public String companyId;
 }
