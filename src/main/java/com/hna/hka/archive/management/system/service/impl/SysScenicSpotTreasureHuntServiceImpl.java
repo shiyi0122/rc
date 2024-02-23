@@ -789,20 +789,20 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
     public PageInfo<SysOrderDetail> getTreasureHuntDetail(SysOrder sysOrder) throws ParseException {
         PageHelper.startPage(sysOrder.getPageNum(), sysOrder.getPageSize());
         //查询类型 0日 1月 2年
-        if (("1").equals(sysOrder.getDateType())) {
+        if (("2").equals(sysOrder.getDateType())) {
             sysOrder.setOrderStartTime(DateUtil.getYearDate(sysOrder.getOrderStartTime()));
             sysOrder.setOrderEndTime(DateUtil.getYearDate(sysOrder.getOrderEndTime()));
-        } else if (("2").equals(sysOrder.getDateType())) {
+        } else if (("1").equals(sysOrder.getDateType())) {
             sysOrder.setOrderStartTime(DateUtil.getYearsDate(sysOrder.getOrderStartTime()));
             sysOrder.setOrderEndTime(DateUtil.getYearsDate(sysOrder.getOrderEndTime()));
-        } else {
-            sysOrder.setOrderStartTime(DateUtil.checkDate(sysOrder.getOrderStartTime()));
-            sysOrder.setOrderEndTime(DateUtil.checkDate(sysOrder.getOrderEndTime()));
+        } else if(("0").equals(sysOrder.getDateType())){
+//            sysOrder.setOrderStartTime(DateUtil.checkDate(sysOrder.getOrderStartTime()));
+//            sysOrder.setOrderEndTime(DateUtil.checkDate(sysOrder.getOrderEndTime()));
         }
 
         List<SysOrderDetail> treasureHuntDetail = sysScenicSpotTreasureHuntMapper.getTreasureHuntDetail(sysOrder);
         for (SysOrderDetail sysOrderDetail : treasureHuntDetail) {
-            if (sysOrderDetail.getHuntPerCustomerTransaction() == null) {
+            if (sysOrderDetail.getHuntPerCustomerTransaction() == null || sysOrderDetail.getHuntPerCustomerTransaction().equals("")){
                 sysOrderDetail.setHuntPerCustomerTransaction("0.00");
             }
         }

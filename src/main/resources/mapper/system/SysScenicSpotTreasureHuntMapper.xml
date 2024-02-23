@@ -654,7 +654,7 @@
     </select>
     <select id="getTreasureHuntDetail" resultType="com.hna.hka.archive.management.system.model.SysOrderDetail">
         SELECT
-        o.ORDER_SCENIC_SPOT_ID,
+        o.ORDER_SCENIC_SPOT_ID as scenicSpotId,
         s.SCENIC_SPOT_NAME AS scenicSpotName,
         s.COMPANY_ID,
         <!--总订单数-->
@@ -678,26 +678,27 @@
         JOIN SYS_SCENIC_SPOT s ON o.ORDER_SCENIC_SPOT_ID = s.SCENIC_SPOT_ID
         WHERE
         1 = 1
-        <if test="scenicSpotId != null and scenicSpotId != ''">
-            AND o.ORDER_SCENIC_SPOT_ID = #{scenicSpotId}
+        <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+            AND o.ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId}
         </if>
-        <if test='dataType == "0"'>
+        <if test='dateType == "0"'>
             AND STR_TO_DATE(o.CREATE_DATE,'%Y-%m-%d') between #{orderStartTime} and #{orderEndTime}
         </if>
-        <if test='dataType == "1"'>
+        <if test='dateType == "1"'>
             AND DATE_FORMAT(STR_TO_DATE(o.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{orderStartTime} and #{orderEndTime}
         </if>
-        <if test='dataType == "2"'>
+        <if test='dateType == "2"'>
             AND DATE_FORMAT(STR_TO_DATE(o.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{orderStartTime} and #{orderEndTime}
         </if>
           <if test="huntsState != null and huntsState != ''">
-            AND s.HUNTS_STATE = #{huntsState}
+            AND o.HUNTS_STATE = #{huntsState}
         </if>
         <if test='companyId  != null and companyId != ""'>
             AND s.COMPANY_ID = #{companyId}
         </if>
         AND o.ORDER_STATUS = 30
         GROUP BY o.ORDER_SCENIC_SPOT_ID
+        ORDER BY COALESCE(COUNT(o.ORDER_ID), 0) DESC
     </select>
 
 

@@ -107,10 +107,10 @@ public class ShiroConfig {
         filterMap.put("/system/app**/**", "anon");
         filterMap.put("/system/sendMessage/**", "anon");
         filterMap.put("/system/scenicSpotOperatingTime/**", "anon");
-//        filterMap.put("/system/broadcastHunt/**", "anon");
-//        filterMap.put("/system/treasureHuntRule/**", "anon");
-//        filterMap.put("/system/treasureHuntNew/**", "anon");
-//        filterMap.put("/system/scenicSpot/**", "anon");
+        filterMap.put("/system/broadcastHunt/**", "anon");
+        filterMap.put("/system/treasureHuntRule/**", "anon");
+        filterMap.put("/system/treasureHuntNew/**", "anon");
+        filterMap.put("/system/scenicSpot/**", "anon");
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问【放行】-->
         filterMap.put("/**", "kickout,authc");
         filterMap.put("/*/*", "authc");

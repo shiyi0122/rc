@@ -1,6 +1,9 @@
 package com.hna.hka.archive.management.system.controller;
 
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.github.pagehelper.PageInfo;
 import com.hna.hka.archive.management.assetsSystem.model.ScenicSpot;
 import com.hna.hka.archive.management.system.model.*;
@@ -17,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.*;
 
@@ -74,7 +79,7 @@ public class BroadcastHuntController extends PublicUtil {
     @ResponseBody
     @RequestMapping("/getTreasureHuntNewList")
     public PageDataResult getTreasureHuntNewList(@RequestParam("pageNum") Integer pageNum,
-                                          @RequestParam("pageSize") Integer pageSize, SysScenicSpotTreasureHunt sysScenicSpotTreasureHunt) {
+                                                 @RequestParam("pageSize") Integer pageSize, SysScenicSpotTreasureHunt sysScenicSpotTreasureHunt) {
         PageDataResult pageDataResult = new PageDataResult();
         Map<String, String> search = new HashMap<>();
         try {
@@ -403,8 +408,6 @@ public class BroadcastHuntController extends PublicUtil {
     }
 
 
-
-
     @ApiOperation("新增用户收货地址")
     @PostMapping("/addUserAddress")
     public ReturnModel addUserAddress(@RequestBody SysCurrentUserAddress userAddress) {
@@ -551,12 +554,12 @@ public class BroadcastHuntController extends PublicUtil {
                 returnModel.setMsg("修改成功！");
                 returnModel.setState(Constant.STATE_SUCCESS);
                 return returnModel;
-            } else if (i == -1){
+            } else if (i == -1) {
                 returnModel.setData("");
                 returnModel.setMsg("未绑定地址！");
                 returnModel.setState(Constant.STATE_FAILURE);
                 return returnModel;
-            }else {
+            } else {
                 returnModel.setData("");
                 returnModel.setMsg("修改失败！");
                 returnModel.setState(Constant.STATE_FAILURE);
@@ -910,37 +913,57 @@ public class BroadcastHuntController extends PublicUtil {
 
     @ApiOperation("查询寻宝详情")
     @PostMapping("/getTreasureHuntDetail")
-    public ReturnModel getTreasureHuntDetail(@RequestBody SysOrder sysOrder) {
+    public ReturnModel getTreasureHuntDetail(@RequestBody SysOrder sysOrder) throws ParseException {
         ReturnModel returnModel = new ReturnModel();
-        try {
-            PageInfo<SysOrderDetail> sysOrderDetails = null;
-            if (sysOrder.getOrderStartTime() == null && sysOrder.getOrderEndTime() == null) {
-                sysOrder.setOrderStartTime(DateUtil.currentDateTime());
-                sysOrder.setOrderEndTime(DateUtil.currentDateTime());
-            }
-            sysOrderDetails= sysScenicSpotTreasureHuntService.getTreasureHuntDetail(sysOrder);
-            returnModel.setData(sysOrderDetails);
-            returnModel.setMsg("查询成功！");
-            returnModel.setState(Constant.STATE_SUCCESS);
-            return returnModel;
-        } catch (Exception e) {
-            returnModel.setData("");
-            returnModel.setMsg("查询失败，请联系管理员！");
-            returnModel.setState(Constant.STATE_FAILURE);
-            return returnModel;
-        }
-    }
 
-    @ApiOperation("寻宝详情导出Excel")
-    @PostMapping("/exportTreasureHuntDetail")
-    public void exportTreasureHuntDetail(@RequestBody SysOrder sysOrder, HttpServletResponse response) throws ParseException {
-        List<SysOrderDetail> sysOrderDetails = null;
-        if (sysOrder.getOrderStartTime() == null && sysOrder.getOrderEndTime() == null) {
+        PageInfo<SysOrderDetail> sysOrderDetails = null;
+        if (("").equals(sysOrder.getOrderStartTime()) || ("").equals(sysOrder.getOrderEndTime())) {
             sysOrder.setOrderStartTime(DateUtil.currentDateTime());
             sysOrder.setOrderEndTime(DateUtil.currentDateTime());
         }
-        sysOrderDetails = sysScenicSpotTreasureHuntService.getTreasureHuntDetail(sysOrder).getList();
-        String dateTime = DateFormatUtils.format(new Date(), "yyyyMMddHHmm");
-        FileUtil.exportExcel(FileUtil.getWorkbook("寻宝详情列表", "寻宝详情列表", SysOrderDetail.class, sysOrderDetails), "寻宝详情列表" + dateTime + ".xls", response);
+        sysOrderDetails = sysScenicSpotTreasureHuntService.getTreasureHuntDetail(sysOrder);
+        returnModel.setData(sysOrderDetails);
+        returnModel.setMsg("查询成功！");
+        returnModel.setState(Constant.STATE_SUCCESS);
+        return returnModel;
+
+    }
+
+    @ApiOperation("寻宝详情导出Excel")
+    @GetMapping("/exportTreasureHuntDetail")
+    public void exportTreasureHuntDetail(HttpServletResponse response, SysOrder sysOrder) throws Exception {
+        if (("").equals(sysOrder.getPageNum()) || ("").equals(sysOrder.getPageSize()) || sysOrder.getPageNum() == null || sysOrder.getPageSize() == null) {
+            sysOrder.setPageNum(1);
+            sysOrder.setPageSize(1000);
+        }
+        List<SysOrderDetail> sysOrderDetails = null;
+        if (("").equals(sysOrder.getOrderStartTime()) || ("").equals(sysOrder.getOrderEndTime())||sysOrder.getOrderStartTime()==null||sysOrder.getOrderEndTime()==null) {
+            sysOrder.setOrderStartTime(DateUtil.currentDateTime());
+            sysOrder.setOrderEndTime(DateUtil.currentDateTime());
+        }
+        PageInfo<SysOrderDetail> detail = sysScenicSpotTreasureHuntService.getTreasureHuntDetail(sysOrder);
+        sysOrderDetails = detail.getList();
+        String fileName = "寻宝详情列表.xlsx";
+        // 清空HTTP缓存头信息
+        response.reset();
+        // 响应头设置
+        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+        response.setHeader("Content-Type", "application/octet-stream;charset=UTF-8");
+        // 创建ExcelWriter对象
+        ExcelWriter excelWriter = null;
+        try {
+            excelWriter = EasyExcel.write(response.getOutputStream(), SysOrderDetail.class).build();
+            // 设置表格样式
+            WriteSheet writeSheet = EasyExcel.writerSheet("寻宝详情列表").build();
+            // 写入数据
+            excelWriter.write(sysOrderDetails, writeSheet);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭ExcelWriter, 完成导出
+            if (excelWriter != null) {
+                excelWriter.finish();
+            }
+        }
     }
 }
