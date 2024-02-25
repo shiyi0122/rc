@@ -1,9 +1,6 @@
 package com.hna.hka.archive.management.system.controller;
 
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.write.metadata.WriteSheet;
 import com.github.pagehelper.PageInfo;
 import com.hna.hka.archive.management.assetsSystem.model.ScenicSpot;
 import com.hna.hka.archive.management.system.model.*;
@@ -20,8 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
-import java.io.IOException;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.*;
 
@@ -533,9 +528,9 @@ public class BroadcastHuntController extends PublicUtil {
         }
     }
 
-    @ApiOperation("下载用户奖品Excel表")
-    @PostMapping("/downloadUserExchange")
-    public void downloadUserExchange(HttpServletResponse response, @RequestBody SysCurrentUserExchange userExchange) {
+    @ApiOperation("导出用户奖品Excel表")
+    @GetMapping("/downloadUserExchange")
+    public void downloadUserExchange(HttpServletResponse response, SysCurrentUserExchange userExchange) {
         List<SysCurrentUserExchange> userExchanges = null;
         userExchanges = sysScenicSpotTreasureHuntService.downloadUserExchange(userExchange);
         String dateTime = DateFormatUtils.format(new Date(), "yyyyMMddHHmm");
@@ -934,36 +929,17 @@ public class BroadcastHuntController extends PublicUtil {
     public void exportTreasureHuntDetail(HttpServletResponse response, SysOrder sysOrder) throws Exception {
         if (("").equals(sysOrder.getPageNum()) || ("").equals(sysOrder.getPageSize()) || sysOrder.getPageNum() == null || sysOrder.getPageSize() == null) {
             sysOrder.setPageNum(1);
-            sysOrder.setPageSize(1000);
+            sysOrder.setPageSize(10000);
         }
         List<SysOrderDetail> sysOrderDetails = null;
-        if (("").equals(sysOrder.getOrderStartTime()) || ("").equals(sysOrder.getOrderEndTime())||sysOrder.getOrderStartTime()==null||sysOrder.getOrderEndTime()==null) {
+        if (("").equals(sysOrder.getOrderStartTime()) || ("").equals(sysOrder.getOrderEndTime()) || sysOrder.getOrderStartTime() == null || sysOrder.getOrderEndTime() == null) {
             sysOrder.setOrderStartTime(DateUtil.currentDateTime());
             sysOrder.setOrderEndTime(DateUtil.currentDateTime());
         }
         PageInfo<SysOrderDetail> detail = sysScenicSpotTreasureHuntService.getTreasureHuntDetail(sysOrder);
         sysOrderDetails = detail.getList();
-        String fileName = "寻宝详情列表.xlsx";
-        // 清空HTTP缓存头信息
-        response.reset();
-        // 响应头设置
-        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
-        response.setHeader("Content-Type", "application/octet-stream;charset=UTF-8");
-        // 创建ExcelWriter对象
-        ExcelWriter excelWriter = null;
-        try {
-            excelWriter = EasyExcel.write(response.getOutputStream(), SysOrderDetail.class).build();
-            // 设置表格样式
-            WriteSheet writeSheet = EasyExcel.writerSheet("寻宝详情列表").build();
-            // 写入数据
-            excelWriter.write(sysOrderDetails, writeSheet);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            // 关闭ExcelWriter, 完成导出
-            if (excelWriter != null) {
-                excelWriter.finish();
-            }
-        }
+        String dateTime = DateFormatUtils.format(new Date(), "yyyyMMddHHmm");
+        FileUtil.exportExcel(FileUtil.getWorkbook("寻宝详情列表", "寻宝详情列表", SysOrderDetail.class, sysOrderDetails), "寻宝详情列表" + dateTime, response);
+
     }
 }

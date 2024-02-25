@@ -249,10 +249,10 @@
                 and a.EXCHANGE_NAME like CONCAT('%',#{exchangeName},'%')
             </if>
             <if test="startValidity != null and startValidity != ''">
-                AND DATE(a.START_VALIDITY) <![CDATA[ >= ]]> #{startValidity}
+                AND DATE(a.CREATE_DATE) <![CDATA[ >= ]]> #{startValidity}
             </if>
             <if test="endValidity != null and endValidity != ''">
-                AND DATE(a.END_VALIDITY) <![CDATA[ <= ]]> #{endValidity}
+                AND DATE(a.CREATE_DATE) <![CDATA[ <= ]]> #{endValidity}
             </if>
             <if test="exchangeType != null and exchangeType != ''">
                 and a.EXCHANGE_TYPE =#{exchangeType}
