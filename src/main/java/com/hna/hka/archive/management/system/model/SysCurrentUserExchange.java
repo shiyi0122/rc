@@ -63,8 +63,11 @@ public class SysCurrentUserExchange {
     private String updateDate;
     private String userPhone1;
 
+    @Excel(name = "收货地址",width = 20,orderNum = "13")
     private String mailingAddress;
+    @Excel(name = "收货人手机号",width = 20,orderNum = "12")
     private String mailingPhone;
+    @Excel(name = "收货人",width = 20,orderNum = "11")
     private String fullName;
 
     private Integer pageNum;

@@ -97,4 +97,6 @@ public class SysRobot {
     private String errorRecordsAffect;
     //故障单号创建时间
     private String CreatTime;
+
+    private String autoUpdateState;
 }

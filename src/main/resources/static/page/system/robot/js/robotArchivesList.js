@@ -63,6 +63,21 @@ layui.use(['form','layer','table','laytpl','upload'],function(){
                 }},
             // {field: 'robotRemarks', title: '机器人备注', minWidth:100, align:"center"},
 			{field: 'robotBatchNumber', title: '机器人批次号', minWidth:100, align:"center"},
+			{field: 'autoUpdateState', title: '升级状态', minWidth:100, align:"center",templet:function (d) {
+                    if (d.autoUpdateState == "0"){
+                        return "下载中";
+                    }else if (d.autoUpdateState == "1"){
+                        return "下载完成";
+                    }else if (d.autoUpdateState == "2"){
+                        return "下载失败";
+                    }else if (d.autoUpdateState == "3"){
+                        return "安装中";
+                    }else if (d.autoUpdateState == "4"){
+                        return "安装完成";
+                    }else if (d.autoUpdateState == "5"){
+                        return "安装失败";
+                    }
+                }},
             // {field: 'robotBluetooth', title: '机器人蓝牙编号', minWidth:100, align:"center"},
             // {field: 'clientVersion', title: '机器人PAD版本号', minWidth:100, align:"center"},
             {field: 'createDate', title: '添加时间', minWidth:100, align:"center"},

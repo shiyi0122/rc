@@ -171,4 +171,6 @@ public class SysScenicSpot {
      */
     private String cooldownTime;
 
+    private String autoUpdateMonitor;
+
 }

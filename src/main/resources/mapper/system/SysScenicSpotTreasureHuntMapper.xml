@@ -229,6 +229,8 @@
             </if>
             <if test="userPhone1 != null and userPhone1 != ''">
                 and b.CURRENT_USER_PHONE LIKE CONCAT('%',#{userPhone1},'%')
+                OR a.USER_PHONE LIKE CONCAT('%',#{userPhone1},'%')
+                OR a.MAILING_PHONE LIKE CONCAT('%',#{userPhone1},'%')
             </if>
             <if test="exchangeNumber != null and exchangeNumber != ''">
                 and a.EXCHANGE_NUMBER LIKE CONCAT('%',#{exchangeNumber},'%')

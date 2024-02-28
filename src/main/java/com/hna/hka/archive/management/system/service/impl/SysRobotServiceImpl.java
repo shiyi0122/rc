@@ -1123,6 +1123,21 @@ public class SysRobotServiceImpl implements SysRobotService {
 
     }
 
+    @Override
+    public List<SysRobot> getRobotUpgrade(Long scenicSpotId,Long robotId) {
+        return sysRobotMapper.getRobotUpgrade(scenicSpotId,robotId);
+    }
+
+    @Override
+    public int updateRobotUpgrade(Long scenicSpotId, Long robotId) {
+        return sysRobotMapper.updateRobotUpgrade(scenicSpotId,robotId);
+    }
+
+    @Override
+    public List<SysRobotAppVersion> getRobotVersionPad(Long scenicSpotId) {
+        return sysRobotMapper.getRobotVersionPad(scenicSpotId);
+    }
+
 
     //list分页
     public List<SysRobot> page(List<SysRobot> dataList, int pageSize, int currentPage) {

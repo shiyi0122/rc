@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.hna.hka.archive.management.appSystem.model.SysAppRobot;
 import com.hna.hka.archive.management.appSystem.model.SysAppRobotOperationTime;
 import com.hna.hka.archive.management.assetsSystem.model.SysAssetsRobotExcel;
-import com.hna.hka.archive.management.assetsSystem.model.SysRobotErrorRecords;
 import com.hna.hka.archive.management.system.dto.SysRobotIdDTO;
 import com.hna.hka.archive.management.system.model.*;
 import com.hna.hka.archive.management.system.util.PageDataResult;
@@ -166,5 +165,9 @@ public interface SysRobotService {
     void robotSynchronization();
 
 
+    List<SysRobot> getRobotUpgrade(Long scenicSpotId,Long robotId);
 
+    int updateRobotUpgrade(Long scenicSpotId, Long robotId);
+
+    List<SysRobotAppVersion> getRobotVersionPad(Long scenicSpotId);
 }

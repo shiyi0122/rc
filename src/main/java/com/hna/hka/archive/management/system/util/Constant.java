@@ -34,5 +34,7 @@ public class Constant {
     public static final String VIP_UNLOCKING = "508";
     //运营人员维护
     public static final String OPERATOR_MAINTENANCE = "509";
+    //PAD升级
+    public static final String ROBOT_UPDATE = "700";
 
 }

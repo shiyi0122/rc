@@ -78,6 +78,7 @@ layui.use(['form','layer','table','laytpl'],function(){
             {field: 'heat', title: '景区热度', minWidth:100, align:"center"},
             {field: 'treasureCooldownTime', title: '宝箱冷却时间(分)', minWidth:100, align:"center"},
             {field: 'cooldownTime', title: '扫码启动后所有宝箱的冷却时间(秒)', minWidth:100, align:"center"},
+            {field: 'autoUpdateMonitor', title: '监听状态', minWidth:100, align:"center"},
             {title: '操作', minWidth:175, templet:'#scenicSpotBasicArchivesListBar',fixed:"right",align:"center"}
         ]]
     });
