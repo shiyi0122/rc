@@ -21,4 +21,7 @@ public class SysRobotAppVersion {
      */
     private String scenicSpotName;
 
+    //0无PAD无更新版本 1有PAD自动更新版本（后台根据此状态来推送给PAD通知更新） 2 景区手动升级
+    private String autoUpdateMonitor;
+
 }

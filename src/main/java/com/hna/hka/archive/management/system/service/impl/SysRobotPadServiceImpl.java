@@ -41,8 +41,8 @@ public class SysRobotPadServiceImpl implements SysRobotPadService {
     @Value("${filePathPadUrl}")
     private String filePathPadUrl;
 
-//    @Autowired
-//    private FileUploadUtil fileUploadUtil;
+    @Autowired
+    private FileUploadUtil fileUploadUtil;
 
 
     /**
@@ -95,8 +95,8 @@ public class SysRobotPadServiceImpl implements SysRobotPadService {
                 //FileUtils.copyInputStreamToFile();这个方法里对IO进行了自动操作，不需要额外的再去关闭IO流
                 FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);
 
-//                String upload = fileUploadUtil.upload(file, filePathPadPaht.substring(1) + filename);
-
+                String upload = fileUploadUtil.upload(file, filePathPadPaht.substring(1) + filename);
+                System.out.println("PAD下载地址："+upload);
             } catch (IOException e) {
                 e.printStackTrace();
             }//复制文件到指定目录

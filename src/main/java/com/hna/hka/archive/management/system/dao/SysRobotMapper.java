@@ -5,10 +5,7 @@ import com.hna.hka.archive.management.appSystem.model.SysAppRobotOperationTime;
 import com.hna.hka.archive.management.assetsSystem.model.OperateState;
 import com.hna.hka.archive.management.assetsSystem.model.SysAssetsRobotExcel;
 import com.hna.hka.archive.management.system.dto.SysRobotIdDTO;
-import com.hna.hka.archive.management.system.model.SysRobot;
-import com.hna.hka.archive.management.system.model.SysRobotAppVersion;
-import com.hna.hka.archive.management.system.model.SysRobotExcel;
-import com.hna.hka.archive.management.system.model.SysRobotGPS;
+import com.hna.hka.archive.management.system.model.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -127,4 +124,6 @@ public interface SysRobotMapper {
     int updateRobotUpgrade(@Param("scenicSpotId") Long scenicSpotId, @Param("robotId") Long robotId);
 
     List<SysRobotAppVersion> getRobotVersionPad(@Param("scenicSpotId") Long scenicSpotId);
+
+    List<SysScenicSpot> timingRobotAuto();
 }

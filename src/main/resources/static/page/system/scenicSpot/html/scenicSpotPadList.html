@@ -22,6 +22,14 @@
                 <div class="layui-input-inline">
                     <input type="text" class="layui-input versionNumberVal" placeholder="版本号" />
                 </div>
+                <div class="layui-input-inline">
+                    <select type="text" class="layui-input autoUpdateMonitor" placeholder="PAD更新类型">
+                        <option value=""></option>
+                        <option value="0">PAD无更新版本</option>
+                        <option value="1">PAD自动更新版本</option>
+                        <option value="2">PAD景区手动升级</option>
+                    </select>
+                </div>
                 <div class="layui-inline">
                     <button id="btnSearch" class="layui-btn icon-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
                     <button id="reset" type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe666;</i>重置</button>

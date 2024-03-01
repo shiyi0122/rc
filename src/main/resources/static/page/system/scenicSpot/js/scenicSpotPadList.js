@@ -26,6 +26,15 @@ layui.use(['form','layer','table','laytpl'],function(){
             {field: 'scenicSpotName', title: '景区名称', minWidth:100, align:"center"},
             {field: 'versionUrl', title: 'PAD路径', minWidth:100, align:"center"},
             {field: 'versionNumber', title: 'PAD版本号', minWidth:100, align:"center"},
+            {field: 'autoUpdateMonitor', title: 'PAD更新类型', minWidth:100, align:"center",templet:function(d){
+                    if (d.autoUpdateMonitor == "0"){
+                        return "PAD无更新版本";
+                    }else if(d.autoUpdateMonitor == "1"){
+                        return "PAD自动更新版本";
+                    }else if(d.autoUpdateMonitor == "2"){
+                        return "PAD景区手动升级";
+                    }
+                }},
             {title: '操作', minWidth:100, templet:'#scenicSpotPadListBar',fixed:"right",align:"center"}
         ]]
     });
@@ -40,7 +49,8 @@ layui.use(['form','layer','table','laytpl'],function(){
             },
             where: {
                 versionNumber: $(".versionNumberVal").val(),
-                scenicSpotName: $(".scenicSpotNameVal").val() //搜索的关键字
+                scenicSpotName: $(".scenicSpotNameVal").val(), //搜索的关键字
+                autoUpdateMonitor : $(".autoUpdateMonitor").val()
             }
         })
     });
@@ -112,6 +122,7 @@ layui.use(['form','layer','table','laytpl'],function(){
                         body.find(".scenicSpotId").val(edit.scenicSpotId);
                         body.find(".scenicSpotName").val(edit.scenicSpotName);
                         body.find(".versionNumber").val(edit.versionNumber);
+                        body.find(".autoUpdateMonitor").val(edit.autoUpdateMonitor);
                         form.render();
                     }
                 }

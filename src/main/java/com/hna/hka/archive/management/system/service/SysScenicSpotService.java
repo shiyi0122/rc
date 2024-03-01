@@ -22,6 +22,7 @@ import java.util.Map;
 public interface SysScenicSpotService {
     /**
      * 根据ID查询景区
+     *
      * @param scenicSpotId
      * @return
      */
@@ -29,21 +30,24 @@ public interface SysScenicSpotService {
 
     /**
      * 景区列表查询
+     *
      * @param pageNum
      * @param pageSize
      * @param search
      * @return
      */
-    PageDataResult getScenicSpotList(Integer pageNum, Integer pageSize, Map<String,String> search);
+    PageDataResult getScenicSpotList(Integer pageNum, Integer pageSize, Map<String, String> search);
 
     /**
      * 查询景区归属地
+     *
      * @return
      */
     List<SysScenicSpotBinding> getScenicSpotBindingList();
 
     /**
      * 新增景区
+     *
      * @param sysScenicSpot
      * @param modificationLog
      * @return
@@ -52,25 +56,32 @@ public interface SysScenicSpotService {
 
     /**
      * 新增景区(改)
+     *
      * @param sysScenicSpotExpand
      * @param modificationLog
      * @return
      */
-    int addScenicSpotNew(SysScenicSpotExpand sysScenicSpotExpand, SysScenicSpotPriceModificationLog modificationLog,BusinessScenicSpotArea businessScenicSpotArea);
+    int addScenicSpotNew(SysScenicSpotExpand sysScenicSpotExpand, SysScenicSpotPriceModificationLog modificationLog, BusinessScenicSpotArea businessScenicSpotArea);
+
     /**
      * 修改景区信息
+     *
      * @param sysScenicSpot
      * @return
      */
-    int editScenicSpot(SysScenicSpot sysScenicSpot,SysScenicSpotPriceModificationLog modificationLog);
+    int editScenicSpot(SysScenicSpot sysScenicSpot, SysScenicSpotPriceModificationLog modificationLog);
+
     /**
      * 修改景区信息（改）
+     *
      * @param sysScenicSpotExpand
      * @return
      */
     int editScenicSpotNew(BusinessScenicSpotArea businessScenicSpotArea, SysScenicSpotExpand sysScenicSpotExpand, SysScenicSpotPriceModificationLog modificationLog);
+
     /**
      * 删除景区
+     *
      * @param scenicSpotId
      * @return
      */
@@ -78,6 +89,7 @@ public interface SysScenicSpotService {
 
     /**
      * 修改景区状态
+     *
      * @param sysScenicSpot
      * @return
      */
@@ -85,38 +97,43 @@ public interface SysScenicSpotService {
 
     /**
      * 获取当前景区
+     *
      * @param scenicSpotId
      * @return
      */
     SysScenicSpot getCurrentScenicSpot(long scenicSpotId);
 
     /**
-     *  查询当前景区是否有封顶价格
+     * 查询当前景区是否有封顶价格
+     *
      * @param scenicSpotId
      * @return
      */
     SysScenicSpotCapPrice getCapPriceByScenicSpotId(Long scenicSpotId);
 
     /**
-     *  新增景区封顶价格
+     * 新增景区封顶价格
+     *
      * @param capPrice
      * @return
      */
     int addCapPrice(SysScenicSpotCapPrice capPrice, SysUsers user);
 
     /**
-     *  查询景区封顶价格
+     * 查询景区封顶价格
+     *
      * @param scenicSpotId
      * @return
      */
     SysScenicSpotCapPrice getScenicSpotCapPriceByScenicSpotId(Long scenicSpotId);
 
     /**
-     *  编辑景区封顶价格
+     * 编辑景区封顶价格
+     *
      * @param capPrice
      * @return
      */
-    int editCapPrice(SysScenicSpotCapPrice capPrice,SysUsers user);
+    int editCapPrice(SysScenicSpotCapPrice capPrice, SysUsers user);
 
     int addScenicSpotPicture(MultipartFile file, SysScenicSpotImg sysScenicSpotImg);
 
@@ -128,13 +145,13 @@ public interface SysScenicSpotService {
 
     SysRobotAppVersion getRobotAppVersionById(Long scenicSpotId);
 
-    int addScenicSpotPad(Long scenicSpotId, Long padId);
+    int addScenicSpotPad(Long scenicSpotId, Long padId,String autoUpdateMonitor);
 
-    int editScenicSpotPad(Long versionId, Long scenicSpotId, Long padId);
+    int editScenicSpotPad(Long versionId, Long scenicSpotId, Long padId, String autoUpdateMonitor);
 
-	PageDataResult getSemanticResourcesList(Integer pageNum, Integer pageSize, Map<String, String> search);
+    PageDataResult getSemanticResourcesList(Integer pageNum, Integer pageSize, Map<String, String> search);
 
-	List<SysScenicSpot> getScenicSpotExcel(Map<String, String> search);
+    List<SysScenicSpot> getScenicSpotExcel(Map<String, String> search);
 
     void addScenicSpotOperationRules();
 
@@ -143,7 +160,7 @@ public interface SysScenicSpotService {
 
     List<SysScenicSpotCapPrice> getScenicSpotCapPriceExcel(Map<String, String> search);
 
-    int updateScenicSpotSwitchs(Long sysScenicSpotid,String switchs);
+    int updateScenicSpotSwitchs(Long sysScenicSpotid, String switchs);
 
     List<SysScenicSpot> getScenicSpotNameList();
 

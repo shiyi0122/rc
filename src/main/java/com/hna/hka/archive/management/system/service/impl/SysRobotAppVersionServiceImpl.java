@@ -108,7 +108,8 @@ public class SysRobotAppVersionServiceImpl implements SysRobotAppVersionService 
             sysRobotVersion.setVersionDescription(sysRobotAppVersion.getVersionDescription());
             sysRobotVersion.setVersionUrl(filePathPadUrl+filename);
             sysRobotVersion.setCreateDate(DateUtil.currentDateTime());
-            return sysRobotAppVersionMapper.insert(sysRobotVersion);
+            sysRobotAppVersionMapper.insert(sysRobotVersion);
+            return sysRobotAppVersionMapper.updateById(sysRobotAppVersion.getScenicSpotId(),sysRobotAppVersion.getAutoUpdateMonitor());
         }else{
             return 2;
         }
@@ -135,6 +136,7 @@ public class SysRobotAppVersionServiceImpl implements SysRobotAppVersionService 
     **/
     @Override
     public int editRobotVersionPad(SysRobotAppVersion sysRobotAppVersion) {
+        sysRobotAppVersionMapper.updateById(sysRobotAppVersion.getScenicSpotId(),sysRobotAppVersion.getAutoUpdateMonitor());
         return sysRobotAppVersionMapper.updateByPrimaryKeySelective(sysRobotAppVersion);
     }
 }

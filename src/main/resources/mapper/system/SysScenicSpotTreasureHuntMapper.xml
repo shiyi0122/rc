@@ -394,7 +394,8 @@
         PRIZE_SIZE,
         PROBABILITY,
         CREATE_DATE,
-        UPDATE_DATE
+        UPDATE_DATE,
+        USER_EXPIRATION
         from
         SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
         <where>
@@ -1132,6 +1133,9 @@
             <if test="wayType != null and wayType != ''">
                 WAY_TYPE,
             </if>
+            <if test="userExpiration != null and userExpiration != ''">
+                USER_EXPIRATION,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="treasureId != null and treasureId != ''">
@@ -1174,7 +1178,10 @@
                 #{updateDate,jdbcType=VARCHAR},
             </if>
             <if test="wayType != null and wayType != ''">
-                #{wayType,jdbcType=VARCHAR}
+                #{wayType,jdbcType=VARCHAR},
+            </if>
+            <if test="userExpiration != null and userExpiration != ''">
+                #{userExpiration,jdbcType=BIGINT}
             </if>
         </trim>
     </insert>
@@ -1503,7 +1510,10 @@
                 WAY_TYPE =#{wayType,jdbcType=VARCHAR},
             </if>
             <if test="updateDate != null and updateDate != ''">
-                UPDATE_DATE =#{updateDate,jdbcType=VARCHAR}
+                UPDATE_DATE =#{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="userExpiration != null and userExpiration != ''">
+                USER_EXPIRATION =#{userExpiration,jdbcType=BIGINT}
             </if>
         </set>
         where TREASURE_ID =#{treasureId}

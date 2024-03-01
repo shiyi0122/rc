@@ -906,7 +906,7 @@ public class BroadcastHuntController extends PublicUtil {
     }
 
 
-    @ApiOperation("查询寻宝详情")
+    @ApiOperation("查询寻宝统计详情")
     @PostMapping("/getTreasureHuntDetail")
     public ReturnModel getTreasureHuntDetail(@RequestBody SysOrder sysOrder) throws ParseException {
         ReturnModel returnModel = new ReturnModel();

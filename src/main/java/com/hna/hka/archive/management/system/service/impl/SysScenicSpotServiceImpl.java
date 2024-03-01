@@ -819,7 +819,7 @@ public class SysScenicSpotServiceImpl implements SysScenicSpotService {
      * @Param [scenicSpotId, padId]
      **/
     @Override
-    public int addScenicSpotPad(Long scenicSpotId, Long padId) {
+    public int addScenicSpotPad(Long scenicSpotId, Long padId, String autoUpdateMonitor) {
         SysRobotPad sysRobotPad = sysRobotPadMapper.selectByPrimaryKey(padId);
         if (ToolUtil.isEmpty(sysRobotPad)) {
             return 2;
@@ -831,6 +831,7 @@ public class SysScenicSpotServiceImpl implements SysScenicSpotService {
         sysRobotAppVersion.setVersionDescription(sysRobotPad.getPadDescription());
         sysRobotAppVersion.setVersionNumber(sysRobotPad.getPadNumber());
         sysRobotAppVersion.setCreateDate(DateUtil.currentDateTime());
+        sysRobotAppVersionMapper.updateById(scenicSpotId, autoUpdateMonitor);
         return sysRobotAppVersionMapper.insertSelective(sysRobotAppVersion);
     }
 
@@ -842,7 +843,7 @@ public class SysScenicSpotServiceImpl implements SysScenicSpotService {
      * @Param [versionId, scenicSpotId, padId]
      **/
     @Override
-    public int editScenicSpotPad(Long versionId, Long scenicSpotId, Long padId) {
+    public int editScenicSpotPad(Long versionId, Long scenicSpotId, Long padId, String autoUpdateMonitor) {
         SysRobotPad sysRobotPad = sysRobotPadMapper.selectByPrimaryKey(padId);
         if (ToolUtil.isEmpty(sysRobotPad)) {
             return 2;
@@ -852,6 +853,8 @@ public class SysScenicSpotServiceImpl implements SysScenicSpotService {
         sysRobotAppVersion.setVersionUrl(sysRobotPad.getPadUrl());
         sysRobotAppVersion.setVersionDescription(sysRobotPad.getPadDescription());
         sysRobotAppVersion.setVersionNumber(sysRobotPad.getPadNumber());
+        sysRobotAppVersionMapper.updateById(scenicSpotId, autoUpdateMonitor);
+        sysRobotMapper.updateRobotUpgrade(scenicSpotId, null);
         return sysRobotAppVersionMapper.updateByPrimaryKeySelective(sysRobotAppVersion);
     }
 
@@ -1177,7 +1180,6 @@ public class SysScenicSpotServiceImpl implements SysScenicSpotService {
     public List<SysScenicSpot> getScenicSpotById(ScenicSpot scenicSpot) {
         return sysScenicSpotMapper.selectById(scenicSpot);
     }
-
 
 
     /**

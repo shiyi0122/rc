@@ -50,4 +50,7 @@ public class SysScenicSpotTreasureNewHunt {
     //兑奖方式0未选择兑换方式  1邮寄方式 2现场兑换方式
     private String wayType;
 
+    //用户中奖后有效期（单位天）
+    private Long userExpiration;
+
 }

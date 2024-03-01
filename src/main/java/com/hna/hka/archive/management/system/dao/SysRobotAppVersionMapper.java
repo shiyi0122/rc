@@ -36,4 +36,6 @@ public interface SysRobotAppVersionMapper {
     SysRobotAppVersion getAppVersionNumber(Long scenicSpotId);
 
     List<SysRobotAppVersion> getScenicSpotPadList(Map<String, String> search);
+
+    int updateById(@Param("scenicSpotId") Long scenicSpotId,@Param("autoUpdateMonitor")String autoUpdateMonitor);
 }

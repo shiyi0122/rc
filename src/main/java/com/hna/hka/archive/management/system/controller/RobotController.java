@@ -1368,7 +1368,7 @@ public class RobotController extends PublicUtil {
     public ReturnModel getRobotUpgrade(Long scenicSpotId) {
         ReturnModel returnModel = new ReturnModel();
         if (scenicSpotId != null) {
-            List<SysRobot> robotUpgrade = sysRobotService.getRobotUpgrade(scenicSpotId,null);
+            List<SysRobot> robotUpgrade = sysRobotService.getRobotUpgrade(scenicSpotId, null);
             returnModel.setData(robotUpgrade);
             returnModel.setMsg("查询成功！");
             returnModel.setState(Constant.STATE_SUCCESS);
@@ -1386,15 +1386,11 @@ public class RobotController extends PublicUtil {
     public ReturnModel updateRobotUpgrade(Long scenicSpotId, Long robotId) throws Exception {
         ReturnModel returnModel = new ReturnModel();
         if (scenicSpotId != null || robotId != null) {
-            int i = sysRobotService.updateRobotUpgrade(scenicSpotId, robotId);
-            if (i > 0) {
-                returnModel.setData("");
-                returnModel.setMsg("修改成功！");
-                returnModel.setState(Constant.STATE_SUCCESS);
-                List<SysRobot> robotUpgrade = sysRobotService.getRobotUpgrade(scenicSpotId,robotId);
-                if (ToolUtil.isNotEmpty(robotUpgrade) && robotUpgrade.size() > 0) {
-                    for (SysRobot sysRobot : robotUpgrade) {
-                        if (sysRobot.getRobotCodeCid() != null) {
+            List<SysRobot> robotUpgrade = sysRobotService.getRobotUpgrade(scenicSpotId, robotId);
+            if (ToolUtil.isNotEmpty(robotUpgrade) && robotUpgrade.size() > 0) {
+                for (SysRobot sysRobot : robotUpgrade) {
+                    if (sysRobot.getRobotCodeCid() != null) {
+                        if (!("0").equals(sysRobot.getAutoUpdateState()) || !("4").equals(sysRobot.getAutoUpdateState())) {
                             returnModel.setData("");
                             returnModel.setMsg("机器人升级修改成功");
                             returnModel.setState(Constant.STATE_SUCCESS);

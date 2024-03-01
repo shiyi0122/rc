@@ -387,7 +387,7 @@ public class SysRobotServiceImpl implements SysRobotService {
     @Override
     public List<SysRobotGPS> getRobotGpsList(Map<String, Object> search) {
         List<SysRobot> robotList = sysRobotMapper.getRobotGpsList(search);
-        if (robotList.size() == 0){
+        if (robotList.size() == 0) {
             return new ArrayList<SysRobotGPS>();
         }
         SysRobot sysRobot1 = robotList.get(robotList.size() - 1);
@@ -1124,18 +1124,50 @@ public class SysRobotServiceImpl implements SysRobotService {
     }
 
     @Override
-    public List<SysRobot> getRobotUpgrade(Long scenicSpotId,Long robotId) {
-        return sysRobotMapper.getRobotUpgrade(scenicSpotId,robotId);
+    public List<SysRobot> getRobotUpgrade(Long scenicSpotId, Long robotId) {
+        return sysRobotMapper.getRobotUpgrade(scenicSpotId, robotId);
     }
 
     @Override
     public int updateRobotUpgrade(Long scenicSpotId, Long robotId) {
-        return sysRobotMapper.updateRobotUpgrade(scenicSpotId,robotId);
+        return sysRobotMapper.updateRobotUpgrade(scenicSpotId, robotId);
     }
 
     @Override
     public List<SysRobotAppVersion> getRobotVersionPad(Long scenicSpotId) {
         return sysRobotMapper.getRobotVersionPad(scenicSpotId);
+    }
+
+    @Override
+    public void timingRobotAuto() throws Exception {
+        List<SysScenicSpot> sysScenicSpots = sysRobotMapper.timingRobotAuto();
+        if (sysScenicSpots.size() > 0) {
+            ReturnModel returnModel = new ReturnModel();
+            List<SysRobot> robots = sysRobotMapper.getRobotUpgrade(sysScenicSpots.get(0).getScenicSpotId(), null);
+            if (ToolUtil.isNotEmpty(robots) && robots.size() > 0) {
+                for (SysRobot sysRobot : robots) {
+                    if (sysRobot.getRobotCodeCid() != null && !("1").equals(sysRobot.getAutoUpdateState())) {
+                        returnModel.setData("");
+                        returnModel.setMsg("机器人升级修改成功");
+                        returnModel.setState(Constant.STATE_SUCCESS);
+                        returnModel.setType(Constant.ROBOT_UPDATE);
+                        // 转JSON格式发送到个推
+                        String robotUnlock = JsonUtils.toString(returnModel);
+                        String encode = AES.encode(robotUnlock);// 加密推送
+                        String isSuccess = WeChatGtRobotAppPush.singlePush(sysRobot.getRobotCodeCid(), encode, "成功!");
+                        if ("1".equals(isSuccess)) {
+                            returnModel.setData("");
+                            returnModel.setMsg("发送成功！");
+                            returnModel.setState(Constant.STATE_SUCCESS);
+                        } else {
+                            returnModel.setData("");
+                            returnModel.setMsg("发送失败！");
+                            returnModel.setState(Constant.STATE_FAILURE);
+                        }
+                    }
+                }
+            }
+        }
     }
 
 

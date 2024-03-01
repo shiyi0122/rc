@@ -1,34 +1,31 @@
 package com.hna.hka.archive.management.system.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.hna.hka.archive.management.assetsSystem.model.ScenicSpot;
 import com.hna.hka.archive.management.business.model.BusinessScenicSpotArea;
 import com.hna.hka.archive.management.business.model.BusinessWorldArea;
 import com.hna.hka.archive.management.business.service.BusinessScenicSpotExpandService;
 import com.hna.hka.archive.management.system.model.*;
 import com.hna.hka.archive.management.system.service.SysScenicSpotBroadcastService;
-import com.hna.hka.archive.management.system.service.SysScenicSpotCapPriceLogService;
 import com.hna.hka.archive.management.system.service.SysScenicSpotGpsCoordinateService;
 import com.hna.hka.archive.management.system.service.SysScenicSpotService;
 import com.hna.hka.archive.management.system.util.*;
-import com.rabbitmq.tools.json.JSONUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
-import java.io.File;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -1094,6 +1091,7 @@ public class ScenicSpotController extends PublicUtil {
         search.put("userId", user.getUserId().toString());
         search.put("versionNumber", sysRobotAppVersion.getVersionNumber());
         search.put("scenicSpotName", sysRobotAppVersion.getScenicSpotName());
+        search.put("autoUpdateMonitor", sysRobotAppVersion.getAutoUpdateMonitor());
         try {
             if (null == pageNum) {
                 pageNum = 1;
@@ -1117,7 +1115,7 @@ public class ScenicSpotController extends PublicUtil {
      **/
     @RequestMapping("/addScenicSpotPad")
     @ResponseBody
-    public ReturnModel addScenicSpotPad(Long scenicSpotId, Long padId) {
+    public ReturnModel addScenicSpotPad(Long scenicSpotId, Long padId,String autoUpdateMonitor) {
         ReturnModel dataModel = new ReturnModel();
         try {
             if (ToolUtil.isEmpty(scenicSpotId)) {
@@ -1140,7 +1138,7 @@ public class ScenicSpotController extends PublicUtil {
                 dataModel.setState(Constant.STATE_FAILURE);
                 return dataModel;
             }
-            int i = sysScenicSpotService.addScenicSpotPad(scenicSpotId, padId);
+            int i = sysScenicSpotService.addScenicSpotPad(scenicSpotId, padId,autoUpdateMonitor);
             if (i == 1) {
                 dataModel.setData("");
                 dataModel.setMsg("景区PAD添加成功！");
@@ -1175,7 +1173,7 @@ public class ScenicSpotController extends PublicUtil {
      **/
     @RequestMapping("/editScenicSpotPad")
     @ResponseBody
-    public ReturnModel editScenicSpotPad(Long versionId, Long scenicSpotId, Long padId) {
+    public ReturnModel editScenicSpotPad(Long versionId, Long scenicSpotId, Long padId,String autoUpdateMonitor) {
         ReturnModel dataModel = new ReturnModel();
         try {
             if (ToolUtil.isEmpty(scenicSpotId)) {
@@ -1193,7 +1191,7 @@ public class ScenicSpotController extends PublicUtil {
             //根据景区ID查询景区PAD信息
             SysRobotAppVersion robotAppVersion = sysScenicSpotService.getRobotAppVersionById(scenicSpotId);
             if (ToolUtil.isEmpty(robotAppVersion)) {
-                int i = sysScenicSpotService.addScenicSpotPad(scenicSpotId, padId);
+                int i = sysScenicSpotService.addScenicSpotPad(scenicSpotId, padId,autoUpdateMonitor);
                 if (i == 1) {
                     dataModel.setData("");
                     dataModel.setMsg("景区PAD添加成功！");
@@ -1217,7 +1215,7 @@ public class ScenicSpotController extends PublicUtil {
                     dataModel.setState(Constant.STATE_FAILURE);
                     return dataModel;
                 }
-                int i = sysScenicSpotService.editScenicSpotPad(versionId, scenicSpotId, padId);
+                int i = sysScenicSpotService.editScenicSpotPad(versionId, scenicSpotId, padId,autoUpdateMonitor);
                 if (i == 1) {
                     dataModel.setData("");
                     dataModel.setMsg("景区PAD编辑成功！");

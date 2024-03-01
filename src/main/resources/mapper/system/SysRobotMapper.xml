@@ -965,7 +965,7 @@
     </update>
     <update id="updateRobotUpgrade">
         UPDATE SYS_ROBOT
-        SET AUTO_UPDATE_STATE = 0
+        SET AUTO_UPDATE_STATE = 6
         <where>
             <if test="scenicSpotId != null and scenicSpotId != ''">
                 SCENIC_SPOT_ID =#{scenicSpotId}
@@ -1200,7 +1200,8 @@
         CLIENT_VERSION,
         ROBOT_CODE_CID,
         AUTO_UPDATE_STATE
-        FROM SYS_ROBOT
+        FROM
+        SYS_ROBOT
         <where>
             <if test="scenicSpotId != '' and scenicSpotId != null">
                 SCENIC_SPOT_ID = #{scenicSpotId}
@@ -1225,6 +1226,16 @@
             </if>
         </where>
         ORDER BY A.CREATE_DATE DESC
+    </select>
+    <select id="timingRobotAuto" resultType="com.hna.hka.archive.management.system.model.SysScenicSpot">
+        SELECT
+            SCENIC_SPOT_ID,
+            SCENIC_SPOT_NAME,
+            AUTO_UPDATE_MONITOR
+        FROM
+            SYS_SCENIC_SPOT
+        WHERE
+            AUTO_UPDATE_MONITOR = 1
     </select>
 
 </mapper>

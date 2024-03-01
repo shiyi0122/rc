@@ -103,6 +103,11 @@
       CREATE_DATE = #{createDate,jdbcType=VARCHAR}
     where VERSION_ID = #{versionId,jdbcType=BIGINT}
   </update>
+  <update id="updateById">
+    update SYS_SCENIC_SPOT
+    set AUTO_UPDATE_MONITOR =#{autoUpdateMonitor,jdbcType=VARCHAR}
+    where SCENIC_SPOT_ID =#{scenicSpotId,jdbcType=BIGINT}
+  </update>
   <select id="getRobotVersionPadList" resultMap="BaseResultMap">
     select
     A.*,
@@ -131,7 +136,8 @@
 	C.VERSION_DESCRIPTION,
 	B.SCENIC_SPOT_ID,
 	C.CREATE_DATE,
-	B.SCENIC_SPOT_NAME AS scenicSpotName
+	B.SCENIC_SPOT_NAME AS scenicSpotName,
+    B.AUTO_UPDATE_MONITOR AS autoUpdateMonitor
     FROM
 	SYS_USERS_ROLE_SPOT A
 	LEFT JOIN SYS_SCENIC_SPOT B ON A.SCENIC_SPOT_ID = B.SCENIC_SPOT_ID
@@ -145,6 +151,9 @@
       </if>
       <if test="versionNumber != null and versionNumber != ''">
         AND C.VERSION_NUMBER LIKE CONCAT('%',#{versionNumber},'%')
+      </if>
+      <if test="autoUpdateMonitor != null and autoUpdateMonitor != ''">
+        AND B.AUTO_UPDATE_MONITOR =#{autoUpdateMonitor}
       </if>
     </where>
     ORDER BY C.CREATE_DATE DESC

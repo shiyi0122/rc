@@ -170,4 +170,6 @@ public interface SysRobotService {
     int updateRobotUpgrade(Long scenicSpotId, Long robotId);
 
     List<SysRobotAppVersion> getRobotVersionPad(Long scenicSpotId);
+
+    void timingRobotAuto() throws Exception;
 }
