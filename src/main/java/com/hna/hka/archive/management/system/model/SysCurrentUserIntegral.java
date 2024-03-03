@@ -14,7 +14,7 @@ public class SysCurrentUserIntegral {
     private String userPhone;
 
     //金币积分额度
-    private Long integral;
+    private String integral;
 
     private String createDate;
 

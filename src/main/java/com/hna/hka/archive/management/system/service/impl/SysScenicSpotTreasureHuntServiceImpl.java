@@ -407,17 +407,17 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
      */
     @Override
     public int updateUserInteGral(SysCurrentUserIntegral userIntegral) {
+        SysCurrentUserIntegral userIntegral1 = new SysCurrentUserIntegral();
         SysCurrentUserIntegral userByUserId = sysScenicSpotTreasureHuntMapper.getUserByUserId(userIntegral.getUserId());
         //查询旧的积分数额
-        Long integral = 0l;
+        String integral = "0";
         if (userByUserId != null) {
             integral = userByUserId.getIntegral();
         }
-        userIntegral.setUpdateDate(DateUtil.currentDateTime());
-        int i1 = sysScenicSpotTreasureHuntMapper.updateUserInteGral(userIntegral);
-        if (i1 == 0) {
-            return i1;
-        }
+        userIntegral1.setIntegralId(userIntegral.getIntegralId());
+        userIntegral1.setIntegral(userIntegral.getIntegral());
+        userIntegral1.setUpdateDate(DateUtil.currentDateTime());
+        sysScenicSpotTreasureHuntMapper.updateUserInteGral(userIntegral1);
         //添加道缓存
         redisUtil.set(userIntegral.getUserId().toString(), JSONObject.toJSONString(userIntegral));
         //添加积分修改日志
@@ -427,8 +427,8 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
 //            return 0;
 //        }
         userIntegralLog.setUserAccount(currentUser.getLoginName());
-        userIntegralLog.setAfterIntegral(integral);
-        userIntegralLog.setFrontIntegral(userIntegral.getIntegral());
+        userIntegralLog.setAfterIntegral(Long.valueOf(integral));
+        userIntegralLog.setFrontIntegral(Long.valueOf(userIntegral.getIntegral()));
         userIntegralLog.setIntegralLogId(IdUtils.getSeqId());
         userIntegralLog.setUserId(userIntegral.getUserId());
         userIntegralLog.setCreateDate(DateUtil.currentDateTime());
