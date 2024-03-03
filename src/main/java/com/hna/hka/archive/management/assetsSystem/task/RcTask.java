@@ -46,7 +46,7 @@ public class RcTask {
     @Autowired
     private AppCodeScanCodePrizeCashingService appCodeScanCodePrizeCashingService;
 
-    //    @Scheduled(cron = "0 0 1 * * ?")//每天凌晨一点执行
+//    @Scheduled(cron = "0 0 1 * * ?")//每天凌晨一点执行
     public void calculateRevenue() throws Exception {
         service.execute(() -> {
             sysScenicSpotService.addScenicSpotOperationRules();
@@ -129,7 +129,7 @@ public class RcTask {
     }
 
     //PAD升级推送
-//    @Scheduled(cron = "0 57/5 16 * * ?")
+//    @Scheduled(cron = "0 0/5 1 * * ?")
     public void timingRobotAuto() throws Exception {
         service.execute(() -> {
             try {

@@ -805,6 +805,11 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
             if (sysOrderDetail.getHuntPerCustomerTransaction() == null || sysOrderDetail.getHuntPerCustomerTransaction().equals("")){
                 sysOrderDetail.setHuntPerCustomerTransaction("0.00");
             }
+            if (sysOrderDetail.getLotteryPerCustomerTransaction() == null || sysOrderDetail.getLotteryPerCustomerTransaction().equals("")){
+                sysOrderDetail.setLotteryPerCustomerTransaction("0.00");
+            }
+            sysOrderDetail.setHuntProportion(sysOrderDetail.getHuntProportion() + "%");
+            sysOrderDetail.setLotteryProportion(sysOrderDetail.getLotteryProportion() + "%");
         }
         return new PageInfo<>(treasureHuntDetail);
     }

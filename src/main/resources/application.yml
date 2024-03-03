@@ -180,6 +180,11 @@ alipay:
 aliyun:
     oss:
       endpoint: oss-cn-beijing.aliyuncs.com
-      accessKeyId: LTAI5tGHudTuZqmVV5sMhGSn            # 阿里云账号AccessKey里所对应的AccessKey ID
-      accessKeySecret: 9SjAE3CIfVfhJRrdcPPOhTfiYqcVIP  # 阿里云账号AccessKey里所对应的AccessKey Secret
+      accessKeyId: LTAI5tRCDMT5WrQ42qwtTsux            # 阿里云账号AccessKey里所对应的AccessKey ID
+      accessKeySecret: SGqTs6ppFXMLcfyns4VzeWNo0FxYQT  # 阿里云账号AccessKey里所对应的AccessKey Secret
       bucketName: jxzy-robot
+        #旧OSS（可轮换使用，单位：年）
+        # 阿里云账号AccessKey里所对应的AccessKey ID
+        #accessKeyId: LTAI5tGHudTuZqmVV5sMhGSn
+        # 阿里云账号AccessKey里所对应的AccessKey Secret
+        #accessKeySecret: 9SjAE3CIfVfhJRrdcPPOhTfiYqcVIP
