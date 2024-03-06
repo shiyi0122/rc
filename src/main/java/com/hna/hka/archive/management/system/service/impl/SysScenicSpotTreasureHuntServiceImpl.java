@@ -795,17 +795,19 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
         } else if (("1").equals(sysOrder.getDateType())) {
             sysOrder.setOrderStartTime(DateUtil.getYearsDate(sysOrder.getOrderStartTime()));
             sysOrder.setOrderEndTime(DateUtil.getYearsDate(sysOrder.getOrderEndTime()));
-        } else if(("0").equals(sysOrder.getDateType())){
-//            sysOrder.setOrderStartTime(DateUtil.checkDate(sysOrder.getOrderStartTime()));
-//            sysOrder.setOrderEndTime(DateUtil.checkDate(sysOrder.getOrderEndTime()));
         }
-
         List<SysOrderDetail> treasureHuntDetail = sysScenicSpotTreasureHuntMapper.getTreasureHuntDetail(sysOrder);
         for (SysOrderDetail sysOrderDetail : treasureHuntDetail) {
-            if (sysOrderDetail.getHuntPerCustomerTransaction() == null || sysOrderDetail.getHuntPerCustomerTransaction().equals("")){
+            //查询景区是否开启寻宝
+            SysScenicSpot huntsState = sysOrderMapper.getHuntsState(Long.valueOf(sysOrderDetail.getScenicSpotId()));
+            //如果开启寻宝，寻宝订单数和总订单数保持一致
+            if (("1").equals(huntsState.getHuntSwitch())) {
+                sysOrderDetail.setHuntOrder(sysOrderDetail.getAllOrder());
+            }
+            if (sysOrderDetail.getHuntPerCustomerTransaction() == null || sysOrderDetail.getHuntPerCustomerTransaction().equals("")) {
                 sysOrderDetail.setHuntPerCustomerTransaction("0.00");
             }
-            if (sysOrderDetail.getLotteryPerCustomerTransaction() == null || sysOrderDetail.getLotteryPerCustomerTransaction().equals("")){
+            if (sysOrderDetail.getLotteryPerCustomerTransaction() == null || sysOrderDetail.getLotteryPerCustomerTransaction().equals("")) {
                 sysOrderDetail.setLotteryPerCustomerTransaction("0.00");
             }
             sysOrderDetail.setHuntProportion(sysOrderDetail.getHuntProportion() + "%");

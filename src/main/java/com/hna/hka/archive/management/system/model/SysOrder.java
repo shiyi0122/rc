@@ -166,4 +166,7 @@ public class SysOrder extends BaseRowModel {
 
     //所属公司ID
     public String companyId;
+
+    //景区是否开启寻宝
+    public String huntSwitch;
 }

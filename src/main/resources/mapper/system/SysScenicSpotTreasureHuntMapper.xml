@@ -663,11 +663,11 @@
         <!--总订单数-->
         COALESCE(COUNT(o.ORDER_ID), 0) AS allOrder,
         <!--寻宝订单数-->
-        COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '1' THEN 1 ELSE 0 END), 0) AS huntOrder,
+        COALESCE ( SUM( CASE WHEN o.HUNTS_STATE IN ( '1', '3' ) THEN 1 ELSE 0 END ), 0 ) AS huntOrder,
         <!--抽奖订单数-->
         COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0) AS lotteryOrder,
         <!--寻宝订单占比-->
-        ROUND((COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '1' THEN 1 ELSE 0 END), 0) / COALESCE(COUNT(o.ORDER_ID), 0)) * 100, 2) AS huntProportion,
+        ROUND((COALESCE ( SUM( CASE WHEN o.HUNTS_STATE IN ( '1', '3' ) THEN 1 ELSE 0 END ), 0 ) / COALESCE(COUNT( o.ORDER_ID ), 0 )) * 100,2) AS huntProportion,
         <!--抽奖订单占比-->
         ROUND((COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0) / COALESCE(COUNT(o.ORDER_ID), 0)) * 100, 2) AS lotteryProportion,
         <!--客单价-->
@@ -698,6 +698,9 @@
         </if>
         <if test='companyId  != null and companyId != ""'>
             AND s.COMPANY_ID = #{companyId}
+        </if>
+        <if test="huntSwitch != null and huntSwitch != ''">
+            AND s.HUNT_SWITCH = #{huntSwitch}
         </if>
         AND o.ORDER_STATUS = 30
         GROUP BY o.ORDER_SCENIC_SPOT_ID

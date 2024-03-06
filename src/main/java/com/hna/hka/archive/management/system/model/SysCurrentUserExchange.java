@@ -32,7 +32,7 @@ public class SysCurrentUserExchange {
     //奖品图片地址
     private String picUrl;
 
-    //兑换状态 0 兑换 1已兑换 2 已过期 默认0
+    //兑换状态 0 待兑换 1已核销 2 已过期 默认0
     @Excel(name = "兑换状态",width = 20,orderNum = "5")
     private String exchangeState;
 

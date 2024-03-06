@@ -3,10 +3,7 @@ package com.hna.hka.archive.management.system.dao;
 import com.hna.hka.archive.management.appSystem.model.IsItEmpty;
 import com.hna.hka.archive.management.appSystem.model.SysAppOrder;
 import com.hna.hka.archive.management.assetsSystem.model.*;
-import com.hna.hka.archive.management.system.model.SysOrder;
-import com.hna.hka.archive.management.system.model.SysOrderExcel;
-import com.hna.hka.archive.management.system.model.UploadOrderExcelBean;
-import com.hna.hka.archive.management.system.model.UploadOrderExcelVoBean;
+import com.hna.hka.archive.management.system.model.*;
 import com.hna.hka.archive.management.wenYuRiverInterface.model.RealTimeAccess;
 import com.hna.hka.archive.management.wenYuRiverInterface.model.RobotUtilizationRate;
 import com.hna.hka.archive.management.wenYuRiverInterface.model.WenYuRiverOrder;
@@ -267,4 +264,6 @@ public interface SysOrderMapper {
     List<SysOrder> getSpotIdAndStatusByList(Long scenicSpotId,String orderAbnormalTime);
 
     int getTotle(Map<String, Object> search);
+
+    SysScenicSpot getHuntsState(@Param("orderScenicSpotId") Long orderScenicSpotId);
 }
