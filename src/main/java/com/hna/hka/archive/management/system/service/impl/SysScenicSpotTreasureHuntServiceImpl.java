@@ -803,6 +803,7 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
             //如果开启寻宝，寻宝订单数和总订单数保持一致
             if (("1").equals(huntsState.getHuntSwitch())) {
                 sysOrderDetail.setHuntOrder(sysOrderDetail.getAllOrder());
+                sysOrderDetail.setHuntProportion("100");
             }
             if (sysOrderDetail.getHuntPerCustomerTransaction() == null || sysOrderDetail.getHuntPerCustomerTransaction().equals("")) {
                 sysOrderDetail.setHuntPerCustomerTransaction("0.00");
