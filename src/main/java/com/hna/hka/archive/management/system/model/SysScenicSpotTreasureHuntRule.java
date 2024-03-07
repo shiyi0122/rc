@@ -24,4 +24,7 @@ public class SysScenicSpotTreasureHuntRule {
          */
         @Excel(name = "景区名称",width = 20,orderNum = "0")
         private String scenicSpotName;
+
+        //寻宝开机播报规则内容
+        private String ruleContents;
 }

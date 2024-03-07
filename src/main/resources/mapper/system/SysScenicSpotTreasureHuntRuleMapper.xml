@@ -90,6 +90,9 @@
       <if test="ruleContent != null" >
         RULE_CONTENT = #{ruleContent,jdbcType=VARCHAR},
       </if>
+      <if test="ruleContents != null and ruleContents != ''" >
+        RULE_CONTENTS = #{ruleContents,jdbcType=VARCHAR},
+      </if>
       <if test="ruleUrl != null" >
         RULE_URL = #{ruleUrl,jdbcType=VARCHAR},
       </if>
@@ -106,6 +109,7 @@
     update SYS_SCENIC_SPOT_TREASURE_HUNT_RULE
     set SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
       RULE_CONTENT = #{ruleContent,jdbcType=VARCHAR},
+      RULE_CONTENTS = #{ruleContents,jdbcType=VARCHAR},
       RULE_URL = #{ruleUrl,jdbcType=VARCHAR},
       CREATE_DATE = #{createDate,jdbcType=VARCHAR},
       UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
