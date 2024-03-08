@@ -1141,12 +1141,16 @@ public class SysRobotServiceImpl implements SysRobotService {
     @Override
     public void timingRobotAuto() throws Exception {
         List<SysScenicSpot> sysScenicSpots = sysRobotMapper.timingRobotAuto();
+
         if (sysScenicSpots.size() > 0) {
             ReturnModel returnModel = new ReturnModel();
             List<SysRobot> robots = sysRobotMapper.getRobotUpgrade(sysScenicSpots.get(0).getScenicSpotId(), null);
+//            List<SysRobot> robots = sysRobotMapper.getRobotUpgrade(15698320289682l, null);
+            System.out.println("____________景区名称："+sysScenicSpots.get(0).getScenicSpotName()+"---------------------");
             if (ToolUtil.isNotEmpty(robots) && robots.size() > 0) {
                 for (SysRobot sysRobot : robots) {
-                    if (sysRobot.getRobotCodeCid() != null && !("1").equals(sysRobot.getAutoUpdateState())) {
+                    if (sysRobot.getRobotCodeCid() != null && !("4").equals(sysRobot.getAutoUpdateState())) {
+
                         returnModel.setData("");
                         returnModel.setMsg("机器人升级修改成功");
                         returnModel.setState(Constant.STATE_SUCCESS);
@@ -1155,6 +1159,7 @@ public class SysRobotServiceImpl implements SysRobotService {
                         String robotUnlock = JsonUtils.toString(returnModel);
                         String encode = AES.encode(robotUnlock);// 加密推送
                         String isSuccess = WeChatGtRobotAppPush.singlePush(sysRobot.getRobotCodeCid(), encode, "成功!");
+
                         if ("1".equals(isSuccess)) {
                             returnModel.setData("");
                             returnModel.setMsg("发送成功！");

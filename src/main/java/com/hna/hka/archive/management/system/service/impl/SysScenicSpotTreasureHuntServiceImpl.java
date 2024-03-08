@@ -800,10 +800,12 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
         for (SysOrderDetail sysOrderDetail : treasureHuntDetail) {
             //查询景区是否开启寻宝
             SysScenicSpot huntsState = sysOrderMapper.getHuntsState(Long.valueOf(sysOrderDetail.getScenicSpotId()));
-            //如果开启寻宝，寻宝订单数和总订单数保持一致
+            //如果开启寻宝，寻宝订单数和总订单数保持一致，客单价和寻宝客单价保持一致
             if (("1").equals(huntsState.getHuntSwitch())) {
                 sysOrderDetail.setHuntOrder(sysOrderDetail.getAllOrder());
                 sysOrderDetail.setHuntProportion("100");
+                //客单价和寻宝客单价保持一致
+                sysOrderDetail.setHuntPerCustomerTransaction(sysOrderDetail.getPerCustomerTransaction());
             }
             if (sysOrderDetail.getHuntPerCustomerTransaction() == null || sysOrderDetail.getHuntPerCustomerTransaction().equals("")) {
                 sysOrderDetail.setHuntPerCustomerTransaction("0.00");
