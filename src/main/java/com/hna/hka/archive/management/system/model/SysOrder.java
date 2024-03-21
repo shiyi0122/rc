@@ -143,6 +143,8 @@ public class SysOrder extends BaseRowModel {
     //当前订单的退款状态
     private String refundStatus;
 
+    //扫码时停靠点名称
+    private String startParkingName;
     //还车点名称
     private String parkingName;
     //还车点id

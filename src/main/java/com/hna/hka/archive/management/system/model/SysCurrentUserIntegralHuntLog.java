@@ -43,4 +43,7 @@ public class SysCurrentUserIntegralHuntLog {
     private Integer pageNum;
     private Integer pageSize;
     private String userPhone1;
+    private String picUrl;
+    private String jackpotId;
+    private String jackpotName;
 }
