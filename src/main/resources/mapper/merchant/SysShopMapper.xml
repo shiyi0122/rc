@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.Merchant.dao.SysShopMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.Merchant.model.SysShop">
+        <id column="SHOP_ID" property="shopId" jdbcType="BIGINT"/>
+        <result column="SHOP_NAME" property="shopName" jdbcType="VARCHAR"/>
+        <result column="SCENIC_SPOT_ID" property="scenicSpotId" jdbcType="BIGINT"/>
+        <result column="SCENIC_SPOT_NAME" property="scenicSpotName" jdbcType="VARCHAR"/>
+        <result column="SHOP_GPS" property="shopGps" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+        <result column="SHOP_ADDRESS" property="shopAddress" jdbcType="VARCHAR"/>
+        <result column="SHOP_PHONE" property="shopPhone" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        SHOP_ID
+        , SHOP_NAME,SHOP_PHONE,SHOP_ADDRESS, SCENIC_SPOT_ID, SCENIC_SPOT_NAME, SHOP_GPS, CREATE_DATE, UPDATE_DATE
+    </sql>
+
+    <delete id="deleteShop" parameterType="java.lang.Long">
+        delete
+        from SYS_SHOP
+        where SHOP_ID = #{shopId,jdbcType=BIGINT}
+    </delete>
+    <select id="getShopList" resultType="com.hna.hka.archive.management.Merchant.model.SysShop">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_SHOP
+        <where>
+            1=1
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                and SCENIC_SPOT_ID = #{scenicSpotId}
+            </if>
+            <if test="shopId != null and shopId != ''">
+                and SHOP_ID = #{shopId}
+            </if>
+            <if test="shopName != null and shopName != ''">
+                and SHOP_NAME like CONCAT('%',#{shopName},'%')
+            </if>
+            <if test="shopPhone != null and shopPhone != ''">
+                and SHOP_PHONE like CONCAT('%',#{shopPhone},'%')
+            </if>
+        </where>
+        order by CREATE_DATE desc
+    </select>
+    <select id="getScenicList" resultType="com.hna.hka.archive.management.assetsSystem.model.ScenicSpot">
+        SELECT SCENIC_SPOT_ID,
+               SCENIC_SPOT_NAME,
+               SCENIC_SPOT_CONTACT,
+               SCENIC_SPOT_PHONE,
+               SCENIC_SPOT_EMAIL,
+               SCENIC_SPOT_ADDRES,
+               SCENIC_SPOT_POSTAL_CODE,
+               SCENIC_SPOT_ROBOT_TOTAL,
+               SCENIC_SPOT_STATUS,
+               SCENIC_SPOT_OPENWORD,
+               SCENIC_SPOT_CLOSEWORD,
+               SCENIC_SPOT_BEYOND_PRICE,
+               SCENIC_SPOT_WEEKEND_PRICE,
+               SCENIC_SPOT_NORMAL_PRICE,
+               SCENIC_SPOT_WEEKEND_RENT_PRICE,
+               SCENIC_SPOT_NORMAL_RENT_PRICE,
+               SCENIC_SPOT_WEEKEND_TIME,
+               SCENIC_SPOT_NORMAL_TIME,
+               SCENIC_SPOT_REMAINING_TIME,
+               SCENIC_SPOT_RENT_TIME,
+               COORDINATE_RANGE,
+               SCENIC_SPOT_DEPOSIT,
+               NORMAL_CAPPED_PRICE,
+               WEEKEND_CAPPED_PRICE,
+               RANDOM_BROADCAST_TIME,
+               ROBOT_WAKEUP_WORDS,
+               SCENIC_SPOT_THE_SERVER,
+               CREATE_DATE,
+               UPDATE_DATE,
+               SCENIC_SPOT_FID,
+               SCENIC_SPOT_FREQUENCY,
+               SCENIC_SPOT_FENCE_TIME,
+               SCENIC_SPOT_FORBIDDEN_ZONE_TIME,
+               TEST_START_TIME,
+               TRIAL_OPERATIONS_TIME,
+               FORMAL_OPERATION_TIME,
+               STOP_OPERATION_TIME,
+               COMPANY_ID,
+               PAUSE_STATE,
+               WORK_TIME,
+               CLOSING_TIME,
+               PAUSE_BROADCAST,
+               WORK_BROADCAST,
+               CLOSING_BROADCAST,
+               LAMP_OPENING_TIME,
+               LAMP_CLOSING_TIME,
+               LAMP_LIGHTING_TIME,
+               FREE_TIME_SETTING,
+               GIFT_TIME_SETTING,
+               GIFT_USAGE_SETTING
+        FROM SYS_SCENIC_SPOT
+    </select>
+    <select id="queryScenicSpotList"
+            resultType="com.hna.hka.archive.management.system.model.SysScenicSpotBinding">
+        SELECT
+        A.SCENIC_SPOT_ID,
+        A.SCENIC_SPOT_NAME,
+        A.SCENIC_SPOT_CONTACT,
+        A.SCENIC_SPOT_PHONE,
+        A.SCENIC_SPOT_EMAIL,
+        A.SCENIC_SPOT_ADDRES,
+        A.SCENIC_SPOT_POSTAL_CODE,
+        A.SCENIC_SPOT_ROBOT_TOTAL,
+        A.SCENIC_SPOT_STATUS,
+        A.SCENIC_SPOT_OPENWORD,
+        A.SCENIC_SPOT_CLOSEWORD,
+        A.SCENIC_SPOT_BEYOND_PRICE,
+        A.SCENIC_SPOT_WEEKEND_PRICE,
+        A.SCENIC_SPOT_NORMAL_PRICE,
+        A.SCENIC_SPOT_WEEKEND_RENT_PRICE,
+        A.SCENIC_SPOT_NORMAL_RENT_PRICE,
+        A.SCENIC_SPOT_WEEKEND_TIME,
+        A.SCENIC_SPOT_NORMAL_TIME,
+        A.SCENIC_SPOT_REMAINING_TIME,
+        A.SCENIC_SPOT_RENT_TIME,
+        A.COORDINATE_RANGE,
+        A.SCENIC_SPOT_DEPOSIT,
+        A.NORMAL_CAPPED_PRICE,
+        A.WEEKEND_CAPPED_PRICE,
+        A.RANDOM_BROADCAST_TIME,
+        A.ROBOT_WAKEUP_WORDS,
+        A.CREATE_DATE,
+        A.UPDATE_DATE,
+        A.SCENIC_SPOT_FID,
+        A.SCENIC_SPOT_FREQUENCY,
+        A.SCENIC_SPOT_FENCE_TIME,
+        A.SCENIC_SPOT_FORBIDDEN_ZONE_TIME,
+        A.TEST_START_TIME,
+        A.TRIAL_OPERATIONS_TIME,
+        A.FORMAL_OPERATION_TIME,
+        A.STOP_OPERATION_TIME,
+        B.SCENIC_SPOT_FNAME,
+        COUNT(C.SCENIC_SPOT_ID) AS total
+        FROM
+        SYS_SCENIC_SPOT A
+        LEFT JOIN SYS_SCENIC_SPOT_BINDING B ON A.SCENIC_SPOT_FID = B.SCENIC_SPOT_FID
+        LEFT JOIN SYS_SCENIC_SPOT_BROADCAST C ON A.SCENIC_SPOT_ID = C.SCENIC_SPOT_ID
+        <where>
+            B.SCENIC_SPOT_TYPE = 1
+            AND A.ROBOT_WAKEUP_WORDS = 1
+            <if test="scenicSpotFname != null and scenicSpotFname != ''">
+                AND B.SCENIC_SPOT_FNAME LIKE CONCAT('%',#{scenicSpotFname,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName != ''">
+                AND A.SCENIC_SPOT_NAME LIKE CONCAT('%',#{scenicSpotName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        GROUP BY
+        A.SCENIC_SPOT_ID
+        ORDER BY
+        A.CREATE_DATE DESC
+    </select>
+
+    <insert id="addShop" parameterType="com.hna.hka.archive.management.Merchant.model.SysShop">
+        insert into SYS_SHOP
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                SHOP_ID,
+            </if>
+            <if test="shopName != null">
+                SHOP_NAME,
+            </if>
+            <if test="shopAddress != null and shopAddress != ''">
+                SHOP_ADDRESS,
+            </if>
+            <if test="shopPhone != null and shopPhone != ''">
+                SHOP_PHONE,
+            </if>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="scenicSpotName != null">
+                SCENIC_SPOT_NAME,
+            </if>
+            <if test="shopGps != null">
+                SHOP_GPS,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="shopName != null">
+                #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="shopAddress != null and shopAddress != ''">
+                #{shopAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="shopPhone != null and shopPhone != ''">
+                #{shopPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotId != null">
+                #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotName != null">
+                #{scenicSpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="shopGps != null">
+                #{shopGps,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateShop" parameterType="com.hna.hka.archive.management.Merchant.model.SysShop">
+        update SYS_SHOP
+        <set>
+            <if test="shopName != null and shopName != ''">
+                SHOP_NAME = #{shopName,jdbcType=BIGINT},
+            </if>
+            <if test="shopAddress != null and shopAddress != ''">
+                SHOP_ADDRESS = #{shopAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="shopPhone != null and shopPhone != ''">
+                SHOP_PHONE = #{shopPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="scenicSpotName != null and scenicSpotName != ''">
+                SCENIC_SPOT_NAME = #{scenicSpotName,jdbcType=VARCHAR},
+            </if>
+            <if test="shopGps != null and shopGps != ''">
+                SHOP_GPS = #{shopGps,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where SHOP_ID = #{shopId,jdbcType=BIGINT}
+    </update>
+</mapper>

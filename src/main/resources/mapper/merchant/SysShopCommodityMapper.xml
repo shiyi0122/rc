@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.Merchant.dao.SysShopCommodityMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.Merchant.model.SysShopCommodity">
+        <id column="COMMODITY_ID" property="commodityId" jdbcType="BIGINT"/>
+        <result column="SHOP_ID" property="shopId" jdbcType="BIGINT"/>
+        <result column="COMMODITY_NAME" property="commodityName" jdbcType="VARCHAR"/>
+        <result column="COMMODITY_CONTENT" property="commodityContent" jdbcType="VARCHAR"/>
+        <result column="COMMODITY_TYPE" property="commodityType" jdbcType="VARCHAR"/>
+        <result column="COMMODITY_PRICE" property="commodityPrice" jdbcType="VARCHAR"/>
+        <result column="COMMODITY_NUM" property="commodityNum" jdbcType="BIGINT"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        a
+        .
+        COMMODITY_ID
+        , a.SHOP_ID, a.COMMODITY_NAME, a.COMMODITY_CONTENT, a.COMMODITY_TYPE, a.COMMODITY_PRICE,
+    a.COMMODITY_NUM, a.CREATE_DATE, a.UPDATE_DATE,b.SHOP_NAME
+    </sql>
+
+    <delete id="deleteShopCommodity" parameterType="java.lang.Long">
+        delete
+        from SYS_SHOP_COMMODITY
+        where COMMODITY_ID = #{commodityId,jdbcType=BIGINT}
+    </delete>
+    <select id="getShopCommodityList" resultType="com.hna.hka.archive.management.Merchant.model.SysShopCommodity">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_SHOP_COMMODITY a
+        left join SYS_SHOP b on a.SHOP_ID = b.SHOP_ID
+        <where>
+            <if test="shopId != null and shopId != ''">
+                a.SHOP_ID = #{shopId,jdbcType=BIGINT}
+            </if>
+            <if test="commodityName != null and commodityName != ''">
+                and a.COMMODITY_NAME like CONCAT('%',#{commodityName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="commodityType != null and commodityType != ''">
+                and a.COMMODITY_TYPE = #{commodityType,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="exchangePrize" resultType="com.hna.hka.archive.management.system.model.SysCurrentUserExchange">
+        SELECT EXCHANGE_ID,
+               USER_ID,
+               EXCHANGE_NUMBER,
+               SCENIC_SPOT_ID,
+               EXCHANGE_STATE,
+               EXCHANGE_NAME,
+               ADDRESS_ID,
+               START_VALIDITY,
+               END_VALIDITY,
+               CREATE_DATE,
+               UPDATE_DATE,
+               SHIPMENT_STATUS
+        FROM SYS_CURRENT_USER_EXCHANGE
+        WHERE EXCHANGE_NUMBER = #{exchangeNumber,jdbcType=VARCHAR}
+    </select>
+    <select id="getExchangePrize" resultType="com.hna.hka.archive.management.system.model.SysCurrentUserExchange">
+        select EXCHANGE_ID,
+               USER_ID,
+               EXCHANGE_NUMBER,
+               a.SCENIC_SPOT_ID,
+               b.SCENIC_SPOT_NAME,
+               EXCHANGE_STATE,
+               EXCHANGE_NAME,
+               ADDRESS_ID,
+               START_VALIDITY,
+               END_VALIDITY,
+               a.CREATE_DATE,
+               a.UPDATE_DATE,
+               SHIPMENT_STATUS,
+               a.SHOP_ID
+        from SYS_CURRENT_USER_EXCHANGE a
+                 left join SYS_SCENIC_SPOT b on a.SCENIC_SPOT_ID = b.SCENIC_SPOT_ID
+        where EXCHANGE_NUMBER = #{exchangeNumber}
+    </select>
+    <select id="getSysUserById" resultType="com.hna.hka.archive.management.Merchant.model.SysShop">
+        select a.BINDING_ID,
+               a.SHOP_USER_ID,
+               a.SHOP_ID,
+               b.SHOP_NAME,
+               b.SCENIC_SPOT_ID,
+               b.SCENIC_SPOT_NAME
+        from SYS_SHOP_BINDING_USER a
+                 left join SYS_SHOP b on a.SHOP_ID = b.SHOP_ID
+        where SHOP_USER_ID = #{userId}
+    </select>
+    <select id="getTypeNum" resultType="com.hna.hka.archive.management.Merchant.model.SysShopCommodity">
+        select COMMODITY_TYPE
+        from SYS_SHOP_COMMODITY
+        where SHOP_ID = #{shopId}
+        order by CREATE_DATE desc
+        limit 1
+    </select>
+
+    <insert id="addShopCommodity" parameterType="com.hna.hka.archive.management.Merchant.model.SysShopCommodity">
+        insert into SYS_SHOP_COMMODITY
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commodityId != null">
+                COMMODITY_ID,
+            </if>
+            <if test="shopId != null">
+                SHOP_ID,
+            </if>
+            <if test="commodityName != null">
+                COMMODITY_NAME,
+            </if>
+            <if test="commodityContent != null">
+                COMMODITY_CONTENT,
+            </if>
+            <if test="commodityType != null">
+                COMMODITY_TYPE,
+            </if>
+            <if test="commodityPrice != null">
+                COMMODITY_PRICE,
+            </if>
+            <if test="commodityNum != null">
+                COMMODITY_NUM,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="commodityId != null">
+                #{commodityId,jdbcType=BIGINT},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="commodityName != null">
+                #{commodityName,jdbcType=VARCHAR},
+            </if>
+            <if test="commodityContent != null">
+                #{commodityContent,jdbcType=VARCHAR},
+            </if>
+            <if test="commodityType != null">
+                #{commodityType,jdbcType=VARCHAR},
+            </if>
+            <if test="commodityPrice != null">
+                #{commodityPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="commodityNum != null">
+                #{commodityNum,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="addExchangeLog">
+        insert into SYS_CURRENT_USER_EXCHANGE_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="exchangeLogId != null and exchangeLogId != ''">
+                EXCHANGE_LOG_ID,
+            </if>
+            <if test="userId != null and userId != ''">
+                USER_ID,
+            </if>
+            <if test="prizeId != null and prizeId != ''">
+                PRIZE_ID,
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                SCENIC_SPOT_ID,
+            </if>
+            <if test="exchangePort != null and exchangePort != ''">
+                EXCHANGE_PORT,
+            </if>
+            <if test="operationalState != null and operationalState != ''">
+                OPERATIONAL_STATE,
+            </if>
+            <if test="accountName != null and accountName != ''">
+                ACCOUNT_NAME,
+            </if>
+            <if test="mailingAddress != null and mailingAddress != ''">
+                MAILING_ADDRESS,
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                USER_PHONE,
+            </if>
+            <if test="fullName != null and fullName != ''">
+                FALL_NAME,
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CRATE_DATE,
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="exchangeLogId != null and exchangeLogId != ''">
+                #{exchangeLogId},
+            </if>
+            <if test="userId != null and userId != ''">
+                #{userId},
+            </if>
+            <if test="prizeId != null and prizeId != ''">
+                #{prizeId},
+            </if>
+            <if test="scenicSpotId != null and scenicSpotId != ''">
+                #{scenicSpotId},
+            </if>
+            <if test="exchangePort != null and exchangePort != ''">
+                #{exchangePort},
+            </if>
+            <if test="operationalState != null and operationalState != ''">
+                #{operationalState},
+            </if>
+            <if test="accountName != null and accountName != ''">
+                #{accountName},
+            </if>
+            <if test="mailingAddress != null and mailingAddress != ''">
+                #{mailingAddress},
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                #{userPhone},
+            </if>
+            <if test="fullName != null and fullName != ''">
+                #{fallName},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                #{createDate},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                #{updateDate}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateShopCommodity" parameterType="com.hna.hka.archive.management.Merchant.model.SysShopCommodity">
+        update SYS_SHOP_COMMODITY
+        <set>
+            <if test="shopId != null">
+                SHOP_ID = #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="commodityName != null">
+                COMMODITY_NAME = #{commodityName,jdbcType=VARCHAR},
+            </if>
+            <if test="commodityContent != null">
+                COMMODITY_CONTENT = #{commodityContent,jdbcType=VARCHAR},
+            </if>
+            <if test="commodityType != null">
+                COMMODITY_TYPE = #{commodityType,jdbcType=VARCHAR},
+            </if>
+            <if test="commodityPrice != null">
+                COMMODITY_PRICE = #{commodityPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="commodityNum != null">
+                COMMODITY_NUM = #{commodityNum,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where COMMODITY_ID = #{commodityId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeySelective">
+        update SYS_CURRENT_USER_EXCHANGE
+        <set>
+            <if test="userId != null">
+                USER_ID = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="exchangeNumber != null">
+                EXCHANGE_NUMBER = #{exchangeNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="scenicSpotId != null">
+                SCENIC_SPOT_ID = #{scenicSpotId,jdbcType=BIGINT},
+            </if>
+            <if test="exchangeState != null">
+                EXCHANGE_STATE = #{exchangeState,jdbcType=VARCHAR},
+            </if>
+            <if test="shipmentStatus != null and shipmentStatus != ''">
+                SHIPMENT_STATUS =#{shipmentStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeName != null">
+                EXCHANGE_NAME = #{exchangeName,jdbcType=VARCHAR},
+            </if>
+            <if test="startValidity != null">
+                START_VALIDITY = #{startValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="endValidity != null">
+                END_VALIDITY = #{endValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where EXCHANGE_ID = #{exchangeId,jdbcType=BIGINT}
+    </update>
+
+</mapper>
