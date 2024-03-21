@@ -54,8 +54,6 @@ layui.use(['form', 'layer', 'table', 'jquery'], function () {
                     }
                 }
             },
-            {field: 'startParkingName', title: '扫码时停靠点名称', minWidth: 100, align: "center"},
-            {field: 'parkingName', title: '还车点', minWidth: 100, align: "center"},
             {title: '操作', minWidth: 175, templet: '#orderListBar', fixed: "right", align: "center"}
         ]], done: function (res, curr, count) {
             tabledata = res.data;
@@ -95,8 +93,6 @@ layui.use(['form', 'layer', 'table', 'jquery'], function () {
                 currentUserPhone: $(".currentUserPhoneVal").val(),
                 startTime: $(".startTime").val(),
                 endTime: $(".endTime").val(),
-                startParkingName: $(".startParkingName").val(),
-                parkingName: $(".parkingName").val(),
                 orderScenicSpotId: $(".scenicSpotId").val(),
                 orderStatus: $(".orderStatus").val(),
                 huntsState: $(".huntsState").val(),

@@ -1386,32 +1386,27 @@ public class RobotController extends PublicUtil {
     public ReturnModel updateRobotUpgrade(Long scenicSpotId, Long robotId) throws Exception {
         ReturnModel returnModel = new ReturnModel();
         if (scenicSpotId != null || robotId != null) {
-            int i = sysRobotService.updateRobotUpgrade(scenicSpotId, robotId);
-            if (i > 0) {
-                returnModel.setData("");
-                returnModel.setMsg("修改成功！");
-                returnModel.setState(Constant.STATE_SUCCESS);
-                List<SysRobot> robotUpgrade = sysRobotService.getRobotUpgrade(scenicSpotId,robotId);
-                if (ToolUtil.isNotEmpty(robotUpgrade) && robotUpgrade.size() > 0) {
-                    for (SysRobot sysRobot : robotUpgrade) {
-                        if (sysRobot.getRobotCodeCid() != null) {
+            List<SysRobot> robotUpgrade = sysRobotService.getRobotUpgrade(scenicSpotId, robotId);
+            if (ToolUtil.isNotEmpty(robotUpgrade) && robotUpgrade.size() > 0) {
+                for (SysRobot sysRobot : robotUpgrade) {
+                    if (sysRobot.getRobotCodeCid() != null && !("4").equals(sysRobot.getAutoUpdateState())) {
+
+                        returnModel.setData("");
+                        returnModel.setMsg("机器人升级修改成功");
+                        returnModel.setState(Constant.STATE_SUCCESS);
+                        returnModel.setType(Constant.ROBOT_UPDATE);
+                        // 转JSON格式发送到个推
+                        String robotUnlock = JsonUtils.toString(returnModel);
+                        String encode = AES.encode(robotUnlock);// 加密推送
+                        String isSuccess = WeChatGtRobotAppPush.singlePush(sysRobot.getRobotCodeCid(), encode, "成功!");
+                        if ("1".equals(isSuccess)) {
                             returnModel.setData("");
-                            returnModel.setMsg("机器人升级修改成功");
+                            returnModel.setMsg("发送成功！");
                             returnModel.setState(Constant.STATE_SUCCESS);
-                            returnModel.setType(Constant.ROBOT_UPDATE);
-                            // 转JSON格式发送到个推
-                            String robotUnlock = JsonUtils.toString(returnModel);
-                            String encode = AES.encode(robotUnlock);// 加密推送
-                            String isSuccess = WeChatGtRobotAppPush.singlePush(sysRobot.getRobotCodeCid(), encode, "成功!");
-                            if ("1".equals(isSuccess)) {
-                                returnModel.setData("");
-                                returnModel.setMsg("发送成功！");
-                                returnModel.setState(Constant.STATE_SUCCESS);
-                            } else {
-                                returnModel.setData("");
-                                returnModel.setMsg("发送失败！");
-                                returnModel.setState(Constant.STATE_FAILURE);
-                            }
+                        } else {
+                            returnModel.setData("");
+                            returnModel.setMsg("发送失败！");
+                            returnModel.setState(Constant.STATE_FAILURE);
                         }
                     }
                 }

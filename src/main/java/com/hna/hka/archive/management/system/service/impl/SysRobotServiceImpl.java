@@ -1143,38 +1143,35 @@ public class SysRobotServiceImpl implements SysRobotService {
         List<SysScenicSpot> sysScenicSpots = sysRobotMapper.timingRobotAuto();
 
         if (sysScenicSpots.size() > 0) {
-                int i = sysRobotMapper.updateRobotUpgrade(sysScenicSpots.get(0).getScenicSpotId(), null);
-                if (i > 0) {
-                    ReturnModel returnModel = new ReturnModel();
-                    returnModel.setData("");
-                    returnModel.setMsg("修改成功！");
-                    returnModel.setState(Constant.STATE_SUCCESS);
-                    List<SysRobot> robotUpgrade = sysRobotMapper.getRobotUpgrade(sysScenicSpots.get(0).getScenicSpotId(), null);
-                    if (ToolUtil.isNotEmpty(robotUpgrade) && robotUpgrade.size() > 0) {
-                        for (SysRobot sysRobot : robotUpgrade) {
-                            if (sysRobot.getRobotCodeCid() != null) {
-                                returnModel.setData("");
-                                returnModel.setMsg("机器人升级修改成功");
-                                returnModel.setState(Constant.STATE_SUCCESS);
-                                returnModel.setType(Constant.ROBOT_UPDATE);
-                                // 转JSON格式发送到个推
-                                String robotUnlock = JsonUtils.toString(returnModel);
-                                String encode = AES.encode(robotUnlock);// 加密推送
-                                String isSuccess = WeChatGtRobotAppPush.singlePush(sysRobot.getRobotCodeCid(), encode, "成功!");
-                                if ("1".equals(isSuccess)) {
-                                    returnModel.setData("");
-                                    returnModel.setMsg("发送成功！");
-                                    returnModel.setState(Constant.STATE_SUCCESS);
-                                } else {
-                                    returnModel.setData("");
-                                    returnModel.setMsg("发送失败！");
-                                    returnModel.setState(Constant.STATE_FAILURE);
-                                }
-                            }
+            ReturnModel returnModel = new ReturnModel();
+            List<SysRobot> robots = sysRobotMapper.getRobotUpgrade(sysScenicSpots.get(0).getScenicSpotId(), null);
+//            List<SysRobot> robots = sysRobotMapper.getRobotUpgrade(15698320289682l, null);
+            System.out.println("____________景区名称："+sysScenicSpots.get(0).getScenicSpotName()+"---------------------");
+            if (ToolUtil.isNotEmpty(robots) && robots.size() > 0) {
+                for (SysRobot sysRobot : robots) {
+                    if (sysRobot.getRobotCodeCid() != null && !("4").equals(sysRobot.getAutoUpdateState())) {
+
+                        returnModel.setData("");
+                        returnModel.setMsg("机器人升级修改成功");
+                        returnModel.setState(Constant.STATE_SUCCESS);
+                        returnModel.setType(Constant.ROBOT_UPDATE);
+                        // 转JSON格式发送到个推
+                        String robotUnlock = JsonUtils.toString(returnModel);
+                        String encode = AES.encode(robotUnlock);// 加密推送
+                        String isSuccess = WeChatGtRobotAppPush.singlePush(sysRobot.getRobotCodeCid(), encode, "成功!");
+
+                        if ("1".equals(isSuccess)) {
+                            returnModel.setData("");
+                            returnModel.setMsg("发送成功！");
+                            returnModel.setState(Constant.STATE_SUCCESS);
+                        } else {
+                            returnModel.setData("");
+                            returnModel.setMsg("发送失败！");
+                            returnModel.setState(Constant.STATE_FAILURE);
                         }
                     }
                 }
-
+            }
         }
     }
 

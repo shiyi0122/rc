@@ -76,19 +76,4 @@ public class SysCurrentUserExchange {
     //0未选择兑换方式  1邮寄方式 2现场兑换方式
     @Excel(name = "兑换方式",width = 20,orderNum = "10")
     private String wayType;
-
-    //商店ID
-    private Long shopId;
-    //商店名称
-    private String shopName;
-    //商店联系方式
-    private String shopPhone;
-    //商店GPS
-    private String shopGPS;
-    //商品类型
-    private String commodityType;
-    //实物奖品类型 3 实物奖品 5商品  默认实物奖品
-    private String entityExchangeType;
-
-
 }

@@ -9,6 +9,7 @@ import com.hna.hka.archive.management.system.service.SysRobotUnusualLogService;
 import com.hna.hka.archive.management.system.service.SysScenicSpotActivityService;
 import com.hna.hka.archive.management.system.service.SysScenicSpotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
@@ -129,7 +130,7 @@ public class RcTask {
     }
 
     //PAD升级推送
-//    @Scheduled(cron = "0 0/3 0-5 * * ?")
+    @Scheduled(cron = "0 0/3 0-5 * * ?")
 //    @Scheduled(cron = "0 15 20 * * ?")
     public void timingRobotAuto() throws Exception {
         service.execute(() -> {

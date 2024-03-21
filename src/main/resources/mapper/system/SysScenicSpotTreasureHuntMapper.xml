@@ -214,14 +214,7 @@
         a.MAILING_ADDRESS,
         a.FULL_NAME,
         a.MAILING_PHONE,
-        a.WAY_TYPE,
-        a.SHOP_ID,
-        a.SHOP_NAME,
-        a.SHOP_PHONE,
-        a.SHOP_ADDRESS,
-        a.SHOP_GPS,
-        a.COMMODITY_TYPE,
-        a.ENTITY_EXCHANGE_TYPE
+        a.WAY_TYPE
         FROM
         SYS_CURRENT_USER_EXCHANGE a
         LEFT JOIN SYS_CURRENT_USER b ON b.CURRENT_USER_ID = a.USER_ID
@@ -274,18 +267,6 @@
             </if>
             <if test="wayType != null and wayType != ''">
                 and a.WAY_TYPE =#{wayType}
-            </if>
-            <if test="entityExchangeType != null and entityExchangeType != ''">
-                and a.ENTITY_EXCHANGE_TYPE =#{entityExchangeType}
-            </if>
-            <if test="commodityType != null and commodityType !=''">
-                and a.COMMODITY_TYPE =#{commodityType}
-            </if>
-            <if test="shopId !=null and shopId != ''">
-                and a.SHOP_ID =#{shopId}
-            </if>
-            <if test="shopName !=null and shopName != ''">
-                and a.SHOP_NAME Like CONCAT('%',#{shopName},'%')
             </if>
         </where>
         order by a.CREATE_DATE DESC
@@ -463,9 +444,6 @@
         a.AFTER_INTEGRAL_NUM,
         a.USE_INTEGRAL_NUM,
         a.PRIZE_SIZE,
-        a.PIC_URL,
-        a.JACKPOT_ID,
-        a.JACKPOT_NAME,
         a.CREATE_DATE,
         a.UPDATE_DATE,
         b.CURRENT_USER_PHONE as userPhone1
@@ -632,8 +610,6 @@
                WAY_TYPE,
                PRIZE_SIZE,
                PROBABILITY,
-               SHOP_ID,
-               COMMODITY_TYPE,
                CREATE_DATE,
                UPDATE_DATE
         FROM SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
@@ -691,22 +667,15 @@
         <!--抽奖订单数-->
         COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0) AS lotteryOrder,
         <!--寻宝订单占比-->
-        ROUND((COALESCE ( SUM( CASE WHEN o.HUNTS_STATE IN ( '1', '3' ) THEN 1 ELSE 0 END ), 0 ) / COALESCE(COUNT(
-        o.ORDER_ID ), 0 )) * 100,2) AS huntProportion,
+        ROUND((COALESCE ( SUM( CASE WHEN o.HUNTS_STATE IN ( '1', '3' ) THEN 1 ELSE 0 END ), 0 ) / COALESCE(COUNT( o.ORDER_ID ), 0 )) * 100,2) AS huntProportion,
         <!--抽奖订单占比-->
-        ROUND((COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0) / COALESCE(COUNT(o.ORDER_ID), 0)) *
-        100, 2) AS lotteryProportion,
+        ROUND((COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0) / COALESCE(COUNT(o.ORDER_ID), 0)) * 100, 2) AS lotteryProportion,
         <!--客单价-->
-        ROUND(COALESCE(SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2)),
-        0) / COALESCE(COUNT(o.ORDER_ID), 0), 2) AS perCustomerTransaction,
+        ROUND(COALESCE(SUM(ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2)), 0) / COALESCE(COUNT(o.ORDER_ID), 0), 2) AS perCustomerTransaction,
         <!--寻宝客单价-->
-        ROUND(COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '1' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT +
-        DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '1'
-        THEN 1 ELSE 0 END), 0),2) AS huntPerCustomerTransaction,
+        ROUND(COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '1' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '1' THEN 1 ELSE 0 END), 0),2) AS huntPerCustomerTransaction,
         <!--抽奖客单价-->
-        ROUND(COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT +
-        DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3'
-        THEN 1 ELSE 0 END), 0),2) AS lotteryPerCustomerTransaction
+        ROUND(COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT + DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN 1 ELSE 0 END), 0),2) AS lotteryPerCustomerTransaction
         FROM
         SYS_ORDER o
         JOIN SYS_SCENIC_SPOT s ON o.ORDER_SCENIC_SPOT_ID = s.SCENIC_SPOT_ID
@@ -719,13 +688,12 @@
             AND STR_TO_DATE(o.CREATE_DATE,'%Y-%m-%d') between #{orderStartTime} and #{orderEndTime}
         </if>
         <if test='dateType == "1"'>
-            AND DATE_FORMAT(STR_TO_DATE(o.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{orderStartTime} and
-            #{orderEndTime}
+            AND DATE_FORMAT(STR_TO_DATE(o.CREATE_DATE,'%Y-%m-%d' ),'%Y-%m') between #{orderStartTime} and #{orderEndTime}
         </if>
         <if test='dateType == "2"'>
             AND DATE_FORMAT(STR_TO_DATE(o.CREATE_DATE,'%Y-%m-%d' ),'%Y') between #{orderStartTime} and #{orderEndTime}
         </if>
-        <if test="huntsState != null and huntsState != ''">
+          <if test="huntsState != null and huntsState != ''">
             AND o.HUNTS_STATE = #{huntsState}
         </if>
         <if test='companyId  != null and companyId != ""'>
@@ -738,6 +706,7 @@
         GROUP BY o.ORDER_SCENIC_SPOT_ID
         ORDER BY COALESCE(COUNT(o.ORDER_ID), 0) DESC
     </select>
+
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -1170,12 +1139,6 @@
             <if test="userExpiration != null and userExpiration != ''">
                 USER_EXPIRATION,
             </if>
-            <if test="shopId != null and shopId != ''">
-                SHOP_ID,
-            </if>
-            <if test="commodityType != null and commodityType != ''">
-                COMMODITY_TYPE,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="treasureId != null and treasureId != ''">
@@ -1222,12 +1185,6 @@
             </if>
             <if test="userExpiration != null and userExpiration != ''">
                 #{userExpiration,jdbcType=BIGINT}
-            </if>
-            <if test="shopId != null and shopId != ''">
-                #{shopId,jdbcType=BIGINT},
-            </if>
-            <if test="commodityType != null and commodityType != ''">
-                #{commodityType,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -1559,13 +1516,7 @@
                 UPDATE_DATE =#{updateDate,jdbcType=VARCHAR},
             </if>
             <if test="userExpiration != null and userExpiration != ''">
-                USER_EXPIRATION =#{userExpiration,jdbcType=BIGINT},
-            </if>
-            <if test="shopId != null and shopId != ''">
-                SHOP_ID =#{shopId,jdbcType=BIGINT},
-            </if>
-            <if test="commodityType != null and commodityType != ''">
-                COMMODITY_TYPE =#{commodityType,jdbcType=VARCHAR}
+                USER_EXPIRATION =#{userExpiration,jdbcType=BIGINT}
             </if>
         </set>
         where TREASURE_ID =#{treasureId}
