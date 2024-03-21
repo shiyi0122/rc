@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.Merchant.dao.SysShopBindingUserMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.Merchant.model.SysShopBindingUser">
+        <id column="BINDING_ID" property="bindingId" jdbcType="BIGINT"/>
+        <result column="SHOP_USER_ID" property="shopUserId" jdbcType="BIGINT"/>
+        <result column="SHOP_ID" property="shopId" jdbcType="BIGINT"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        BINDING_ID
+        , SHOP_USER_ID, SHOP_ID, CREATE_DATE, UPDATE_DATE
+    </sql>
+
+    <delete id="deleteByUserId" parameterType="java.lang.Long">
+        delete
+        from SYS_SHOP_BINDING_USER
+        where BINDING_ID = #{bindingId,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteShopBindingUser">
+        delete
+        from SYS_SHOP_BINDING_USER
+        where SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT}
+        and SHOP_ID = #{shopId,jdbcType=BIGINT}
+    </delete>
+    <select id="selectById" resultType="com.hna.hka.archive.management.Merchant.model.SysShopBindingUser">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_SHOP_BINDING_USER
+        <where>
+            1=1
+            <if test="shopUserId != null and shopUserId != ''">
+                and SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT}
+            </if>
+            <if test="shopId != null and shopId != ''">
+                and SHOP_ID = #{shopId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+    <insert id="addShopBindingUser" parameterType="com.hna.hka.archive.management.Merchant.model.SysShopBindingUser">
+        insert into SYS_SHOP_BINDING_USER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bindingId != null">
+                BINDING_ID,
+            </if>
+            <if test="shopUserId != null">
+                SHOP_USER_ID,
+            </if>
+            <if test="shopId != null">
+                SHOP_ID,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bindingId != null">
+                #{bindingId,jdbcType=BIGINT},
+            </if>
+            <if test="shopUserId != null">
+                #{shopUserId,jdbcType=BIGINT},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateShopBindingUser" parameterType="com.hna.hka.archive.management.Merchant.model.SysShopBindingUser">
+        update SYS_SHOP_BINDING_USER
+        <set>
+            <if test="shopUserId != null">
+                SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT},
+            </if>
+            <if test="shopId != null">
+                SHOP_ID = #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where BINDING_ID = #{bindingId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hna.hka.archive.management.Merchant.model.SysShopBindingUser">
+        update SYS_SHOP_BINDING_USER
+        set SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT},
+            SHOP_ID      = #{shopId,jdbcType=BIGINT},
+            CREATE_DATE  = #{createDate,jdbcType=VARCHAR},
+            UPDATE_DATE  = #{updateDate,jdbcType=VARCHAR}
+        where BINDING_ID = #{bindingId,jdbcType=BIGINT}
+    </update>
+</mapper>

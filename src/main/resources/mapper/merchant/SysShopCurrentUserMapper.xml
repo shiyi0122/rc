@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hna.hka.archive.management.Merchant.dao.SysShopCurrentUserMapper">
+    <resultMap id="BaseResultMap" type="com.hna.hka.archive.management.Merchant.model.SysShopCurrentUser">
+        <id column="SHOP_USER_ID" property="shopUserId" jdbcType="BIGINT"/>
+        <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR"/>
+        <result column="OPEN_ID" property="openId" jdbcType="VARCHAR"/>
+        <result column="USER_ROLE" property="userRole" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        SHOP_USER_ID
+        , USER_PHONE, OPEN_ID, USER_ROLE, CREATE_DATE, UPDATE_DATE,SHOP_ID,SHOP_NAME
+    </sql>
+
+    <delete id="deleteShopUser" parameterType="java.lang.Long">
+        delete
+        from SYS_SHOP_CURRENT_USER
+        where SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT}
+    </delete>
+    <select id="getShopUser" resultType="com.hna.hka.archive.management.Merchant.model.SysShopCurrentUser">
+        SELECT
+        a.SHOP_USER_ID,
+        a.USER_PHONE,
+        a.OPEN_ID,
+        b.SHOP_ID,
+        c.SHOP_NAME,
+        a.USER_ROLE,
+        a.CREATE_DATE,
+        a.UPDATE_DATE
+        FROM
+        SYS_SHOP_CURRENT_USER a
+        LEFT JOIN SYS_SHOP_BINDING_USER b ON a.SHOP_USER_ID = b.SHOP_USER_ID
+        LEFT JOIN SYS_SHOP c ON b.SHOP_ID = c.SHOP_ID
+        <where>
+            <if test="shopUserId != null and shopUserId != ''">
+                SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT}
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                USER_PHONE = #{userPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="openId != null and openId != ''">
+                OPEN_ID = #{openId,jdbcType=VARCHAR}
+            </if>
+            <if test="userRole != null and userRole != ''">
+                USER_ROLE = #{userRole,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="getShopUserList" resultType="com.hna.hka.archive.management.Merchant.model.SysShopCurrentUser">
+        SELECT
+        a.SHOP_USER_ID,
+        a.USER_PHONE,
+        a.OPEN_ID,
+        b.SHOP_ID,
+        d.SCENIC_SPOT_ID,
+        d.SCENIC_SPOT_NAME,
+        c.SHOP_NAME,
+        a.USER_ROLE,
+        a.CREATE_DATE,
+        a.UPDATE_DATE
+        FROM
+        SYS_SHOP_CURRENT_USER a
+        LEFT JOIN SYS_SHOP_BINDING_USER b ON a.SHOP_USER_ID = b.SHOP_USER_ID
+        LEFT JOIN SYS_SHOP c ON b.SHOP_ID = c.SHOP_ID
+        LEFT JOIN SYS_SCENIC_SPOT d ON c.SCENIC_SPOT_ID = d.SCENIC_SPOT_ID
+        <where>
+            1=1
+            <if test="shopUserId != null and shopUserId != ''">
+                and a.SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT}
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                and a.USER_PHONE = #{userPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="openId != null and openId != ''">
+                and a.OPEN_ID = #{openId,jdbcType=VARCHAR}
+            </if>
+            <if test="userRole != null and userRole != ''">
+                and a.USER_ROLE = #{userRole,jdbcType=VARCHAR}
+            </if>
+            <if test="shopId != null and shopId != ''">
+                and b.SHOP_ID = #{shopId,jdbcType=BIGINT}
+            </if>
+        </where>
+        ORDER BY
+        CREATE_DATE DESC
+    </select>
+
+    <insert id="addShopUser" parameterType="com.hna.hka.archive.management.Merchant.model.SysShopCurrentUser">
+        insert into SYS_SHOP_CURRENT_USER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopUserId != null">
+                SHOP_USER_ID,
+            </if>
+            <if test="userPhone != null">
+                USER_PHONE,
+            </if>
+            <if test="openId != null">
+                OPEN_ID,
+            </if>
+            <if test="userRole != null">
+                USER_ROLE,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE,
+            </if>
+            <if test="thdSession != null and thdSession != ''">
+                THD_SESSION,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopUserId != null">
+                #{shopUserId,jdbcType=BIGINT},
+            </if>
+            <if test="userPhone != null">
+                #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="userRole != null">
+                #{userRole,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="thdSession != null and thdSession != ''">
+                #{thdSession,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateShopUser" parameterType="com.hna.hka.archive.management.Merchant.model.SysShopCurrentUser">
+        update SYS_SHOP_CURRENT_USER
+        <set>
+            <if test="userPhone != null">
+                USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                OPEN_ID = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="userRole != null">
+                USER_ROLE = #{userRole,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT}
+    </update>
+</mapper>
