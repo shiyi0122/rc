@@ -517,6 +517,8 @@
         A.OUT_TRADE_NO,
         A.DEDUCTIBLE_REFUND_AMOUNT,
         A.HUNTS_STATE,
+        A.START_PARKING_NAME,
+        A.PARKING_NAME,
         ROUND( A.ORDER_AMOUNT - A.ORDER_REFUND_AMOUNT, 2 ) AS realIncome
         FROM
         SYS_ORDER A

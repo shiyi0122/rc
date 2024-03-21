@@ -46,4 +46,5 @@ public class SysCurrentUserExchangeLog {
 
     private Integer pageSize;
     private Integer pageNum;
+    private String jackpotName;
 }

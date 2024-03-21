@@ -53,4 +53,10 @@ public class SysScenicSpotTreasureNewHunt {
     //用户中奖后有效期（单位天）
     private Long userExpiration;
 
+    //商店ID
+    private Long shopId;
+
+    //商品类型
+    private String commodityType;
+
 }
