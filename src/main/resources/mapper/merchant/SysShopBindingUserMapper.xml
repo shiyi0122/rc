@@ -38,6 +38,7 @@
             </if>
         </where>
     </select>
+
     <insert id="addShopBindingUser" parameterType="com.hna.hka.archive.management.Merchant.model.SysShopBindingUser">
         insert into SYS_SHOP_BINDING_USER
         <trim prefix="(" suffix=")" suffixOverrides=",">

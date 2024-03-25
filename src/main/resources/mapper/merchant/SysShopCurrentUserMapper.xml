@@ -11,7 +11,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         SHOP_USER_ID
-        , USER_PHONE, OPEN_ID, USER_ROLE, CREATE_DATE, UPDATE_DATE,SHOP_ID,SHOP_NAME
+        , USER_PHONE, OPEN_ID,THD_SESSION, USER_ROLE, CREATE_DATE, UPDATE_DATE
     </sql>
 
     <delete id="deleteShopUser" parameterType="java.lang.Long">
@@ -24,6 +24,7 @@
         a.SHOP_USER_ID,
         a.USER_PHONE,
         a.OPEN_ID,
+        a.THD_SESSION AS thdSession,
         b.SHOP_ID,
         c.SHOP_NAME,
         a.USER_ROLE,
@@ -53,38 +54,59 @@
         a.SHOP_USER_ID,
         a.USER_PHONE,
         a.OPEN_ID,
-        b.SHOP_ID,
-        d.SCENIC_SPOT_ID,
-        d.SCENIC_SPOT_NAME,
-        c.SHOP_NAME,
+        a.THD_SESSION,
         a.USER_ROLE,
         a.CREATE_DATE,
         a.UPDATE_DATE
         FROM
         SYS_SHOP_CURRENT_USER a
-        LEFT JOIN SYS_SHOP_BINDING_USER b ON a.SHOP_USER_ID = b.SHOP_USER_ID
+        <where>
+            1=1
+            <if test="shopUserId != null and shopUserId != ''">
+                and SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT}
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                and USER_PHONE = #{userPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="openId != null and openId != ''">
+                and OPEN_ID = #{openId,jdbcType=VARCHAR}
+            </if>
+            <if test="userRole != null and userRole != ''">
+                and USER_ROLE = #{userRole,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY
+        CREATE_DATE DESC
+    </select>
+    <select id="getThdSession" resultType="com.hna.hka.archive.management.Merchant.model.SysShopCurrentUser">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_SHOP_CURRENT_USER
+        where THD_SESSION = #{thdSession,jdbcType=VARCHAR}
+    </select>
+    <select id="getShopUserPermission" resultType="com.hna.hka.archive.management.Merchant.model.SysShopCurrentUser">
+        SELECT
+        b.SHOP_USER_ID,
+        b.SHOP_ID,
+        b.BiNDING_ID,
+        d.SCENIC_SPOT_ID,
+        d.SCENIC_SPOT_NAME,
+        c.SHOP_NAME,
+        b.CREATE_DATE,
+        b.UPDATE_DATE
+        FROM
+        SYS_SHOP_BINDING_USER b
         LEFT JOIN SYS_SHOP c ON b.SHOP_ID = c.SHOP_ID
         LEFT JOIN SYS_SCENIC_SPOT d ON c.SCENIC_SPOT_ID = d.SCENIC_SPOT_ID
         <where>
             1=1
             <if test="shopUserId != null and shopUserId != ''">
-                and a.SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT}
-            </if>
-            <if test="userPhone != null and userPhone != ''">
-                and a.USER_PHONE = #{userPhone,jdbcType=VARCHAR}
-            </if>
-            <if test="openId != null and openId != ''">
-                and a.OPEN_ID = #{openId,jdbcType=VARCHAR}
-            </if>
-            <if test="userRole != null and userRole != ''">
-                and a.USER_ROLE = #{userRole,jdbcType=VARCHAR}
+                and b.SHOP_USER_ID =#{shopUserId}
             </if>
             <if test="shopId != null and shopId != ''">
-                and b.SHOP_ID = #{shopId,jdbcType=BIGINT}
+                and b.SHOP_ID =#{shopId}
             </if>
         </where>
-        ORDER BY
-        CREATE_DATE DESC
     </select>
 
     <insert id="addShopUser" parameterType="com.hna.hka.archive.management.Merchant.model.SysShopCurrentUser">
@@ -153,6 +175,9 @@
             </if>
             <if test="updateDate != null">
                 UPDATE_DATE = #{updateDate,jdbcType=VARCHAR},
+            </if>
+            <if test="thdSession != null and thdSession != ''">
+                THD_SESSION = #{thdSession,jdbcType=VARCHAR}
             </if>
         </set>
         where SHOP_USER_ID = #{shopUserId,jdbcType=BIGINT}

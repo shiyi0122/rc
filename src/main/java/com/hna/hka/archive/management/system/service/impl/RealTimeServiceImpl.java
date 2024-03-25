@@ -90,7 +90,9 @@ public class RealTimeServiceImpl implements RealTimeService {
 
                 search.put("orderScenicSpotId", spotId);
                 int orderList = sysOrderMapper.getTotle(search);
+                int allTotle = sysOrderMapper.getAllTotle(search);
                 returnMap.put("totle", orderList);
+                returnMap.put("allTotle", allTotle);
 
                 return returnMap;
 
@@ -149,12 +151,15 @@ public class RealTimeServiceImpl implements RealTimeService {
 
                 search.put("time", time);
                 int orderList = 0;
+                int allTotle = 0;
                 String[] spot1 = spotId.split(",");
                 for (int i = 0; i < spot1.length; i++) {
                     search.put("orderScenicSpotId", spot1[i]);
                     orderList += sysOrderMapper.getTotle(search);
+                    allTotle += sysOrderMapper.getTotle(search);
                 }
                 returnMap.put("totle", orderList);
+                returnMap.put("allTotle", allTotle);
 
                 return returnMap;
             }
@@ -221,11 +226,15 @@ public class RealTimeServiceImpl implements RealTimeService {
                 search.put("endTime", DateUtil.addDay(endTime, 1));
                 search.put("orderScenicSpotId", spotId);
                 int orderList = 0;
+                int allTotle = 0;
                 for (String date : list) {
                     search.put("time", date);
-                    orderList += sysOrderMapper.getTotle(search);
+                    orderList = sysOrderMapper.getTotle(search);
+                    allTotle = sysOrderMapper.getAllTotle(search);
+
                 }
                 returnMap.put("totle", orderList);
+                returnMap.put("allTotle", allTotle);
 
                 return returnMap;
             } catch (Exception e) {
@@ -294,7 +303,9 @@ public class RealTimeServiceImpl implements RealTimeService {
                 search.put("orderScenicSpotId", spotId);
                 search.put("time", time);
                 int orderList = sysOrderMapper.getTotle(search);
+                int allTotle = sysOrderMapper.getAllTotle(search);
                 returnMap.put("totle", orderList);
+                returnMap.put("allTotle", allTotle);
 
                 return returnMap;
             } catch (Exception e) {
@@ -311,7 +322,9 @@ public class RealTimeServiceImpl implements RealTimeService {
         search.put("orderScenicSpotId", spotId);
         search.put("time", time);
         int orderList = sysOrderMapper.getTotle(search);
+        int allTotle = sysOrderMapper.getAllTotle(search);
         returnMap.put("totle", orderList);
+        returnMap.put("allTotle", allTotle);
         return returnMap;
     }
 }

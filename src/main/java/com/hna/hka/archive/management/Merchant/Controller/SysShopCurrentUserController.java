@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Api(tags = "商家或店员用户信息接口")
 @RestController
 @CrossOrigin
@@ -75,4 +77,55 @@ public class SysShopCurrentUserController {
         }
         return returnModel;
     }
+
+    @ApiOperation("获取商家或店员用户权限")
+    @PostMapping("/getShopUserPermission")
+    public ReturnModel getShopUserPermission(SysShopCurrentUser sysShopCurrentUser) {
+        ReturnModel returnModel = new ReturnModel();
+        List<SysShopCurrentUser> shopUserPermission = sysShopCurrentUserService.getShopUserPermission(sysShopCurrentUser);
+        returnModel.setData(shopUserPermission);
+        returnModel.setMsg("查询成功！");
+        returnModel.setState(Constant.STATE_SUCCESS);
+        return returnModel;
+    }
+
+    @ApiOperation("新增用户权限")
+    @PostMapping("/addUserPermission")
+    public ReturnModel addUserPermission(SysShopCurrentUser sysShopCurrentUser) {
+        ReturnModel returnModel = new ReturnModel();
+        int i = sysShopCurrentUserService.addUserPermission(sysShopCurrentUser);
+        if (i > 0) {
+            returnModel.setMsg("新增成功！");
+            returnModel.setState(Constant.STATE_SUCCESS);
+        } else if (i == -1){
+            returnModel.setMsg("当前角色已绑定店铺！");
+            returnModel.setState(Constant.STATE_FAILURE);
+        }else if (i== -2) {
+            returnModel.setMsg("暂无权限！");
+            returnModel.setState(Constant.STATE_FAILURE);
+        }else if (i== -3) {
+            returnModel.setMsg("已绑定了这个店铺！");
+            returnModel.setState(Constant.STATE_FAILURE);
+        }else {
+            returnModel.setMsg("新增失败！");
+            returnModel.setState(Constant.STATE_FAILURE);
+        }
+        return returnModel;
+    }
+
+    @ApiOperation("删除用户权限")
+    @GetMapping("delectUserPermission")
+    public ReturnModel delectUserPermission(Long bindingId) {
+        ReturnModel returnModel = new ReturnModel();
+        int result = sysShopCurrentUserService.delectUserPermission(bindingId);
+        if (result > 0) {
+            returnModel.setMsg("删除成功！");
+            returnModel.setState(Constant.STATE_SUCCESS);
+        } else {
+            returnModel.setMsg("删除失败！");
+            returnModel.setState(Constant.STATE_FAILURE);
+        }
+        return returnModel;
+    }
+
 }

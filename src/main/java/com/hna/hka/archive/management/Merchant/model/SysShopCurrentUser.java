@@ -32,6 +32,7 @@ public class SysShopCurrentUser {
     private String thdSession;
     private String scenicSpotId;
     private String scenicSpotName;
+    private String bindingId;
 
 
 }

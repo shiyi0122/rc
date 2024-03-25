@@ -113,6 +113,8 @@ public class ShiroConfig {
         filterMap.put("/system/scenicSpot/**", "anon");
         filterMap.put("/system/robot/**", "anon");
         filterMap.put("/system/appRoleInterface/**", "anon");
+        filterMap.put("/Merchant/**/**", "anon");
+        filterMap.put("/system/realTime/**", "anon");
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问【放行】-->
         filterMap.put("/**", "kickout,authc");
         filterMap.put("/*/*", "authc");

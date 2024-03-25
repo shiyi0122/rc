@@ -16,4 +16,6 @@ public interface SysShopCurrentUserMapper {
     int updateShopUser(SysShopCurrentUser record);
 
     List<SysShopCurrentUser> getShopUserList(SysShopCurrentUser sysShopCurrentUser);
+
+    List<SysShopCurrentUser> getShopUserPermission(SysShopCurrentUser sysShopCurrentUser);
 }

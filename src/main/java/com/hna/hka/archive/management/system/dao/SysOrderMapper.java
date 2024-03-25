@@ -266,4 +266,6 @@ public interface SysOrderMapper {
     int getTotle(Map<String, Object> search);
 
     SysScenicSpot getHuntsState(@Param("orderScenicSpotId") Long orderScenicSpotId);
+
+    int getAllTotle(Map<String, Object> search);
 }

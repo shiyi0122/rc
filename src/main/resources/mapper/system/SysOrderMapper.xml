@@ -4779,6 +4779,26 @@
         WHERE
             SCENIC_SPOT_ID = #{orderScenicSpotId}
     </select>
+    <select id="getAllTotle" resultType="java.lang.Integer">
+        select
+        COALESCE(COUNT(A.ORDER_ID), 0) AS allOrder
+        from SYS_ORDER A
+        <where>
+        1=1
+        <if test="startTime != null and startTime != ''">
+            AND A.CREATE_DATE <![CDATA[ >= ]]> #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND A.CREATE_DATE <![CDATA[ <= ]]> #{endTime}
+        </if>
+        <if test="time != null and time != ''">
+            AND A.CREATE_DATE <![CDATA[ >= ]]> #{time}
+        </if>
+        <if test="orderScenicSpotId != null and orderScenicSpotId != ''">
+            AND A.ORDER_SCENIC_SPOT_ID = #{orderScenicSpotId}
+        </if>
+        </where>
+    </select>
 
 
 </mapper>

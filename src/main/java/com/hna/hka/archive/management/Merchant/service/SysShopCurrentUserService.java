@@ -3,6 +3,7 @@ package com.hna.hka.archive.management.Merchant.service;
 import com.github.pagehelper.PageInfo;
 import com.hna.hka.archive.management.Merchant.model.SysShopCurrentUser;
 
+import java.util.List;
 import java.util.Map;
 
 public interface SysShopCurrentUserService {
@@ -16,4 +17,10 @@ public interface SysShopCurrentUserService {
     int updateShopUser(SysShopCurrentUser sysShopCurrentUser);
 
     int deleteShopUser(Long shopUserId,String shopId);
+
+    List<SysShopCurrentUser> getShopUserPermission(SysShopCurrentUser sysShopCurrentUser);
+
+    int addUserPermission(SysShopCurrentUser sysShopCurrentUser);
+
+    int delectUserPermission(Long bindingId);
 }

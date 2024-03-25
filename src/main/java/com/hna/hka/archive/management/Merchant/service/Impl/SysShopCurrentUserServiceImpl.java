@@ -41,49 +41,11 @@ public class SysShopCurrentUserServiceImpl implements SysShopCurrentUserService 
         sysShopCurrentUser.setShopUserId(IdUtils.getSeqId());
         sysShopCurrentUser.setCreateDate(DateUtil.currentDateTime());
         sysShopCurrentUser.setUpdateDate(DateUtil.currentDateTime());
-        if (sysShopCurrentUser.getShopId() != null) {
-            //添加到中间表
-            SysShopBindingUser shopBindingUser = new SysShopBindingUser();
-            shopBindingUser.setShopUserId(sysShopCurrentUser.getShopUserId());
-            SysShopBindingUser user = sysShopBindingUserMapper.selectById(shopBindingUser);
-            if (user != null) {
-                user.setUpdateDate(DateUtil.currentDateTime());
-                user.setShopId(Long.valueOf(sysShopCurrentUser.getShopId()));
-                sysShopBindingUserMapper.updateShopBindingUser(shopBindingUser);
-            } else {
-                SysShopBindingUser user1 = new SysShopBindingUser();
-                user1.setBindingId(IdUtils.getSeqId());
-                user1.setShopId(Long.valueOf(sysShopCurrentUser.getShopId()));
-                user1.setShopUserId(sysShopCurrentUser.getShopUserId());
-                user1.setCreateDate(DateUtil.currentDateTime());
-                user1.setUpdateDate(DateUtil.currentDateTime());
-                sysShopBindingUserMapper.addShopBindingUser(user1);
-            }
-        }
         return sysShopCurrentUserMapper.addShopUser(sysShopCurrentUser);
     }
 
     @Override
     public int updateShopUser(SysShopCurrentUser sysShopCurrentUser) {
-        if (sysShopCurrentUser.getShopId() != null) {
-            //添加到中间表
-            SysShopBindingUser shopBindingUser = new SysShopBindingUser();
-            shopBindingUser.setShopUserId(sysShopCurrentUser.getShopUserId());
-            SysShopBindingUser user = sysShopBindingUserMapper.selectById(shopBindingUser);
-            if (user != null) {
-                user.setUpdateDate(DateUtil.currentDateTime());
-                user.setShopId(Long.valueOf(sysShopCurrentUser.getShopId()));
-                sysShopBindingUserMapper.updateShopBindingUser(user);
-            } else {
-                SysShopBindingUser user1 = new SysShopBindingUser();
-                user1.setBindingId(IdUtils.getSeqId());
-                user1.setShopId(Long.valueOf(sysShopCurrentUser.getShopId()));
-                user1.setShopUserId(sysShopCurrentUser.getShopUserId());
-                user1.setCreateDate(DateUtil.currentDateTime());
-                user1.setUpdateDate(DateUtil.currentDateTime());
-                sysShopBindingUserMapper.addShopBindingUser(user1);
-            }
-        }
         sysShopCurrentUser.setUpdateDate(DateUtil.currentDateTime());
         return sysShopCurrentUserMapper.updateShopUser(sysShopCurrentUser);
     }
@@ -100,5 +62,43 @@ public class SysShopCurrentUserServiceImpl implements SysShopCurrentUserService 
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public List<SysShopCurrentUser> getShopUserPermission(SysShopCurrentUser sysShopCurrentUser) {
+        return sysShopCurrentUserMapper.getShopUserPermission(sysShopCurrentUser);
+    }
+
+    @Override
+    public int addUserPermission(SysShopCurrentUser sysShopCurrentUser) {
+        //判断用户权限
+        SysShopBindingUser shopBindingUser = new SysShopBindingUser();
+        shopBindingUser.setShopUserId(sysShopCurrentUser.getShopUserId());
+        List<SysShopBindingUser> users = sysShopBindingUserMapper.selectById(shopBindingUser);
+        if (sysShopCurrentUser.getUserRole().equals("0")) {
+            return -2;
+        }
+        if (sysShopCurrentUser.getUserRole().equals("2") && users.size() != 0) {
+            //对方已经绑定一个店铺
+            return -1;
+        }
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getShopId().equals(Long.valueOf(sysShopCurrentUser.getShopId()))) {
+                //对方已经绑定了这个店铺
+                return -3;
+            }
+        }
+        shopBindingUser.setBindingId(IdUtils.getSeqId());
+        shopBindingUser.setShopId(Long.valueOf(sysShopCurrentUser.getShopId()));
+        shopBindingUser.setShopUserId(sysShopCurrentUser.getShopUserId());
+        shopBindingUser.setUpdateDate(DateUtil.currentDateTime());
+        shopBindingUser.setCreateDate(DateUtil.currentDateTime());
+        return sysShopBindingUserMapper.addShopBindingUser(shopBindingUser);
+
+    }
+
+    @Override
+    public int delectUserPermission(Long bindingId) {
+        return sysShopBindingUserMapper.deleteByUserId(bindingId);
     }
 }

@@ -1,21 +1,16 @@
 package com.hna.hka.archive.management.assetsSystem.controller;
 
-import com.alibaba.excel.event.Order;
-import com.hna.hka.archive.management.assetsSystem.model.SearchRobot;
-import com.hna.hka.archive.management.system.model.SysOrder;
 import com.hna.hka.archive.management.system.service.RealTimeService;
 import com.hna.hka.archive.management.system.service.SysOrderService;
 import com.hna.hka.archive.management.system.util.Constant;
 import com.hna.hka.archive.management.system.util.ReturnModel;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +23,7 @@ import java.util.List;
 @Api(tags = "当日营收曲线")
 @RequestMapping("/system/realTime")
 @RestController
+@CrossOrigin
 public class RealTimeController {
 
     @Autowired
