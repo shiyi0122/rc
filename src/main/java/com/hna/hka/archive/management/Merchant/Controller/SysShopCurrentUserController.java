@@ -67,7 +67,7 @@ public class SysShopCurrentUserController {
     @GetMapping("/deleteShopUser")
     public ReturnModel deleteShopUser(Long shopUserId, String shopId) {
         ReturnModel returnModel = new ReturnModel();
-        int result = sysShopCurrentUserService.deleteShopUser(shopUserId,shopId);
+        int result = sysShopCurrentUserService.deleteShopUser(shopUserId, shopId);
         if (result > 0) {
             returnModel.setMsg("删除成功！");
             returnModel.setState(Constant.STATE_SUCCESS);
@@ -97,16 +97,16 @@ public class SysShopCurrentUserController {
         if (i > 0) {
             returnModel.setMsg("新增成功！");
             returnModel.setState(Constant.STATE_SUCCESS);
-        } else if (i == -1){
+        } else if (i == -1) {
             returnModel.setMsg("当前角色已绑定店铺！");
             returnModel.setState(Constant.STATE_FAILURE);
-        }else if (i== -2) {
+        } else if (i == -2) {
             returnModel.setMsg("暂无权限！");
             returnModel.setState(Constant.STATE_FAILURE);
-        }else if (i== -3) {
+        } else if (i == -3) {
             returnModel.setMsg("已绑定了这个店铺！");
             returnModel.setState(Constant.STATE_FAILURE);
-        }else {
+        } else {
             returnModel.setMsg("新增失败！");
             returnModel.setState(Constant.STATE_FAILURE);
         }

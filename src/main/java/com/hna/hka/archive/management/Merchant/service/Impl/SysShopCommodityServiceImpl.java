@@ -25,6 +25,7 @@ public class SysShopCommodityServiceImpl implements SysShopCommodityService {
 
     @Autowired
     private SysShopWriteOffLogMapper sysShopWriteOffLogMapper;
+
     @Override
     public PageInfo<SysShopCommodity> getShopCommodityList(SysShopCommodity sysShopCommodity) {
         List<SysShopCommodity> shopCommodityList = sysShopCommodityMapper.getShopCommodityList(sysShopCommodity);
@@ -34,7 +35,7 @@ public class SysShopCommodityServiceImpl implements SysShopCommodityService {
     @Override
     public int addShopCommodity(SysShopCommodity sysShopCommodity) {
         SysShopCommodity typeNum = sysShopCommodityMapper.getTypeNum(sysShopCommodity.getShopId());
-        if (typeNum.getCommodityType() == null ||("").equals(typeNum.getCommodityType())) {
+        if (typeNum.getCommodityType() == null || ("").equals(typeNum.getCommodityType())) {
             sysShopCommodity.setCommodityType("0");
         } else {
             String commodityType = typeNum.getCommodityType();

@@ -42,7 +42,7 @@ public class SysShopWriteOffLogController {
 
     @ApiOperation("导出核销日志表")
     @PostMapping("/exportShopWriteOffLog")
-    public void exportShopWriteOffLog(HttpServletResponse response,SysShopWriteOffLog sysShopWriteOffLog) {
+    public void exportShopWriteOffLog(HttpServletResponse response, SysShopWriteOffLog sysShopWriteOffLog) {
         List<SysShopWriteOffLog> sysShopWriteOffLogs = null;
         sysShopWriteOffLogs = sysShopWriteOffLogService.exportShopWriteOffLog(sysShopWriteOffLog);
         String dateTime = DateFormatUtils.format(new Date(), "yyyyMMddHHmm");
