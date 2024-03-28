@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * @ProjectName: IDEA-CODE
@@ -106,6 +107,8 @@ public class SysScenicSpotServiceImpl implements SysScenicSpotService {
 
     @Value("${GET_SYS_SCENIC_SPOT_IMG_URL}")
     private String GET_SYS_SCENIC_SPOT_IMG_URL;
+
+    private static final String REGEX_REGEX = "^[-+]?\\d{1,3}\\.\\d+$";
 
 //    @Autowired
 //    private FileUploadUtil fileUploadUtil;
@@ -204,6 +207,20 @@ public class SysScenicSpotServiceImpl implements SysScenicSpotService {
     @Override
     public int addScenicSpot(SysScenicSpot sysScenicSpot, SysScenicSpotPriceModificationLog modificationLog) {
         Long id = IdUtils.getSeqId();
+        if (sysScenicSpot.getCoordinateRange() != null && !("").equals(sysScenicSpot.getCoordinateRange())) {
+            String[] coordinateRange = sysScenicSpot.getCoordinateRange().split(",");
+            if (coordinateRange.length != 2) {
+                return -1;
+            }
+            // 去除空白字符
+            String latitude = coordinateRange[0].trim();
+            String longitude = coordinateRange[1].trim();
+            // 经度范围为-180到180，纬度范围为-90到90
+            Pattern pattern1 = Pattern.compile(REGEX_REGEX);
+            if (!pattern1.matcher(latitude).matches() || !pattern1.matcher(longitude).matches()) {
+                return -1;
+            }
+        }
         SysScenicSpotResourceVersion resourceVersion = new SysScenicSpotResourceVersion();
         resourceVersion.setResId(IdUtils.getSeqId());
         resourceVersion.setScenicSpotId(id);

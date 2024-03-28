@@ -197,7 +197,12 @@ public class ScenicSpotController extends PublicUtil {
                 returnModel.setMsg("景区新增成功");
                 returnModel.setState(Constant.STATE_SUCCESS);
                 return returnModel;
-            } else {
+            } else if (i == -1) {
+                returnModel.setData("");
+                returnModel.setMsg("经纬度格式错误");
+                returnModel.setState(Constant.STATE_FAILURE);
+                return returnModel;
+            }else {
                 returnModel.setData("");
                 returnModel.setMsg("景区新增失败");
                 returnModel.setState(Constant.STATE_FAILURE);
