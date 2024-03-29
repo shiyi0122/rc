@@ -603,6 +603,7 @@
         ORDER_REFUND_AMOUNT As orderRefundAmount,
         CURRENT_USER_PHONE AS currentUserPhone,
         CREATE_DATE AS createDate,
+        REASONS_REFUNDS AS reasonsRefunds,
         ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT, 2) AS realIncome
         FROM
         SYS_ORDER

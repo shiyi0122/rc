@@ -56,6 +56,8 @@ public class SysScenicSpotTreasureNewHunt {
     //商店ID
     private Long shopId;
 
+    private String shopName;
+
     //商品类型
     private String commodityType;
 

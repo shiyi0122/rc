@@ -399,24 +399,28 @@
     </select>
     <select id="getTreasureNewHunt"
             resultType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureNewHunt">
-        select
-        TREASURE_ID,
-        JACKPOT_ID,
-        TREASURE_NAME,
-        TREASURE_TYPE,
-        COUPON_AMOUNT,
-        INVENTORY,
-        END_VALIDITY,
-        START_VALIDITY,
-        PIC_URL,
-        WAY_TYPE,
-        PRIZE_SIZE,
-        PROBABILITY,
-        CREATE_DATE,
-        UPDATE_DATE,
-        USER_EXPIRATION
-        from
-        SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
+        SELECT
+        a.TREASURE_ID,
+        a.JACKPOT_ID,
+        a.TREASURE_NAME,
+        a.TREASURE_TYPE,
+        a.COUPON_AMOUNT,
+        a.INVENTORY,
+        a.END_VALIDITY,
+        a.START_VALIDITY,
+        a.PIC_URL,
+        a.WAY_TYPE,
+        a.PRIZE_SIZE,
+        a.PROBABILITY,
+        a.CREATE_DATE,
+        a.UPDATE_DATE,
+        a.USER_EXPIRATION,
+        a.SHOP_ID,
+        b.SHOP_NAME,
+        a.COMMODITY_TYPE
+        FROM
+        SYS_SCENIC_SPOT_TREASURE_NEW_HUNT a
+        LEFT JOIN SYS_SHOP b ON a.SHOP_ID = b.SHOP_ID
         <where>
             1=1
             <if test="treasureId != null and treasureId != ''">
@@ -1221,7 +1225,7 @@
                 #{wayType,jdbcType=VARCHAR},
             </if>
             <if test="userExpiration != null and userExpiration != ''">
-                #{userExpiration,jdbcType=BIGINT}
+                #{userExpiration,jdbcType=BIGINT},
             </if>
             <if test="shopId != null and shopId != ''">
                 #{shopId,jdbcType=BIGINT},

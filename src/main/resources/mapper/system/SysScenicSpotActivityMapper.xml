@@ -232,4 +232,10 @@
     	AND ACTIVITY_TYPE = #{activityType}
     </where>
   </select>
+    <select id="selectByPhone" resultType="com.hna.hka.archive.management.system.model.SysCurrentUser">
+      select CURRENT_USER_ID,
+             CURRENT_USER_PHONE
+      from SYS_CURRENT_USER
+      where CURRENT_USER_PHONE = #{userPhone}
+    </select>
 </mapper>

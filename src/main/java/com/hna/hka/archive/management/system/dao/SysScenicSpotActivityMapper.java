@@ -1,9 +1,10 @@
 package com.hna.hka.archive.management.system.dao;
 
+import com.hna.hka.archive.management.system.model.SysCurrentUser;
+import com.hna.hka.archive.management.system.model.SysScenicSpotActivity;
+
 import java.util.List;
 import java.util.Map;
-
-import com.hna.hka.archive.management.system.model.SysScenicSpotActivity;
 
 public interface SysScenicSpotActivityMapper {
     int deleteByPrimaryKey(Long activityId);
@@ -21,4 +22,6 @@ public interface SysScenicSpotActivityMapper {
 	List<SysScenicSpotActivity> getScenicSpotActivityList(Map<String, Object> search);
 
 	SysScenicSpotActivity getScenicSpotActivityByType(String activityType);
+
+    SysCurrentUser selectByPhone(String userPhone);
 }

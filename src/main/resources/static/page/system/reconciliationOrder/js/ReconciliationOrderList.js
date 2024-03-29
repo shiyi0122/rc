@@ -48,7 +48,8 @@ layui.use(['form','layer','table'],function(){
                         return "全额退款";
                     }
                 }},
-            {field: 'orderStartTime', title: '订单日期', minWidth:100, align:"center"}
+            {field: 'orderStartTime', title: '订单日期', minWidth:100, align:"center"},
+            {field: 'reasonsRefunds', title: '退款备注', minWidth:100, align:"center"}
         ]],
         done: function (res) {
             $(".realIncome").val(res.realIncome);

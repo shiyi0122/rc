@@ -32,7 +32,8 @@ public class UploadOrderExcelBean {
 	@Excel(name = "订单日期",width = 20,orderNum = "8")
 	private String createDate;
 
-
+	@Excel(name = "退款备注",width = 20,orderNum = "9")
+	private String reasonsRefunds;
 	
 	private String orderStatus;
 	

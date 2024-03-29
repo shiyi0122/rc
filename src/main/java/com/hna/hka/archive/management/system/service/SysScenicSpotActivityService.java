@@ -1,10 +1,10 @@
 package com.hna.hka.archive.management.system.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.hna.hka.archive.management.system.model.SysScenicSpotActivity;
 import com.hna.hka.archive.management.system.util.PageDataResult;
+
+import java.util.List;
+import java.util.Map;
 
 public interface SysScenicSpotActivityService {
 
@@ -23,4 +23,5 @@ public interface SysScenicSpotActivityService {
 	void timingEditActivityFailure();
 
 
+	int addvipCoupon(String userPhone, Long scenicSpotId, Long number);
 }

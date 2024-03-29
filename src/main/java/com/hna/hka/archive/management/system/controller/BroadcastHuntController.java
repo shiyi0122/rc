@@ -717,7 +717,7 @@ public class BroadcastHuntController extends PublicUtil {
     @PostMapping("/addTreasureNewHunt")
     public ReturnModel addTreasureNewHunt(MultipartFile file, SysScenicSpotTreasureNewHunt treasureNewHunt) {
         ReturnModel returnModel = new ReturnModel();
-        try {
+
             int i = sysScenicSpotTreasureHuntService.addTreasureNewHunt(file, treasureNewHunt);
             if (i > 0) {
                 returnModel.setData("");
@@ -730,12 +730,6 @@ public class BroadcastHuntController extends PublicUtil {
                 returnModel.setState(Constant.STATE_FAILURE);
                 return returnModel;
             }
-        } catch (Exception e) {
-            returnModel.setData("");
-            returnModel.setMsg("新增失败，请联系管理员！");
-            returnModel.setState(Constant.STATE_FAILURE);
-            return returnModel;
-        }
     }
 
 
