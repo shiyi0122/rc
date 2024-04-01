@@ -710,7 +710,12 @@
         <!--抽奖客单价-->
         ROUND(COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3' THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT +
         DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE = '3'
-        THEN 1 ELSE 0 END), 0),2) AS lotteryPerCustomerTransaction
+        THEN 1 ELSE 0 END), 0),2) AS lotteryPerCustomerTransaction,
+        <!--未抽奖客单价-->
+        ROUND(COALESCE(SUM(CASE WHEN o.HUNTS_STATE IN ( '0', '1' ) THEN ROUND(ORDER_AMOUNT - ORDER_REFUND_AMOUNT +
+        DEDUCTIBLE_AMOUNT - DEDUCTIBLE_REFUND_AMOUNT, 2) ELSE 0 END), 0) / COALESCE(SUM(CASE WHEN o.HUNTS_STATE IN (
+        '0', '1' )
+        THEN 1 ELSE 0 END), 0),2) AS noLotteryPerCustomerTransaction
         FROM
         SYS_ORDER o
         JOIN SYS_SCENIC_SPOT s ON o.ORDER_SCENIC_SPOT_ID = s.SCENIC_SPOT_ID
@@ -741,6 +746,18 @@
         AND o.ORDER_STATUS = 30
         GROUP BY o.ORDER_SCENIC_SPOT_ID
         ORDER BY COALESCE(COUNT(o.ORDER_ID), 0) DESC
+    </select>
+    <select id="getTreasureNewHuntNum"
+            resultType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureNewHunt">
+        SELECT TREASURE_ID,
+               JACKPOT_ID,
+               TREASURE_NAME,
+               TREASURE_TYPE,
+               PRIZE_SIZE,
+               INVENTORY
+        FROM SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
+        WHERE 1 = 1
+          AND JACKPOT_ID = #{jackpotId,jdbcType=VARCHAR}
     </select>
 
 
@@ -1466,11 +1483,11 @@
             <if test="addressId != null and addressId != ''">
                 ADDRESS_ID =#{addressId,jdbcType=BIGINT},
             </if>
-            <if test="logisiticsId != null and logisiticsId != ''">
-                LOGISTICS_ID =#{logisiticsId,jdbcType=BIGINT}
-            </if>
             <if test="shipmentStatus != null and shipmentStatus != ''">
-                SHIPMENT_STATUS =#{shipmentStatus}
+                SHIPMENT_STATUS =#{shipmentStatus,jdbcType=VARCHAR},
+            </if>
+            <if test=" exchangeState != null and exchangeState != ''">
+                EXCHANGE_STATE = #{exchangeState,jdbcType=VARCHAR}
             </if>
         </set>
         where EXCHANGE_ID =#{exchangeId,jdbcType=BIGINT}
@@ -1523,56 +1540,60 @@
         </set>
         where BROADCAST_ID =#{broadcastId,jdbcType=BIGINT}
     </update>
-    <update id="editTreasureNewHunt">
+    <update id="editTreasureNewHunt"
+            parameterType="com.hna.hka.archive.management.system.model.SysScenicSpotTreasureNewHunt">
         update SYS_SCENIC_SPOT_TREASURE_NEW_HUNT
         <set>
             <if test="jackpotId != null and jackpotId != ''">
-                JACKPOT_ID =#{jackpotId,jdbcType=BIGINT},
+                JACKPOT_ID = #{jackpotId,jdbcType=BIGINT},
             </if>
             <if test="treasureName != null and treasureName != ''">
-                TREASURE_NAME =#{treasureName,jdbcType=VARCHAR},
+                TREASURE_NAME = #{treasureName,jdbcType=VARCHAR},
             </if>
             <if test="treasureType != null and treasureType != ''">
-                TREASURE_TYPE =#{treasureType,jdbcType=VARCHAR},
+                TREASURE_TYPE = #{treasureType,jdbcType=VARCHAR},
             </if>
             <if test="couponAmount != null and couponAmount != ''">
-                COUPON_AMOUNT =#{couponAmount,jdbcType=VARCHAR},
+                COUPON_AMOUNT = #{couponAmount,jdbcType=VARCHAR},
             </if>
             <if test="inventory != null and inventory != ''">
-                INVENTORY =#{inventory,jdbcType=VARCHAR},
+                INVENTORY = #{inventory,jdbcType=BIGINT},
             </if>
             <if test="endValidity != null and endValidity != ''">
-                END_VALIDITY =#{endValidity,jdbcType=VARCHAR},
+                END_VALIDITY = #{endValidity,jdbcType=VARCHAR},
             </if>
             <if test="startValidity != null and startValidity != ''">
-                START_VALIDITY =#{startValidity,jdbcType=VARCHAR},
-            </if>
-            <if test="picUrl != null and picUrl != ''">
-                PIC_URL =#{picUrl,jdbcType=VARCHAR},
-            </if>
-            <if test="prizeSize != null and prizeSize != ''">
-                PRIZE_SIZE =#{prizeSize,jdbcType=VARCHAR},
-            </if>
-            <if test="probability != null and probability != ''">
-                PROBABILITY =#{probability,jdbcType=DOUBLE},
-            </if>
-            <if test="wayType != null and wayType != ''">
-                WAY_TYPE =#{wayType,jdbcType=VARCHAR},
-            </if>
-            <if test="updateDate != null and updateDate != ''">
-                UPDATE_DATE =#{updateDate,jdbcType=VARCHAR},
+                START_VALIDITY = #{startValidity,jdbcType=VARCHAR},
             </if>
             <if test="userExpiration != null and userExpiration != ''">
-                USER_EXPIRATION =#{userExpiration,jdbcType=BIGINT},
+                USER_EXPIRATION = #{userExpiration,jdbcType=BIGINT},
+            </if>
+            <if test="picUrl != null and picUrl != ''">
+                PIC_URL = #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="wayType != null and wayType != ''">
+                WAY_TYPE = #{wayType,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeSize != null and prizeSize != ''">
+                PRIZE_SIZE = #{prizeSize,jdbcType=VARCHAR},
+            </if>
+            <if test="probability != null and probability != ''">
+                PROBABILITY = #{probability,jdbcType=DOUBLE},
             </if>
             <if test="shopId != null and shopId != ''">
-                SHOP_ID =#{shopId,jdbcType=BIGINT},
+                SHOP_ID = #{shopId,jdbcType=BIGINT},
             </if>
             <if test="commodityType != null and commodityType != ''">
-                COMMODITY_TYPE =#{commodityType,jdbcType=VARCHAR}
+                COMMODITY_TYPE = #{commodityType,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                UPDATE_DATE = #{updateDate,jdbcType=VARCHAR}
             </if>
         </set>
-        where TREASURE_ID =#{treasureId}
+        where TREASURE_ID = #{treasureId,jdbcType=BIGINT}
     </update>
     <update id="editBroadcastHuntId">
         update SYS_SCENIC_SPOT_BROADCAST_HUNT

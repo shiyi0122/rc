@@ -30,4 +30,6 @@ public class SysScenicSpotTreasureNewJackpot {
     private String jackpotName;
     //排序
     private String jackpotSort;
+    //判断奖池内的奖品数量是否够用
+    private String ExchangeNum;
 }

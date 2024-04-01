@@ -49,6 +49,8 @@ public class SysOrderExcel extends BaseRowModel {
 
     @ExcelProperty(value = "退款原因",index = 18)
     private String reasonsRefunds;
+    @ExcelProperty(value = "真实退款原因",index = 19)
+    private String reasonsRefundsTrue;
 
     @ExcelProperty(value = "退款金额",index = 13)
     private String orderRefundAmount;
@@ -92,6 +94,6 @@ public class SysOrderExcel extends BaseRowModel {
     @ExcelIgnore
     private String huntsState;
 
-    @ExcelProperty(value = "是否参加寻宝活动",index = 19)
+    @ExcelProperty(value = "是否参加寻宝活动",index = 20)
     private String huntsStateName;
 }

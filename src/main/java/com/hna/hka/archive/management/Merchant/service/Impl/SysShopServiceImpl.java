@@ -5,6 +5,7 @@ import com.hna.hka.archive.management.Merchant.dao.SysShopMapper;
 import com.hna.hka.archive.management.Merchant.model.SysShop;
 import com.hna.hka.archive.management.Merchant.service.SysShopService;
 import com.hna.hka.archive.management.assetsSystem.model.ScenicSpot;
+import com.hna.hka.archive.management.system.model.SysOrder;
 import com.hna.hka.archive.management.system.model.SysScenicSpotBinding;
 import com.hna.hka.archive.management.system.util.DateUtil;
 import com.hna.hka.archive.management.system.util.IdUtils;
@@ -57,5 +58,10 @@ public class SysShopServiceImpl implements SysShopService {
     @Override
     public List<SysScenicSpotBinding> queryScenicSpotList(Map<String, Object> search) {
         return sysShopMapper.queryScenicSpotList(search);
+    }
+
+    @Override
+    public int updateByOrderNumber(SysOrder sysOrder) {
+        return sysShopMapper.updateByOrderNumber(sysOrder);
     }
 }

@@ -171,4 +171,7 @@ public class SysOrder extends BaseRowModel {
 
     //景区是否开启寻宝
     public String huntSwitch;
+
+    @Excel(name = "真实退款原因", width = 20, orderNum = "18")
+    public String reasonsRefundsTrue;
 }

@@ -246,22 +246,22 @@ public class ScenicSpotActivityController extends PublicUtil {
         int i = sysScenicSpotActivityService.addvipCoupon(userPhone, scenicSpotId, number);
         if (i == 1) {
             returnModel.setData("");
-            returnModel.setMsg("VIP优惠券发放成功");
+            returnModel.setMsg("VIP优惠券发放成功！");
             returnModel.setState(Constant.STATE_SUCCESS);
             return returnModel;
         } else if (i == -1) {
             returnModel.setData("");
-            returnModel.setMsg("用户不存在");
+            returnModel.setMsg("用户不存在！");
             returnModel.setState(Constant.STATE_FAILURE);
             return returnModel;
         } else if (i == -2) {
             returnModel.setData("");
-            returnModel.setMsg("景区不存在");
+            returnModel.setMsg("景区不存在！");
             returnModel.setState(Constant.STATE_FAILURE);
             return returnModel;
         } else {
             returnModel.setData("");
-            returnModel.setMsg("VIP优惠券发放失败");
+            returnModel.setMsg("VIP优惠券发放失败！（/addvipCoupon）");
             returnModel.setState(Constant.STATE_FAILURE);
             return returnModel;
         }

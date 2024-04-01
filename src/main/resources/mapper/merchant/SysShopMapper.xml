@@ -248,4 +248,13 @@
         </set>
         where SHOP_ID = #{shopId,jdbcType=BIGINT}
     </update>
+    <update id="updateByOrderNumber">
+        UPDATE SYS_ORDER
+        <set>
+            <if test="reasonsRefunds != null and reasonsRefunds != ''">
+                REASONS_REFUNDS =#{reasonsRefunds,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE ORDER_NUMBER =#{orderNumber,jdbcType=VARCHAR}
+    </update>
 </mapper>

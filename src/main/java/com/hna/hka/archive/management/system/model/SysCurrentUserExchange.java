@@ -25,7 +25,7 @@ public class SysCurrentUserExchange {
     //关联景区ID
     private Long scenicSpotId;
 
-    //0未填写地址 1地址已提交 2已发货 3已收货
+    //0未填写地址 1地址已提交 2已发货 3已收货  4现场已兑换 5已过期
     @Excel(name = "发货状态",width = 20,orderNum = "4")
     private String shipmentStatus;
 

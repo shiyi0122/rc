@@ -24,13 +24,24 @@
                     <input name="orderNumber" type="hidden" class="orderNumber"/>
                     <input name="orderStatus" type="hidden" class="orderStatus"/>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="like" lay-skin="primary" title="运营要求" value="运营要求" lay-filter="switchTest" >
-                        <input type="checkbox" name="like" lay-skin="primary" title="定位不准" value="定位不准" lay-filter="switchTest" >
-                        <input type="checkbox" name="like" lay-skin="primary" title="客户特殊要求" value="客户特殊要求" lay-filter="switchTest" >
-                        <input type="checkbox" name="like" lay-skin="primary" title="领导体验" value="领导体验" lay-filter="switchTest" >
-                        <input type="checkbox" name="like" lay-skin="primary" title="超声卡顿" value="超声卡顿" lay-filter="switchTest" >
-                        <input type="checkbox" name="like" lay-skin="primary" title="内部测试" value="内部测试" lay-filter="switchTest" >
-                        <input id="other" type="checkbox" name="like" lay-skin="primary" title="其他" value="" lay-filter="switchTest" >
+<!--                        <input type="checkbox" name="like" lay-skin="primary" title="运营要求" value="运营要求" lay-filter="switchTest" >-->
+<!--                        <input type="checkbox" name="like" lay-skin="primary" title="定位不准" value="定位不准" lay-filter="switchTest" >-->
+<!--                        <input type="checkbox" name="like" lay-skin="primary" title="客户特殊要求" value="客户特殊要求" lay-filter="switchTest" >-->
+<!--                        <input type="checkbox" name="like" lay-skin="primary" title="领导体验" value="领导体验" lay-filter="switchTest" >-->
+<!--                        <input type="checkbox" name="like" lay-skin="primary" title="超声卡顿" value="超声卡顿" lay-filter="switchTest" >-->
+<!--                        <input type="checkbox" name="like" lay-skin="primary" title="内部测试" value="内部测试" lay-filter="switchTest" >-->
+                        <input type="radio" name="like" lay-skin="primary" title="调度费" value="客户不满调度费" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="禁区限制" value="客户不满禁区限制" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="速度限制" value="客户不满速度限制" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="点错" value="客户点错，继续使用" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="工作人员体验" value="工作人员体验" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="领导体验" value="领导体验" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="内部测试" value="内部测试" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="奖励" value="发社媒奖励" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="天气原因" value="天气原因" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="团购" value="团购优惠" lay-filter="switchTest" >
+                        <input id="other" type="radio" name="like" lay-skin="primary" title="其他" value="" lay-filter="switchTest" >
+                        <input name="reasonsRefundsTrue" placeholder="请输入真实原因内容" type="text" class="layui-input reasonsRefundsTrue" autocomplete="off"/>
                     </div>
                     <br>
                     <div class="layui-inline layui-col-md12 inp-box">

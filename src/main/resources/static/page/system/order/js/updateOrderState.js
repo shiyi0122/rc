@@ -4,22 +4,27 @@ layui.use(['form', 'layedit', 'laydate'], function(){
         layedit = layui.layedit,
         laydate = layui.laydate;
     $(".inp-box").hide()
-    //监听提交
-    form.on('checkbox(switchTest)', function(data){
-        var vals = data.value
-        var other=$("#other")
-        if($("#other").prop("checked") == true){
-            $(".inp-box").show()
-        }else{
-            $(".inp-box").hide()
+    var test1 = ""
+    // 监听提交
+    form.on('radio(switchTest)', function(data){
+        var vals = data.value;
+        console.log(JSON.stringify(data));
+        test1 = vals;
+        var other = $("#other");
+        if ($("#other").prop("checked") == true) {
+            $(".inp-box").show();
+        } else {
+            $(".inp-box").hide();
         }
-
     });
+
     form.on('submit(btnSubmit)', function(data){
+        console.log(data)
         var arr_box = [];
-        $('input[type=checkbox]:checked').each(function() {
-            arr_box.push($(this).val());
+        $('input[type=radio]:checked').each(function() {
+            arr_box = [$(this).val()];
         });
+        console.log(arr_box)
         var dex = top.layer.msg('状态修改中，请稍候',{icon: 16,time:false,shade:0.8});
         $.ajax({
             url: "/system/order/updateOrderState",
@@ -27,7 +32,8 @@ layui.use(['form', 'layedit', 'laydate'], function(){
                 orderNumber : $(".orderNumber").val(),
                 orderStatus : $(".orderStatus").val(),
                 reason : arr_box.toString(),
-                reasonsRefunds : $(".reasonsRefunds").val()
+                reasonsRefunds : $(".reasonsRefunds").val(),
+                reasonsRefundsTrue : $(".reasonsRefundsTrue").val()
             },
             type: "POST",
             cache:false,

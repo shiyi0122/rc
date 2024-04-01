@@ -337,6 +337,11 @@ public class OrderController extends PublicUtil {
                         sysCurrentUserService.updateCurrenUser(currenUser);
                         order.setOrderStatus("30");
                         order.setReasonsRefunds(reason);
+                        if (sysRobot.getReasonsRefundsTrue() == null || ("").equals(sysRobot.getReasonsRefundsTrue())){
+                            order.setReasonsRefundsTrue(reason);
+                        }else {
+                            order.setReasonsRefundsTrue(sysRobot.getReasonsRefundsTrue());
+                        }
                         order.setUpdateDate(DateUtil.currentDateTime());
                         int i = sysOrderService.updateOrderStatus(order);
                         if (i == 1) {
@@ -387,6 +392,11 @@ public class OrderController extends PublicUtil {
                         sysCurrentUserService.updateCurrenUser(currenUser);
                         order.setOrderStatus("40");
                         order.setReasonsRefunds(reason);
+                        if (sysRobot.getReasonsRefundsTrue() == null || ("").equals(sysRobot.getReasonsRefundsTrue())){
+                            order.setReasonsRefundsTrue(reason);
+                        }else {
+                            order.setReasonsRefundsTrue(sysRobot.getReasonsRefundsTrue());
+                        }
                         order.setUpdateDate(DateUtil.currentDateTime());
                         int i = sysOrderService.updateOrderStatus(order);
                         if (i == 1) {
@@ -489,6 +499,11 @@ public class OrderController extends PublicUtil {
                         sysCurrentUserService.updateCurrenUser(currenUser);
                         order.setOrderStatus("30");
                         order.setReasonsRefunds(reason);
+                        if (sysRobot.getReasonsRefundsTrue() == null || ("").equals(sysRobot.getReasonsRefundsTrue())){
+                            order.setReasonsRefundsTrue(reason);
+                        }else {
+                            order.setReasonsRefundsTrue(sysRobot.getReasonsRefundsTrue());
+                        }
                         order.setUpdateDate(DateUtil.currentDateTime());
                         int i = sysOrderService.updateOrderStatus(order);
                         if (i == 1) {
@@ -555,6 +570,11 @@ public class OrderController extends PublicUtil {
                         sysCurrentUserService.updateCurrenUser(currenUser);
                         order.setOrderStatus("40");
                         order.setReasonsRefunds(reason);
+                        if (sysRobot.getReasonsRefundsTrue() == null || ("").equals(sysRobot.getReasonsRefundsTrue())){
+                            order.setReasonsRefundsTrue(reason);
+                        }else {
+                            order.setReasonsRefundsTrue(sysRobot.getReasonsRefundsTrue());
+                        }
                         order.setUpdateDate(DateUtil.currentDateTime());
                         int i = sysOrderService.updateOrderStatus(order);
                         if (i == 1) {
@@ -1299,19 +1319,41 @@ public class OrderController extends PublicUtil {
 
 
             String reasonNew = "";
+//            if ("1".equals(reason)) {
+//                order.setIsDispatchingFee("1");
+//                reasonNew = "退调度费";
+//            } else if ("2".equals(reason)) {
+//                reasonNew = "内部测试";
+//            } else if ("3".equals(reason)) {
+//                order.setIsDispatchingFee("1");
+//                reasonNew = "退调度费及其他";
+//            } else if ("4".equals(reason)) {
+//
+//            }
             if ("1".equals(reason)) {
                 order.setIsDispatchingFee("1");
-                reasonNew = "退调度费";
+                reasonNew = "客户不满调度费";
             } else if ("2".equals(reason)) {
-                reasonNew = "内部测试";
+                reasonNew = "客户不满速度限制";
             } else if ("3".equals(reason)) {
-                order.setIsDispatchingFee("1");
-                reasonNew = "退调度费及其他";
+                reasonNew = "客户不满速度限制";
             } else if ("4".equals(reason)) {
-
+                reasonNew = "点错继续使用";
+            }else if ("5".equals(reason)) {
+                reasonNew = "工作人员体验";
+            }else if ("6".equals(reason)) {
+                reasonNew = "领导体验";
+            }else if ("7".equals(reason)) {
+                reasonNew = "内部测试";
+            }else if ("8".equals(reason)) {
+                reasonNew = "发社媒体奖励";
+            }else if ("9".equals(reason)) {
+                reasonNew = "天气原因";
+            }else if ("10".equals(reason)) {
+                reasonNew = "团购优惠";
             }
 
-            if (ToolUtil.isNotEmpty(reasonsRefunds) && reason.equals("4")) {
+            if (ToolUtil.isNotEmpty(reasonsRefunds) && reason.equals("")) {
                 reasonNew = reasonNew + reasonsRefunds;
             }
             int fee = 0;// 初始化金额
@@ -1369,6 +1411,11 @@ public class OrderController extends PublicUtil {
 //                }
 
                 order.setReasonsRefunds(reasonNew);
+                if (sysOrder.getReasonsRefundsTrue() == null || ("").equals(sysOrder.getReasonsRefundsTrue())){
+                    order.setReasonsRefundsTrue(reasonNew);
+                }else {
+                    order.setReasonsRefundsTrue(sysOrder.getReasonsRefundsTrue());
+                }
                 order.setRefundStatus("0");
                 sysOrderService.updateOrder(order);
                 //添加退款日志
@@ -1751,6 +1798,9 @@ public class OrderController extends PublicUtil {
                 }
             }
             order.setReasonsRefunds(reasonNew);
+            if (order.getReasonsRefundsTrue() == null || ("").equals(order.getReasonsRefundsTrue())){
+                order.setReasonsRefundsTrue(reason);
+            }
             int i = sysOrderService.updateOrder(order);
             if (i == 1) {
                 SysCurrentUserAccount account = sysCurrentUserAccountService.selectAccountByUserId(sysCurrentUser.getCurrentUserId());
@@ -2168,6 +2218,11 @@ public class OrderController extends PublicUtil {
             //解析微信返回结果
             if (packageP != null && packageP.get("return_code").toString().equals("SUCCESS") && packageP.get("result_code").toString().equals("SUCCESS")) {
                 order.setReasonsRefunds(reason);
+                if (sysOrder.getReasonsRefundsTrue() == null || ("").equals(sysOrder.getReasonsRefundsTrue())){
+                    order.setReasonsRefundsTrue(reasonsRefunds);
+                }else {
+                    order.setReasonsRefundsTrue(sysOrder.getReasonsRefundsTrue());
+                }
                 //计算全额退款
                 if (order.getOrderRefundAmount() != null && order.getOrderAmount() != null) {
                     Double orderAmount = Double.valueOf(order.getOrderRefundAmount());
@@ -2279,6 +2334,11 @@ public class OrderController extends PublicUtil {
                 }
                 order.setOrderNumber(order.getOrderNumber());
                 order.setReasonsRefunds(reason);
+                if (sysOrder.getReasonsRefundsTrue() == null || ("").equals(sysOrder.getReasonsRefundsTrue())){
+                    order.setReasonsRefundsTrue(reason);
+                }else {
+                    order.setReasonsRefundsTrue(sysOrder.getReasonsRefundsTrue());
+                }
                 //计算全额退款
                 if (order.getOrderRefundAmount() != null && order.getOrderAmount() != null) {
                     Double orderAmount = Double.valueOf(order.getOrderRefundAmount());
@@ -2423,6 +2483,11 @@ public class OrderController extends PublicUtil {
             //解析微信返回结果
             if (packageP != null && packageP.get("return_code").toString().equals("SUCCESS") && packageP.get("result_code").toString().equals("SUCCESS")) {
                 order.setReasonsRefunds(reason);
+                if (sysOrder.getReasonsRefundsTrue() == null || ("").equals(sysOrder.getReasonsRefundsTrue())){
+                    order.setReasonsRefundsTrue(reason);
+                }else {
+                    order.setReasonsRefundsTrue(sysOrder.getReasonsRefundsTrue());
+                }
                 //计算全额退款
                 if (ToolUtil.isNotEmpty(order.getOrderRefundAmount()) && ToolUtil.isNotEmpty(order.getOrderAmount())) {
                     Double orderRefundAmount = Double.valueOf(order.getOrderRefundAmount());
@@ -2530,6 +2595,11 @@ public class OrderController extends PublicUtil {
                 order.setDeductibleRefundAmount(order.getDeductibleRefundAmount());
             }
             order.setReasonsRefunds(reason);
+            if (sysOrder.getReasonsRefundsTrue() == null || ("").equals(sysOrder.getReasonsRefundsTrue())){
+                sysOrder.setReasonsRefundsTrue(reason);
+            }else {
+                order.setReasonsRefundsTrue(order.getReasonsRefundsTrue());
+            }
             int i = sysOrderService.updateOrder(order);
             if (i == 1) {
                 SysCurrentUserAccount account = sysCurrentUserAccountService.selectAccountByUserId(sysCurrentUser.getCurrentUserId());

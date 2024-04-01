@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -304,6 +305,18 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
     public PageInfo<SysScenicSpotTreasureNewJackpot> getJackpotNew(SysScenicSpotTreasureNewJackpot treasureNewJackpot) {
         PageHelper.startPage(treasureNewJackpot.getPageNum(), treasureNewJackpot.getPageSize());
         List<SysScenicSpotTreasureNewJackpot> jackpotNew = sysScenicSpotTreasureHuntMapper.getJackpotNew(treasureNewJackpot);
+        for (SysScenicSpotTreasureNewJackpot treasureNewJackpot1 : jackpotNew) {
+            List<SysScenicSpotTreasureNewHunt> treasureNewHuntNum = sysScenicSpotTreasureHuntMapper.getTreasureNewHuntNum(treasureNewJackpot1.getJackpotId());
+            for (SysScenicSpotTreasureNewHunt hunt : treasureNewHuntNum) {
+                //奖品类型为普通奖品
+                if (("0").equals(hunt.getPrizeSize()) && hunt.getInventory() < 10) {
+                    treasureNewJackpot1.setExchangeNum("0");
+                    //奖品类型为大奖
+                } else if (("1").equals(hunt.getPrizeSize()) && hunt.getInventory() < 1) {
+                    treasureNewJackpot1.setExchangeNum("0");
+                }
+            }
+        }
         PageInfo<SysScenicSpotTreasureNewJackpot> pageInfo = new PageInfo<>(jackpotNew);
         return pageInfo;
     }
@@ -481,9 +494,11 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
 //                userExchange.setPicUrl(filePathGetExchangePicUrl + filename);
 //            }
 //        }
-        SysCurrentUserExchange userExchangeId = sysScenicSpotTreasureHuntMapper.getUserExchangeId(userExchange.getExchangeId());
-        if (("0").equals(userExchangeId.getShipmentStatus())) {
-            return -1;
+        if (!("4").equals(userExchange.getShipmentStatus())) {
+            SysCurrentUserExchange userExchangeId = sysScenicSpotTreasureHuntMapper.getUserExchangeId(userExchange.getExchangeId());
+            if (("0").equals(userExchangeId.getShipmentStatus())) {
+                return -1;
+            }
         }
         userExchange.setUpdateDate(DateUtil.currentDateTime());
 
@@ -491,6 +506,7 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
         SysCurrentUserExchangeLog exchangeLog = new SysCurrentUserExchangeLog();
         SysUsers sysUser = this.getSysUser();
         exchangeLog.setAccountName(sysUser.getLoginName());
+//        exchangeLog.setAccountName("houjingchen");
         exchangeLog.setExchangeLogId(IdUtils.getSeqId());
         exchangeLog.setUserId(userExchange.getUserId());
         //奖品id
@@ -673,9 +689,10 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
         }
         treasureNewHunt.setProbability(Double.valueOf(treasureNewHunt.getProbability1()));
         treasureNewHunt.setUpdateDate(DateUtil.currentDateTime());
+        sysScenicSpotTreasureHuntMapper.editTreasureNewHunt(treasureNewHunt);
         //添加修改奖品日志表
         this.addTreasureNewHuntLog(treasureNewHunt);
-        return sysScenicSpotTreasureHuntMapper.editTreasureNewHunt(treasureNewHunt);
+        return 1;
     }
 
     public void addTreasureNewHuntLog(SysScenicSpotTreasureNewHunt treasureNewHunt) {
@@ -781,7 +798,46 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
 
     @Override
     public List<SysCurrentUserExchange> downloadUserExchange(SysCurrentUserExchange userExchange) {
-        return sysScenicSpotTreasureHuntMapper.getUserExchange(userExchange);
+        List<SysCurrentUserExchange> userExchanges = sysScenicSpotTreasureHuntMapper.getUserExchange(userExchange);
+        for (SysCurrentUserExchange userExchange1 : userExchanges) {
+            //宝箱类型 4寻宝宝箱 5随机宝箱
+            if (("4").equals(userExchange1.getExchangeType())) {
+                userExchange1.setExchangeType("寻宝宝箱");
+            } else if (("5").equals(userExchange1.getExchangeType())) {
+                userExchange1.setExchangeType("随机宝箱");
+            }
+            //发货状态 0未填写地址 1地址已提交 2已发货 3已收货  4现场已兑换 5已过期
+            if (("0").equals(userExchange1.getShipmentStatus())) {
+                userExchange1.setShipmentStatus("未填写地址");
+            } else if (("1").equals(userExchange1.getShipmentStatus())) {
+                userExchange1.setShipmentStatus("地址已提交");
+            } else if (("2").equals(userExchange1.getShipmentStatus())) {
+                userExchange1.setShipmentStatus("已发货");
+            } else if (("3").equals(userExchange1.getShipmentStatus())) {
+                userExchange1.setShipmentStatus("已收货");
+            } else if (("4").equals(userExchange1.getShipmentStatus())) {
+                userExchange1.setShipmentStatus("现场已兑换");
+            } else if (("5").equals(userExchange1.getShipmentStatus())) {
+                userExchange1.setShipmentStatus("已过期");
+            }
+            //兑换状态 0 待兑换 1已核销 2 已过期 默认0
+            if (("0").equals(userExchange1.getExchangeState())) {
+                userExchange1.setExchangeState("待兑换");
+            } else if (("1").equals(userExchange1.getExchangeState())) {
+                userExchange1.setExchangeState("已核销");
+            } else if (("2").equals(userExchange1.getExchangeState())) {
+                userExchange1.setExchangeState("已过期");
+            }
+            //0未选择兑换方式  1邮寄方式 2现场兑换方式
+            if (("0").equals(userExchange1.getWayType())) {
+                userExchange1.setWayType("未选择兑换方式");
+            } else if (("1").equals(userExchange1.getWayType())) {
+                userExchange1.setWayType("邮寄方式");
+            } else if (("2").equals(userExchange1.getWayType())) {
+                userExchange1.setWayType("现场兑换方式");
+            }
+        }
+        return userExchanges;
     }
 
 
@@ -797,6 +853,7 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
             sysOrder.setOrderEndTime(DateUtil.getYearsDate(sysOrder.getOrderEndTime()));
         }
         List<SysOrderDetail> treasureHuntDetail = sysScenicSpotTreasureHuntMapper.getTreasureHuntDetail(sysOrder);
+
         for (SysOrderDetail sysOrderDetail : treasureHuntDetail) {
             //查询景区是否开启寻宝
             SysScenicSpot huntsState = sysOrderMapper.getHuntsState(Long.valueOf(sysOrderDetail.getScenicSpotId()));
@@ -815,18 +872,36 @@ public class SysScenicSpotTreasureHuntServiceImpl implements SysScenicSpotTreasu
             }
             sysOrderDetail.setHuntProportion(sysOrderDetail.getHuntProportion() + "%");
             sysOrderDetail.setLotteryProportion(sysOrderDetail.getLotteryProportion() + "%");
+            // 抽奖订单的效益评估（抽奖订单平均客单价-没抽奖平均客单价）/ 没抽奖平均客单价
+            // 抽奖的平均客单价
+            String lottery = sysOrderDetail.getLotteryPerCustomerTransaction();
+            // 未抽奖的平均客单价
+            String noLottery = sysOrderDetail.getNoLotteryPerCustomerTransaction();
+            // 抽奖订单的效益评估
+            double lotteryOrderBenefitEvaluation = (Double.parseDouble(lottery) - Double.parseDouble(noLottery)) / Double.parseDouble(noLottery) * 100;
+            // 格式化为保留两位小数的字符串
+            DecimalFormat df = new DecimalFormat("#.00");
+            String formattedResult = df.format(lotteryOrderBenefitEvaluation);
+            // 转换回double类型
+            double result = Double.parseDouble(formattedResult);
+            sysOrderDetail.setLotteryOrderBenefitEvaluation(String.valueOf(result) + "%");
+            //客单价提升 抽奖客单价-客单价/客单价
+            // 抽奖的平均客单价
+            String lotteryPerCustomerTransaction = sysOrderDetail.getLotteryPerCustomerTransaction();
+            //客单价
+            String perCustomerTransaction = sysOrderDetail.getPerCustomerTransaction();
+            //客单价提升
+            double perCustomerTransactionIncrease = (Double.parseDouble(lotteryPerCustomerTransaction) - Double.parseDouble(perCustomerTransaction)) / Double.parseDouble(perCustomerTransaction) * 100;
+            String formatPerCustomer = df.format(perCustomerTransactionIncrease);
+            double result1 = Double.parseDouble(formatPerCustomer);
+            sysOrderDetail.setPerCustomerTransactionIncrease(String.valueOf(result1) + "%");
         }
         return new PageInfo<>(treasureHuntDetail);
     }
-
-
-//    @Override
-//    public List<SysScenicSpotBroadcastExtendWithBLOBs> getTreasureExcel(Map<String, Object> search) {
-//        return sysScenicSpotTreasureHuntMapper.getTreasureExcel(search);
-//    }
 
     public SysUsers getSysUser() {
         SysUsers user = (SysUsers) SecurityUtils.getSubject().getPrincipal();
         return user;
     }
+
 }

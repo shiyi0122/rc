@@ -119,10 +119,22 @@
 <!--                    </div>-->
 <!--                     上报原因 end-->
                     <div class="layui-input-block">
-                        <input type="checkbox" name="like" lay-skin="primary" title="退调度费" value="1" lay-filter="switchTest" >
-                        <input type="checkbox" name="like" lay-skin="primary" title="内部测试" value="2" lay-filter="switchTest" >
-                        <input type="checkbox" name="like" lay-skin="primary" title="退调度费及其他" value="3" lay-filter="switchTest" >
-                        <input id="other" type="checkbox" name="like" lay-skin="primary" title="其他" value="4" lay-filter="switchTest" >
+<!--                        <input type="checkbox" name="like" lay-skin="primary" title="退调度费" value="1" lay-filter="switchTest" >-->
+<!--                        <input type="checkbox" name="like" lay-skin="primary" title="内部测试" value="2" lay-filter="switchTest" >-->
+<!--                        <input type="checkbox" name="like" lay-skin="primary" title="退调度费及其他" value="3" lay-filter="switchTest" >-->
+<!--                        <input id="other" type="checkbox" name="like" lay-skin="primary" title="其他" value="4" lay-filter="switchTest" >-->
+                        <input type="radio" name="like" lay-skin="primary" title="调度费" value="1" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="禁区限制" value="2" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="速度限制" value="3" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="点错" value="4" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="工作人员体验" value="5" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="领导体验" value="6" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="内部测试" value="7" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="奖励" value="8" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="天气原因" value="9" lay-filter="switchTest" >
+                        <input type="radio" name="like" lay-skin="primary" title="团购" value="10" lay-filter="switchTest" >
+                        <input id="other" type="radio" name="like" lay-skin="primary" title="其他" value="" lay-filter="switchTest" >
+                        <input name="reasonsRefundsTrue" placeholder="请输入真实原因内容" type="text" class="layui-input reasonsRefundsTrue" autocomplete="off"/>
                     </div>
                     <br>
                     <div class="layui-inline layui-col-md12 inp-box">

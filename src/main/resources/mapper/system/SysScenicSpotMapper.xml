@@ -1107,6 +1107,9 @@
                 and SCENIC_SPOT_ID =#{scenicSpotId}
             </if>
         </where>
+        ORDER BY
+        HUNT_SWITCH DESC,
+        SCENIC_SPOT_ID ASC
     </select>
 
 </mapper>

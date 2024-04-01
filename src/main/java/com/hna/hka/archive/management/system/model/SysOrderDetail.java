@@ -27,7 +27,7 @@ public class SysOrderDetail {
     @Excel(name = "抽奖订单占比", width = 20, orderNum = "6")
     public String lotteryProportion;
 
-    @Excel(name = "客单价", width = 20, orderNum = "7")
+    @Excel(name = "总客单价", width = 20, orderNum = "7")
     public String perCustomerTransaction;
 
     @Excel(name = "寻宝客单价", width = 20, orderNum = "8")
@@ -36,5 +36,13 @@ public class SysOrderDetail {
     @Excel(name = "抽奖客单价", width = 20, orderNum = "9")
     public String lotteryPerCustomerTransaction;
 
+    @Excel(name = "未抽奖客单价", width = 20, orderNum = "10")
+    public String noLotteryPerCustomerTransaction;
+
+    @Excel(name = "抽奖订单的效益评估", width = 20, orderNum = "11")
+    public String lotteryOrderBenefitEvaluation;
+
+    @Excel(name = "客单价提升", width = 20, orderNum = "12")
+    public String perCustomerTransactionIncrease;
 
 }

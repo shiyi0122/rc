@@ -1,9 +1,13 @@
 package com.hna.hka.archive.management.Merchant.Controller;
 
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.github.pagehelper.PageInfo;
+import com.hna.hka.archive.management.Merchant.model.OrderVo;
 import com.hna.hka.archive.management.Merchant.model.SysShop;
 import com.hna.hka.archive.management.Merchant.service.SysShopService;
 import com.hna.hka.archive.management.assetsSystem.model.ScenicSpot;
+import com.hna.hka.archive.management.system.model.SysOrder;
 import com.hna.hka.archive.management.system.model.SysScenicSpotBinding;
 import com.hna.hka.archive.management.system.util.Constant;
 import com.hna.hka.archive.management.system.util.FromCityToProvince;
@@ -13,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -148,4 +153,24 @@ public class SysShopController extends PublicUtil {
         }
     }
 
+    @PostMapping("/importExcel")
+    public ReturnModel importExcel(@RequestPart("file") MultipartFile file) throws Exception {
+        ReturnModel returnModel = new ReturnModel();
+        try {
+            ImportParams params = new ImportParams();
+            params.setHeadRows(1);
+            List<OrderVo> importExcel = ExcelImportUtil.importExcel(file.getInputStream(), OrderVo.class, params);
+            for (OrderVo orderVo:importExcel){
+                SysOrder sysOrder = new SysOrder();
+                sysOrder.setOrderNumber(orderVo.getOrderNumber());
+                sysOrder.setReasonsRefunds(orderVo.getReasonsRefunds());
+                sysShopService.updateByOrderNumber(sysOrder);
+            }
+            returnModel.setMsg("导入成功！");
+            returnModel.setState(Constant.STATE_SUCCESS);
+        } catch (Exception e) {
+            throw new RuntimeException("导入失败！", e);
+        }
+        return returnModel;
+    }
 }

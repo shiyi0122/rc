@@ -372,6 +372,9 @@
             <if test="reasonsRefunds != null">
                 REASONS_REFUNDS = #{reasonsRefunds,jdbcType=VARCHAR},
             </if>
+            <if test="reasonsRefundsTrue != null">
+                REASONS_REFUNDS_TRUE = #{reasonsRefundsTrue,jdbcType=VARCHAR},
+            </if>
             <if test="runningTrack != null">
                 RUNNING_TRACK = #{runningTrack,jdbcType=VARCHAR},
             </if>
@@ -4207,6 +4210,7 @@
         A.ORDER_STATUS AS orderStatus,
         A.DISPATCHING_FEE AS dispatchingFee,
         A.REASONS_REFUNDS AS reasonsRefunds,
+        A.REASONS_REFUNDS_TRUE AS reasonsRefundsTrue,
         A.ORDER_REFUND_AMOUNT AS orderRefundAmount,
         A.TOTAL_TIME AS totalTime,
         A.CURRENT_USER_PHONE AS currentUserPhone,

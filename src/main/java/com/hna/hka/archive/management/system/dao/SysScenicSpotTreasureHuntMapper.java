@@ -90,4 +90,5 @@ public interface SysScenicSpotTreasureHuntMapper {
     List<SysOrderDetail> getTreasureHuntDetail(SysOrder sysOrder);
 
 
+    List<SysScenicSpotTreasureNewHunt> getTreasureNewHuntNum(@Param("jackpotId") Long jackpotId);
 }

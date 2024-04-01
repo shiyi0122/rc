@@ -8,7 +8,7 @@ setTimeout(()=>{
         $(".inp-box").hide();
 
         //监听复选框
-        form.on('checkbox(switchTest)', function(data){
+        form.on('radio(switchTest)', function(data){
             var vals = data.value
             var other=$("#other")
             if($("#other").prop("checked") == true){
@@ -20,7 +20,7 @@ setTimeout(()=>{
         });
         //监听提交
         form.on('submit(btnSubmitPayBack)', function(data){
-            var checkbox = $('input[type=checkbox]:checked').val()
+            var checkbox = $('input[type=radio]:checked').val()
             var index = top.layer.msg('订单退款中，请稍候',{icon: 16,time:false,shade:0.8});
             $.ajax({
                 url: "/system/order/doPayOrderBackDeposit",
@@ -37,7 +37,8 @@ setTimeout(()=>{
                     payMoney : data.field.payMoney,
                     // reason : radio,
                      reason : checkbox,
-                    reasonsRefunds : data.field.reasonsRefunds
+                    reasonsRefunds : data.field.reasonsRefunds,
+                    reasonsRefundsTrue : data.field.reasonsRefundsTrue
                 },
                 type: "POST",
                 cache:false,
